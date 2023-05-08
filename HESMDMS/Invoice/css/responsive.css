@@ -1,0 +1,55 @@
+@media only screen and (max-width:1399px){
+    .container{max-width: 1199px;}
+    p{font-size: 16px;}
+    body,*{font-size: 14px;}
+}
+@media only screen and (max-width:991px){
+    table tr td { font-size: 10px; }
+    .gas_icon_box { padding: 20px 10px 0 10px; }
+}
+@media only screen and (max-width:767px){
+   .header_area{flex-direction: column;text-align: center;}
+   .header_content h1{font-size: 18px;padding-top: 5px;}
+   a.logo { max-width: 80px; margin-top: 5px;}
+   .header_content span{font-size: 9px;text-align: center;}
+   header .header_content{border-width: 3px;}
+   .home_con img { max-width: 40px; margin-right: 10px; }
+   .home_con h2{font-size: 16px;}
+   .invoice_area h3 {font-size: 18px;margin: 10px 0;}
+   .invoice_tabel,.consumption_pattern_area,.total_box_area,.counting_box_area,.gas_icon_box .icon_box{flex-wrap: wrap;}
+   .invoice_tabel table { width: 100%; margin-bottom: 10px;}
+   .pattern_box{max-width: 100%;}
+   .comapny_info_box table,.consumption_pattern_area .scm_box{border-width: 1px;}
+   .consumption_pattern_area .scm_box{padding: 10px 0;}
+   .gas_pattern_box h4{font-size: 11px;}
+   .total_box_area .total_box { max-width: 48%; margin-bottom: 5px;}
+   .total_box p{font-size: 10px;}
+   .total_box span { font-size: 12px; padding: 2px 0;  margin-top: 0px; }
+   .counting_box_area{justify-content: flex-start;}
+   .counting_box_area .count_box { max-width: 45%;margin: 0 3px 5px;}
+   .count_box p{padding: 10px 0;}
+   .invoice_form_area .invoice_form{max-width: 100%;}
+   .invoice_form table tr th { font-size: 11px;}
+   .invoice_form .invoice_detail{padding: 5px;}
+   .invoice_form .invoice_detail p{font-size: 12px;}
+   .note_tabel{flex-wrap: wrap;padding: 5px;}
+   .note_tabel tr td { font-size: 12px; }
+   p{font-size: 12px;}
+   .bottom_area{border-width: 5px;}
+   .small_gas_area{flex-wrap: wrap;}
+   .small_gas_area .small_gas_box{max-width: 100%;margin-bottom: 10px;}
+   .small_gas_box h3{font-size: 16px;padding: 5px 0;}
+   .small_gas_area p { font-size: 12px; margin-bottom: 5px; }
+   .small_icon_box .icon_box p { max-width: 100%;}
+   .small_gas_box .number_plate{padding: 20px 0;}
+   .small_gas_box .number_plate{max-width: 250px;}
+   .payment_detail {padding: 5px;}
+   .payment_detail p { font-size: 12px; }
+   .payment_detail span { font-size: 12px; color: var(--black-color); margin-bottom: 5px;}
+   .polite_area h3 { font-size: 18px; }
+   .polite_area p { font-size: 11px; color: #313131; }
+   .small_gas { padding-bottom: 5px; border-bottom: 5px solid var(--primary-color); }
+}
+@media only screen and (max-width:575px){
+    
+}

@@ -1,0 +1,44 @@
+﻿@using Newtonsoft.Json;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .dx-datagrid {
+        color: #333;
+        background-color: transparent !important;
+    }
+
+    .dx-toolbar {
+        background-color: transparent !important;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    .greenColor {
+        color: green;
+    }
+
+    .sub {
+        vertical-align: 0;
+        position: relative;
+        top: -1.2ex;
+        font-size: 76%;
+    }
+</style>
+<div class="card card-block card-stretch card-height">
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <h4 class="card-title">Last 15 Days Report</h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="15DayConsumption"></div>
+    </div>
+</div>
+<script>
+    var dayreport = @Html.Raw(JsonConvert.SerializeObject(ViewBag.dayreport));
+</script>
+<script src="~/Scripts/grid/15DayConsumption.js"></script>

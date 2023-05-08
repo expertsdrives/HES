@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>suntront</title>
+    <style>
+        @charset "utf-8";
+        /* CSS Document */
+        /*-----------------------------------------------------------------------------
+
+Prototype Version:  2.4
+
+*/
+        @font-face {
+            font-family: 'Open Sans';
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-Medium.eot');
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-Medium.eot?#iefix') format('embedded-opentype'), url('http://expertsllp.in/Invoice/font/OpenSans-Medium.woff2') format('woff2'), url('http://expertsllp.in/Invoice/font/OpenSans-Medium.woff') format('woff'), url('http://expertsllp.in/Invoice/font/OpenSans-Medium.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Open Sans';
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-Regular.eot');
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-Regular.eot?#iefix') format('embedded-opentype'), url('http://expertsllp.in/Invoice/font/OpenSans-Regular.woff2') format('woff2'), url('http://expertsllp.in/Invoice/font/OpenSans-Regular.woff') format('woff'), url('http://expertsllp.in/Invoice/font/OpenSans-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Open Sans';
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-Bold.eot');
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-Bold.eot?#iefix') format('embedded-opentype'), url('http://expertsllp.in/Invoice/font/OpenSans-Bold.woff2') format('woff2'), url('http://expertsllp.in/Invoice/font/OpenSans-Bold.woff') format('woff'), url('http://expertsllp.in/Invoice/font/OpenSans-Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Open Sans';
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-ExtraBold.eot');
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-ExtraBold.eot?#iefix') format('embedded-opentype'), url('http://expertsllp.in/Invoice/font/OpenSans-ExtraBold.woff2') format('woff2'), url('../font/OpenSans-ExtraBold.woff') format('woff'), url('../font/OpenSans-ExtraBold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Open Sans';
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-SemiBold.eot');
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-SemiBold.eot?#iefix') format('embedded-opentype'), url('http://expertsllp.in/Invoice/font/OpenSans-SemiBold.woff2') format('woff2'), url('http://expertsllp.in/Invoice/font/OpenSans-SemiBold.woff') format('woff'), url('http://expertsllp.in/Invoice/font/OpenSans-SemiBold.ttf') format('truetype');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Open Sans';
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-Light.eot');
+            src: url('http://expertsllp.in/Invoice/font/OpenSans-Light.eot?#iefix') format('embedded-opentype'), url('http://expertsllp.in/Invoice/font/OpenSans-Light.woff2') format('woff2'), url('http://expertsllp.in/Invoice/font/OpenSans-Light.woff') format('woff'), url('http://expertsllp.in/Invoice/font/OpenSans-Light.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+
+
+
+        /* Table of Contents----------------------------------------------------------------------------
+1. Clean Base
+2. Base Typography
+3. Images
+4. Links
+5. Forms
+6. Tables
+7. Framework
+*/
+        :root {
+            --primary-color: #993399;
+            --black-color: #000000;
+            --White-color: #ffffff;
+           /* --gray-color: #666666;*/
+        }
+
+
+        /* 1. Create a Clean Base
+------------------------------------------------------------------------------*/
+
+        html, body, br, hr, div, span, a, object, iframe, ul, ol, dl, li, dt, dd, h1, h2, h3, h4, h5, h6, p, blockquote, q, address,
+        small, big, cite, dfn, ins, del, i, em, b, strong, sup, sub, strike, pre, code, samp, kbd, var, tt, form, fieldset, legend, label, input, textarea, option, .nobox {
+            background: transparent;
+            border: 0;
+            font-size: 100%;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            vertical-align: baseline;
+        }
+
+        /* HTML5 display-role reset for older browsers */
+    /*    article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, main {
+            display: block
+        }
+
+        blockquote, q {
+            quotes: none;
+        }
+
+        br {
+            height: 0;
+        }
+
+        ul, ol, dl, li {
+            margin: 0;
+            padding: 0;
+        }*/
+
+        html, body {
+           /* height: 100%;
+            -webkit-appearance: none;
+            border: none;
+            -webkit-text-size-adjust: none;*/
+        }
+
+        body {
+           /* color: var(--gray-color);
+            font-family: 'Open Sans';*/
+            font-size: 18px;
+        }
+
+        /* Class for clearing floats */
+        .clear {
+            clear: both;
+            display: block;
+            overflow: hidden;
+            visibility: hidden;
+            width: 0;
+            height: 0;
+        }
+
+        .cf:after, .cf:before {
+            display: table;
+            content: ''
+        }
+
+        .cf:after {
+            clear: both;
+        }
+
+      /*  * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }*/
+
+        /* 2. Define Base Typography
+------------------------------------------------------------------------------*/
+
+        /* Create the Default Headers  */
+        h1, h2, h3, h4, h5, h6 {
+           /* margin: 0;
+            color: var(--gray-color);
+            font-weight: 500;*/
+        }
+        /* Specific Header Settings */
+        h1, .h1 {
+            font-size: 20px;
+        }
+
+        h2, .h2 {
+            font-size: 16px;
+        }
+
+        h3, .h3 {
+            font-size: 14px;
+        }
+
+        h4, .h4 {
+            font-size: 15px;
+        }
+
+        h5, .h5 {
+            font-size: 25px;
+        }
+
+        h6, .h6 {
+            font-size: 18px;
+        }
+
+        /* Create the Default Paragraphs */
+        p {
+            margin-bottom: 20px;
+        }
+
+        /* Other Typo */
+        strong {
+            font-weight: bold;
+        }
+
+        hr {
+            border: 0 #000 solid;
+            border-top-width: 1px;
+            clear: both;
+            height: 0;
+        }
+
+        ol {
+            list-style: decimal;
+        }
+
+        ul {
+            list-style: disc;
+        }
+
+        .unlisted {
+            list-style: none;
+        }
+        /* 3. Images
+------------------------------------------------------------------------------*/
+
+        /* Remove border around linked images */
+        img {
+            border: 0;
+            border-style: none;
+            max-width: 100%;
+        }
+
+        /* 4. Links
+------------------------------------------------------------------------------*/
+
+        /* Default Link Types */
+        a {
+            color: var(--pink-color);
+            text-decoration: none;
+        }
+
+            a:hover {
+                color: var(--secondar-color);
+            }
+
+            a:active {
+                color: #e8941a;
+            }
+
+            a:focus {
+                outline: none;
+            }
+
+            a.current {
+                color: #e8941a;
+            }
+
+        input, textarea {
+            font-family: 'Assistant';
+        }
+
+            /* 5. Forms
+------------------------------------------------------------------------------*/
+
+            input[type='submit'] {
+                -webkit-appearance: none;
+                border: none;
+                -webkit-text-size-adjust: none;
+            }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -o-appearance: none;
+            appearance: none;
+        }
+
+        textarea {
+            overflow: auto;
+        }
+
+        input:focus::placeholder {
+            font-size: 0;
+        }
+
+        ::-webkit-input-placeholder {
+            color: #000;
+        }
+
+        :-moz-placeholder {
+            color: #000;
+        }
+
+        ::-moz-placeholder {
+            color: #000;
+        }
+
+        :-ms-input-placeholder {
+            color: #000;
+        }
+
+        ::-ms-input-placeholder {
+            color: #000;
+        }
+
+        :placeholder-shown {
+            color: #000;
+        }
+        /* Removes fieldset borders. even on Opea 7 */
+        fieldset {
+            border: 1px solid transparent;
+        }
+
+        /* 6. Tables
+------------------------------------------------------------------------------*/
+
+        /* Table Fixes */
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        td {
+            text-align: right;
+            font-weight: normal;
+        }
+
+
+        /* 7. Framework ------------------------------------------------------------------------------*/ /* Common CSS */
+        /*transition effect*/
+        input, textarea, button, select {
+            font-family: 'Helvetica';
+        }
+
+        button {
+            border: none;
+            outline: none;
+            background: none;
+        }
+
+        a, .panner_box_inner .pannel_box, a::after, a::before, .quick_area li, #btnmenu span::after, #btnmenu span::before, #btnmenu span {
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+        }
+
+        /* Page Layout */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 15px;
+            width: 100%;
+        }
+
+        .row {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+            position: relative;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .col-1 {
+            max-width: 8.33333333%;
+        }
+
+        .col-2 {
+            max-width: 16.66666667%;
+        }
+
+        .col-3 {
+            max-width: 25%;
+        }
+
+        .col-4 {
+            max-width: 33.33333333%;
+        }
+
+        .col-5 {
+            max-width: 41.66666667%;
+        }
+
+        .col-6 {
+            max-width: 50%;
+        }
+
+        .col-7 {
+            max-width: 58.33333333%;
+        }
+
+        .col-8 {
+            max-width: 66.66666667%;
+        }
+
+        .col-9 {
+            max-width: 75%;
+        }
+
+        .col-10 {
+            max-width: 83.33333333%;
+        }
+
+        .col-11 {
+            max-width: 91.66666667%;
+        }
+
+        .col-12 {
+            max-width: 100%;
+        }
+
+
+        .d-flex {
+            display: flex;
+        }
+
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+
+        .align-center {
+            align-items: center;
+        }
+
+        .align-start {
+            align-items: flex-start;
+        }
+
+        .align-end {
+            align-items: flex-end;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .justify-start {
+            justify-content: flex-start;
+        }
+
+        .justify-end {
+            justify-content: flex-end;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        /* header Content*/
+        header {
+            width: 100%;
+        }
+
+            header .header_content {
+                border-bottom: 3px solid var(--primary-color);
+            }
+
+        .header_content h1 {
+            color: var(--primary-color);
+        }
+
+        .header_content span {
+            font-size: 9px;
+            font-weight: 200;
+            padding-right: 10px;
+            display: block;
+            text-align: right;
+        }
+
+        .home_con img {
+            max-width: 40px;
+            margin-right: 10px;
+        }
+
+        /* Retail In voice */
+        .invoice_area {
+            text-align: center;
+        }
+
+            .invoice_area h3 {
+                font-weight: bold;
+                color: var(--black-color);
+                text-decoration: underline;
+                text-transform: uppercase;
+                margin: 10px 0;
+            }
+
+            .invoice_area .invoice_tabel {
+                border: 1px solid var(--primary-color);
+                width: 100%;
+                margin: 0 0 2px;
+            }
+
+        .invoice_tabel {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+            .invoice_tabel table {
+                width: 33.33%;
+            }
+
+        table tr td {
+            font-size: 11px;
+            color: var(--black-color);
+            text-align: left;
+            margin-bottom: 5px;
+            padding: 0 10px 2px;
+            position: relative;
+        }
+
+            table tr td span {
+                position: absolute;
+                right: 0;
+            }
+
+        .consumption_pattern_area {
+            width: 100%;
+            padding-bottom: 2px;
+        }
+
+        .pattern_box {
+            max-width: 49.5%;
+            width: 100%;
+        }
+
+        .consumption_pattern_area table {
+            width: 100%;
+        }
+
+        .consumption_pattern_area .scm_box {
+            border: 1px solid var(--primary-color);
+            padding: 24px 0;
+        }
+
+        .comapny_info_box table {
+            border: 1px solid var(--primary-color);
+        }
+
+        .gas_pattern_box {
+            margin-top: 2px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--primary-color );
+        }
+
+            .gas_pattern_box h4 {
+                color: var(--White-color);
+                text-align: center;
+                background: var(--primary-color);
+                padding: 2px 0;
+                font-size: 10px;
+            }
+
+            .gas_pattern_box table tr td {
+                border: 1px solid var(--primary-color);
+                padding: 10px 0;
+            }
+
+        .total_box_area {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+            .total_box_area .total_box {
+                max-width: 20%;
+                width: 100%;
+            }
+
+        .total_box p {
+            margin-bottom: 0;
+            font-size: 10px;
+        }
+
+        .total_box span {
+            display: block;
+            width: 100%;
+            font-size: 10px;
+            padding: 2px 0;
+            border: 1px solid var(--primary-color);
+            margin-top: 0px;
+            color: #000000;
+            font-weight: 700;
+        }
+
+        .counting_box_area {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .counting_box_area .count_box {
+                max-width: 12%;
+                width: 100%;
+                border: 1px solid var(--primary-color);
+                border-radius: 10px;
+                overflow: hidden;
+                height: 50px;
+            }
+
+        .count_box h4 {
+            font-size: 9px;
+            color: var(--White-color);
+            text-align: center;
+            padding: 2px 0;
+            background: #993399;
+        }
+
+        .count_box p {
+            font-size: 10px;
+            color: #000000;
+            padding: 8px;
+        }
+
+        .count_box span {
+            font-size: 20px;
+            color: var(--primary-color);
+        }
+
+        .invoice_form table {
+            width: 100%;
+        }
+
+        .invoice_form_area .invoice_form {
+            max-width: 70%;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .invoice_form table tr th {
+            font-size: 10px;
+            color: var(--White-color);
+            padding: 2px 0;
+            background-color: #993399;
+        }
+
+        .invoice_form table tr td {
+            border: 1px solid var(--primary-color);
+        }
+
+        .invoice_form .top_border td {
+            padding: 10px 8px 25%;
+        }
+
+        .invoice_form .invoice_detail {
+            margin-top: 10px;
+            width: 100%;
+            border: 1px solid var(--primary-color);
+            padding: 10px 20px;
+            text-align: left;
+        }
+
+            .invoice_form .invoice_detail p {
+                font-size: 14px;
+                color: #000000;
+                margin: 0;
+            }
+
+        .invoice_form span {
+            font-size: 10px;
+            color: #000000;
+            display: block;
+            text-align: center;
+        }
+
+        .border_dotted {
+            border: 1px dashed var(--black-color);
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .bottom_area {
+            border-bottom: 10px solid var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+            .bottom_area p {
+                color: #000000;
+                font-size: 13px;
+            }
+
+        .note_tabel {
+            padding: 5px;
+            border-radius: 10px;
+            border: 1px solid var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .note_tabel tr td {
+                font-size: 10 px;
+            }
+
+        .nft_form h4 {
+            font-size: 16px;
+            color: var(--black-color);
+        }
+
+        .small_gas_area {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .small_gas_area .small_gas_box {
+                max-width: 48%;
+                width: 100%;
+                border-radius: 20px;
+                border: 1px solid var(--primary-color);
+                overflow: hidden;
+            }
+
+        .small_gas_box h3 {
+            color: var(--White-color);
+            text-align: center;
+            font-size: 22px;
+            padding: 8px 0;
+            background: var(--primary-color);
+        }
+
+        .small_gas_box .gas_detail {
+            padding: 10px 15px;
+        }
+
+        .small_gas_area p {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .gas_icon_box {
+            padding: 40px 10px 0 30px;
+        }
+
+            .gas_icon_box .icon_box {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .gas_icon_box p {
+                color: #000000;
+            }
+
+        .small_icon_box .icon_box:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .icon_box .box_img {
+            max-width: 75px;
+            width: 100%;
+            height: 75px;
+            border-radius: 100%;
+            border: 3px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+            .icon_box .box_img img {
+                max-width: 50px;
+                height: 50px;
+                width: 100%;
+                margin: 0 auto;
+            }
+
+        .icon_box p img {
+            max-width: 20px;
+        }
+
+        .small_icon_box .icon_box {
+            margin-bottom: 0;
+            width: 100%;
+        }
+
+            .small_icon_box .icon_box p {
+                max-width: 76%;
+                width: 100%;
+            }
+
+        .payment_box {
+            width: 100%;
+            border: 1px solid;
+            margin: 20px 0 5px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+            .payment_box h3 {
+                font-size: 22px;
+                color: var(--White-color);
+                text-align: center;
+                background: var(--primary-color);
+                padding: 8px 0;
+            }
+
+        .payment_detail {
+            padding: 10px 20px;
+        }
+
+            .payment_detail p {
+                font-size: 14px;
+                color: var(--primary-color);
+                margin-bottom: 0;
+                font-weight: 600;
+            }
+
+            .payment_detail span {
+                font-size: 14px;
+                color: var(--black-color);
+                margin-bottom: 15px;
+                display: block;
+            }
+
+        .small_gas_box .number_plate {
+            padding-top: 80px;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+
+        .plat_box {
+            text-align: center;
+        }
+
+        .small_gas {
+            padding-bottom: 10px;
+            border-bottom: 10px solid var(--primary-color);
+        }
+
+        .polite_area {
+            text-align: center;
+        }
+
+            .polite_area img {
+                max-width: 600px;
+                width: 100%;
+                margin: 0 auto 10px;
+            }
+
+            .polite_area h3 {
+                font-size: 22px;
+                color: #000000;
+                font-weight: 600;
+            }
+
+            .polite_area p {
+                font-size: 16px;
+                color: #313131;
+            }
+
+
+        /* new css */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+            font: 12pt "Tahoma";
+        }
+
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .page {
+            width: 21cm;
+            padding: 10PX;
+            min-height: 29.7cm;
+            margin: 1cm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .subpage {
+            height: 256mm;
+            outline: 2cm transparent solid;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+            .page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+
+            .vendorListHeading {
+                background-color: #993399 !important;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .vendorListHeading {
+                color: white !important;
+            }
+        }
+        @media only screen and (max-width:1399px) {
+            .container {
+                max-width: 1199px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            body, * {
+                font-size: 14px;
+            }
+        }
+
+        @media only screen and (max-width:991px) {
+            table tr td {
+                font-size: 10px;
+            }
+
+            .gas_icon_box {
+                padding: 20px 10px 0 10px;
+            }
+        }
+
+        @media only screen and (max-width:767px) {
+            .header_area {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header_content h1 {
+                font-size: 18px;
+                padding-top: 5px;
+            }
+
+            a.logo {
+                max-width: 80px;
+                margin-top: 5px;
+            }
+
+            .header_content span {
+                font-size: 9px;
+                text-align: center;
+            }
+
+            header .header_content {
+                border-width: 3px;
+            }
+
+            .home_con img {
+                max-width: 40px;
+                margin-right: 10px;
+            }
+
+            .home_con h2 {
+                font-size: 16px;
+            }
+
+            .invoice_area h3 {
+                font-size: 18px;
+                margin: 10px 0;
+            }
+
+            .invoice_tabel, .consumption_pattern_area, .total_box_area, .counting_box_area, .gas_icon_box .icon_box {
+                flex-wrap: wrap;
+            }
+
+                .invoice_tabel table {
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+
+            .pattern_box {
+                max-width: 100%;
+            }
+
+            .comapny_info_box table, .consumption_pattern_area .scm_box {
+                border-width: 1px;
+            }
+
+            .consumption_pattern_area .scm_box {
+                padding: 10px 0;
+            }
+
+            .gas_pattern_box h4 {
+                font-size: 11px;
+            }
+
+            .total_box_area .total_box {
+                max-width: 48%;
+                margin-bottom: 5px;
+            }
+
+            .total_box p {
+                font-size: 10px;
+            }
+
+            .total_box span {
+                font-size: 12px;
+                padding: 2px 0;
+                margin-top: 0px;
+            }
+
+            .counting_box_area {
+                justify-content: flex-start;
+            }
+
+                .counting_box_area .count_box {
+                    max-width: 45%;
+                    margin: 0 3px 5px;
+                }
+
+            .count_box p {
+                padding: 10px 0;
+            }
+
+            .invoice_form_area .invoice_form {
+                max-width: 100%;
+            }
+
+            .invoice_form table tr th {
+                font-size: 11px;
+            }
+
+            .invoice_form .invoice_detail {
+                padding: 5px;
+            }
+
+                .invoice_form .invoice_detail p {
+                    font-size: 12px;
+                }
+
+            .note_tabel {
+                flex-wrap: wrap;
+                padding: 5px;
+            }
+
+                .note_tabel tr td {
+                    font-size: 12px;
+                }
+
+            p {
+                font-size: 12px;
+            }
+
+            .bottom_area {
+                border-width: 5px;
+            }
+
+            .small_gas_area {
+                flex-wrap: wrap;
+            }
+
+                .small_gas_area .small_gas_box {
+                    max-width: 100%;
+                    margin-bottom: 10px;
+                }
+
+            .small_gas_box h3 {
+                font-size: 16px;
+                padding: 5px 0;
+            }
+
+            .small_gas_area p {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+
+            .small_icon_box .icon_box p {
+                max-width: 100%;
+            }
+
+            .small_gas_box .number_plate {
+                padding: 20px 0;
+            }
+
+            .small_gas_box .number_plate {
+                max-width: 250px;
+            }
+
+            .payment_detail {
+                padding: 5px;
+            }
+
+                .payment_detail p {
+                    font-size: 12px;
+                }
+
+                .payment_detail span {
+                    font-size: 12px;
+                    color: var(--black-color);
+                    margin-bottom: 5px;
+                }
+
+            .polite_area h3 {
+                font-size: 18px;
+            }
+
+            .polite_area p {
+                font-size: 11px;
+                color: #313131;
+            }
+
+            .small_gas {
+                padding-bottom: 5px;
+                border-bottom: 5px solid var(--primary-color);
+            }
+        }
+
+        @media only screen and (max-width:575px) {
+        }
+    </style>
+</head>
+<body>
+<div >
+    <div >
+      <div >
+        <header style="width:100%">
+            <div style="justify-content: space-between; align-items: center; display: flex;">
+                <a href="javascript:void(0);" style=" max-width: 80px; margin-top: 5px;"><img src="http://expertsllp.in/Invoice/images/adani_logo.png" alt="adani_logo"></a>
+                <div  style="border-bottom: 3px solid #993399;  ">
+                    <h1 style="color: #993399">Adani Total Gas Limited</h1>
+                    <span>(Formerly Known as Adani Gas Limited)</span>
+                    <div  style="align-items: center; display: flex; "> 
+                        <img src="http://expertsllp.in/Invoice/images/home_icon.png" style="max-width: 40px; margin-right: 10px; ">
+                        <h2>Domestic <br> PNG Connection</h2>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--<section class="retail_invoic">
+            <div class="invoice_area">
+                <h3>VAT RETAIL INVOIC</h3>
+                <div class="invoice_tabel">
+                     <table>
+                         <tr>
+                         <td>Customer ID <span>:</span></td>
+                         <td>#customerID</td>		
+                         </tr>
+                         <tr>
+                             <td>Customer Type <span>:</span></td>
+                             <td>Domestic</td>
+                         </tr>
+                         <tr>
+                             <td>Customer Name <span>:</span></td>
+                             <td>#customerName</td>
+                         </tr>
+                         <tr>
+                             <td colspan="2">Address: #street1<br>#street2 -<br> #street3.</td>
+                         </tr>
+                         <tr>
+                             <td>Contact No<span>:</span></td>
+                             <td>#contactNumber </td>
+                         </tr>
+                     </table>
+                     <table>
+                         <tr>
+                             <td>VAT Invoice No <span>:</span></td>
+                             <td>#vatInvoiceNumber</td>
+                         </tr>
+                         <tr>
+                             <td>GST Invoice No <span>:</span></td>
+                             <td></td>
+                         </tr>
+                         <tr>
+                             <td>GST Credit Note <span>:</span></td>
+                             <td></td>
+                         </tr>
+                         <tr>
+                             <td>Invoice Date <span>:</span></td>
+                             <td>#InvoiceDate </td>
+                         </tr>
+                         <tr>
+                             <td>Invoice Period<span>:</span></td>
+                             <td>#InvoiceDuration</td>
+                         </tr>
+                         <tr>
+                             <td>Payment Due Date <span>:</span></td>
+                             <td>#PaymentDueDate</td>
+                         </tr>
+                         <tr>
+                             <td>Payment Mode  <span>:</span></td>
+                             <td></td>
+                         </tr>
+                         <tr>
+                             <td>CIN <span>:</span></td>
+                             <td>L40100GJ2005PLC046553 </td>
+                         </tr>
+                     </table>
+                     <table>
+                         <tr>
+                             <td> Meter No <span>:</span></td>
+                             <td>#MeterNUmber</td>
+                         </tr>
+                         <tr>
+                             <td> HSN Code <span>:</span></td>
+                             <td>27112100</td>
+                         </tr>
+                         <tr>
+                             <td> Product<span>:</span></td>
+                             <td>Natural Gas (PNG)</td>
+                         </tr>
+                         <tr>
+                             <td> Invoice Type<span>:</span></td>
+                             <td>ACTUAL INVOICE</td>
+                         </tr>
+                         <tr>
+                             <td>Reading Date<span>:</span></td>
+                             <td>#ReadingDate</td>
+                         </tr>
+                         <tr>
+                             <td> State Code <span>:</span></td>
+                             <td>24</td>
+                         </tr>
+                         <tr>
+                             <td>State <span>:</span></td>
+                             <td>GUJARAT</td>
+                         </tr>
+                         <tr>
+                             <td> Next Sch. MR Dt<span>:</span></td>
+                             <td>18.12.2021 </td>
+                         </tr>
+                     </table>
+                </div>
+                <div class="consumption_pattern_area d-flex align-center justify-between">
+                     <div class="pattern_box scm_box">
+                         <table>
+                             <tr>
+                                 <td> a) Closing Reading (SCM<span>:</span></td>
+                                 <td>19.000</td>
+                             </tr>
+                             <tr>
+                                 <td> b) Opening Reading (SCM)<span>:</span></td>
+                                 <td>0.120</td>
+                             </tr>
+                             <tr>
+                                 <td> c) Total Consumption (SCM) (a - b)<span>:</span></td>
+                                 <td>18.880</td>
+                             </tr>
+                             <tr>
+                                 <td> d) Average GCV for billing period (Kcal / SCM)<span>:</span></td>
+                                 <td>10,535.365</td>
+                             </tr>
+                             <tr>
+                                 <td> e) Consumption (Kcal) (c * d)<span>:</span></td>
+                                 <td>198,907.69</td>
+                             </tr>
+                             <tr>
+                                 <td>Conversion of BTU (1 Kcal = 3.968321 BTU)<span>:</span></td>
+                                 <td>789,329.57 </td>
+                             </tr>
+                             <tr>
+                                 <td> Total Consumption MMBTU (1, 000,000 BTU)<span>:</span></td>
+                                 <td>#TotalConcumption</td>
+                             </tr>
+                         </table>
+                     </div>
+                     <div class="pattern_box">
+                         <div class="comapny_info_box">
+                             <table>
+                                 <tr>
+                                     <td> Company TIN No. & Date<span>:</span></td>
+                                     <td>24073405497 & 21.10.2010</td>
+                                 </tr>
+                                 <tr>
+                                     <td>Company TIN (CST) No & Date <span>:</span></td>
+                                     <td>24573405497 & 21.10.2010</td> </tr>
+                                 <tr>
+                                     <td> Company GSTIN No<span>:</span></td>
+                                     <td>24AAFCA3788D1ZS</td>
+                                 </tr>
+                             </table>
+                             <table>
+                                 <tr>
+                                     <td>Security Deposit Available with us : </td>
+                                 </tr>
+                                 <tr>
+                                     <td> Against Connection : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1,000.00</td>
+                                 </tr>
+                                 <tr>
+                                     <td> Against Gas Usage : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 500.00 </td>
+                                 </tr>
+                             </table>
+                         </div>
+                         <div class="gas_pattern_box">
+                             <h4 class="vendorListHeading">Your Gas Consumption Pattern(MMBTU)</h4>
+                             <table>
+                                 <tr>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                 </tr>
+                                 <tr>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                 </tr>
+                             </table>
+                         </div>
+                     </div>
+                </div>
+                <div class="total_box_area">
+                    <div class="total_box">
+                        <p>Gas Cosumption(SCM)</p>
+                        <span class="total_income">#SCM</span>
+                    </div>
+                    <div class="total_box">
+                        <p>Gas Cosumption(MMBTU)</p>
+                        <span class="total_income">#GasMMBTU </span>
+                    </div>
+                    <div class="total_box">
+                        <p>Amount Payable(₹)</p>
+                        <span class="total_income">#AmountPayable</span>
+                    </div>
+                    <div class="total_box">
+                        <p>Due Date</p>
+                        <span class="total_income">#DueDate</span>
+                    </div>
+                </div>
+                <div class="counting_box_area">
+                    <div class="count_box">
+                        <h4 class="vendorListHeading">Previous Dues(₹)</h4>
+                        <p>#PreviousDue</p>
+                    </div><span>-</span>
+                    <div class="count_box">
+                        <h4 class="vendorListHeading">Payment Received(₹)</h4>
+                        <p>#PaymentReceived</p>
+                    </div><span>=</span>
+                    <div class="count_box">
+                        <h4 class="vendorListHeading">Opening Balance(₹)</h4>
+                        <p>#openingBalance</p>
+                    </div><span>+</span>
+                    <div class="count_box">
+                        <h4 class="vendorListHeading">Current Invoice Amount(₹)</h4>
+                        <p>#curentInvoiceAmount</p>
+                    </div><span>=</span>
+                    <div class="count_box">
+                        <h4 class="vendorListHeading">Amount Due Before Due Date</h4>
+                        <p>#amountBeforeDue</p>
+                    </div>
+                    <div class="count_box">
+                        <h4 class="vendorListHeading">Amount Due After Due Date</h4>
+                        <p>#amountAfterDue</p>
+                    </div>
+                </div>
+                <div class="invoice_form_area">
+                    <div class="invoice_form">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="vendorListHeading">Particulars</th>
+                                    <th class="vendorListHeading">Rate <br> (₹)</th>
+                                    <th class="vendorListHeading">Quantity <br>(MMBTU)</th>
+                                    <th class="vendorListHeading">Amount <br>(₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="top_border">
+                                    <td>Gas Charge <br>VAT</td>
+                                    <td>Rs.#charge  <br>15.00%</td>
+                                    <td>0.789</td>
+                                    <td>#GasSalesCharge <br>#vatcharge</td>
+                                </tr>
+                                <tr >
+                                 <td>Total Current Charge</td>
+                                 <td></td>
+                                 <td></td>
+                                 <td>1810.23</td>
+                             </tr>
+                            </tbody>
+                        </table>
+                        <div class="invoice_detail">
+                            <p>The gas price per MMBTU, W.e.f 02-10-21, <1.60 is Rs.907.20 &
+                             >1.60 is Rs.1088.64, W.e.f 06-10-21, <1.60 is Rs.991.20 & >1.60 is
+                             Rs.1189.44 & W.e.f 11-10-21, <1.60 is Rs.1061.20 & >1.60 is
+                             Rs.1273.44. Gas charges are calculated on pro-rata basi</p>
+                        </div>
+                        <span>Kindly Detach this payment slip and return with your payment</span>
+                    </div>
+                </div>
+            </div>
+        </section>-->
+        <div class="border_dotted"></div>
+        <!--<div class="bottom_area">
+            <div class="container">
+                <div class="note_tabel">
+                    <table>
+                        <tr>
+                            <td> Customer ID<span>:</span></td>
+                            <td>1000600775</td>
+                        </tr>
+                        <tr>
+                            <td> Print Doc No<span>:</span></td>
+                            <td>300006956558 </td>
+                        </tr>
+                        <tr>
+                            <td>Invoice Date  <span>:</span></td>
+                            <td>22.10.2021 </td>
+                        </tr>
+                        <tr>
+                            <td> Total Payable <span>:</span></td>
+                            <td>1,810.00</td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td> Payment Due Date<span>:</span></td>
+                            <td>08.11.2021 </td>
+                        </tr>
+                        <tr>
+                            <td>Bank Name / Branch <span>:</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td> Cheque / DD No. & <span>:</span></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <div class="nft_form">
+                        <h4>For Payment by NEFT/RTGS</h4>
+                        <table>
+                            <tr>
+                                <td> A/C No<span>:</span></td>
+                                <td>AGLGAS1000600775</td>
+                            </tr>
+                            <tr>
+                                <td> Bank Name/Branch<span>:</span></td>
+                                <td>HDFC BANK/Sandoz Branch, Mumbai </td>
+                            </tr>
+                            <tr>
+                                <td> IFSC Code<span>:</span></td>
+                                <td>HDFC0000240</td>
+                            </tr>
+                            <tr>
+                                <td> A/C Type<span>:</span></td>
+                                <td>Current</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <p><strong>Note:</strong> Cheque/DD should be payable to <strong>'ADANI TOTAL GAS LTD - ID - 1000600775'</strong>. Kindly write Customer Name, Customer ID & Invoice
+                 No on the back side of the Cheque/DD. <strong>Please do not drop Post Dated Cheques in drop box, Post Dated Cheques are liable to bounce</strong>
+                 Adani Corporate House, Shantigram, Near Vaishnav Devi Circle, S. G. Highway, Khodiyar, Ahmedabad-382421, Gujarat.</p>
+            </div>
+        </div>-->  
+      </div>
+    </div>
+  </div>
+   
+</body>
+</html>

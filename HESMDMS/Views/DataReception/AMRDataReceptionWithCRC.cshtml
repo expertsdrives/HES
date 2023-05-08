@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "AMRDataReceptionWithCRC";
+}
+@{
+    var role = @Convert.ToString(Session["RoleID"]);
+    <style>
+        .dx-datagrid {
+            color: #333;
+            background-color: transparent !important;
+        }
+
+        .dx-toolbar {
+            background-color: transparent !important;
+        }
+
+        .redColor {
+            color: red;
+        }
+
+        .greenColor {
+            color: green;
+        }
+        .sub {
+            vertical-align: 0;
+            position: relative;
+            top: -1.2ex;
+            font-size: 76%;
+        }
+        .right-side {
+            position: absolute;
+            right: 1px;
+            top: 6px;
+        }
+
+    </style>
+
+    <div class="card card-block card-stretch card-height">
+        <div class="card-header" style="text-align:center">
+            <div class="header-title">
+                <h4 class="card-title">Domestic PNG Gas AMR Data</h4>
+            </div>
+
+        </div>
+        <div class="right-side">
+            <div id="selectStatus"></div>
+        </div>
+        <div class="card-body">
+            <div id="DataReceptionWithCRC"></div>
+        </div>
+    </div>
+    <script>
+         var distinctCount = @Html.Raw(Json.Encode(ViewBag.DistinctBusiness));
+        var distinctMeterCount = @Html.Raw(Json.Encode(ViewBag.DistinctMeterNumber));
+        var ro = @role;
+    </script>
+    if (role == "1" || role == "2" || role == "3")
+    {
+        <script src="~/Scripts/grid/DataReceptionWithCRC.js"></script>
+    }
+    else
+    {
+        <script src="~/Scripts/grid/DataReceptionWithATGL.js"></script>
+    }
+}

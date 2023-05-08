@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "LastMeterReading";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var role = @Convert.ToString(Session["RoleID"]);
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<style>
+    #fromdate {
+        height: 50%;
+    }
+
+    .right-side {
+        position: absolute;
+       
+    }
+
+    #todate {
+        height: 40%;
+    }
+
+    .dx-texteditor-container {
+        height: 32px !important;
+    }
+
+    /*.dx-scrollview-content {
+        height: 32px;
+    }*/
+
+    .dx-pivotgrid {
+        color: #333;
+        background-color: transparent !important;
+    }
+
+        .dx-pivotgrid .dx-pivotgrid-area td {
+            color: #222260 !important
+        }
+
+    .pivot-cell-alt {
+        background-color: #f1f1f1 !important;
+    }
+
+    .dx-toolbar {
+        background-color: transparent !important;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    .greenColor {
+        color: green;
+    }
+
+    .sub {
+        vertical-align: 0;
+        position: relative;
+        top: -1.2ex;
+        font-size: 76%;
+    }
+</style>
+
+
+
+<div class="card card-block card-stretch card-height">
+
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <h4 class="card-title">Date Wise Meter Reading</h4>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+       
+
+        <div class="row">
+            <div class="col-md-4">
+                <label for="fromdate">Select From Date</label>
+                <div id="fromdate"></div>
+            </div>
+
+            <div class="col-md-4" >               
+                    <div id="selectStatus1" class="right-side" style="height: 50%; top: 50%;"></div>
+
+            </div>
+            <div class="col-md-4">
+                <label for="todate">select To Date</label>
+                <div id="todate"></div>
+            </div>
+        </div>
+
+        <br />
+        <div id="sales-fieldchooser"></div>
+        <div id="15dayMeter"></div>
+    </div>
+</div>
+<script>
+    var ro = @role;
+    var POCL = "@ViewBag.POCLocation";
+</script>
+
+<script src="~/Scripts/grid/15DayMeterReport.js"></script>

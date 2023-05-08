@@ -1,0 +1,209 @@
+﻿<error errorId="02566a90-29f6-44c6-985c-ce7b3fd2bd53" application="/LM/W3SVC/4/ROOT" host="KRUTISH" type="pdftron.Common.PDFNetException" message="Exception: &#xA;	 Message: This product must be initialized with a valid key.&#xA;Please go to https://www.pdftron.com/pws/get-key to obtain a demo key or for more information.&#xA;	 Conditional expression: license_ok&#xA;	 Version      : 9.2.0-91be0af529&#xA;	 Platform     : .Net Framework&#xA;	 Architecture : x86&#xA;	 Filename     : License.cpp&#xA;	 Function     : trn::License::Instance&#xA;	 Linenumber   : 212&#xA;" source="HESMDMS" detail="pdftron.Common.PDFNetException: Exception: &#xA;	 Message: This product must be initialized with a valid key.&#xA;Please go to https://www.pdftron.com/pws/get-key to obtain a demo key or for more information.&#xA;	 Conditional expression: license_ok&#xA;	 Version      : 9.2.0-91be0af529&#xA;	 Platform     : .Net Framework&#xA;	 Architecture : x86&#xA;	 Filename     : License.cpp&#xA;	 Function     : trn::License::Instance&#xA;	 Linenumber   : 212&#xA;&#xD;&#xA;   at HESMDMS.Models.ExportPDF.GenerateHTMLtoPDF(String PDFPath, String HTML) in E:\Projects\Smart Meters\HES\Code Solution\HESMDMS\HESMDMS\Models\ExportPDF.cs:line 36&#xD;&#xA;   at HESMDMS.Areas.Admin.Controllers.AccountingController.InvoiceGenerate() in E:\Projects\Smart Meters\HES\Code Solution\HESMDMS\HESMDMS\Areas\Admin\Controllers\AccountingController.cs:line 42&#xD;&#xA;   at lambda_method(Closure , ControllerBase , Object[] )&#xD;&#xA;   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)&#xD;&#xA;   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;BeginInvokeSynchronousActionMethod&gt;b__39(IAsyncResult asyncResult, ActionInvocation innerInvokeState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3d()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;&gt;c__DisplayClass46.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3f()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass33.&lt;BeginInvokeActionMethodWithFilters&gt;b__32(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;&gt;c__DisplayClass2b.&lt;BeginInvokeAction&gt;b__1c()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;BeginInvokeAction&gt;b__1e(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecuteCore&gt;b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecute&gt;b__15(IAsyncResult asyncResult, Controller controller)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.&lt;BeginProcessRequest&gt;b__5(IAsyncResult asyncResult, ProcessRequestState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="Manish Ojha" time="2022-04-27T06:24:22.8797388Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CACHE_CONTROL:max-age=0&#xD;&#xA;HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_CONTENT_LENGTH:145&#xD;&#xA;HTTP_CONTENT_TYPE:multipart/form-data; boundary=----WebKitFormBoundaryOPABmx8wOulLSA7C&#xD;&#xA;HTTP_ACCEPT:text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, br&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.9&#xD;&#xA;HTTP_COOKIE:ASP.NET_SessionId=od0o3urizysegxc5r2srybfg; __RequestVerificationToken=JI8kpzsqXSn2_qCDIh4xKS8dNSZ3YU4D7sypPEQSq9XCinGN0QPp2TOgf-1oAY-jRcdXKLaZVBgxiBE9Ft19_MzcqLuq3jz1RUlsyH6KSlk1; .ASPXAUTH=987DB49BF4E29919048CB4571D9A9020D27F573F59843BE2CF770538381C632DEC1B9201D3CA5EBDD4272091DE96396717215D51F4FB66A641976EED4ACA078B113E64CDDDBB50E267A12C16109CF3C6D4DC8F91E8D39FB714615CE4129E6A04D983720FCFC4D5205103BA56E6F2660F&#xD;&#xA;HTTP_HOST:localhost:7898&#xD;&#xA;HTTP_REFERER:http://localhost:7898/Admin/Accounting/GenerateInvoice&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36&#xD;&#xA;HTTP_SEC_CH_UA:&quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;100&quot;, &quot;Google Chrome&quot;;v=&quot;100&quot;&#xD;&#xA;HTTP_SEC_CH_UA_MOBILE:?0&#xD;&#xA;HTTP_SEC_CH_UA_PLATFORM:&quot;Windows&quot;&#xD;&#xA;HTTP_UPGRADE_INSECURE_REQUESTS:1&#xD;&#xA;HTTP_ORIGIN:http://localhost:7898&#xD;&#xA;HTTP_SEC_FETCH_SITE:same-origin&#xD;&#xA;HTTP_SEC_FETCH_MODE:navigate&#xD;&#xA;HTTP_SEC_FETCH_USER:?1&#xD;&#xA;HTTP_SEC_FETCH_DEST:document&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Cache-Control: max-age=0&#xD;&#xA;Connection: keep-alive&#xD;&#xA;Content-Length: 145&#xD;&#xA;Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryOPABmx8wOulLSA7C&#xD;&#xA;Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&#xD;&#xA;Accept-Encoding: gzip, deflate, br&#xD;&#xA;Accept-Language: en-US,en;q=0.9&#xD;&#xA;Cookie: ASP.NET_SessionId=od0o3urizysegxc5r2srybfg; __RequestVerificationToken=JI8kpzsqXSn2_qCDIh4xKS8dNSZ3YU4D7sypPEQSq9XCinGN0QPp2TOgf-1oAY-jRcdXKLaZVBgxiBE9Ft19_MzcqLuq3jz1RUlsyH6KSlk1; .ASPXAUTH=987DB49BF4E29919048CB4571D9A9020D27F573F59843BE2CF770538381C632DEC1B9201D3CA5EBDD4272091DE96396717215D51F4FB66A641976EED4ACA078B113E64CDDDBB50E267A12C16109CF3C6D4DC8F91E8D39FB714615CE4129E6A04D983720FCFC4D5205103BA56E6F2660F&#xD;&#xA;Host: localhost:7898&#xD;&#xA;Referer: http://localhost:7898/Admin/Accounting/GenerateInvoice&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36&#xD;&#xA;sec-ch-ua: &quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;100&quot;, &quot;Google Chrome&quot;;v=&quot;100&quot;&#xD;&#xA;sec-ch-ua-mobile: ?0&#xD;&#xA;sec-ch-ua-platform: &quot;Windows&quot;&#xD;&#xA;Upgrade-Insecure-Requests: 1&#xD;&#xA;Origin: http://localhost:7898&#xD;&#xA;Sec-Fetch-Site: same-origin&#xD;&#xA;Sec-Fetch-Mode: navigate&#xD;&#xA;Sec-Fetch-User: ?1&#xD;&#xA;Sec-Fetch-Dest: document&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/4/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="E:\Projects\Smart Meters\HES\Code Solution\HESMDMS\HESMDMS\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="Manish Ojha" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="Manish Ojha" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="Manish Ojha" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="145" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="multipart/form-data; boundary=----WebKitFormBoundaryOPABmx8wOulLSA7C" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="4" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/4" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/Admin/Accounting/InvoiceGenerate" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="E:\Projects\Smart Meters\HES\Code Solution\HESMDMS\HESMDMS\Admin\Accounting\InvoiceGenerate" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="52537" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="POST" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/Admin/Accounting/InvoiceGenerate" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="7898" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/Admin/Accounting/InvoiceGenerate" />
+    </item>
+    <item name="HTTP_CACHE_CONTROL">
+      <value string="max-age=0" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_CONTENT_LENGTH">
+      <value string="145" />
+    </item>
+    <item name="HTTP_CONTENT_TYPE">
+      <value string="multipart/form-data; boundary=----WebKitFormBoundaryOPABmx8wOulLSA7C" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, br" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.9" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="ASP.NET_SessionId=od0o3urizysegxc5r2srybfg; __RequestVerificationToken=JI8kpzsqXSn2_qCDIh4xKS8dNSZ3YU4D7sypPEQSq9XCinGN0QPp2TOgf-1oAY-jRcdXKLaZVBgxiBE9Ft19_MzcqLuq3jz1RUlsyH6KSlk1; .ASPXAUTH=987DB49BF4E29919048CB4571D9A9020D27F573F59843BE2CF770538381C632DEC1B9201D3CA5EBDD4272091DE96396717215D51F4FB66A641976EED4ACA078B113E64CDDDBB50E267A12C16109CF3C6D4DC8F91E8D39FB714615CE4129E6A04D983720FCFC4D5205103BA56E6F2660F" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:7898" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:7898/Admin/Accounting/GenerateInvoice" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36" />
+    </item>
+    <item name="HTTP_SEC_CH_UA">
+      <value string="&quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;100&quot;, &quot;Google Chrome&quot;;v=&quot;100&quot;" />
+    </item>
+    <item name="HTTP_SEC_CH_UA_MOBILE">
+      <value string="?0" />
+    </item>
+    <item name="HTTP_SEC_CH_UA_PLATFORM">
+      <value string="&quot;Windows&quot;" />
+    </item>
+    <item name="HTTP_UPGRADE_INSECURE_REQUESTS">
+      <value string="1" />
+    </item>
+    <item name="HTTP_ORIGIN">
+      <value string="http://localhost:7898" />
+    </item>
+    <item name="HTTP_SEC_FETCH_SITE">
+      <value string="same-origin" />
+    </item>
+    <item name="HTTP_SEC_FETCH_MODE">
+      <value string="navigate" />
+    </item>
+    <item name="HTTP_SEC_FETCH_USER">
+      <value string="?1" />
+    </item>
+    <item name="HTTP_SEC_FETCH_DEST">
+      <value string="document" />
+    </item>
+  </serverVariables>
+  <form>
+    <item name="MonthName">
+      <value string="April" />
+    </item>
+  </form>
+  <cookies>
+    <item name="ASP.NET_SessionId">
+      <value string="od0o3urizysegxc5r2srybfg" />
+    </item>
+    <item name="__RequestVerificationToken">
+      <value string="JI8kpzsqXSn2_qCDIh4xKS8dNSZ3YU4D7sypPEQSq9XCinGN0QPp2TOgf-1oAY-jRcdXKLaZVBgxiBE9Ft19_MzcqLuq3jz1RUlsyH6KSlk1" />
+    </item>
+    <item name=".ASPXAUTH">
+      <value string="987DB49BF4E29919048CB4571D9A9020D27F573F59843BE2CF770538381C632DEC1B9201D3CA5EBDD4272091DE96396717215D51F4FB66A641976EED4ACA078B113E64CDDDBB50E267A12C16109CF3C6D4DC8F91E8D39FB714615CE4129E6A04D983720FCFC4D5205103BA56E6F2660F" />
+    </item>
+  </cookies>
+</error>

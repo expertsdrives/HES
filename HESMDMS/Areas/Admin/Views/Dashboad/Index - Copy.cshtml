@@ -1,0 +1,895 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<style>
+    svg {
+        margin-top: 0.3em;
+    }
+
+    :root {
+        --animate-delay: 0.5s;
+    }
+
+    .svgicons {
+        margin-top: 0.3em;
+    }
+    @@media only screen and (max-width: 1700px) {
+        .mobileCard {
+            font-size: 17px;
+        }
+    }
+</style>
+<link href="~/Images/demo/w3.css" rel="stylesheet" />
+@{
+
+    @*<div class="w3-content w3-display-container">
+            <img class="mySlides" src="~/Images/Demo/img_mountains_wide.jpg" style="width:100%">
+            <img class="mySlides" src="~/Images/Demo/img_nature_wide.jpg" style="width:100%">
+            <img class="mySlides" src="~/Images/Demo/img_snow_wide.jpg" style="width:100%">
+            <img class="mySlides" src="~/Images/Demo/img_mountains_wide.jpg" style="width:100%">
+
+            <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+            <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+        </div>*@
+    <div class="w3-content w3-display-container" style="width:100%">
+        <div id="executiveDashboard" class="mySlides animate__fadeOut">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 ">
+                    <div class="card card-block card-stretch back-img ">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center" >
+                                <div class=" align-items-center card-total-sale ">
+                                    <div class="border bg-warning rounded iq-icon-box">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="25" width="25" class="mb-1">
+                                            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5 class="mobileCard">Meters</h5>
+                                            <h3 class="mobileCard">@ViewBag.TotalMeters</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/meter.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="card card-block card-stretch back-img ">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class=" align-items-center card-total-sale ">
+                                    <div class="border bg-secondary rounded iq-icon-box">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="25" width="25" class="mb-1">
+                                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5 class="mobileCard">Customers</h5>
+                                            <h3 class="mobileCard">@ViewBag.TotalCustomers</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/customers.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="card card-block card-stretch back-img">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class=" align-items-center card-total-sale ">
+                                    <div class="border bg-primary rounded iq-icon-box">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="25" width="25" class="mb-1">
+                                            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5 class="mobileCard">AMR's</h5>
+                                            <h3 class="mobileCard">@ViewBag.TotalAMR</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/amr.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 ">
+                    <div class="card card-block card-stretch back-img">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class=" align-items-center card-total-sale ">
+
+                                    <div class="border bg-success rounded iq-icon-box">
+                                        <svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" style="width: 17px;"
+                                             xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             xmlns:cc="http://creativecommons.org/ns#"
+                                             xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                             xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                                             xmlns:svg="http://www.w3.org/2000/svg"
+                                             xmlns:ns1="http://sozi.baierouge.fr"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             id="svg3611"
+                                             sodipodi:docname="Indian_Rupee_symbol.svg"
+                                             viewBox="0 0 169.76 250.39"
+                                             version="1.1"
+                                             inkscape:version="0.47 r22583">
+                                            <sodipodi:namedview id="base"
+                                                                bordercolor="#666666"
+                                                                inkscape:pageshadow="2"
+                                                                inkscape:window-y="-4"
+                                                                pagecolor="#ffffff"
+                                                                inkscape:window-height="712"
+                                                                inkscape:window-maximized="1"
+                                                                inkscape:zoom="5.3091607"
+                                                                inkscape:window-x="-4"
+                                                                showgrid="false"
+                                                                borderopacity="1.0"
+                                                                inkscape:current-layer="layer1"
+                                                                inkscape:cx="94.062924"
+                                                                inkscape:cy="212.24797"
+                                                                inkscape:window-width="1280"
+                                                                inkscape:pageopacity="0.0"
+                                                                inkscape:document-units="px" />
+                                            <g id="layer1"
+                                               inkscape:label="Layer 1"
+                                               inkscape:groupmode="layer"
+                                               transform="translate(0 -801.97)">
+                                                <path id="path4158"
+                                                      sodipodi:nodetypes="cccccccccccccccccccc"
+                                                      style="stroke:#ffffff;stroke-width:.099084;fill:#ffffff"
+                                                      d="m99.017 1052.3-90.577-113.33 0.5232-22.46c42.51 2.93 75.559-1.57 83.248-41.78l-90.578-0.52 14.66-24.55 72.253 1.04c-11.009-22.88-41.286-25.7-88.484-24.02l16.231-24.03 153.41-0.22927-15.184 23.731h-42.409c7.7512 8.1823 13.424 17.597 13.613 25.591l43.98-0.52226-15.184 23.502-29.32 0.52229c-4.5772 35.058-36.787 55.815-77.489 60.584l91.184 116.44-39.874 0.022v0.0004z" />
+                                            </g>
+                                            <metadata>
+                                                <rdf:RDF>
+                                                    <cc:Work>
+                                                        <dc:format>image/svg+xml</dc:format>
+                                                        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+                                                        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+                                                        <dc:publisher>
+                                                            <cc:Agent rdf:about="http://openclipart.org/">
+                                                                <dc:title>Openclipart</dc:title>
+                                                            </cc:Agent>
+                                                        </dc:publisher>
+                                                        <dc:title>Indian Rupee Symbol</dc:title>
+                                                        <dc:date>2010-07-23T08:59:26</dc:date>
+                                                        <dc:description>The clipart was generated as draft based on the  Symbol of Indian Rupee approved by the Union Cabinet on 15 July 2010. The Design for the symbol was submitted by D Udaya Kumar.&#13;\nSource :http://pib.nic.in/archieve/others/2010/jul/d2010071501.pdf</dc:description>
+                                                        <dc:source>https://openclipart.org/detail/74431/indian-rupee-symbol-by-netalloy</dc:source>
+                                                        <dc:creator>
+                                                            <cc:Agent>
+                                                                <dc:title>netalloy</dc:title>
+                                                            </cc:Agent>
+                                                        </dc:creator>
+                                                        <dc:subject>
+                                                            <rdf:Bag>
+                                                                <rdf:li>Indian Rupee Symbol</rdf:li>
+                                                            </rdf:Bag>
+                                                        </dc:subject>
+                                                    </cc:Work>
+                                                    <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+                                                        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction" />
+                                                        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution" />
+                                                        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+                                                    </cc:License>
+                                                </rdf:RDF>
+                                            </metadata>
+                                        </svg>
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5 class="mobileCard">Revenvue</h5>
+                                            <h3 class="mobileCard">@ViewBag.Revenue/-</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/revenue.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xl-4">
+                    <div class="card card-block card-stretch card-height">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h4 class="card-title">
+                                    Total Customers
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="chart-TotalCustomer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xl-8">
+                    <div class="card card-block card-stretch card-height">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h4 class="card-title">
+                                    Total Customer Composition
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div id="chart" class="visited-chart-05">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="SalesDashboard" class="mySlides animate__fadeOut">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 ">
+                    <div class="card card-block card-stretch back-img ">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class=" align-items-center card-total-sale ">
+                                    <div class="border bg-warning rounded iq-icon-box">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="25" width="25" class="mb-1">
+                                            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5 class="mobileCard">Vayudoot</h5>
+                                            <h3 class="mobileCard">5</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/meter.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="card card-block card-stretch back-img ">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class=" align-items-center card-total-sale ">
+                                    <div class="border bg-secondary rounded iq-icon-box">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve" style="width:63%">
+<g id="sim_card">
+                                        <g>
+                                        <path fill="#3BAFDA" d="M405.344,245.328c0-5.891,4.766-10.664,10.656-10.664v-21.336c-5.891,0-10.656-4.773-10.656-10.664    S410.109,192,416,192V42.664c0-11.781-9.547-21.336-21.328-21.336H117.344C105.562,21.328,96,30.883,96,42.664V192    c5.891,0,10.672,4.773,10.672,10.664S101.891,213.328,96,213.328v21.336c5.891,0,10.672,4.773,10.672,10.664    S101.891,255.992,96,255.992V448l64,64h234.672c11.781,0,21.328-9.562,21.328-21.344V255.992    C410.109,255.992,405.344,251.219,405.344,245.328z" />
+	</g>
+                                        <g>
+                                        <path fill="#4FC2E9" d="M405.344,245.328c0-5.891,4.766-10.664,10.656-10.664v-21.336c-5.891,0-10.656-4.773-10.656-10.664    S410.109,192,416,192V21.328C416,9.547,406.453,0,394.672,0H117.344C105.562,0,96,9.547,96,21.328V192    c5.891,0,10.672,4.773,10.672,10.664S101.891,213.328,96,213.328v21.336c5.891,0,10.672,4.773,10.672,10.664    S101.891,255.992,96,255.992v170.664l64,64h234.672c11.781,0,21.328-9.547,21.328-21.328V255.992    C410.109,255.992,405.344,251.219,405.344,245.328z" />
+	</g>
+                                        <path fill="#FFCE54" d="M160,288c-5.875,0-10.656-4.781-10.656-10.672V64c0-5.883,4.781-10.672,10.656-10.672h192   c5.891,0,10.672,4.789,10.672,10.672v213.328c0,5.891-4.781,10.672-10.672,10.672H160z" />
+                                        <path fill="#F6BB42" d="M352,42.664H160c-11.781,0-21.328,9.547-21.328,21.336v64v85.328v64c0,11.781,9.547,21.328,21.328,21.328   h192c11.781,0,21.344-9.547,21.344-21.328v-64V128V64C373.344,52.211,363.781,42.664,352,42.664z M266.672,128V64h32v64H266.672z    M213.344,128V64h32v64H213.344z M160,64h32v64v10.664v10.664h160V192H160v-27.117v-15.555V128V64z M245.344,213.328v64h-32v-64   H245.344z M266.672,213.328h32v64h-32V213.328z M160,213.328h32v64h-32V213.328z M352,277.328h-32v-64h32V277.328z M320,128V64h32   v64H320z" />
+                                        <path fill="#3BAFDA" d="M160,352c0,5.891-4.766,10.656-10.656,10.656s-10.672-4.766-10.672-10.656s4.781-10.672,10.672-10.672   S160,346.109,160,352z" />
+                                        <path fill="#3BAFDA" d="M202.672,352c0,5.891-4.781,10.656-10.672,10.656s-10.656-4.766-10.656-10.656s4.766-10.672,10.656-10.672   S202.672,346.109,202.672,352z" />
+                                        <path fill="#3BAFDA" d="M245.344,352c0,5.891-4.781,10.656-10.672,10.656S224,357.891,224,352s4.781-10.672,10.672-10.672   S245.344,346.109,245.344,352z" />
+                                        <path fill="#3BAFDA" d="M288,352c0,5.891-4.766,10.656-10.656,10.656s-10.672-4.766-10.672-10.656s4.781-10.672,10.672-10.672   S288,346.109,288,352z" />
+                                        <path fill="#3BAFDA" d="M330.672,352c0,5.891-4.781,10.656-10.672,10.656s-10.656-4.766-10.656-10.656s4.766-10.672,10.656-10.672   S330.672,346.109,330.672,352z" />
+                                        <path fill="#3BAFDA" d="M373.344,352c0,5.891-4.781,10.656-10.672,10.656S352,357.891,352,352s4.781-10.672,10.672-10.672   S373.344,346.109,373.344,352z" />
+                                        <path fill="#656D78" d="M362.672,384H149.344c-5.891,0-10.672,4.781-10.672,10.656c0,5.906,4.781,10.672,10.672,10.672h213.328   c5.891,0,10.672-4.766,10.672-10.672C373.344,388.781,368.562,384,362.672,384z" />
+</g>
+</svg>
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5>Simcards</h5>
+                                            <h3>158</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/simcard.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="card card-block card-stretch back-img">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class=" align-items-center card-total-sale ">
+                                    <div class="border bg-primary rounded iq-icon-box">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="25" width="25" class="mb-1">
+                                            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5 class="mobileCard">AMR Packets</h5>
+                                            <h3 class="mobileCard">2056</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/datapackets.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 ">
+                    <div class="card card-block card-stretch back-img">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class=" align-items-center card-total-sale ">
+
+                                    <div class="border bg-success rounded iq-icon-box">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                             viewBox="0 0 523.646 523.646" style="width: 63%"
+                                             xml:space="preserve">
+<g>
+                                        <path d="M235.523,169.902H7.412c-4.09,0-7.412,3.321-7.412,7.421v67.418c0,4.093,3.322,7.415,7.412,7.415h228.111
+		c4.1,0,7.421-3.322,7.421-7.415v-67.424C242.944,173.218,239.623,169.902,235.523,169.902z M121.475,228.593H24.107v-38.946h97.368
+		V228.593z M235.523,269.351H7.412c-4.09,0-7.412,3.322-7.412,7.412v67.424c0,4.108,3.322,7.418,7.412,7.418h228.111
+		c4.1,0,7.421-3.31,7.421-7.418v-67.424C242.944,272.673,239.623,269.351,235.523,269.351z M121.475,327.034H24.107v-38.946h97.368
+		V327.034z M235.523,367.848H7.412c-4.09,0-7.412,3.322-7.412,7.424v67.406c0,4.103,3.322,7.418,7.412,7.418h228.111
+		c4.1,0,7.421-3.315,7.421-7.418V375.26C242.944,371.163,239.623,367.848,235.523,367.848z M121.475,428.444H24.107v-38.951h97.368
+		V428.444z M523.646,264.959c0,51.708-42.061,93.763-93.768,93.763H260.624c1.2-2.914,1.938-6.076,1.938-9.422v-10.367h167.316
+		c40.79,0,73.979-33.184,73.979-73.979s-33.183-73.97-73.979-73.97c-3.837,0-7.886,0.37-12.378,1.126l-6.324,1.067l-3.559-5.346
+		c-13.771-20.694-36.812-33.053-61.602-33.053c-2.482,0-5.013,0.127-7.495,0.381l-8.346,0.848l-2.199-8.098
+		c-8.724-32.122-38.041-54.565-71.304-54.565c-37.223,0-68.024,27.671-73.14,63.511h-20.005
+		c5.225-46.79,44.984-83.303,93.145-83.303c39.458,0,74.526,24.881,87.95,61.439c29.908-0.375,57.795,13.249,75.799,36.727
+		c3.264-0.354,6.396-0.532,9.458-0.532C481.585,171.19,523.646,213.258,523.646,264.959z" />
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5 class="mobileCard">Sim Usage</h5>
+                                            <h3 class="mobileCard">200 MB</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/usage.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xl-4">
+                    <div class="card card-block card-stretch card-height">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h4 class="card-title">
+                                    Total Vayudoot vs AMR
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="chart-VayudootAMR">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xl-8">
+                    <div class="card card-block card-stretch card-height">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h4 class="card-title">
+                                    Total Meters/AMR Vayudoot
+
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div id="meterAMR" class="visited-chart-05">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="RatioDashboard" class="mySlides animate__fadeOut">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 ">
+                    <div class="card card-block card-stretch back-img ">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class=" align-items-center card-total-sale ">
+                                    <div class="border bg-warning rounded iq-icon-box">
+                                        <img src="~/Images/metersvg.png" class="svgicons" />
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5 class="mobileCard">Meter : Customers</h5>
+                                            <h3 class="mobileCard">418393 : 433531</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/customermeter.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="card card-block card-stretch back-img ">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class=" align-items-center card-total-sale ">
+                                    <div class="border bg-secondary rounded iq-icon-box">
+                                        <img src="~/Images/amrsvg.png" class="svgicons" />
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5 class="mobileCard">AMR : Meter</h5>
+                                            <h3 class="mobileCard">158 : 418393</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/amrmeter.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="card card-block card-stretch back-img">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class=" align-items-center card-total-sale ">
+                                    <div class="border bg-primary rounded iq-icon-box">
+                                        <img src="~/Images/Vayudootsvg.png" class="svgicons" />
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5 class="mobileCard">Vayudoot : AMR</h5>
+                                            <h3 class="mobileCard">5 : 158</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/vaydutamr.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 ">
+                    <div class="card card-block card-stretch back-img">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class=" align-items-center card-total-sale ">
+
+                                    <div class="border bg-success rounded iq-icon-box">
+                                        <img src="~/Images/smicardsvg.png" class="svgicons" />
+
+                                    </div>
+                                    <div class="d-flex align-items-center  card-total-sale justify-content-between mt-3">
+                                        <div class="card-text">
+                                            <h5 class="mobileCard">SIM Card : Vayudoot</h5>
+                                            <h3 class="mobileCard">5 : 5</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vector-img"><img src="~/Images/Vayudoot.png" class="avatar-80 rounded" alt="user"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xl-4">
+                    <div class="card card-block card-stretch card-height">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h4 class="card-title">
+                                    Total AMR
+
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="chart-amrRatio">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xl-8">
+                    <div class="card card-block card-stretch card-height">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h4 class="card-title">
+                                    Vayudoot Packets
+
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div id="Vayudootchart" class="visited-chart-05">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+    </div>
+
+
+    <script src="~/assets/js/apexcharts.js"></script>
+    <script>
+            var slideIndex = 1;
+            showDivs(slideIndex);
+
+            function plusDivs(n) {
+                showDivs(slideIndex += n);
+            }
+
+            function showDivs(n) {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                if (n > x.length) { slideIndex = 1 }
+                if (n < 1) { slideIndex = x.length }
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                x[slideIndex - 1].style.display = "block";
+            }
+    if (jQuery('#chart-TotalCustomer').length) {
+
+        var options = {
+            series: [@ViewBag.AMRWithSales, @ViewBag.totalZeroCinsumption],
+            chart: {
+                height: 288,
+                type: 'donut',
+            },
+
+            labels: ["Running", "No Sales"],
+            colors: ['#F56692', '#04237D', '#f1ddf2'],
+            plotOptions: {
+                pie: {
+                    startAngle: -90,
+                    endAngle: 270,
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true
+                            }
+                        }
+                    }
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            grid: {
+                padding: {
+
+                    bottom: 0,
+                }
+            },
+            legend: {
+                position: 'bottom',
+                offsetY: 8,
+                show: true,
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        height: 268
+                    }
+                }
+            }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-TotalCustomer"), options);
+        chart.render();
+
+        const body = document.querySelector('body')
+        if (body.classList.contains('dark')) {
+            apexChartUpdate(chart, {
+                dark: true
+            })
+        }
+
+        document.addEventListener('ChangeColorMode', function (e) {
+            apexChartUpdate(chart, e.detail)
+        })
+
+    };
+
+            if (jQuery('#chart-VayudootAMR').length) {
+
+        var options = {
+            series: [@ViewBag.AMRWithSales, 5],
+            chart: {
+                height: 288,
+                type: 'donut',
+            },
+
+            labels: ["AMR", "Vayudoot"],
+            colors: ['#F56692', '#04237D', '#f1ddf2'],
+            plotOptions: {
+                pie: {
+                    startAngle: -90,
+                    endAngle: 270,
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true
+                            }
+                        }
+                    }
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            grid: {
+                padding: {
+
+                    bottom: 0,
+                }
+            },
+            legend: {
+                position: 'bottom',
+                offsetY: 8,
+                show: true,
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        height: 268
+                    }
+                }
+            }]
+        };
+
+                var chart = new ApexCharts(document.querySelector("#chart-VayudootAMR"), options);
+        chart.render();
+
+        const body = document.querySelector('body')
+        if (body.classList.contains('dark')) {
+            apexChartUpdate(chart, {
+                dark: true
+            })
+        }
+
+        document.addEventListener('ChangeColorMode', function (e) {
+            apexChartUpdate(chart, e.detail)
+        })
+
+    };
+
+
+  var options = {
+          series: [{
+          name: 'Running',
+          data: @Html.Raw(Json.Encode(@ViewBag.IntArray))
+        },
+        {
+          name: 'No Sales',
+          data: @Html.Raw(Json.Encode(@ViewBag.ZeroArray))
+        }],
+          chart: {
+          type: 'bar',
+          height: 350,
+          stacked: true,
+          toolbar: {
+            show: true
+          },
+          zoom: {
+            enabled: true
+          }
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            legend: {
+              position: 'bottom',
+              offsetX: -10,
+              offsetY: 0
+            }
+          }
+      }],
+      colors: ['#F56692', '#04237D', '#f1ddf2'],
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            borderRadius: 10
+          },
+        },
+        xaxis: {
+
+          categories:  @Html.Raw(Json.Encode(@ViewBag.MonthArray)),
+        },
+        legend: {
+          position: 'right',
+          offsetY: 40
+        },
+        fill: {
+          opacity: 1
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+
+
+
+
+        var options = {
+            series: [{
+                name: "Total",
+                data: [8,2,148]
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: true,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            colors: ['#F56692', '#04237D', '#f1ddf2'],
+            xaxis: {
+                categories: ['Replaced', 'Faulty', 'Running'
+                ],
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#meterAMR"), options);
+        chart.render();
+
+
+
+
+
+
+        var options = {
+            series: [{
+                data: [158,50,25,0,5]
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            colors: ['#6b6e96'],
+          
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: true,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            xaxis: {
+                categories: ['Installed', 'In-Stock', 'Replcaed', 'Repaired', 'Scraped'
+                ],
+            }
+        };
+
+        var amrRatio = new ApexCharts(document.querySelector("#chart-amrRatio"), options);
+        amrRatio.render();
+
+
+
+
+        var options = {
+            series: [{
+                name: 'Vayudoots',
+                data: [2000,3000,2500,1800,1000]
+            }],
+            annotations: {
+                points: [{
+                    x: '404980297703266',
+                    seriesIndex: 0,
+                    label: {
+                        borderColor: '#775DD0',
+                        offsetY: 0,
+                        style: {
+                            color: '#fff',
+                            background: '#775DD0',
+                        },
+                        text: 'Vayudoot 404980297703266 has good Frequency',
+                    }
+                }]
+            },
+            chart: {
+                height: 350,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 10,
+                    columnWidth: '50%',
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 2
+            },
+
+            grid: {
+                row: {
+                    colors: ['#fff', '#f2f2f2']
+                }
+            },
+            xaxis: {
+                labels: {
+                    rotate: -45
+                },
+                categories: ['404980297229191', '404980297703266', '404980297703277', '404980297707571', '404980297709311'
+                ],
+                tickPlacement: 'on'
+            },
+            yaxis: {
+                title: {
+                    text: 'Vayudoots',
+                },
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'light',
+                    type: "horizontal",
+                    shadeIntensity: 0.25,
+                    gradientToColors: undefined,
+                    inverseColors: true,
+                    opacityFrom: 0.85,
+                    opacityTo: 0.85,
+                    stops: [50, 0, 100]
+                },
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#Vayudootchart"), options);
+        chart.render();
+
+    </script>
+}

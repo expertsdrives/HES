@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "GenerateInvoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    <div class="card card-block card-stretch card-height">
+        <div class="card-header" style="text-align:center">
+            <div class="header-title">
+                <h4 class="card-title">Generate Invoice</h4>
+            </div>
+
+        </div>
+
+        <div class="card-body">
+            @using (Html.BeginForm("InvoiceGenerate", "Accounting", new { area = "Admin" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "profilepicture" }))
+            {
+                <div class="new-user-info">
+                    <div class="form-group">
+                        <div id="searchBox"></div>
+                        @* @Html.DropDownList("BP", (IEnumerable<SelectListItem>)ViewBag.BP, new { @class = "form-control", @width = "500px" })*@
+                    </div>
+                    <hr>
+
+                    <input type="submit" class="btn btn-primary" value="Generate Invoice" />
+                </div>
+            }
+        </div>
+    </div>
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    serializer.MaxJsonLength = Int32.MaxValue;
+    var jsonModel = serializer.Serialize(ViewBag.monthName);
+    <script>
+
+    var monthName = @Html.Raw(jsonModel);
+
+
+    $(() => {
+        const searchBox = $('#searchBox').dxSelectBox({
+            dataSource: JSON.parse(monthName),
+            displayExpr: 'MonthName',
+            valueExpr: 'MonthName',
+            height: 50,
+            name:'MonthName',
+            searchEnabled: true,
+        }).dxSelectBox('instance');
+    });
+    </script>
+}

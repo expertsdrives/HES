@@ -1,0 +1,273 @@
+﻿@model HESMDMS.Models.tbl_CustomerRegistration
+
+@using (Html.BeginForm("Insert", "Home", FormMethod.Post,
+                                      new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-xl-3 col-lg-4">
+            <div class="card card-block card-stretch card-height">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">Add New User</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <div class="crm-profile-img-edit position-relative">
+                            <img class="crm-profile-pic rounded avatar-100" id="blah" src="../assets/images/user/1.png" alt="profile-pic">
+                            <div class="crm-p-image bg-primary">
+                                <i class="las la-pen upload-button"></i>
+                                @*@Html.TextBoxFor(model => model.Image, new { type = "file",@class="file-upload",@accept = "image/*", @onchange = "readURL(this);" })*@
+                                <input class="file-upload" type="file" accept="image/*" onchange="readURL(this);" id="file" name="file">
+                                @*@Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control", @type="file"} })*@
+                            </div>
+                        </div>
+                        <div class="img-extension mt-3">
+                            <div class="d-inline-block align-items-center">
+                                <span>Only</span>
+                                <a href="javascript:void();">.jpg</a>
+                                <a href="javascript:void();">.png</a>
+                                <a href="javascript:void();">.jpeg</a>
+                                <span>allowed</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="BusinessPartnerNo">Business Partner No</label>
+                        @Html.TextBoxFor(model => model.BusinessPartnerNo, new { @class = "form-control", @placeholder = "Business Partner No" })
+                        @*<input type="text" class="form-control" id="BusinessPartnerNo" placeholder="Business Partner No">*@
+                    </div>
+                    <div class="form-group">
+                        <label for="MeterNumber">Meter Number:</label>
+                        @Html.TextBoxFor(model => model.MeterNumber, new { @class = "form-control", @placeholder = "Meter Number" })
+                        @*<input type="text" class="form-control" id="MeterNumber" placeholder="Meter Number">*@
+                    </div>
+                    <div class="form-group">
+                        <label for="OpeningMeterReading">Opening Meter Reading:</label>
+                        @Html.TextBoxFor(model => model.OpeningMeterReading, new { @class = "form-control", @placeholder = "Opening Meter Reading" })
+                        @*<input type="text" class="form-control" id="OpeningMeterReading" placeholder="Opening Meter Reading">*@
+                    </div>
+                    <div class="form-group">
+                        <label for="OpeningAMRReading">Opening AMR Reading:</label>
+                        @Html.TextBoxFor(model => model.OpeningAMRReading, new { @class = "form-control", @placeholder = "Opening AMR Reading" })
+
+                        @*<input type="text" class="form-control" id="OpeningAMRReading" placeholder="Opening AMR Reading">*@
+                    </div>
+                    <div class="form-group">
+                        <label for="SerialNumber">Serial Number</label>
+                        <br />
+                        <div id="searchBox"></div>
+                        @*@Html.DropDownList("serialNumbers", (IEnumerable<SelectListItem>)ViewBag.serialNumbers, new { @class = "selectpicker form-control", @width = "500px", @onchange = "callChangefunc(this.value)" })*@
+                        @*@Html.TextBoxFor(model => model.SerialNumber, new { @class = "form-control", @placeholder = "Serial Number" })*@
+                        @*                                    <input type="text" class="form-control" id="SerialNumber" placeholder="Serial Number">*@
+                    </div>
+                    <div class="form-group">
+                        <label for="TXID">TXID</label>
+                        @Html.TextBoxFor(model => model.TXID, new { @class = "form-control", @placeholder = "TXID", @readonly = true })
+                        @*<input type="text" class="form-control" id="TXID" placeholder="TXID">*@
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InstallationDate">Installation Date</label>
+                        @Html.TextBoxFor(model => model.InstallationDate, new { @class = "form-control", @placeholder = "Installation Date", @type = "date", required = "required" })
+                        @*                                    <input type="date" class="form-control" id="InstallationDate" placeholder="Installation Date">*@
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">New User Information</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="new-user-info">
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="FirstName">Full Name:</label>
+                                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @placeholder = "Full Name" })
+                                @*<input type="text" class="form-control" id="FirstName" placeholder="First Name">*@
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                <label for="Address">Address:</label>
+                                @Html.TextAreaFor(model => model.Address, new { @class = "form-control", @placeholder = "Address" })
+                                @*<textarea class="form-control" id="Address" placeholder="Address"></textarea>*@
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>Country:</label>
+                                @Html.TextBoxFor(model => model.Country, new { @class = "form-control", @placeholder = "Country" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="MobileNumber">Mobile Number:</label>
+                                @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control", @placeholder = "Mobile Number" })
+                                @*<input type="text" class="form-control" id="MobileNumber" placeholder="Mobile Number">*@
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="Email">Email:</label>
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })
+                                @*                                            <input type="email" class="form-control" id="Email" placeholder="Email">*@
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="PinCode">Pin Code:</label>
+                                @Html.TextBoxFor(model => model.PinCode, new { @class = "form-control", @placeholder = "Pin Code" })
+                                @*<input type="text" class="form-control" id="PinCode" placeholder="Pin Code">*@
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="Town">Town/City:</label>
+                                @Html.TextBoxFor(model => model.Town, new { @class = "form-control", @placeholder = "Town/City" })
+
+                                @*<input type="text" class="form-control" id="Town" placeholder="Town/City">*@
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="Town">Altitude</label>
+                                @Html.TextBoxFor(model => model.Altitude, new { @class = "form-control", @placeholder = "Altitude", @readonly = true })
+
+                                @*<input type="text" class="form-control" id="Town" placeholder="Town/City">*@
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="Latitude">Latitude:</label>
+                                @Html.TextBoxFor(model => model.Latitude, new { @class = "form-control", @placeholder = "Latitude", @readonly = true })
+                                @*<input type="text" class="form-control" id="MobileNumber" placeholder="Mobile Number">*@
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="Longitude">Longitude:</label>
+                                @Html.TextBoxFor(model => model.Longitude, new { @class = "form-control", @placeholder = "Longitude", @readonly = true })
+                                <label id="demo"></label>
+                                @*                                            <input type="email" class="form-control" id="Email" placeholder="Email">*@
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="Remarks">Remarks</label>
+                                @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks", @rows = "4" })
+                                @*<textarea type="text" class="form-control" id="Remarks" placeholder="Remarks" rows="6"></textarea>*@
+                            </div>
+                        </div>
+                        <hr>
+
+                        <input type="submit" class="btn btn-primary" value="Add New User" id="insertCus" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+<script>
+         var meterList = @Html.Raw(Json.Encode(ViewBag.serialNumbers));
+
+
+    $(() => {
+ $('#searchBox').dxSelectBox({
+            dataSource: JSON.parse(meterList),
+            displayExpr: 'Serial_Number',
+            valueExpr: 'Serial_Number',
+            height: 50,
+            name:'serialNumbers',
+            searchEnabled: true,
+            onValueChanged(data) {
+                $.ajax({
+                    url: "getTxid?serialNumber=" + data.value,
+                    success: function (result) {
+                        $("#TXID").val(result);
+                    }
+                });
+            },
+        }).dxValidator({
+            validationRules: [{
+                type: 'required',
+                message: 'Serial Number is required',
+            }],
+        });
+    });
+        $(document).ready(function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            }
+            else { x.innerHTML = "Geolocation is not supported by this browser."; }
+            //$('#insertCus').on('submit', function (e) {
+
+            //});
+            $("#insertCus").click(function () {
+                //$.ajax({
+                //    url: "insert",
+                //    success: function (result) {
+                //        $("#TXID").val(result);
+                //    }
+                //});
+
+
+                var formData = $(this).serialize();
+
+                $.post('/Home/Insert', formData, function (response) {
+                    //Do something with response
+                });
+
+            });
+        });
+        function callChangefunc(val) {
+
+        }
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        var x = document.getElementById("demo");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            }
+            else { x.innerHTML = "Geolocation is not supported by this browser."; }
+        }
+        function showPosition(position) {
+
+            //var latlondata = position.coords.latitude + "," + position.coords.longitude;
+            var a = position.coords.altitude
+            $('#Latitude').val(position.coords.latitude);
+            $('#Altitude').val(a);
+            $('#Longitude').val(position.coords.longitude);
+            return false;
+        }
+        function showError(error) {
+            if (error.code == 1) {
+                x.innerHTML = "User denied the request for Geolocation."
+            }
+            else if (err.code == 2) {
+                x.innerHTML = "Location information is unavailable."
+            }
+            else if (err.code == 3) {
+                x.innerHTML = "The request to get user location timed out."
+            }
+            else {
+                x.innerHTML = "An unknown error occurred."
+            }
+        }
+
+</script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#serialNumbers").select2({
+            theme: "classic"// need to override the changed default
+        });
+    });
+</script>

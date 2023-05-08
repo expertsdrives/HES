@@ -1,0 +1,361 @@
+@charset "utf-8";
+/* CSS Document */
+/*-----------------------------------------------------------------------------
+
+Prototype Version:  2.4
+
+*/
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../font/OpenSans-Medium.eot');
+    src: url('../font/OpenSans-Medium.eot?#iefix') format('embedded-opentype'),
+         url('../font/OpenSans-Medium.woff2') format('woff2'),
+         url('../font/OpenSans-Medium.woff') format('woff'),
+         url('../font/OpenSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../font/OpenSans-Regular.eot');
+    src: url('../font/OpenSans-Regular.eot?#iefix') format('embedded-opentype'),
+         url('../font/OpenSans-Regular.woff2') format('woff2'),
+         url('../font/OpenSans-Regular.woff') format('woff'),
+         url('../font/OpenSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../font/OpenSans-Bold.eot');
+    src: url('../font/OpenSans-Bold.eot?#iefix') format('embedded-opentype'),
+         url('../font/OpenSans-Bold.woff2') format('woff2'),
+         url('../font/OpenSans-Bold.woff') format('woff'),
+         url('../font/OpenSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../font/OpenSans-ExtraBold.eot');
+    src: url('../font/OpenSans-ExtraBold.eot?#iefix') format('embedded-opentype'),
+         url('../font/OpenSans-ExtraBold.woff2') format('woff2'),
+         url('../font/OpenSans-ExtraBold.woff') format('woff'),
+         url('../font/OpenSans-ExtraBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../font/OpenSans-SemiBold.eot');
+    src: url('../font/OpenSans-SemiBold.eot?#iefix') format('embedded-opentype'),
+         url('../font/OpenSans-SemiBold.woff2') format('woff2'),
+         url('../font/OpenSans-SemiBold.woff') format('woff'),
+         url('../font/OpenSans-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../font/OpenSans-Light.eot');
+    src: url('../font/OpenSans-Light.eot?#iefix') format('embedded-opentype'),
+         url('../font/OpenSans-Light.woff2') format('woff2'),
+         url('../font/OpenSans-Light.woff') format('woff'),
+         url('../font/OpenSans-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+/* Table of Contents----------------------------------------------------------------------------
+1. Clean Base
+2. Base Typography
+3. Images
+4. Links
+5. Forms
+6. Tables
+7. Framework
+*/
+:root{
+    --primary-color:#993399;
+    --black-color:#000000;
+    --White-color:#ffffff;
+    --gray-color:#666666;
+}
+
+
+/* 1. Create a Clean Base
+------------------------------------------------------------------------------*/
+
+html, body, br, hr, div, span, a, object, iframe, ul, ol, dl, li, dt, dd, h1, h2, h3, h4, h5, h6, p, blockquote, q, address,
+small, big, cite, dfn, ins, del, i, em, b, strong, sup, sub, strike, pre, code, samp, kbd, var, tt, form, fieldset, legend, label,input, textarea, option, .nobox 
+{background: transparent; border: 0; font-size: 100%; margin: 0; outline: 0; padding: 0; vertical-align: baseline;}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, main {display: block}
+
+blockquote, q {quotes: none;}
+br {height: 0;}
+ul, ol, dl, li {margin:0; padding:0;}
+html, body{height: 100%; -webkit-appearance:none; border:none; -webkit-text-size-adjust:none;}
+body{color: var(--gray-color);font-family: 'Open Sans'; font-size: 18px;}
+
+/* Class for clearing floats */
+.clear {clear:both; display:block; overflow:hidden; visibility:hidden; width:0; height:0;}
+.cf:after,.cf:before{display: table;content: ''}
+.cf:after{clear: both;}
+*{-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+
+/* 2. Define Base Typography
+------------------------------------------------------------------------------*/
+
+/* Create the Default Headers  */
+h1, h2, h3, h4, h5, h6 {margin: 0;color: var(--gray-color);font-weight: 500;}
+/* Specific Header Settings */
+h1,.h1 {font-size:20px;}
+h2,.h2 {font-size:16px;}
+h3,.h3 {font-size:14px; }
+h4,.h4 {font-size:15px;}
+h5,.h5 {font-size: 25px;}
+h6,.h6 {font-size: 18px;}
+
+/* Create the Default Paragraphs */
+p { margin-bottom: 20px;}
+
+/* Other Typo */
+strong {font-weight: bold;}
+hr {border:0 #000 solid; border-top-width: 1px; clear: both; height: 0;}
+ol {list-style: decimal;}
+ul {list-style: disc;}
+
+.unlisted{list-style: none;}
+/* 3. Images
+------------------------------------------------------------------------------*/
+
+/* Remove border around linked images */
+img {border: 0; border-style: none;max-width: 100%;}
+
+/* 4. Links
+------------------------------------------------------------------------------*/
+
+/* Default Link Types */
+a {color: var(--pink-color);text-decoration:none;}
+a:hover {color: var(--secondar-color);}
+a:active {color: #e8941a;}
+a:focus {outline: none;}
+a.current{color: #e8941a;}
+input,textarea{font-family: 'Assistant';}
+
+/* 5. Forms
+------------------------------------------------------------------------------*/
+
+input[type='submit']{ -webkit-appearance:none; border:none; -webkit-text-size-adjust:none; }
+select{-webkit-appearance:none; -moz-appearance:none; -o-appearance:none; appearance:none;}
+textarea{overflow:auto;}
+input:focus::placeholder{font-size: 0;}
+::-webkit-input-placeholder{ color: #000;}
+:-moz-placeholder{ color: #000;}
+::-moz-placeholder{ color: #000;}
+:-ms-input-placeholder{ color: #000;}
+::-ms-input-placeholder{ color: #000;}
+:placeholder-shown{ color: #000;}
+/* Removes fieldset borders. even on Opea 7 */
+fieldset {border: 1px solid transparent;}
+
+/* 6. Tables
+------------------------------------------------------------------------------*/
+
+/* Table Fixes */
+table {border-spacing: 0; border-collapse: collapse;}
+td {text-align: right; font-weight: normal;}
+
+
+/* 7. Framework ------------------------------------------------------------------------------*/ /* Common CSS */
+/*transition effect*/
+input,textarea,button,select{font-family: 'Helvetica';}
+button{border: none;outline: none;background: none;}
+
+a,.panner_box_inner .pannel_box,a::after,a::before ,.quick_area li,#btnmenu span::after,#btnmenu span::before,#btnmenu span{-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-o-transition: all 0.5s ease;transition: all 0.5s ease;}
+
+/* Page Layout */
+.container{max-width: 1600px; margin:0 auto; padding:0 15px; width:100%;}
+.row{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-15px;margin-left:-15px;}
+.col-1,.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-9,.col-10,.col-11,.col-12{position:relative;width:100%;padding-right:15px;padding-left:15px;}
+.col-1{max-width:8.33333333%;}
+.col-2{max-width:16.66666667%;}
+.col-3{max-width:25%;}
+.col-4{max-width:33.33333333%;}
+.col-5{max-width:41.66666667%;}
+.col-6{max-width:50%;}
+.col-7{max-width:58.33333333%;}
+.col-8{max-width:66.66666667%;}
+.col-9{max-width:75%;}
+.col-10{max-width:83.33333333%;}
+.col-11{max-width:91.66666667%;}
+.col-12{max-width:100%;}
+
+
+.d-flex{display: flex;}
+.flex-wrap{flex-wrap: wrap;}
+.align-center{align-items: center;}
+.align-start{align-items: flex-start;}
+.align-end{align-items: flex-end;}
+.justify-center{justify-content: center;}
+.justify-start{justify-content: flex-start;}
+.justify-end{justify-content: flex-end;}
+.justify-between{justify-content: space-between;}
+
+/* header Content*/
+header{width: 100%;}
+header .header_content{border-bottom: 3px solid var(--primary-color);}
+.header_content h1{color: var(--primary-color);}
+.header_content span{font-size: 9px;font-weight: 200;padding-right: 10px;display: block;text-align: right;}
+.home_con img{max-width: 40px;margin-right: 10px;}
+
+/* Retail In voice */
+.invoice_area{text-align: center;}
+.invoice_area h3{font-weight: bold; color: var(--black-color);text-decoration: underline; text-transform: uppercase;margin:10px 0;}
+.invoice_area .invoice_tabel{border: 1px solid var(--primary-color);width: 100%;margin: 0 0 2px;}
+.invoice_tabel{display: flex; justify-content: space-between;width: 100%;}
+.invoice_tabel table{width: 33.33%;}
+table tr td{font-size: 11px;color: var(--black-color);text-align: left;margin-bottom: 5px;padding: 0 10px 2px;position: relative;}
+table tr td span{position: absolute;right: 0;}
+
+.consumption_pattern_area{width: 100%;padding-bottom: 2px;}
+.pattern_box{max-width: 49.5%;width: 100%;}
+.consumption_pattern_area table{width: 100%;}
+.consumption_pattern_area .scm_box{border: 1px solid var(--primary-color);padding: 24px 0;}
+
+.comapny_info_box table{border: 1px solid var(--primary-color);}
+
+.gas_pattern_box{margin-top:2px; border-radius: 10px;overflow: hidden;border: 1px solid var(--primary-color );}
+.gas_pattern_box h4{color: var(--White-color);text-align: center;background: var(--primary-color);padding: 2px 0;font-size: 10px;}
+.gas_pattern_box table tr td{border: 1px solid var(--primary-color);padding: 10px 0;}
+
+.total_box_area{display: flex;justify-content: space-between;margin-bottom: 5px;}
+.total_box_area .total_box{max-width: 20%;width: 100%;}
+.total_box p{margin-bottom: 0;font-size: 10px;}
+.total_box span{display: block; width: 100%;font-size: 10px; padding: 2px 0;border: 1px solid var(--primary-color);margin-top: 0px;color: #000000;font-weight: 700;}
+
+.counting_box_area{width: 100%;display: flex;justify-content: space-between;align-items: center;}
+.counting_box_area .count_box{max-width: 12%;width: 100%;border: 1px solid var(--primary-color);border-radius: 10px;overflow: hidden;height: 50px;}
+.count_box h4{font-size: 9px;color: var(--White-color);text-align: center;padding: 2px 0;background: #993399;}
+.count_box p{font-size: 10px;color: #000000;padding:8px;}
+.count_box span{font-size: 20px;color: var(--primary-color);}
+
+.invoice_form table{width: 100%;}
+.invoice_form_area .invoice_form{max-width: 70%;width: 100%;margin-top: 5px;}
+.invoice_form table tr th{font-size: 10px;color: var(--White-color);padding: 2px 0;background-color:#993399;}
+.invoice_form table tr td{border: 1px solid var(--primary-color);}
+.invoice_form .top_border td{padding: 10px 8px 25%;}
+
+.invoice_form .invoice_detail{margin-top: 10px; width: 100%;border: 1px solid var(--primary-color);padding: 10px 20px;text-align: left;}
+.invoice_form .invoice_detail p{font-size: 14px;color: #000000;margin: 0;}
+.invoice_form span{font-size: 10px;color: #000000;display: block;text-align: center;}
+
+.border_dotted{border: 1px dashed var(--black-color);width: 100%;margin: 10px 0;}
+
+.bottom_area{border-bottom: 10px solid var(--primary-color);margin-bottom: 20px;}
+.bottom_area p{color: #000000;font-size: 13px;}
+.note_tabel {padding: 5px;border-radius: 10px;border: 1px solid var(--primary-color);margin-bottom: 10px;display: flex;justify-content: space-between;}
+.note_tabel tr td{font-size: 10 px;}
+
+.nft_form h4{font-size: 16px;color: var(--black-color);}
+
+.small_gas_area{width: 100%;display: flex;justify-content: space-between;}
+.small_gas_area .small_gas_box{max-width: 48%;width: 100%;border-radius: 20px;border: 1px solid var(--primary-color);overflow: hidden;}
+.small_gas_box h3{color: var(--White-color);text-align: center;font-size: 22px;padding: 8px 0;background: var(--primary-color);}
+
+.small_gas_box .gas_detail{padding: 10px 15px;}
+.small_gas_area p{font-size: 14px;margin-bottom: 10px;}
+.gas_icon_box{padding: 40px 10px 0 30px;}
+.gas_icon_box .icon_box{display: flex;align-items: center;margin-bottom: 20px;}
+.gas_icon_box p{color: #000000;}
+.small_icon_box .icon_box:nth-child(even){flex-direction: row-reverse;}
+.icon_box .box_img{max-width: 75px; width: 100%;height: 75px;border-radius: 100%;border: 3px solid var(--primary-color);display: flex;align-items: center;justify-content: center;margin-right: 10px;}
+.icon_box .box_img img{max-width: 50px;height: 50px; width: 100%;margin: 0 auto;}
+.icon_box p img{max-width: 20px;}
+.small_icon_box .icon_box{margin-bottom: 0;width: 100%;}
+
+.small_icon_box .icon_box p{max-width: 76%; width: 100%;}
+
+.payment_box{width: 100%;border: 1px solid;margin: 20px 0 5px;border-radius: 20px;overflow: hidden;}
+.payment_box h3{font-size: 22px;color: var(--White-color);text-align: center;background:var(--primary-color);padding: 8px 0;}
+.payment_detail{padding: 10px 20px;}
+.payment_detail p{font-size: 14px;color: var(--primary-color);margin-bottom: 0;font-weight: 600;}
+.payment_detail span{font-size: 14px;color: var(--black-color);margin-bottom: 15px;display: block;}
+.small_gas_box .number_plate{padding-top: 80px;max-width: 500px;width: 100%;margin: 0 auto;padding-bottom: 50px;}
+.plat_box{text-align: center;}
+
+.small_gas{padding-bottom: 10px;border-bottom: 10px solid var(--primary-color);}
+.polite_area{text-align: center;}
+.polite_area img{max-width: 600px;width: 100%;margin: 0 auto 10px; }
+.polite_area h3{font-size: 22px;color: #000000;font-weight: 600;}
+.polite_area p{font-size: 16px;color: #313131;}
+
+
+/* new css */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FAFAFA;
+    font: 12pt "Tahoma";
+  }
+  
+  * {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+  
+  .page {
+    width: 21cm;
+    padding: 10PX;
+    min-height: 29.7cm;
+    margin: 1cm auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .subpage {
+    height: 256mm;
+    outline: 2cm transparent solid;
+  }
+  
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  
+  @media print {
+    .page {
+      margin: 0;
+      border: initial;
+      border-radius: initial;
+      width: initial;
+      min-height: initial;
+      box-shadow: initial;
+      background: initial;
+      page-break-after: always;
+    }
+    .vendorListHeading {
+        background-color:#993399 !important;
+        -webkit-print-color-adjust: exact; 
+    }
+    .vendorListHeading{
+        color: white !important;
+    }
+  }

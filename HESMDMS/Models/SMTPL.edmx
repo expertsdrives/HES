@@ -1,0 +1,1748 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SmartMeterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustomerRaw">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Business Patner" Type="nvarchar" MaxLength="255" />
+          <Property Name="Full Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="House No," Type="nvarchar" MaxLength="255" />
+          <Property Name="Street" Type="nvarchar" MaxLength="255" />
+          <Property Name="Street 2" Type="nvarchar" MaxLength="255" />
+          <Property Name="Street 3" Type="nvarchar" MaxLength="255" />
+          <Property Name="Street 4" Type="nvarchar" MaxLength="255" />
+          <Property Name="Street 5" Type="nvarchar" MaxLength="255" />
+          <Property Name="Mobile Number" Type="nvarchar" MaxLength="255" />
+          <Property Name="Meter Number" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tbl_AdminCredentials">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="AccessFailedCount" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SmartMeter.dbo.tbl_AMRHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_AMRHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BusinessPartnerNo" Type="varchar" MaxLength="50" />
+          <Property Name="MeterNumber" Type="varchar" MaxLength="50" />
+          <Property Name="New_AMR_TXID" Type="varchar" MaxLength="50" />
+          <Property Name="Old_AMR_TXID" Type="varchar" MaxLength="50" />
+          <Property Name="New_AMR_Serial_Number" Type="varchar" MaxLength="50" />
+          <Property Name="Old_AMR_Serial_Number" Type="varchar" MaxLength="50" />
+          <Property Name="New_Opening_Meter_Reading" Type="float" />
+          <Property Name="Old_Opening_Meter_Reading" Type="float" />
+          <Property Name="New_Opening_AMR_Reading" Type="float" />
+          <Property Name="Old_Opening_AMR_Reading" Type="float" />
+          <Property Name="New_Installation_Date" Type="datetime" />
+          <Property Name="Old_Installation_Date" Type="datetime" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SmartMeter.dbo.tbl_CustomerDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_CustomerDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BusinessPartnerNo" Type="varchar" MaxLength="255" />
+          <Property Name="ContractAccount" Type="varchar" MaxLength="255" />
+          <Property Name="MeterReadingUnit" Type="varchar" MaxLength="255" />
+          <Property Name="ConnectionObject" Type="varchar" MaxLength="255" />
+          <Property Name="FullName" Type="varchar" MaxLength="255" />
+          <Property Name="HouseNumber" Type="varchar" MaxLength="255" />
+          <Property Name="Street" Type="varchar" MaxLength="500" />
+          <Property Name="Street2" Type="varchar" MaxLength="500" />
+          <Property Name="Street3" Type="varchar" MaxLength="500" />
+          <Property Name="Street4" Type="varchar" MaxLength="500" />
+          <Property Name="Street5" Type="varchar" MaxLength="500" />
+          <Property Name="City" Type="varchar" MaxLength="500" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="255" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tbl_CustomerRegistration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="nvarchar" MaxLength="50" />
+          <Property Name="BusinessPartnerNo" Type="int" />
+          <Property Name="MeterNumber" Type="int" />
+          <Property Name="OpeningMeterReading" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="OpeningAMRReading" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="SerialNumber" Type="nvarchar(max)" />
+          <Property Name="TXID" Type="int" />
+          <Property Name="Altitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="InstallationDate" Type="datetime" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobileNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="PinCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Town" Type="nvarchar" MaxLength="50" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ApprovedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_JioLogs">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" />
+          <Property Name="JioRequest" Type="nvarchar(max)" />
+          <Property Name="SMTPLResponse" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_MeterMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="varchar" MaxLength="50" />
+          <Property Name="Type" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tbl_RawData_CRC">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="VAYUDUT_ID" Type="nvarchar" MaxLength="50" />
+          <Property Name="V_VOLTAGE" Type="nvarchar" MaxLength="50" />
+          <Property Name="VAYUDUT_TEMPERATURE" Type="nvarchar" MaxLength="50" />
+          <Property Name="MODULE_ERROR" Type="nvarchar" MaxLength="50" />
+          <Property Name="NW_ERROR" Type="nvarchar" MaxLength="50" />
+          <Property Name="POST_ERROR" Type="nvarchar" MaxLength="50" />
+          <Property Name="TX_ERRORS" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_ID" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_VERSION_NO" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_LOW_WEIGHTAGE_COUNT" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_HIGH_WEIGHTAGE_COUNT" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_BATTERY_VOLTAGE" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_TEMPERATURE" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_MAGNET_TEMPER_LOGGER" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_CASE_TEMPER_LOGGER" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_CRC8" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_CRC_STATUS" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_RawDataAPI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VayudutName" Type="varchar" MaxLength="255" />
+          <Property Name="ReceptionDate" Type="varchar" MaxLength="255" />
+          <Property Name="Time" Type="varchar" MaxLength="255" />
+          <Property Name="TXID" Type="int" />
+          <Property Name="DataCount" Type="int" />
+          <Property Name="BatteryPower" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tbl_RoleMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_SerialNumberMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Serial Number" Type="nvarchar" MaxLength="255" />
+          <Property Name="TXID" Type="float" />
+          <Property Name="IsAssigned" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_SignalRMaxID">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaxID" Type="int" />
+          <Property Name="PLD" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_SMeterMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MeterID" Type="float" />
+          <Property Name="SimICCID" Type="nvarchar" MaxLength="255" />
+          <Property Name="SimNo" Type="float" />
+          <Property Name="IMSI" Type="float" />
+          <Property Name="IMEI" Type="float" />
+          <Property Name="DeviceName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MUNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="PLD" Type="nvarchar" MaxLength="50" />
+          <Property Name="PLDLength" Type="float" />
+          <Property Name="VID" Type="nvarchar" MaxLength="50" />
+          <Property Name="SVC" Type="nvarchar" MaxLength="50" />
+          <Property Name="AID" Type="nvarchar" MaxLength="50" />
+          <Property Name="AppName" Type="nvarchar" MaxLength="50" />
+          <Property Name="EID" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SmartMeter.dbo.V_DistinctMeter' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_DistinctMeter">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SmartMeter.dbo.V_FetchDailyConsumption' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_FetchDailyConsumption">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rnk" Type="varchar" MaxLength="50" />
+          <Property Name="Row#" Type="varchar" MaxLength="50" />
+          <Property Name="FullName" Type="varchar" MaxLength="150" />
+          <Property Name="MeterNumber" Type="varchar" MaxLength="150" />
+          <Property Name="TXID" Type="varchar" MaxLength="150" />
+          <Property Name="BusinessPartnerNo" Type="varchar" MaxLength="150" />
+          <Property Name="OpeningMeterReading" Type="varchar" MaxLength="30" />
+          <Property Name="OpeningAMRReading" Type="varchar" MaxLength="30" />
+          <Property Name="DataCount" Type="varchar" MaxLength="150" />
+          <Property Name="Date" Type="varchar" MaxLength="150" />
+          <Property Name="Time" Type="varchar" MaxLength="150" />
+          <Property Name="InstallationDate" Type="varchar" MaxLength="150" />
+          <Property Name="ReadingCount" Type="varchar" MaxLength="30" />
+          <Property Name="AMRSerialNumber" Type="varchar" MaxLength="150" />
+          <Property Name="DailyConsumption" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SmartMeter.dbo.V_FetchInductiveData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_FetchInductiveData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BusinessPartnerNo" Type="bigint" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Time" Type="varchar" MaxLength="8" />
+          <Property Name="VAYUDUT_ID" Type="nvarchar" MaxLength="50" />
+          <Property Name="V_Voltage" Type="float" />
+          <Property Name="VAYUDUT_TEMPERATURE" Type="int" />
+          <Property Name="MODULE_ERROR" Type="nvarchar" MaxLength="50" />
+          <Property Name="NW_ERROR" Type="nvarchar" MaxLength="50" />
+          <Property Name="POST_ERROR" Type="nvarchar" MaxLength="50" />
+          <Property Name="TX_ERRORS" Type="int" />
+          <Property Name="AMR_ID" Type="int" />
+          <Property Name="AMR_VERSION_NO" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_LOW_WEIGHTAGE_COUNT" Type="int" />
+          <Property Name="AMR_HIGH_WEIGHTAGE_COUNT" Type="int" />
+          <Property Name="DataCount" Type="bigint" />
+          <Property Name="AMR_BATTERY_VOLTAGE" Type="float" />
+          <Property Name="AMR_TEMPERATURE" Type="float" />
+          <Property Name="AMR_MAGNET_TEMPER_LOGGER" Type="int" />
+          <Property Name="AMR_CASE_TEMPER_LOGGER" Type="int" />
+          <Property Name="AMR_CRC8" Type="nvarchar" MaxLength="50" />
+          <Property Name="AMR_CRC_STATUS" Type="int" />
+        </EntityType>
+        <Association Name="FK_tbl_AdminCredentials_tbl_RoleMaster">
+          <End Role="tbl_RoleMaster" Type="Self.tbl_RoleMaster" Multiplicity="1" />
+          <End Role="tbl_AdminCredentials" Type="Self.tbl_AdminCredentials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_RoleMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_AdminCredentials">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="FetchConsumption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchConsumption_15DayRevenue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchConsumption_15DayRevenue_Demo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchConsumption_CaseTemper" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchConsumption_CaseTemper_Demo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchConsumption_Demo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchConsumption_MagneticTemper" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchConsumption_POC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchConsumption_VayudutWise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchConsumption_VayudutWise_Demo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchCRCData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchDataConsumption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BusninessPartner" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_AMRHealth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ConsumptionGraph" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GenerateInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GenerateInvoiceForOdoo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GenerateInvoiceForOdooDateWise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Get15DayReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_TotalAMR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_TotalRevenue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ZeroConsumption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="SmartMeterModelStoreContainer">
+          <EntitySet Name="CustomerRaw" EntityType="Self.CustomerRaw" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_AdminCredentials" EntityType="Self.tbl_AdminCredentials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_CustomerRegistration" EntityType="Self.tbl_CustomerRegistration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_JioLogs" EntityType="Self.tbl_JioLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MeterMaster" EntityType="Self.tbl_MeterMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_RawData_CRC" EntityType="Self.tbl_RawData_CRC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_RawDataAPI" EntityType="Self.tbl_RawDataAPI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_RoleMaster" EntityType="Self.tbl_RoleMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SerialNumberMaster" EntityType="Self.tbl_SerialNumberMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SignalRMaxID" EntityType="Self.tbl_SignalRMaxID" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SMeterMaster" EntityType="Self.tbl_SMeterMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_AMRHistory" EntityType="Self.tbl_AMRHistory" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_AMRHistory].[ID] AS [ID], 
+    [tbl_AMRHistory].[BusinessPartnerNo] AS [BusinessPartnerNo], 
+    [tbl_AMRHistory].[MeterNumber] AS [MeterNumber], 
+    [tbl_AMRHistory].[New_AMR_TXID] AS [New_AMR_TXID], 
+    [tbl_AMRHistory].[Old_AMR_TXID] AS [Old_AMR_TXID], 
+    [tbl_AMRHistory].[New_AMR_Serial_Number] AS [New_AMR_Serial_Number], 
+    [tbl_AMRHistory].[Old_AMR_Serial_Number] AS [Old_AMR_Serial_Number], 
+    [tbl_AMRHistory].[New_Opening_Meter_Reading] AS [New_Opening_Meter_Reading], 
+    [tbl_AMRHistory].[Old_Opening_Meter_Reading] AS [Old_Opening_Meter_Reading], 
+    [tbl_AMRHistory].[New_Opening_AMR_Reading] AS [New_Opening_AMR_Reading], 
+    [tbl_AMRHistory].[Old_Opening_AMR_Reading] AS [Old_Opening_AMR_Reading], 
+    [tbl_AMRHistory].[New_Installation_Date] AS [New_Installation_Date], 
+    [tbl_AMRHistory].[Old_Installation_Date] AS [Old_Installation_Date], 
+    [tbl_AMRHistory].[Date] AS [Date]
+    FROM [dbo].[tbl_AMRHistory] AS [tbl_AMRHistory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_CustomerDetails" EntityType="Self.tbl_CustomerDetails" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_CustomerDetails].[ID] AS [ID], 
+    [tbl_CustomerDetails].[BusinessPartnerNo] AS [BusinessPartnerNo], 
+    [tbl_CustomerDetails].[ContractAccount] AS [ContractAccount], 
+    [tbl_CustomerDetails].[MeterReadingUnit] AS [MeterReadingUnit], 
+    [tbl_CustomerDetails].[ConnectionObject] AS [ConnectionObject], 
+    [tbl_CustomerDetails].[FullName] AS [FullName], 
+    [tbl_CustomerDetails].[HouseNumber] AS [HouseNumber], 
+    [tbl_CustomerDetails].[Street] AS [Street], 
+    [tbl_CustomerDetails].[Street2] AS [Street2], 
+    [tbl_CustomerDetails].[Street3] AS [Street3], 
+    [tbl_CustomerDetails].[Street4] AS [Street4], 
+    [tbl_CustomerDetails].[Street5] AS [Street5], 
+    [tbl_CustomerDetails].[City] AS [City], 
+    [tbl_CustomerDetails].[PostalCode] AS [PostalCode], 
+    [tbl_CustomerDetails].[SerialNumber] AS [SerialNumber]
+    FROM [dbo].[tbl_CustomerDetails] AS [tbl_CustomerDetails]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="V_DistinctMeter" EntityType="Self.V_DistinctMeter" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_DistinctMeter].[ID] AS [ID], 
+    [V_DistinctMeter].[SerialNumber] AS [SerialNumber]
+    FROM [dbo].[V_DistinctMeter] AS [V_DistinctMeter]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="V_FetchDailyConsumption" EntityType="Self.V_FetchDailyConsumption" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_FetchDailyConsumption].[ID] AS [ID], 
+    [V_FetchDailyConsumption].[Rnk] AS [Rnk], 
+    [V_FetchDailyConsumption].[Row#] AS [Row#], 
+    [V_FetchDailyConsumption].[FullName] AS [FullName], 
+    [V_FetchDailyConsumption].[MeterNumber] AS [MeterNumber], 
+    [V_FetchDailyConsumption].[TXID] AS [TXID], 
+    [V_FetchDailyConsumption].[BusinessPartnerNo] AS [BusinessPartnerNo], 
+    [V_FetchDailyConsumption].[OpeningMeterReading] AS [OpeningMeterReading], 
+    [V_FetchDailyConsumption].[OpeningAMRReading] AS [OpeningAMRReading], 
+    [V_FetchDailyConsumption].[DataCount] AS [DataCount], 
+    [V_FetchDailyConsumption].[Date] AS [Date], 
+    [V_FetchDailyConsumption].[Time] AS [Time], 
+    [V_FetchDailyConsumption].[InstallationDate] AS [InstallationDate], 
+    [V_FetchDailyConsumption].[ReadingCount] AS [ReadingCount], 
+    [V_FetchDailyConsumption].[AMRSerialNumber] AS [AMRSerialNumber], 
+    [V_FetchDailyConsumption].[DailyConsumption] AS [DailyConsumption]
+    FROM [dbo].[V_FetchDailyConsumption] AS [V_FetchDailyConsumption]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="V_FetchInductiveData" EntityType="Self.V_FetchInductiveData" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_FetchInductiveData].[ID] AS [ID], 
+    [V_FetchInductiveData].[BusinessPartnerNo] AS [BusinessPartnerNo], 
+    [V_FetchInductiveData].[Date] AS [Date], 
+    [V_FetchInductiveData].[Time] AS [Time], 
+    [V_FetchInductiveData].[VAYUDUT_ID] AS [VAYUDUT_ID], 
+    [V_FetchInductiveData].[V_Voltage] AS [V_Voltage], 
+    [V_FetchInductiveData].[VAYUDUT_TEMPERATURE] AS [VAYUDUT_TEMPERATURE], 
+    [V_FetchInductiveData].[MODULE_ERROR] AS [MODULE_ERROR], 
+    [V_FetchInductiveData].[NW_ERROR] AS [NW_ERROR], 
+    [V_FetchInductiveData].[POST_ERROR] AS [POST_ERROR], 
+    [V_FetchInductiveData].[TX_ERRORS] AS [TX_ERRORS], 
+    [V_FetchInductiveData].[AMR_ID] AS [AMR_ID], 
+    [V_FetchInductiveData].[AMR_VERSION_NO] AS [AMR_VERSION_NO], 
+    [V_FetchInductiveData].[AMR_LOW_WEIGHTAGE_COUNT] AS [AMR_LOW_WEIGHTAGE_COUNT], 
+    [V_FetchInductiveData].[AMR_HIGH_WEIGHTAGE_COUNT] AS [AMR_HIGH_WEIGHTAGE_COUNT], 
+    [V_FetchInductiveData].[DataCount] AS [DataCount], 
+    [V_FetchInductiveData].[AMR_BATTERY_VOLTAGE] AS [AMR_BATTERY_VOLTAGE], 
+    [V_FetchInductiveData].[AMR_TEMPERATURE] AS [AMR_TEMPERATURE], 
+    [V_FetchInductiveData].[AMR_MAGNET_TEMPER_LOGGER] AS [AMR_MAGNET_TEMPER_LOGGER], 
+    [V_FetchInductiveData].[AMR_CASE_TEMPER_LOGGER] AS [AMR_CASE_TEMPER_LOGGER], 
+    [V_FetchInductiveData].[AMR_CRC8] AS [AMR_CRC8], 
+    [V_FetchInductiveData].[AMR_CRC_STATUS] AS [AMR_CRC_STATUS]
+    FROM [dbo].[V_FetchInductiveData] AS [V_FetchInductiveData]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tbl_AdminCredentials_tbl_RoleMaster" Association="Self.FK_tbl_AdminCredentials_tbl_RoleMaster">
+            <End Role="tbl_RoleMaster" EntitySet="tbl_RoleMaster" />
+            <End Role="tbl_AdminCredentials" EntitySet="tbl_AdminCredentials" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SmartMeterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_RawData_CRC">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="VAYUDUT_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="V_VOLTAGE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VAYUDUT_TEMPERATURE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MODULE_ERROR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NW_ERROR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="POST_ERROR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TX_ERRORS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_VERSION_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_LOW_WEIGHTAGE_COUNT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_HIGH_WEIGHTAGE_COUNT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_BATTERY_VOLTAGE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_TEMPERATURE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_MAGNET_TEMPER_LOGGER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_CASE_TEMPER_LOGGER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_CRC8" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_CRC_STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_RawDataAPI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VayudutName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ReceptionDate" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Time" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TXID" Type="Int32" />
+          <Property Name="DataCount" Type="Int32" />
+          <Property Name="BatteryPower" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tbl_CustomerDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BusinessPartnerNo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ContractAccount" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="MeterReadingUnit" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ConnectionObject" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="HouseNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Street2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Street3" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Street4" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Street5" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SerialNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="SmartMeterEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_RawData_CRC" EntityType="Self.tbl_RawData_CRC" />
+          <EntitySet Name="tbl_RawDataAPI" EntityType="Self.tbl_RawDataAPI" />
+          <EntitySet Name="tbl_CustomerDetails" EntityType="Self.tbl_CustomerDetails" />
+          <EntitySet Name="CustomerRaws" EntityType="SmartMeterModel.CustomerRaw" />
+          <EntitySet Name="tbl_SerialNumberMaster" EntityType="SmartMeterModel.tbl_SerialNumberMaster" />
+          <EntitySet Name="tbl_RoleMaster" EntityType="SmartMeterModel.tbl_RoleMaster" />
+          <EntitySet Name="tbl_AdminCredentials" EntityType="SmartMeterModel.tbl_AdminCredentials" />
+          <AssociationSet Name="FK_tbl_AdminCredentials_tbl_RoleMaster" Association="SmartMeterModel.FK_tbl_AdminCredentials_tbl_RoleMaster">
+            <End Role="tbl_RoleMaster" EntitySet="tbl_RoleMaster" />
+            <End Role="tbl_AdminCredentials" EntitySet="tbl_AdminCredentials" />
+          </AssociationSet>
+          <EntitySet Name="tbl_CustomerRegistration" EntityType="SmartMeterModel.tbl_CustomerRegistration" />
+          <FunctionImport Name="FetchCRCData" ReturnType="Collection(SmartMeterModel.FetchCRCData_Result)" />
+          <EntitySet Name="V_FetchInductiveData" EntityType="SmartMeterModel.V_FetchInductiveData" />
+          <EntitySet Name="V_DistinctMeter" EntityType="SmartMeterModel.V_DistinctMeter" />
+          <EntitySet Name="V_FetchDailyConsumption" EntityType="SmartMeterModel.V_FetchDailyConsumption" />
+          <EntitySet Name="tbl_MeterMaster" EntityType="SmartMeterModel.tbl_MeterMaster" />
+          <FunctionImport Name="sp_Get15DayReport" />
+          <FunctionImport Name="FetchConsumption_MagneticTemper" ReturnType="Collection(SmartMeterModel.FetchConsumption_MagneticTemper_Result)" />
+          <FunctionImport Name="FetchConsumption_VayudutWise" ReturnType="Collection(SmartMeterModel.FetchConsumption_VayudutWise_Result)" />
+          <FunctionImport Name="sp_ZeroConsumption" ReturnType="Collection(SmartMeterModel.sp_ZeroConsumption_Result)" />
+          <FunctionImport Name="sp_TotalRevenue" ReturnType="Collection(SmartMeterModel.sp_TotalRevenue_Result)" />
+          <FunctionImport Name="sp_ConsumptionGraph" ReturnType="Collection(SmartMeterModel.sp_ConsumptionGraph_Result)" />
+          <FunctionImport Name="sp_TotalAMR" ReturnType="Collection(SmartMeterModel.sp_TotalAMR_Result)" />
+          <FunctionImport Name="FetchDataConsumption">
+          <Parameter Name="BusninessPartner" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FetchConsumption" ReturnType="Collection(SmartMeterModel.FetchConsumption_Result)" />
+          <EntitySet Name="tbl_AMRHistory" EntityType="SmartMeterModel.tbl_AMRHistory" />
+          <FunctionImport Name="sp_AMRHealth" ReturnType="Collection(SmartMeterModel.sp_AMRHealth_Result)" />
+          <FunctionImport Name="sp_GenerateInvoice" ReturnType="Collection(SmartMeterModel.sp_GenerateInvoice_Result)" />
+          <FunctionImport Name="FetchConsumption_Demo" ReturnType="Collection(SmartMeterModel.FetchConsumption_Demo_Result)" />
+          <FunctionImport Name="FetchConsumption_15DayRevenue_Demo" ReturnType="Collection(SmartMeterModel.FetchConsumption_15DayRevenue_Demo_Result)" />
+          <FunctionImport Name="FetchConsumption_VayudutWise_Demo" ReturnType="Collection(SmartMeterModel.FetchConsumption_VayudutWise_Demo_Result)" />
+          <FunctionImport Name="FetchConsumption_CaseTemper_Demo" ReturnType="Collection(SmartMeterModel.FetchConsumption_CaseTemper_Demo_Result)" />
+          <FunctionImport Name="FetchConsumption_CaseTemper" ReturnType="Collection(SmartMeterModel.FetchConsumption_CaseTemper_Result)" />
+          <EntitySet Name="tbl_JioLogs" EntityType="SmartMeterModel.tbl_JioLogs" />
+          <FunctionImport Name="sp_GenerateInvoiceForOdoo" ReturnType="Collection(SmartMeterModel.sp_GenerateInvoiceForOdoo_Result)" />
+          <FunctionImport Name="sp_GenerateInvoiceForOdooDateWise" ReturnType="Collection(SmartMeterModel.sp_GenerateInvoiceForOdooDateWise_Result)">
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="FetchConsumption_POC" ReturnType="Collection(SmartMeterModel.FetchConsumption_POC_Result)" />
+          <FunctionImport Name="FetchConsumption_15DayRevenue" ReturnType="Collection(SmartMeterModel.FetchConsumption_15DayRevenue_Result)" />
+          <EntitySet Name="tbl_SMeterMaster" EntityType="SmartMeterModel.tbl_SMeterMaster" />
+          <EntitySet Name="tbl_SignalRMaxID" EntityType="SmartMeterModel.tbl_SignalRMaxID" />
+        </EntityContainer>
+        <EntityType Name="CustomerRaw">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Business_Patner" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Full_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="House_No_" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Street_2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Street_3" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Street_4" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Street_5" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile_Number" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Meter_Number" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_SerialNumberMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Serial_Number" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TXID" Type="Double" />
+          <Property Name="IsAssigned" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tbl_RoleMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_AdminCredentials" Relationship="SmartMeterModel.FK_tbl_AdminCredentials_tbl_RoleMaster" FromRole="tbl_RoleMaster" ToRole="tbl_AdminCredentials" />
+        </EntityType>
+        <EntityType Name="tbl_AdminCredentials">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_RoleMaster" Relationship="SmartMeterModel.FK_tbl_AdminCredentials_tbl_RoleMaster" FromRole="tbl_AdminCredentials" ToRole="tbl_RoleMaster" />
+          <Property Name="AccessFailedCount" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_tbl_AdminCredentials_tbl_RoleMaster">
+          <End Type="SmartMeterModel.tbl_RoleMaster" Role="tbl_RoleMaster" Multiplicity="1" />
+          <End Type="SmartMeterModel.tbl_AdminCredentials" Role="tbl_AdminCredentials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_RoleMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_AdminCredentials">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_CustomerRegistration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessPartnerNo" Type="Int32" />
+          <Property Name="MeterNumber" Type="Int32" />
+          <Property Name="OpeningMeterReading" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="OpeningAMRReading" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="SerialNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TXID" Type="Int32" />
+          <Property Name="Altitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InstallationDate" Type="DateTime" Precision="3" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Town" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="FetchCRCData_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="8" />
+          <Property Type="String" Name="VAYUDUT_ID" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="V_Voltage" Nullable="true" />
+          <Property Type="Int32" Name="VAYUDUT_TEMPERATURE" Nullable="true" />
+          <Property Type="String" Name="MODULE_ERROR" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="NW_ERROR" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="POST_ERROR" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="TX_ERRORS" Nullable="true" />
+          <Property Type="Int32" Name="AMR_ID" Nullable="true" />
+          <Property Type="String" Name="AMR_VERSION_NO" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="AMR_LOW_WEIGHTAGE_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="AMR_HIGH_WEIGHTAGE_COUNT" Nullable="true" />
+          <Property Type="Int64" Name="Data_Count" Nullable="true" />
+          <Property Type="Double" Name="AMR_BATTERY_VOLTAGE" Nullable="true" />
+          <Property Type="Double" Name="AMR_TEMPERATURE" Nullable="true" />
+          <Property Type="Int32" Name="AMR_MAGNET_TEMPER_LOGGER" Nullable="true" />
+          <Property Type="Int32" Name="AMR_CASE_TEMPER_LOGGER" Nullable="true" />
+          <Property Type="String" Name="AMR_CRC8" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="AMR_CRC_STATUS" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="V_FetchInductiveData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Time" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="VAYUDUT_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="V_Voltage" Type="Double" />
+          <Property Name="VAYUDUT_TEMPERATURE" Type="Int32" />
+          <Property Name="MODULE_ERROR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NW_ERROR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="POST_ERROR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TX_ERRORS" Type="Int32" />
+          <Property Name="AMR_ID" Type="Int32" />
+          <Property Name="AMR_VERSION_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_LOW_WEIGHTAGE_COUNT" Type="Int32" />
+          <Property Name="AMR_HIGH_WEIGHTAGE_COUNT" Type="Int32" />
+          <Property Name="DataCount" Type="Int64" />
+          <Property Name="AMR_BATTERY_VOLTAGE" Type="Double" />
+          <Property Name="AMR_TEMPERATURE" Type="Double" />
+          <Property Name="AMR_MAGNET_TEMPER_LOGGER" Type="Int32" />
+          <Property Name="AMR_CASE_TEMPER_LOGGER" Type="Int32" />
+          <Property Name="AMR_CRC8" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AMR_CRC_STATUS" Type="Int32" />
+          <Property Name="BusinessPartnerNo" Type="Int64" />
+        </EntityType>
+        <EntityType Name="V_DistinctMeter">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SerialNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="V_FetchDailyConsumption">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rnk" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Row_" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="MeterNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="TXID" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="BusinessPartnerNo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="OpeningMeterReading" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="OpeningAMRReading" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DataCount" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Time" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="InstallationDate" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ReadingCount" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AMRSerialNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DailyConsumption" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_MeterMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <ComplexType Name="FetchConsumption_MagneticTemper_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Rnk" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Row_" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="8000" />
+          <Property Type="String" Name="MeterNumber" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="TXID" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="BusinessPartnerNo" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="OpeningMeterReading" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="OpeningAMRReading" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="DataCount" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Date" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="InstallationDate" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="ReadingCount" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="AMRSerialNumber" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="MagneticTemper" Nullable="true" />
+          <Property Type="Int32" Name="CaseTemper" Nullable="true" />
+          <Property Type="String" Name="DailyConsumption" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="FetchConsumption_VayudutWise_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="8000" />
+          <Property Type="Int32" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int32" Name="TXID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="String" Name="OpeningMeterReading" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="OpeningAMRReading" Nullable="true" MaxLength="30" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="8" />
+          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="ReadingCount" Nullable="true" Precision="30" Scale="8" />
+          <Property Type="String" Name="SerialNumber" Nullable="true" />
+          <Property Type="String" Name="VAYUDUT_ID" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_ZeroConsumption_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="TXID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_TotalRevenue_Result">
+          <Property Type="Int64" Name="ID" Nullable="true" />
+          <Property Type="Decimal" Name="Revenue" Nullable="true" Precision="38" Scale="3" />
+        </ComplexType>
+        <ComplexType Name="sp_ConsumptionGraph_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="TXID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_TotalAMR_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="TXID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="FetchConsumption_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="true" />
+          <Property Type="Int64" Name="Rnk" Nullable="true" />
+          <Property Type="Int64" Name="Row_" Nullable="true" />
+          <Property Type="String" Name="FullName" Nullable="true" />
+          <Property Type="Int64" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int64" Name="TXID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="Decimal" Name="OpeningMeterReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Decimal" Name="OpeningAMRReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="AMRSerialNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Vayudut_ID" Nullable="true" />
+          <Property Type="Int32" Name="MagneticTamper" Nullable="true" />
+          <Property Type="Int32" Name="CaseTamper" Nullable="true" />
+          <Property Type="Decimal" Name="ReadingCount" Nullable="true" Precision="27" Scale="5" />
+          <Property Type="Int64" Name="Row__" Nullable="true" />
+          <Property Type="Decimal" Name="DailyConsumption" Nullable="true" Precision="28" Scale="5" />
+        </ComplexType>
+        <EntityType Name="tbl_AMRHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BusinessPartnerNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MeterNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="New_AMR_TXID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Old_AMR_TXID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="New_AMR_Serial_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Old_AMR_Serial_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="New_Opening_Meter_Reading" Type="Double" />
+          <Property Name="Old_Opening_Meter_Reading" Type="Double" />
+          <Property Name="New_Opening_AMR_Reading" Type="Double" />
+          <Property Name="Old_Opening_AMR_Reading" Type="Double" />
+          <Property Name="New_Installation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Old_Installation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <ComplexType Name="sp_AMRHealth_Result">
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="8000" />
+          <Property Type="Int32" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="String" Name="AMRSerialNumber" Nullable="true" />
+          <Property Type="Double" Name="C05_May_2022" Nullable="true" />
+          <Property Type="Double" Name="C04_May_2022" Nullable="true" />
+          <Property Type="Double" Name="C03_May_2022" Nullable="true" />
+          <Property Type="Double" Name="C02_May_2022" Nullable="true" />
+          <Property Type="Double" Name="C01_May_2022" Nullable="true" />
+          <Property Type="Double" Name="C30_Apr_2022" Nullable="true" />
+          <Property Type="Double" Name="C29_Apr_2022" Nullable="true" />
+          <Property Type="Double" Name="C28_Apr_2022" Nullable="true" />
+          <Property Type="Double" Name="C27_Apr_2022" Nullable="true" />
+          <Property Type="Double" Name="C26_Apr_2022" Nullable="true" />
+          <Property Type="Double" Name="C25_Apr_2022" Nullable="true" />
+          <Property Type="Double" Name="C24_Apr_2022" Nullable="true" />
+          <Property Type="Double" Name="C23_Apr_2022" Nullable="true" />
+          <Property Type="Double" Name="C22_Apr_2022" Nullable="true" />
+          <Property Type="Double" Name="C21_Apr_2022" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GenerateInvoice_Result">
+          <Property Type="Int64" Name="ID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="String" Name="CustomerID" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HouseNumber" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Street" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street3" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street4" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street5" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int32" Name="YearOfSale" Nullable="true" />
+          <Property Type="String" Name="MonthOfSales" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="GasSales" Nullable="true" Precision="38" Scale="5" />
+          <Property Type="Decimal" Name="MMBTUSales" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="Revenue" Nullable="true" Precision="38" Scale="6" />
+        </ComplexType>
+        <ComplexType Name="FetchConsumption_Demo_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="true" />
+          <Property Type="Int64" Name="Rnk" Nullable="true" />
+          <Property Type="Int64" Name="Row_" Nullable="true" />
+          <Property Type="String" Name="FullName" Nullable="true" />
+          <Property Type="Int64" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int64" Name="TXID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="Decimal" Name="OpeningMeterReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Decimal" Name="OpeningAMRReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="AMRSerialNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Vayudut_ID" Nullable="true" />
+          <Property Type="Int32" Name="MagneticTamper" Nullable="true" />
+          <Property Type="Int32" Name="CaseTamper" Nullable="true" />
+          <Property Type="Decimal" Name="ReadingCount" Nullable="true" Precision="27" Scale="5" />
+          <Property Type="Int64" Name="Row__" Nullable="true" />
+          <Property Type="Decimal" Name="DailyConsumption" Nullable="true" Precision="28" Scale="5" />
+        </ComplexType>
+        <ComplexType Name="FetchConsumption_15DayRevenue_Demo_Result">
+          <Property Type="Decimal" Name="Revenue" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="true" />
+          <Property Type="Int64" Name="Rnk" Nullable="true" />
+          <Property Type="Int64" Name="Row_" Nullable="true" />
+          <Property Type="String" Name="FullName" Nullable="true" />
+          <Property Type="Int64" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int64" Name="TXID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="Decimal" Name="OpeningMeterReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Decimal" Name="OpeningAMRReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="AMRSerialNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Vayudut_ID" Nullable="true" />
+          <Property Type="Int32" Name="MagneticTamper" Nullable="true" />
+          <Property Type="Int32" Name="CaseTamper" Nullable="true" />
+          <Property Type="Decimal" Name="ReadingCount" Nullable="true" Precision="27" Scale="5" />
+          <Property Type="Int64" Name="Row__" Nullable="true" />
+          <Property Type="Decimal" Name="DailyConsumption" Nullable="true" Precision="28" Scale="5" />
+        </ComplexType>
+        <ComplexType Name="FetchConsumption_VayudutWise_Demo_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="8000" />
+          <Property Type="Int32" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int32" Name="TXID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="String" Name="OpeningMeterReading" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="OpeningAMRReading" Nullable="true" MaxLength="30" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="8" />
+          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="ReadingCount" Nullable="true" Precision="30" Scale="8" />
+          <Property Type="String" Name="SerialNumber" Nullable="true" />
+          <Property Type="String" Name="VAYUDUT_ID" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="FetchConsumption_CaseTemper_Demo_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="true" />
+          <Property Type="Int64" Name="Rnk" Nullable="true" />
+          <Property Type="Int64" Name="Row_" Nullable="true" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="8000" />
+          <Property Type="Int64" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int64" Name="TXID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="String" Name="OpeningMeterReading" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="OpeningAMRReading" Nullable="true" MaxLength="30" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ReadingCount" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="AMRSerialNumber" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="MagneticTamper" Nullable="true" />
+          <Property Type="Int32" Name="CaseTamper" Nullable="true" />
+          <Property Type="String" Name="DailyConsumption" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="FetchConsumption_CaseTemper_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="true" />
+          <Property Type="Int64" Name="Rnk" Nullable="true" />
+          <Property Type="Int64" Name="Row_" Nullable="true" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="8000" />
+          <Property Type="Int64" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int64" Name="TXID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="String" Name="OpeningMeterReading" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="OpeningAMRReading" Nullable="true" MaxLength="30" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ReadingCount" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="AMRSerialNumber" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="MagnaticTemper" Nullable="true" />
+          <Property Type="Int32" Name="CaseTemper" Nullable="true" />
+          <Property Type="String" Name="DailyConsumption" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <EntityType Name="tbl_JioLogs">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <Property Name="JioRequest" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SMTPLResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="sp_GenerateInvoiceForOdoo_Result">
+          <Property Type="Int64" Name="ID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="String" Name="CustomerID" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HouseNumber" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Street" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street3" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street4" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street5" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int32" Name="YearOfSale" Nullable="true" />
+          <Property Type="String" Name="MonthOfSales" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="GasSales" Nullable="true" Precision="38" Scale="5" />
+        </ComplexType>
+        <ComplexType Name="sp_GenerateInvoiceForOdooDateWise_Result">
+          <Property Type="Int64" Name="ID" Nullable="true" />
+          <Property Type="String" Name="DateRange" Nullable="false" MaxLength="81" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="String" Name="CustomerID" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="FullName" Nullable="true" />
+          <Property Type="String" Name="HouseNumber" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Street" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street3" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street4" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street5" Nullable="true" MaxLength="500" />
+          <Property Type="Int64" Name="MeterNumber" Nullable="true" />
+          <Property Type="Decimal" Name="GasSales" Nullable="true" Precision="38" Scale="5" />
+        </ComplexType>
+        <ComplexType Name="FetchConsumption_POC_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="true" />
+          <Property Type="Int64" Name="Rnk" Nullable="true" />
+          <Property Type="Int64" Name="Row_" Nullable="true" />
+          <Property Type="String" Name="FullName" Nullable="true" />
+          <Property Type="Int64" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int64" Name="TXID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="Decimal" Name="OpeningMeterReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Decimal" Name="OpeningAMRReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="AMRSerialNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Vayudut_ID" Nullable="true" />
+          <Property Type="Int32" Name="MagneticTamper" Nullable="true" />
+          <Property Type="Int32" Name="CaseTamper" Nullable="true" />
+          <Property Type="String" Name="Street" Nullable="true" MaxLength="500" />
+          <Property Type="Decimal" Name="ReadingCount" Nullable="true" Precision="27" Scale="5" />
+          <Property Type="Int64" Name="Row__" Nullable="true" />
+          <Property Type="Decimal" Name="DailyConsumption" Nullable="true" Precision="28" Scale="5" />
+        </ComplexType>
+        <ComplexType Name="FetchConsumption_15DayRevenue_Result">
+          <Property Type="Decimal" Name="MMBTU" Nullable="true" Precision="33" Scale="9" />
+          <Property Type="Decimal" Name="Revenue" Nullable="true" Precision="38" Scale="9" />
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="true" />
+          <Property Type="Int64" Name="Rnk" Nullable="true" />
+          <Property Type="Int64" Name="Row_" Nullable="true" />
+          <Property Type="String" Name="FullName" Nullable="true" />
+          <Property Type="Int64" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int64" Name="TXID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="Decimal" Name="OpeningMeterReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Decimal" Name="OpeningAMRReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="AMRSerialNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Vayudut_ID" Nullable="true" />
+          <Property Type="Int32" Name="MagneticTamper" Nullable="true" />
+          <Property Type="Int32" Name="CaseTamper" Nullable="true" />
+          <Property Type="Decimal" Name="ReadingCount" Nullable="true" Precision="27" Scale="5" />
+          <Property Type="Int64" Name="Row__" Nullable="true" />
+          <Property Type="Decimal" Name="DailyConsumption" Nullable="true" Precision="28" Scale="5" />
+        </ComplexType>
+        <EntityType Name="tbl_SMeterMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeterID" Type="Double" />
+          <Property Name="SimICCID" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SimNo" Type="Double" />
+          <Property Name="IMSI" Type="Double" />
+          <Property Name="IMEI" Type="Double" />
+          <Property Name="DeviceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MUNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PLD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PLDLength" Type="Double" />
+          <Property Name="VID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SVC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EID" Type="Double" />
+        </EntityType>
+        <EntityType Name="tbl_SignalRMaxID">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaxID" Type="Int32" />
+          <Property Name="PLD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SmartMeterModelStoreContainer" CdmEntityContainer="SmartMeterEntities">
+          <EntitySetMapping Name="tbl_RawData_CRC">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_RawData_CRC">
+              <MappingFragment StoreEntitySet="tbl_RawData_CRC">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="VAYUDUT_ID" ColumnName="VAYUDUT_ID" />
+                <ScalarProperty Name="V_VOLTAGE" ColumnName="V_VOLTAGE" />
+                <ScalarProperty Name="VAYUDUT_TEMPERATURE" ColumnName="VAYUDUT_TEMPERATURE" />
+                <ScalarProperty Name="MODULE_ERROR" ColumnName="MODULE_ERROR" />
+                <ScalarProperty Name="NW_ERROR" ColumnName="NW_ERROR" />
+                <ScalarProperty Name="POST_ERROR" ColumnName="POST_ERROR" />
+                <ScalarProperty Name="TX_ERRORS" ColumnName="TX_ERRORS" />
+                <ScalarProperty Name="AMR_ID" ColumnName="AMR_ID" />
+                <ScalarProperty Name="AMR_VERSION_NO" ColumnName="AMR_VERSION_NO" />
+                <ScalarProperty Name="AMR_LOW_WEIGHTAGE_COUNT" ColumnName="AMR_LOW_WEIGHTAGE_COUNT" />
+                <ScalarProperty Name="AMR_HIGH_WEIGHTAGE_COUNT" ColumnName="AMR_HIGH_WEIGHTAGE_COUNT" />
+                <ScalarProperty Name="AMR_BATTERY_VOLTAGE" ColumnName="AMR_BATTERY_VOLTAGE" />
+                <ScalarProperty Name="AMR_TEMPERATURE" ColumnName="AMR_TEMPERATURE" />
+                <ScalarProperty Name="AMR_MAGNET_TEMPER_LOGGER" ColumnName="AMR_MAGNET_TEMPER_LOGGER" />
+                <ScalarProperty Name="AMR_CASE_TEMPER_LOGGER" ColumnName="AMR_CASE_TEMPER_LOGGER" />
+                <ScalarProperty Name="AMR_CRC8" ColumnName="AMR_CRC8" />
+                <ScalarProperty Name="AMR_CRC_STATUS" ColumnName="AMR_CRC_STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_RawDataAPI">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_RawDataAPI">
+              <MappingFragment StoreEntitySet="tbl_RawDataAPI">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VayudutName" ColumnName="VayudutName" />
+                <ScalarProperty Name="ReceptionDate" ColumnName="ReceptionDate" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="BatteryPower" ColumnName="BatteryPower" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_CustomerDetails">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_CustomerDetails">
+              <MappingFragment StoreEntitySet="tbl_CustomerDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="ContractAccount" ColumnName="ContractAccount" />
+                <ScalarProperty Name="MeterReadingUnit" ColumnName="MeterReadingUnit" />
+                <ScalarProperty Name="ConnectionObject" ColumnName="ConnectionObject" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Street2" ColumnName="Street2" />
+                <ScalarProperty Name="Street3" ColumnName="Street3" />
+                <ScalarProperty Name="Street4" ColumnName="Street4" />
+                <ScalarProperty Name="Street5" ColumnName="Street5" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerRaws">
+            <EntityTypeMapping TypeName="SmartMeterModel.CustomerRaw">
+              <MappingFragment StoreEntitySet="CustomerRaw">
+                <ScalarProperty Name="Meter_Number" ColumnName="Meter Number" />
+                <ScalarProperty Name="Mobile_Number" ColumnName="Mobile Number" />
+                <ScalarProperty Name="Street_5" ColumnName="Street 5" />
+                <ScalarProperty Name="Street_4" ColumnName="Street 4" />
+                <ScalarProperty Name="Street_3" ColumnName="Street 3" />
+                <ScalarProperty Name="Street_2" ColumnName="Street 2" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="House_No_" ColumnName="House No," />
+                <ScalarProperty Name="Full_Name" ColumnName="Full Name" />
+                <ScalarProperty Name="Business_Patner" ColumnName="Business Patner" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_SerialNumberMaster">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_SerialNumberMaster">
+              <MappingFragment StoreEntitySet="tbl_SerialNumberMaster">
+                <ScalarProperty Name="IsAssigned" ColumnName="IsAssigned" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="Serial_Number" ColumnName="Serial Number" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_RoleMaster">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_RoleMaster">
+              <MappingFragment StoreEntitySet="tbl_RoleMaster">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_AdminCredentials">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_AdminCredentials">
+              <MappingFragment StoreEntitySet="tbl_AdminCredentials">
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_CustomerRegistration">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_CustomerRegistration">
+              <MappingFragment StoreEntitySet="tbl_CustomerRegistration">
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Town" ColumnName="Town" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="Altitude" ColumnName="Altitude" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FetchCRCData" FunctionName="SmartMeterModel.Store.FetchCRCData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchCRCData_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="VAYUDUT_ID" ColumnName="VAYUDUT_ID" />
+                <ScalarProperty Name="V_Voltage" ColumnName="V_Voltage" />
+                <ScalarProperty Name="VAYUDUT_TEMPERATURE" ColumnName="VAYUDUT_TEMPERATURE" />
+                <ScalarProperty Name="MODULE_ERROR" ColumnName="MODULE_ERROR" />
+                <ScalarProperty Name="NW_ERROR" ColumnName="NW_ERROR" />
+                <ScalarProperty Name="POST_ERROR" ColumnName="POST_ERROR" />
+                <ScalarProperty Name="TX_ERRORS" ColumnName="TX_ERRORS" />
+                <ScalarProperty Name="AMR_ID" ColumnName="AMR_ID" />
+                <ScalarProperty Name="AMR_VERSION_NO" ColumnName="AMR_VERSION_NO" />
+                <ScalarProperty Name="AMR_LOW_WEIGHTAGE_COUNT" ColumnName="AMR_LOW_WEIGHTAGE_COUNT" />
+                <ScalarProperty Name="AMR_HIGH_WEIGHTAGE_COUNT" ColumnName="AMR_HIGH_WEIGHTAGE_COUNT" />
+                <ScalarProperty Name="Data_Count" ColumnName="Data Count" />
+                <ScalarProperty Name="AMR_BATTERY_VOLTAGE" ColumnName="AMR_BATTERY_VOLTAGE" />
+                <ScalarProperty Name="AMR_TEMPERATURE" ColumnName="AMR_TEMPERATURE" />
+                <ScalarProperty Name="AMR_MAGNET_TEMPER_LOGGER" ColumnName="AMR_MAGNET_TEMPER_LOGGER" />
+                <ScalarProperty Name="AMR_CASE_TEMPER_LOGGER" ColumnName="AMR_CASE_TEMPER_LOGGER" />
+                <ScalarProperty Name="AMR_CRC8" ColumnName="AMR_CRC8" />
+                <ScalarProperty Name="AMR_CRC_STATUS" ColumnName="AMR_CRC_STATUS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="V_FetchInductiveData">
+            <EntityTypeMapping TypeName="SmartMeterModel.V_FetchInductiveData">
+              <MappingFragment StoreEntitySet="V_FetchInductiveData">
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="AMR_CRC_STATUS" ColumnName="AMR_CRC_STATUS" />
+                <ScalarProperty Name="AMR_CRC8" ColumnName="AMR_CRC8" />
+                <ScalarProperty Name="AMR_CASE_TEMPER_LOGGER" ColumnName="AMR_CASE_TEMPER_LOGGER" />
+                <ScalarProperty Name="AMR_MAGNET_TEMPER_LOGGER" ColumnName="AMR_MAGNET_TEMPER_LOGGER" />
+                <ScalarProperty Name="AMR_TEMPERATURE" ColumnName="AMR_TEMPERATURE" />
+                <ScalarProperty Name="AMR_BATTERY_VOLTAGE" ColumnName="AMR_BATTERY_VOLTAGE" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="AMR_HIGH_WEIGHTAGE_COUNT" ColumnName="AMR_HIGH_WEIGHTAGE_COUNT" />
+                <ScalarProperty Name="AMR_LOW_WEIGHTAGE_COUNT" ColumnName="AMR_LOW_WEIGHTAGE_COUNT" />
+                <ScalarProperty Name="AMR_VERSION_NO" ColumnName="AMR_VERSION_NO" />
+                <ScalarProperty Name="AMR_ID" ColumnName="AMR_ID" />
+                <ScalarProperty Name="TX_ERRORS" ColumnName="TX_ERRORS" />
+                <ScalarProperty Name="POST_ERROR" ColumnName="POST_ERROR" />
+                <ScalarProperty Name="NW_ERROR" ColumnName="NW_ERROR" />
+                <ScalarProperty Name="MODULE_ERROR" ColumnName="MODULE_ERROR" />
+                <ScalarProperty Name="VAYUDUT_TEMPERATURE" ColumnName="VAYUDUT_TEMPERATURE" />
+                <ScalarProperty Name="V_Voltage" ColumnName="V_Voltage" />
+                <ScalarProperty Name="VAYUDUT_ID" ColumnName="VAYUDUT_ID" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_DistinctMeter">
+            <EntityTypeMapping TypeName="SmartMeterModel.V_DistinctMeter">
+              <MappingFragment StoreEntitySet="V_DistinctMeter">
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_FetchDailyConsumption">
+            <EntityTypeMapping TypeName="SmartMeterModel.V_FetchDailyConsumption">
+              <MappingFragment StoreEntitySet="V_FetchDailyConsumption">
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Row_" ColumnName="Row#" />
+                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MeterMaster">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_MeterMaster">
+              <MappingFragment StoreEntitySet="tbl_MeterMaster">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_Get15DayReport" FunctionName="SmartMeterModel.Store.sp_Get15DayReport" />
+          <FunctionImportMapping FunctionImportName="FetchConsumption_MagneticTemper" FunctionName="SmartMeterModel.Store.FetchConsumption_MagneticTemper">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_MagneticTemper_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
+                <ScalarProperty Name="Row_" ColumnName="Row#" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="MagneticTemper" ColumnName="MagneticTemper" />
+                <ScalarProperty Name="CaseTemper" ColumnName="CaseTemper" />
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchConsumption_VayudutWise" FunctionName="SmartMeterModel.Store.FetchConsumption_VayudutWise">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_VayudutWise_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="VAYUDUT_ID" ColumnName="VAYUDUT_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ZeroConsumption" FunctionName="SmartMeterModel.Store.sp_ZeroConsumption">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.sp_ZeroConsumption_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TotalRevenue" FunctionName="SmartMeterModel.Store.sp_TotalRevenue">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.sp_TotalRevenue_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Revenue" ColumnName="Revenue" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ConsumptionGraph" FunctionName="SmartMeterModel.Store.sp_ConsumptionGraph">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.sp_ConsumptionGraph_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TotalAMR" FunctionName="SmartMeterModel.Store.sp_TotalAMR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.sp_TotalAMR_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchDataConsumption" FunctionName="SmartMeterModel.Store.FetchDataConsumption" />
+          <FunctionImportMapping FunctionImportName="FetchConsumption" FunctionName="SmartMeterModel.Store.FetchConsumption">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
+                <ScalarProperty Name="Row_" ColumnName="Row#" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="Vayudut_ID" ColumnName="Vayudut_ID" />
+                <ScalarProperty Name="MagneticTamper" ColumnName="MagneticTamper" />
+                <ScalarProperty Name="CaseTamper" ColumnName="CaseTamper" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="Row__" ColumnName="Row##" />
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_AMRHistory">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_AMRHistory">
+              <MappingFragment StoreEntitySet="tbl_AMRHistory">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Old_Installation_Date" ColumnName="Old_Installation_Date" />
+                <ScalarProperty Name="New_Installation_Date" ColumnName="New_Installation_Date" />
+                <ScalarProperty Name="Old_Opening_AMR_Reading" ColumnName="Old_Opening_AMR_Reading" />
+                <ScalarProperty Name="New_Opening_AMR_Reading" ColumnName="New_Opening_AMR_Reading" />
+                <ScalarProperty Name="Old_Opening_Meter_Reading" ColumnName="Old_Opening_Meter_Reading" />
+                <ScalarProperty Name="New_Opening_Meter_Reading" ColumnName="New_Opening_Meter_Reading" />
+                <ScalarProperty Name="Old_AMR_Serial_Number" ColumnName="Old_AMR_Serial_Number" />
+                <ScalarProperty Name="New_AMR_Serial_Number" ColumnName="New_AMR_Serial_Number" />
+                <ScalarProperty Name="Old_AMR_TXID" ColumnName="Old_AMR_TXID" />
+                <ScalarProperty Name="New_AMR_TXID" ColumnName="New_AMR_TXID" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_AMRHealth" FunctionName="SmartMeterModel.Store.sp_AMRHealth">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.sp_AMRHealth_Result">
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="C05_May_2022" ColumnName="05-May-2022" />
+                <ScalarProperty Name="C04_May_2022" ColumnName="04-May-2022" />
+                <ScalarProperty Name="C03_May_2022" ColumnName="03-May-2022" />
+                <ScalarProperty Name="C02_May_2022" ColumnName="02-May-2022" />
+                <ScalarProperty Name="C01_May_2022" ColumnName="01-May-2022" />
+                <ScalarProperty Name="C30_Apr_2022" ColumnName="30-Apr-2022" />
+                <ScalarProperty Name="C29_Apr_2022" ColumnName="29-Apr-2022" />
+                <ScalarProperty Name="C28_Apr_2022" ColumnName="28-Apr-2022" />
+                <ScalarProperty Name="C27_Apr_2022" ColumnName="27-Apr-2022" />
+                <ScalarProperty Name="C26_Apr_2022" ColumnName="26-Apr-2022" />
+                <ScalarProperty Name="C25_Apr_2022" ColumnName="25-Apr-2022" />
+                <ScalarProperty Name="C24_Apr_2022" ColumnName="24-Apr-2022" />
+                <ScalarProperty Name="C23_Apr_2022" ColumnName="23-Apr-2022" />
+                <ScalarProperty Name="C22_Apr_2022" ColumnName="22-Apr-2022" />
+                <ScalarProperty Name="C21_Apr_2022" ColumnName="21-Apr-2022" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GenerateInvoice" FunctionName="SmartMeterModel.Store.sp_GenerateInvoice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.sp_GenerateInvoice_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Street2" ColumnName="Street2" />
+                <ScalarProperty Name="Street3" ColumnName="Street3" />
+                <ScalarProperty Name="Street4" ColumnName="Street4" />
+                <ScalarProperty Name="Street5" ColumnName="Street5" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="YearOfSale" ColumnName="YearOfSale" />
+                <ScalarProperty Name="MonthOfSales" ColumnName="MonthOfSales" />
+                <ScalarProperty Name="GasSales" ColumnName="GasSales" />
+                <ScalarProperty Name="MMBTUSales" ColumnName="MMBTUSales" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Revenue" ColumnName="Revenue" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchConsumption_Demo" FunctionName="SmartMeterModel.Store.FetchConsumption_Demo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_Demo_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
+                <ScalarProperty Name="Row_" ColumnName="Row#" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="Vayudut_ID" ColumnName="Vayudut_ID" />
+                <ScalarProperty Name="MagneticTamper" ColumnName="MagneticTamper" />
+                <ScalarProperty Name="CaseTamper" ColumnName="CaseTamper" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="Row__" ColumnName="Row##" />
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchConsumption_15DayRevenue_Demo" FunctionName="SmartMeterModel.Store.FetchConsumption_15DayRevenue_Demo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_15DayRevenue_Demo_Result">
+                <ScalarProperty Name="Revenue" ColumnName="Revenue" />
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
+                <ScalarProperty Name="Row_" ColumnName="Row#" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="Vayudut_ID" ColumnName="Vayudut_ID" />
+                <ScalarProperty Name="MagneticTamper" ColumnName="MagneticTamper" />
+                <ScalarProperty Name="CaseTamper" ColumnName="CaseTamper" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="Row__" ColumnName="Row##" />
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchConsumption_VayudutWise_Demo" FunctionName="SmartMeterModel.Store.FetchConsumption_VayudutWise_Demo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_VayudutWise_Demo_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="VAYUDUT_ID" ColumnName="VAYUDUT_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchConsumption_CaseTemper_Demo" FunctionName="SmartMeterModel.Store.FetchConsumption_CaseTemper_Demo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_CaseTemper_Demo_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
+                <ScalarProperty Name="Row_" ColumnName="Row#" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="MagneticTamper" ColumnName="MagneticTamper" />
+                <ScalarProperty Name="CaseTamper" ColumnName="CaseTamper" />
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchConsumption_CaseTemper" FunctionName="SmartMeterModel.Store.FetchConsumption_CaseTemper">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_CaseTemper_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
+                <ScalarProperty Name="Row_" ColumnName="Row#" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="MagnaticTemper" ColumnName="MagnaticTemper" />
+                <ScalarProperty Name="CaseTemper" ColumnName="CaseTemper" />
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_JioLogs">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_JioLogs">
+              <MappingFragment StoreEntitySet="tbl_JioLogs">
+                <ScalarProperty Name="SMTPLResponse" ColumnName="SMTPLResponse" />
+                <ScalarProperty Name="JioRequest" ColumnName="JioRequest" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GenerateInvoiceForOdoo" FunctionName="SmartMeterModel.Store.sp_GenerateInvoiceForOdoo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.sp_GenerateInvoiceForOdoo_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Street2" ColumnName="Street2" />
+                <ScalarProperty Name="Street3" ColumnName="Street3" />
+                <ScalarProperty Name="Street4" ColumnName="Street4" />
+                <ScalarProperty Name="Street5" ColumnName="Street5" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="YearOfSale" ColumnName="YearOfSale" />
+                <ScalarProperty Name="MonthOfSales" ColumnName="MonthOfSales" />
+                <ScalarProperty Name="GasSales" ColumnName="GasSales" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GenerateInvoiceForOdooDateWise" FunctionName="SmartMeterModel.Store.sp_GenerateInvoiceForOdooDateWise">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.sp_GenerateInvoiceForOdooDateWise_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DateRange" ColumnName="DateRange" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Street2" ColumnName="Street2" />
+                <ScalarProperty Name="Street3" ColumnName="Street3" />
+                <ScalarProperty Name="Street4" ColumnName="Street4" />
+                <ScalarProperty Name="Street5" ColumnName="Street5" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="GasSales" ColumnName="GasSales" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchConsumption_POC" FunctionName="SmartMeterModel.Store.FetchConsumption_POC">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_POC_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
+                <ScalarProperty Name="Row_" ColumnName="Row#" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="Vayudut_ID" ColumnName="Vayudut_ID" />
+                <ScalarProperty Name="MagneticTamper" ColumnName="MagneticTamper" />
+                <ScalarProperty Name="CaseTamper" ColumnName="CaseTamper" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="Row__" ColumnName="Row##" />
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchConsumption_15DayRevenue" FunctionName="SmartMeterModel.Store.FetchConsumption_15DayRevenue">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_15DayRevenue_Result">
+                <ScalarProperty Name="MMBTU" ColumnName="MMBTU" />
+                <ScalarProperty Name="Revenue" ColumnName="Revenue" />
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
+                <ScalarProperty Name="Row_" ColumnName="Row#" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="Vayudut_ID" ColumnName="Vayudut_ID" />
+                <ScalarProperty Name="MagneticTamper" ColumnName="MagneticTamper" />
+                <ScalarProperty Name="CaseTamper" ColumnName="CaseTamper" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="Row__" ColumnName="Row##" />
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_SMeterMaster">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_SMeterMaster">
+              <MappingFragment StoreEntitySet="tbl_SMeterMaster">
+                <ScalarProperty Name="EID" ColumnName="EID" />
+                <ScalarProperty Name="AppName" ColumnName="AppName" />
+                <ScalarProperty Name="AID" ColumnName="AID" />
+                <ScalarProperty Name="SVC" ColumnName="SVC" />
+                <ScalarProperty Name="VID" ColumnName="VID" />
+                <ScalarProperty Name="PLDLength" ColumnName="PLDLength" />
+                <ScalarProperty Name="PLD" ColumnName="PLD" />
+                <ScalarProperty Name="MUNumber" ColumnName="MUNumber" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+                <ScalarProperty Name="IMSI" ColumnName="IMSI" />
+                <ScalarProperty Name="SimNo" ColumnName="SimNo" />
+                <ScalarProperty Name="SimICCID" ColumnName="SimICCID" />
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_SignalRMaxID">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_SignalRMaxID">
+              <MappingFragment StoreEntitySet="tbl_SignalRMaxID">
+                <ScalarProperty Name="PLD" ColumnName="PLD" />
+                <ScalarProperty Name="MaxID" ColumnName="MaxID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

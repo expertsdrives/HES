@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .dx-datagrid {
+        color: #333;
+        background-color: transparent !important;
+    }
+
+    .dx-toolbar {
+        background-color: transparent !important;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    .greenColor {
+        color: green;
+    }
+</style>
+
+<div class="card card-block card-stretch card-height">
+    <div class="card-header d-flex justify-content-between">
+        <div class="header-title">
+            <h4 class="card-title">AMR Data Reception</h4>
+        </div>
+        <div class="card-header-toolbar d-flex align-items-center">
+            <button type="button" class="btn mb-1 btn-outline-primary">
+                Total Data Reception <span class="badge badge-primary ml-2">@String.Format("{0:n0}", ViewBag.AMRData)</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div id="DataReception"></div>
+    </div>
+</div>
+<script src="~/Scripts/grid/DataReception.js"></script>

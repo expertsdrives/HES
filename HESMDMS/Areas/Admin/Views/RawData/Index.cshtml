@@ -1,0 +1,165 @@
+﻿@model IEnumerable<HESMDMS.Models.FetchConsumption_Result>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutArea.cshtml";
+}
+<style>
+    .sub {
+        vertical-align: 0;
+        position: relative;
+        top: -1.2ex;
+        font-size: 76%;
+    }
+</style>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.5/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/datatables.min.js"></script>
+<div class="card card-block card-stretch card-height">
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <h4 class="card-title">Domestic PNG Gas AMR Data</h4>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="min">From Date:</label>
+                <input type="text" id="min" name="min" class="form-control">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="max">To Date:</label>
+                <input type="text" id="max" name="max" class="form-control">
+            </div>
+        </div>
+        @*<table border="0" cellspacing="5" cellpadding="5">
+            <tbody>
+                <tr>
+                    <td>Minimum date:</td>
+                    <td><input type="text" id="min" name="min"></td>
+                </tr>
+                <tr>
+                    <td>Maximum date:</td>
+                    <td><input type="text" id="max" name="max"></td>
+                </tr>
+            </tbody>
+        </table>*@
+        <table cellpadding="0" cellspacing="0" id="example">
+            <thead>
+                <tr>
+                    <th>Business Partner</th>
+                    <th>Customer Name</th>
+                    <th><span>Gas Sold (m</span><span class="sub">3</span><span>)</span></th>
+                    <th><span>Meter Reading (m</span><span class="sub">3</span><span>)</span></th>
+                    <th>Meter Number</th>
+                    <th>Rx Date</th>
+                    <th>AMR UID</th>
+                    <th>TXID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var data in Model)
+                {
+                    <tr>
+                        <td>@data.BusinessPartnerNo</td>
+                        <td>@data.FullName</td>
+                        <td>@data.DailyConsumption</td>
+                        <td>@data.ReadingCount</td>
+                        <td>@data.MeterNumber</td>
+                        <td>@data.Date</td>
+                        <td>@data.AMRSerialNumber</td>
+                        <td>@data.TXID</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    var minDate, maxDate;
+
+    // Custom filtering function which will search data in column four between two values
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = minDate.val();
+            var max = maxDate.val();
+            var date = new Date(data[5]);
+
+            if (
+                (min === null && max === null) ||
+                (min === null && date <= max) ||
+                (min <= date && max === null) ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            }
+            return false;
+        }
+    );
+
+    $(document).ready(function () {
+        // Create date inputs
+        minDate = new DateTime($('#min'), {
+            format: 'MMMM Do YYYY'
+        });
+        maxDate = new DateTime($('#max'), {
+            format: 'MMMM Do YYYY'
+        });
+
+        // DataTables initialisation
+        var table = $('#example').DataTable({
+            "order": [[5, "desc"]],
+            responsive: true,
+            "pageLength": 100
+        });
+
+        // Refilter the table
+        $('#min, #max').on('change', function () {
+            table.draw();
+        });
+    });
+    //var minDate, maxDate;
+    //$.fn.dataTable.ext.search.push(
+    //    function (settings, data, dataIndex) {
+    //        var min = minDate.val();
+    //        var max = maxDate.val();
+    //        var date = new Date(data[5]);
+
+    //        if (
+    //            (min === null && max === null) ||
+    //            (min === null && date <= max) ||
+    //            (min <= date && max === null) ||
+    //            (min <= date && date <= max)
+    //        ) {
+    //            return true;
+    //        }
+    //        return false;
+    //    }
+    //);
+    //$(document).ready(function () {
+    //    minDate = new DateTime($('#min'), {
+    //        format: 'MMMM Do YYYY'
+    //    });
+    //    maxDate = new DateTime($('#max'), {
+    //        format: 'MMMM Do YYYY'
+    //    });
+    //    $('#min, #max').on('change', function () {
+    //        table.draw();
+    //    });
+    //    var table = $('#table_id').DataTable({
+    //        dom: "Bfrtip",
+    //        buttons: ["excel", "pdf", "print", "excelHtml5", "pdfHtml5"],
+    //        "order": [[5, "desc"]],
+    //        columnDefs: [
+    //            { width: '10%', targets: 5 }
+    //        ],
+    //    });
+    //});
+</script>
