@@ -1,0 +1,399 @@
+﻿
+@{
+    ViewBag.Title = "Terminal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-sm-12 col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">Select Meter</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div id="SelectMeter"></div>
+        </div>
+    </div>
+
+</div>
+
+<div class="loadpanel"></div>
+
+    <div class="col-sm-12 col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title">System Opertation</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button id="connectButton" class="btn btn-primary">Connect via Serial Port</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" readonly id="target">
+                </div>
+                @*<div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="btnPassword">Password</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblPassword">
+                </div>*@
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12 col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title">Volume</h4>
+                </div>
+            </div>
+            <div class="card-body volume">
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="btnPresentVolume">Present Volume</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="0 m3" aria-label="" readonly id="lblPresentVolume">
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="btnVolumeNVM">Volume (NVM)</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="0 m3" aria-label="" readonly id="lblVolumeNVM">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-12 col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title">RTC</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                @*<div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button">Set RTC</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="dd:mm:yy HH:MM:SS" aria-label="" readonly id="clock">
+                </div>*@
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="btnGetRTC">Get RTC</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblGetRTC">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12 col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title">System Health Check</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="btnSOVStatus">SOV Status</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblSOVStatus">
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="btnSOVOpen">SOV Open</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblSOVOpen">
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="btnSOVClose">SOV Close</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblSOVClose">
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="btnBatteryVoltage">Battery Voltage</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="0 Volts" aria-label="" readonly id="lblBatteryVoltage">
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="btnBatteryLife">Battery Life</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="0 Years 0 Days" aria-label="" readonly id="lblBatteryLife">
+                </div>
+                @*<div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button">Dispaly All</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" readonly>
+                </div>*@
+                @*<div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-primary" type="button">Battery Replacement Start</button>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" aria-label="" readonly>
+                    </div>
+                    <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-primary" type="button">Battery Replacement End</button>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" aria-label="" readonly>
+                    </div>*@
+            </div>
+        </div>
+
+    </div>
+    @*<div class="col-sm-12 col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title">NBIOT</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+
+                    <tbody>
+                        <tr>
+                            <th scope="row">RF</th>
+                            <td><img src="~/Images/red.png" /></td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row">Functionality</th>
+                            <td><img src="~/Images/red.png" /></td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row">SIM</th>
+                            <td><img src="~/Images/red.png" /></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Operator</th>
+                            <td><img src="~/Images/red.png" /></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">N/W Reg</th>
+                            <td><img src="~/Images/red.png" /></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">IMSI</th>
+                            <td><img src="~/Images/red.png" /></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">RSSI</th>
+                            <td><img src="~/Images/red.png" /></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">N/W Band</th>
+                            <td><img src="~/Images/red.png" /></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" rowspan="2"><button class="btn btn-primary" type="button">NBIOT Check</button></th>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>*@
+
+
+
+
+    <div class="col-sm-12 col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title">Tamper/Error Status</h4>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                    </div>
+                    <input type="text" class="form-control" readonly value="Tilt Tamper" >
+                    <input type="text" class="form-control" readonly value="0" id="lblTilt">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                    </div>
+                    <input type="text" class="form-control" readonly value="Case Tamper" >
+                    <input type="text" class="form-control" readonly value="0" id="lblCase">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                    </div>
+                    <input type="text" class="form-control" readonly value="Magnet Tamper" >
+                    <input type="text" class="form-control" readonly value="0" id="lblMaganet">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                    </div>
+                    <input type="text" class="form-control" readonly value="Excess Push Key" >
+                    <input type="text" class="form-control" readonly value="0" id="lblExcessPush">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                    </div>
+                    <input type="text" class="form-control" readonly value="Excess Gas Flow" >
+                    <input type="text" class="form-control" readonly value="0" id="lblExcessGas">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                    </div>
+                    <input type="text" class="form-control" readonly value="SOV Tamper" >
+                    <input type="text" class="form-control" readonly value="0" id="lblSOVTamper">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                    </div>
+                    <input type="text" class="form-control" readonly value="Login Error" >
+                    <input type="text" class="form-control" readonly value="0" id="lblLoginError">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                    </div>
+                    <input type="text" class="form-control" readonly value="Battery Tamper" >
+                    <input type="text" class="form-control" readonly value="0" id="lblBatteryTamper">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                    </div>
+                    <input type="text" class="form-control" readonly value="RF Comm Error" >
+                    <input type="text" class="form-control" readonly value="0" id="lblRFTamper">
+                </div>
+                <br />
+                <br />
+                <button class="btn btn-primary" type="button" id="btnTamperStatus">Tamper Status</button>&nbsp;
+                <button type="submit" class="btn bg-danger">Tamper Reset</button>
+
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    var Jsondata = @Html.Raw(Json.Encode(ViewBag.data));
+
+</script>
+<script src="~/Scripts/grid/TerminalControl.js"></script>
+<script>
+    $(document).ready(function () {
+
+      
+    });
+    let port;
+    let log;
+ 
+    function toHexString(byteArray) {
+        var hexString = '';
+        for (var i = 0; i < byteArray.length; i++) {
+            var hex = byteArray[i].toString(16);
+            if (hex.length === 1) {
+                hex = '0' + hex;
+            }
+            hexString += hex + ",";
+        }
+        return hexString.slice(0, -1);
+    }
+    function getAsciiBytes(str) {
+        var encoder = new TextEncoder();
+        var byteArray = encoder.encode(str);
+        return Array.from(byteArray);
+    }
+    $('#connectButton').click(function () {
+        if (navigator.serial) {
+            connectSerial();
+        }
+        else {
+     alert('Web Serial API not supported.');
+      }
+    });
+    //document.getElementById('connectButton').addEventListener('click', () => {
+    //    if (navigator.serial) {
+
+    //        $('#myLink').click();
+
+
+    //    } else {
+    //        alert('Web Serial API not supported.');
+    //    }
+    //});
+
+
+    async function connectSerial() {
+        log = document.getElementById('target');
+
+        try {
+
+            port = await navigator.serial.requestPort();
+            await port.open({ baudRate: 4800 });
+
+            const decoder = new TextDecoderStream();
+
+            port.readable.pipeTo(decoder.writable);
+
+            const inputStream = decoder.readable;
+            const reader = inputStream.getReader();
+            const writer = port.writable.getWriter();
+
+            var password = "";
+            var passwordInput = document.createElement("input");
+            passwordInput.type = "password";
+            var a = window.prompt("Enter password:");
+            var length = a.length;
+            var paddedStr = length.toString().padStart(2, '0');
+            var keyByte = getAsciiBytes(a);
+            const hexString1 = toHexString(keyByte);
+            const Password = hexString1.replace(/,/g, ' ');
+            const hexString = "02 03 00 " + paddedStr + " 7E " + Password;
+            const byteArray = hexString.split(' ').map(hex => parseInt(hex, 16));
+            const data = new Uint8Array(byteArray);
+            await writer.write(data);
+            // Allow the serial port to be closed later.
+            writer.releaseLock();
+            if (a == "12345678") {
+                $('#target').val("Authenticated")
+            }
+            else {
+                $('#target').val("Incorrect Password")
+            }
+            while (true) {
+                const { value, done } = await reader.read();
+                if (value) {
+                    log.textContent += value + '\n';
+                }
+                if (done) {
+                    console.log('[readLoop] DONE', done);
+                    reader.releaseLock();
+                    break;
+                }
+            }
+
+        } catch (error) {
+            log.innerHTML = error;
+        }
+    }
+</script>

@@ -18,6 +18,7 @@ namespace HESMDMS.Controllers
     {
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         SmartMeterEntities clsMeters = new SmartMeterEntities();
+        SmartMeter_ProdEntities clsMeters_Prod= new SmartMeter_ProdEntities();
         [Route("CustomerLoad")]
         [HttpGet]
         public HttpResponseMessage CustomerLoad(DataSourceLoadOptions loadOptions)
@@ -117,50 +118,53 @@ namespace HESMDMS.Controllers
         public HttpResponseMessage d2c(DataSourceLoadOptions loaddata)
         {
             FetchJioLogs fetchLogs = new FetchJioLogs();
-            DateTime date1 = Convert.ToDateTime("1-12-2022");
-            var data = clsMeters.tbl_JioLogs.Where(x => x.DateTime >= date1).OrderByDescending(x => x.DateTime).ToList();
+            DateTime date1 = Convert.ToDateTime("01-03-2023");
+            var data = clsMeters_Prod.tbl_JioLogs.Where(x => x.DateTime >= date1).OrderByDescending(x => x.DateTime).ToList();
             List<ModelParameter> model = new List<ModelParameter>();
             foreach (var fData in data)
             {
-                FetchJioLogs deserializedProduct = JsonConvert.DeserializeObject<FetchJioLogs>(fData.SMTPLResponse);
-                if (deserializedProduct.pld != null && deserializedProduct.Data != null)
+                if (IsValidJson(fData.SMTPLResponse))
                 {
-
-                    string[] splitarray = deserializedProduct.Data.ToString().Split(',');
-                    int sizes = splitarray.Length;
-                    if (sizes == 25)
+                    FetchJioLogs deserializedProduct = JsonConvert.DeserializeObject<FetchJioLogs>(fData.SMTPLResponse);
+                    if (deserializedProduct.pld != null && deserializedProduct.Data != null)
                     {
-                        model.Add(new ModelParameter
-                        {
-                            ID = fData.ID,
-                            StartingFrame = splitarray[0].Trim(),
-                            InstrumentID = splitarray[1].Trim(),
-                            Date = splitarray[2],
-                            Time = splitarray[3],
-                            Record = splitarray[4].Trim(),
-                            ActivationStatus = splitarray[5].Trim(),
-                            GasCount = splitarray[6].Trim(),
-                            MeasurementValue = splitarray[7].Trim(),
-                            TotalConsumption = splitarray[8].Trim(),
-                            UnitofMeasurement = splitarray[9].Trim(),
-                            BatteryVoltage = splitarray[10].Trim(),
-                            TamperEvents = splitarray[11].Trim(),
-                            AccountBalance = splitarray[12].Trim(),
-                            eCreditBalance = splitarray[13].Trim(),
-                            StandardCharge = splitarray[14].Trim(),
-                            StandardChargeUnit = splitarray[15].Trim(),
-                            eCreditonoff = splitarray[16].Trim(),
-                            ValvePosition = splitarray[17].Trim(),
-                            SystemHealth = splitarray[18].Trim(),
-                            TransmissionPacket = splitarray[19].Trim(),
-                            Temperature = splitarray[21].Trim(),
-                            TarrifName = splitarray[22].Trim(),
-                            GasCalorific = splitarray[20].Trim(),
-                            Checksum = splitarray[23].Trim(),
-                            EndOfFrame = splitarray[24].Trim()
-                        });
-                    }
 
+                        string[] splitarray = deserializedProduct.Data.ToString().Split(',');
+                        int sizes = splitarray.Length;
+                        if (sizes == 25)
+                        {
+                            model.Add(new ModelParameter
+                            {
+                                ID = fData.ID,
+                                StartingFrame = splitarray[0].Trim(),
+                                InstrumentID = splitarray[1].Trim(),
+                                Date = splitarray[2],
+                                Time = splitarray[3],
+                                Record = splitarray[4].Trim(),
+                                ActivationStatus = splitarray[5].Trim(),
+                                GasCount = splitarray[6].Trim(),
+                                MeasurementValue = splitarray[7].Trim(),
+                                TotalConsumption = splitarray[8].Trim(),
+                                UnitofMeasurement = splitarray[9].Trim(),
+                                BatteryVoltage = splitarray[10].Trim(),
+                                TamperEvents = splitarray[11].Trim(),
+                                AccountBalance = splitarray[12].Trim(),
+                                eCreditBalance = splitarray[13].Trim(),
+                                StandardCharge = splitarray[14].Trim(),
+                                StandardChargeUnit = splitarray[15].Trim(),
+                                eCreditonoff = splitarray[16].Trim(),
+                                ValvePosition = splitarray[17].Trim(),
+                                SystemHealth = splitarray[18].Trim(),
+                                TransmissionPacket = splitarray[19].Trim(),
+                                Temperature = splitarray[21].Trim(),
+                                TarrifName = splitarray[22].Trim(),
+                                GasCalorific = splitarray[20].Trim(),
+                                Checksum = splitarray[23].Trim(),
+                                EndOfFrame = splitarray[24].Trim()
+                            });
+                        }
+
+                    }
                 }
 
             }
@@ -178,7 +182,36 @@ namespace HESMDMS.Controllers
 
         //    return Request.CreateResponse(DataSourceLoader.Load(table15DayReport, loadOptions));
         //}
-
+        private bool IsValidJson(string strInput)
+        {
+            if (string.IsNullOrWhiteSpace(strInput)) { return false; }
+            strInput = strInput.Trim();
+            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            {
+                try
+                {
+                    var js = new Newtonsoft.Json.JsonSerializer();
+                    js.Deserialize(new Newtonsoft.Json.JsonTextReader(new System.IO.StringReader(strInput)));
+                    return true;
+                }
+                catch (JsonReaderException jex)
+                {
+                    //Exception in parsing json
+                    Console.WriteLine(jex.Message);
+                    return false;
+                }
+                catch (Exception ex) //some other exception
+                {
+                    Console.WriteLine(ex.ToString());
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
         [Route("MagneticTemper")]
         [HttpGet]
         public HttpResponseMessage MagneticTemper(DataSourceLoadOptions loadOptions)

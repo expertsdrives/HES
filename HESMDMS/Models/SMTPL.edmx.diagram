@@ -22,6 +22,7 @@
         <EntityTypeShape EntityType="SmartMeterModel.tbl_JioLogs" Width="1.5" PointX="11.375" PointY="3.75" />
         <EntityTypeShape EntityType="SmartMeterModel.tbl_SMeterMaster" Width="1.5" PointX="9.375" PointY="11.75" />
         <EntityTypeShape EntityType="SmartMeterModel.tbl_SignalRMaxID" Width="1.5" PointX="11.375" PointY="11.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_OTACommands" Width="1.5" PointX="12.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

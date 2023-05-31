@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SmartMeter_ProdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SmartMeter_ProdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbl_JioLogs">
           <Key>
             <PropertyRef Name="ID" />
@@ -14,11 +14,22 @@
           <Property Name="JioRequest" Type="nvarchar(max)" />
           <Property Name="SMTPLResponse" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="tbl_Response">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogDate" Type="datetime" />
+          <Property Name="pld" Type="nvarchar" MaxLength="50" />
+          <Property Name="aid" Type="nvarchar" MaxLength="50" />
+          <Property Name="eid" Type="nvarchar" MaxLength="50" />
+          <Property Name="Data" Type="nvarchar(max)" />
+        </EntityType>
         <EntityContainer Name="SmartMeter_ProdModelStoreContainer">
           <EntitySet Name="tbl_JioLogs" EntityType="Self.tbl_JioLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Response" EntityType="Self.tbl_Response" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SmartMeter_ProdModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -33,7 +44,19 @@
         </EntityType>
         <EntityContainer Name="SmartMeter_ProdEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_JioLogs" EntityType="Self.tbl_JioLogs" />
+          <EntitySet Name="tbl_Response" EntityType="SmartMeter_ProdModel.tbl_Response" />
         </EntityContainer>
+        <EntityType Name="tbl_Response">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogDate" Type="DateTime" Precision="3" />
+          <Property Name="pld" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="aid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="eid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -47,6 +70,18 @@
                 <ScalarProperty Name="DateTime" ColumnName="DateTime" />
                 <ScalarProperty Name="JioRequest" ColumnName="JioRequest" />
                 <ScalarProperty Name="SMTPLResponse" ColumnName="SMTPLResponse" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Response">
+            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_Response">
+              <MappingFragment StoreEntitySet="tbl_Response">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="eid" ColumnName="eid" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="pld" ColumnName="pld" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

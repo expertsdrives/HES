@@ -26,5 +26,6 @@ namespace HESMDMS.Models
         }
     
         public virtual DbSet<tbl_JioLogs> tbl_JioLogs { get; set; }
+        public virtual DbSet<tbl_Response> tbl_Response { get; set; }
     }
 }

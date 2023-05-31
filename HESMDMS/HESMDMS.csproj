@@ -36,6 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,6 +45,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -7196,6 +7198,7 @@
     <Content Include="Scripts\globalize\number.min.js" />
     <Content Include="Scripts\grid\AMRHealthGraph.js" />
     <Content Include="Scripts\grid\15DayRevenue.js" />
+    <Content Include="Scripts\grid\BillingParameters.js" />
     <Content Include="Scripts\grid\CustomerRegistration.js" />
     <Content Include="Scripts\grid\15DayConsumption.js" />
     <Content Include="Scripts\grid\CaseTemper.js" />
@@ -7205,6 +7208,7 @@
     <Content Include="Scripts\grid\MeterInformation.js" />
     <Content Include="Scripts\grid\ReplaceMeter.js" />
     <Content Include="Scripts\grid\Terminal.js" />
+    <Content Include="Scripts\grid\TerminalControl.js" />
     <Content Include="Scripts\grid\VayudutWise.js" />
     <Content Include="Scripts\grid\MagneticTemper.js" />
     <Content Include="Scripts\grid\MeterMaster.js" />
@@ -7221,6 +7225,8 @@
       <DependentUpon>SMTPLProd.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\SmartMeter\Views\UART\Index.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\Terminal\Terminal.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\Terminal\BillingParameters.cshtml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
@@ -7665,9 +7671,12 @@
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_JioLogs.cs">
-      <DependentUpon>SMTPLProd.tt</DependentUpon>
+      <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_MeterMaster.cs">
+      <DependentUpon>SMTPL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_OTACommands.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_RawDataAPI.cs">
@@ -7675,6 +7684,9 @@
     </Compile>
     <Compile Include="Models\tbl_RawData_CRC.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Response.cs">
+      <DependentUpon>SMTPLProd.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_RoleMaster.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>

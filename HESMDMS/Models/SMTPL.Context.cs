@@ -43,6 +43,7 @@ namespace HESMDMS.Models
         public virtual DbSet<tbl_JioLogs> tbl_JioLogs { get; set; }
         public virtual DbSet<tbl_SMeterMaster> tbl_SMeterMaster { get; set; }
         public virtual DbSet<tbl_SignalRMaxID> tbl_SignalRMaxID { get; set; }
+        public virtual DbSet<tbl_OTACommands> tbl_OTACommands { get; set; }
     
         public virtual ObjectResult<FetchCRCData_Result> FetchCRCData()
         {

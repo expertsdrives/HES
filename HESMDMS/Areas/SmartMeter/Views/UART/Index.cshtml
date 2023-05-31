@@ -23,23 +23,10 @@
     }
 
 </style>
-<div id="ex1" class="modal" style="width: 500px; height: 200px; ">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="floating-label form-group">
-                <input class="floating-input form-control" id="Password" name="Password" placeholder="Enter Password" type="password" value="">
-
-            </div>
-        </div>
-    </div>
-    <a href="#" rel="modal:close">OK</a>
-</div>
 <div class="card card-block card-stretch card-height">
     <div class="card-header" style="text-align:center">
         <div class="header-title">
             <h4 class="card-title"> Smart Gas Meter UART Communication</h4>
-
-            <p><a href="#ex1" rel="modal:open"  id="myLink">Open Modal</a></p>
         </div>
     </div>
     <div class="card-body" id="bodyData">
@@ -58,7 +45,7 @@
 <script>
     $(document).ready(function () {
 
-        $('#Password').focus();
+      
     });
     let port;
     let log;
@@ -81,6 +68,7 @@
     }
     $('#connectButton').click(function () {
         if (navigator.serial) {
+            connectSerial();
         }
         else {
      alert('Web Serial API not supported.');
@@ -117,7 +105,7 @@
             var password = "";
             var passwordInput = document.createElement("input");
             passwordInput.type = "password";
-            var a = window.prompt("Enter password:", passwordInput);
+            var a = window.prompt("Enter password:");
             var length = a.length;
             var paddedStr = length.toString().padStart(2, '0');
             var keyByte = getAsciiBytes(a);
@@ -129,6 +117,12 @@
             await writer.write(data);
             // Allow the serial port to be closed later.
             writer.releaseLock();
+            if (a == "12345678") {
+                $('#target').val("Authenticated")
+            }
+            else {
+                $('#target').val("Incorrect Password")
+            }
             while (true) {
                 const { value, done } = await reader.read();
                 if (value) {

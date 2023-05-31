@@ -75,7 +75,7 @@ $(() => {
             function getAllMessages() {
                 //var tbl = $('#messagesTable');
                 $.ajax({
-                    url: 'Terminal/GetMessages',
+                    url: '/SmartMeter/Terminal/GetMessages',
                     data: { pld: pld},
                     contentType: 'application/html ; charset:utf-8',
                     type: 'GET',
@@ -123,7 +123,7 @@ $(() => {
         onClick() {
 
             $.ajax({
-                url: 'Terminal/SendToAPIAsync',
+                url: '/SmartMeter/Terminal/SendToAPIAsync',
                 type: 'POST',
                 data: { aid: aid, pld: pld, data: apidata, eid: eeid },
                 success: function (result) {

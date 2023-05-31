@@ -123,6 +123,17 @@ warning 6002: The table/view 'SmartMeter.dbo.tbl_CustomerDetails' does not have 
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="date" />
         </EntityType>
+        <EntityType Name="tbl_OTACommands">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Command" Type="varchar(max)" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="StartingPostion" Type="int" />
+          <Property Name="EndingPostion" Type="int" />
+        </EntityType>
         <EntityType Name="tbl_RawData_CRC">
           <Key>
             <PropertyRef Name="ID" />
@@ -308,6 +319,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_FetchInductiveData' does not have
           <EntitySet Name="tbl_CustomerRegistration" EntityType="Self.tbl_CustomerRegistration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_JioLogs" EntityType="Self.tbl_JioLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MeterMaster" EntityType="Self.tbl_MeterMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_OTACommands" EntityType="Self.tbl_OTACommands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_RawData_CRC" EntityType="Self.tbl_RawData_CRC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_RawDataAPI" EntityType="Self.tbl_RawDataAPI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_RoleMaster" EntityType="Self.tbl_RoleMaster" Schema="dbo" store:Type="Tables" />
@@ -515,6 +527,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_FetchInductiveData' does not have
           <FunctionImport Name="FetchConsumption_15DayRevenue" ReturnType="Collection(SmartMeterModel.FetchConsumption_15DayRevenue_Result)" />
           <EntitySet Name="tbl_SMeterMaster" EntityType="SmartMeterModel.tbl_SMeterMaster" />
           <EntitySet Name="tbl_SignalRMaxID" EntityType="SmartMeterModel.tbl_SignalRMaxID" />
+          <EntitySet Name="tbl_OTACommands" EntityType="SmartMeterModel.tbl_OTACommands" />
         </EntityContainer>
         <EntityType Name="CustomerRaw">
           <Key>
@@ -1047,6 +1060,17 @@ warning 6002: The table/view 'SmartMeter.dbo.V_FetchInductiveData' does not have
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaxID" Type="Int32" />
           <Property Name="PLD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_OTACommands">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Command" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartingPostion" Type="Int32" />
+          <Property Name="EndingPostion" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1718,6 +1742,18 @@ warning 6002: The table/view 'SmartMeter.dbo.V_FetchInductiveData' does not have
               <MappingFragment StoreEntitySet="tbl_SignalRMaxID">
                 <ScalarProperty Name="PLD" ColumnName="PLD" />
                 <ScalarProperty Name="MaxID" ColumnName="MaxID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_OTACommands">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_OTACommands">
+              <MappingFragment StoreEntitySet="tbl_OTACommands">
+                <ScalarProperty Name="EndingPostion" ColumnName="EndingPostion" />
+                <ScalarProperty Name="StartingPostion" ColumnName="StartingPostion" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Command" ColumnName="Command" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
