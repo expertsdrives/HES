@@ -5,11 +5,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using HESMDMS.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace HESMDMS.Controllers
 {
@@ -18,7 +22,7 @@ namespace HESMDMS.Controllers
     {
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         SmartMeterEntities clsMeters = new SmartMeterEntities();
-        SmartMeter_ProdEntities clsMeters_Prod= new SmartMeter_ProdEntities();
+        SmartMeter_ProdEntities clsMeters_Prod = new SmartMeter_ProdEntities();
         [Route("CustomerLoad")]
         [HttpGet]
         public HttpResponseMessage CustomerLoad(DataSourceLoadOptions loadOptions)
@@ -310,5 +314,54 @@ namespace HESMDMS.Controllers
         {
             return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_SMeterMaster, loadOptions));
         }
+        [Route("SmartMeterBackLogs")]
+        [HttpGet]
+        public HttpResponseMessage SmartMeterBackLogs(DataSourceLoadOptions loadOptions) {
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.tbl_CommandBackLog, loadOptions));
+        }
+        [Route("MeterFromPLD")]
+        [HttpGet]
+        public HttpResponseMessage MeterFromPLD(DataSourceLoadOptions loadOptions,string pld)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_SMeterMaster.Where(x=>x.PLD==pld), loadOptions));
+        }
+        [Route("LoadSmartUser")]
+        [HttpGet]
+        public HttpResponseMessage LoadSmartUser(DataSourceLoadOptions loadOptions)
+        {
+            
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.sp_SmartUser(), loadOptions));
+        }
+
+        [Route("LoadSMeterLookup")]
+        [HttpGet]
+        public HttpResponseMessage LoadSMeterLookup(DataSourceLoadOptions loadOptions)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_SMeterMaster, loadOptions));
+        }
+        [Route("InsertSmartUser")]
+        [HttpPost]
+        public HttpResponseMessage InsertSmartUser(FormDataCollection form)
+        {
+            var values = form.Get("values");
+
+            var newOrder = new tbl_AdminCredentials();
+            newOrder.RoleID = 5;
+            JsonConvert.PopulateObject(values, newOrder);
+            Validate(newOrder);
+            clsMeters.tbl_AdminCredentials.Add(newOrder);
+            clsMeters.SaveChanges();
+            var json = JsonConvert.DeserializeObject<sp_SmartUser_Result>(values);
+            var us = json.Username;
+            var LastUser = clsMeters.tbl_AdminCredentials.Where(x => x.Username == us).FirstOrDefault();
+            var SUser = new tbl_SmartMeterUser();
+            SUser.UserID = LastUser.ID;
+            SUser.MeterID = json.MeterID.ToString();
+            clsMeters_Prod.tbl_SmartMeterUser.Add(SUser);
+            clsMeters_Prod.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.Created, newOrder);
+            
+        }
+        
     }
 }

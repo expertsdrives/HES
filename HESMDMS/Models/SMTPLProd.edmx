@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SmartMeter_ProdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_CommandBackLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Data" Type="varchar(max)" />
+          <Property Name="EventName" Type="varchar(max)" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="LogDate" Type="datetime" />
+          <Property Name="pld" Type="varchar(max)" />
+          <Property Name="CompletedLogDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="tbl_JioLogs">
           <Key>
             <PropertyRef Name="ID" />
@@ -25,9 +37,38 @@
           <Property Name="eid" Type="nvarchar" MaxLength="50" />
           <Property Name="Data" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="tbl_SGMAuditLogs">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pld" Type="nvarchar(max)" />
+          <Property Name="Data" Type="nvarchar(max)" />
+          <Property Name="MeterID" Type="nvarchar(max)" />
+          <Property Name="EventName" Type="nvarchar(max)" />
+          <Property Name="LogDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_SmartMeterUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="MeterID" Type="varchar(max)" />
+        </EntityType>
+        <Function Name="sp_MeterResponse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ResponseSplited" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pld" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="LDate" Type="date" Mode="In" />
+          <Parameter Name="MDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sp_SmartUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="SmartMeter_ProdModelStoreContainer">
+          <EntitySet Name="tbl_CommandBackLog" EntityType="Self.tbl_CommandBackLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_JioLogs" EntityType="Self.tbl_JioLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Response" EntityType="Self.tbl_Response" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SGMAuditLogs" EntityType="Self.tbl_SGMAuditLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SmartMeterUser" EntityType="Self.tbl_SmartMeterUser" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -45,6 +86,16 @@
         <EntityContainer Name="SmartMeter_ProdEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_JioLogs" EntityType="Self.tbl_JioLogs" />
           <EntitySet Name="tbl_Response" EntityType="SmartMeter_ProdModel.tbl_Response" />
+          <EntitySet Name="tbl_CommandBackLog" EntityType="SmartMeter_ProdModel.tbl_CommandBackLog" />
+          <EntitySet Name="tbl_SGMAuditLogs" EntityType="SmartMeter_ProdModel.tbl_SGMAuditLogs" />
+          <EntitySet Name="tbl_SmartMeterUser" EntityType="SmartMeter_ProdModel.tbl_SmartMeterUser" />
+          <FunctionImport Name="sp_MeterResponse" ReturnType="Collection(SmartMeter_ProdModel.sp_MeterResponse_Result)" />
+          <FunctionImport Name="sp_ResponseSplited" ReturnType="Collection(SmartMeter_ProdModel.sp_ResponseSplited_Result)">
+            <Parameter Name="pld" Mode="In" Type="String" />
+            <Parameter Name="LDate" Mode="In" Type="DateTime" />
+            <Parameter Name="MDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_SmartUser" ReturnType="Collection(SmartMeter_ProdModel.sp_SmartUser_Result)" />
         </EntityContainer>
         <EntityType Name="tbl_Response">
           <Key>
@@ -57,6 +108,90 @@
           <Property Name="eid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="tbl_CommandBackLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LogDate" Type="DateTime" Precision="3" />
+          <Property Name="CompletedLogDate" Type="DateTime" Precision="3" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pld" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_SGMAuditLogs">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pld" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MeterID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EventName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LogDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_SmartMeterUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="MeterID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="sp_MeterResponse_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="DateTime" Name="LogDate" Nullable="true" />
+          <Property Type="Time" Name="LogTime" Nullable="true" />
+          <Property Type="String" Name="pld" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="aid" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="eid" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Data" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ResponseSplited_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="DateTime" Name="LogDate" Nullable="true" />
+          <Property Type="Time" Name="LogTime" Nullable="true" />
+          <Property Type="String" Name="pld" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="aid" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="eid" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StartingFrame" Nullable="true" />
+          <Property Type="String" Name="InstrumentID" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" />
+          <Property Type="String" Name="ActivationStatus" Nullable="true" />
+          <Property Type="String" Name="GasCount" Nullable="true" />
+          <Property Type="String" Name="MeasurementValue" Nullable="true" />
+          <Property Type="Decimal" Name="TotalConsumption" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="String" Name="UnitofMeasurement" Nullable="true" />
+          <Property Type="String" Name="BatteryVoltage" Nullable="true" />
+          <Property Type="String" Name="TamperEvents" Nullable="true" />
+          <Property Type="Decimal" Name="AccountBalance" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="String" Name="eCreditBalance" Nullable="true" />
+          <Property Type="String" Name="StandardCharge" Nullable="true" />
+          <Property Type="String" Name="StandardChargeUnit" Nullable="true" />
+          <Property Type="String" Name="eCreditonoff" Nullable="true" />
+          <Property Type="String" Name="ValvePosition" Nullable="true" />
+          <Property Type="String" Name="SystemHealth" Nullable="true" />
+          <Property Type="String" Name="TransmissionPacket" Nullable="true" />
+          <Property Type="String" Name="GasCalorific" Nullable="true" />
+          <Property Type="String" Name="Temperature" Nullable="true" />
+          <Property Type="String" Name="TarrifName" Nullable="true" />
+          <Property Type="String" Name="Checksum" Nullable="true" />
+          <Property Type="String" Name="EndOfFrame" Nullable="true" />
+          <Property Type="Decimal" Name="previous_value" Nullable="false" Precision="18" Scale="3" />
+          <Property Type="Decimal" Name="ActualConsumption" Nullable="false" Precision="19" Scale="3" />
+        </ComplexType>
+        <ComplexType Name="sp_SmartUser_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Password" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="RoleID" Nullable="false" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="AccessFailedCount" Nullable="true" />
+          <Property Type="String" Name="MeterID" Nullable="true" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -85,6 +220,105 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_CommandBackLog">
+            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_CommandBackLog">
+              <MappingFragment StoreEntitySet="tbl_CommandBackLog">
+                <ScalarProperty Name="pld" ColumnName="pld" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="CompletedLogDate" ColumnName="CompletedLogDate" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EventName" ColumnName="EventName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_SGMAuditLogs">
+            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_SGMAuditLogs">
+              <MappingFragment StoreEntitySet="tbl_SGMAuditLogs">
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="EventName" ColumnName="EventName" />
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="pld" ColumnName="pld" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_SmartMeterUser">
+            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_SmartMeterUser">
+              <MappingFragment StoreEntitySet="tbl_SmartMeterUser">
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_MeterResponse" FunctionName="SmartMeter_ProdModel.Store.sp_MeterResponse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeter_ProdModel.sp_MeterResponse_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="LogTime" ColumnName="LogTime" />
+                <ScalarProperty Name="pld" ColumnName="pld" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="eid" ColumnName="eid" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ResponseSplited" FunctionName="SmartMeter_ProdModel.Store.sp_ResponseSplited">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeter_ProdModel.sp_ResponseSplited_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="LogTime" ColumnName="LogTime" />
+                <ScalarProperty Name="pld" ColumnName="pld" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="eid" ColumnName="eid" />
+                <ScalarProperty Name="StartingFrame" ColumnName="StartingFrame" />
+                <ScalarProperty Name="InstrumentID" ColumnName="InstrumentID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="ActivationStatus" ColumnName="ActivationStatus" />
+                <ScalarProperty Name="GasCount" ColumnName="GasCount" />
+                <ScalarProperty Name="MeasurementValue" ColumnName="MeasurementValue" />
+                <ScalarProperty Name="TotalConsumption" ColumnName="TotalConsumption" />
+                <ScalarProperty Name="UnitofMeasurement" ColumnName="UnitofMeasurement" />
+                <ScalarProperty Name="BatteryVoltage" ColumnName="BatteryVoltage" />
+                <ScalarProperty Name="TamperEvents" ColumnName="TamperEvents" />
+                <ScalarProperty Name="AccountBalance" ColumnName="AccountBalance" />
+                <ScalarProperty Name="eCreditBalance" ColumnName="eCreditBalance" />
+                <ScalarProperty Name="StandardCharge" ColumnName="StandardCharge" />
+                <ScalarProperty Name="StandardChargeUnit" ColumnName="StandardChargeUnit" />
+                <ScalarProperty Name="eCreditonoff" ColumnName="eCreditonoff" />
+                <ScalarProperty Name="ValvePosition" ColumnName="ValvePosition" />
+                <ScalarProperty Name="SystemHealth" ColumnName="SystemHealth" />
+                <ScalarProperty Name="TransmissionPacket" ColumnName="TransmissionPacket" />
+                <ScalarProperty Name="GasCalorific" ColumnName="GasCalorific" />
+                <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+                <ScalarProperty Name="TarrifName" ColumnName="TarrifName" />
+                <ScalarProperty Name="Checksum" ColumnName="Checksum" />
+                <ScalarProperty Name="EndOfFrame" ColumnName="EndOfFrame" />
+                <ScalarProperty Name="previous_value" ColumnName="previous_value" />
+                <ScalarProperty Name="ActualConsumption" ColumnName="ActualConsumption" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_SmartUser" FunctionName="SmartMeter_ProdModel.Store.sp_SmartUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeter_ProdModel.sp_SmartUser_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,0 +1,256 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+
+
+    <div class="loadpanel"></div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Balance</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-4">
+                        <input type="text" class="form-control" placeholder="Enter Amount" aria-label="" id="lblAddBalance"><br />
+
+                    </div>
+                    <p>Kindly Pay amount via UPI smtpl@ybl</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnAddBalance">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xl-6">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card card-block card-stretch card-height">
+                            <div class="card-body">
+                                <div class=" rounded m-auto  align-items-center">
+                                    <p>
+                                        Current Balance
+                                    </p>
+                                    <h2>Rs. @ViewBag.Balance</h2>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mt-3">
+                                    <p class=" mb-0">Last Updated : @ViewBag.BalanceDate</p>
+                                </div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                    Add Balance
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card card-block card-stretch card-height">
+                            <div class="card-body">
+                                <div class=" rounded m-auto  align-items-center">
+                                    <p>Todays Consumption</p>
+
+                                    <h2>@ViewBag.VolumeMMBTU </h2>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mt-3">
+                                    <p class=" mb-0">Last Updated : @ViewBag.BalanceDate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card card-block card-stretch card-height">
+                            <div class="card-body">
+                                <div class=" rounded m-auto  align-items-center">
+                                    <p>Yesterday's Balance</p>
+                                    <h2>Rs. @ViewBag.YBalance</h2>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mt-3">
+                                    <p class=" mb-0">Last Updated : @ViewBag.YBalanceDate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card card-block card-stretch card-height">
+                            <div class="card-body">
+                                <div class=" rounded m-auto  align-items-center">
+                                    <p>Yesterday's Consumption</p>
+                                    <h2>@ViewBag.YVolumeMMBTU</h2>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mt-3">
+                                    <p class=" mb-0">Last Updated : @ViewBag.YBalanceDate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-xl-6">
+                <div class="card card-block card-stretch card-height">
+                    <div class="card-header d-flex justify-content-between ">
+                        <div class="header-title">
+                            <h4 class="card-title">Last 5 Transaction</h4>
+                        </div>
+                    </div>
+                    <div class="card-body rec-pat p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0 table-borderless">
+                                <thead class="">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Meter ID</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var data in ViewBag.AuditLog)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @data.LogDate
+                                            </td>
+                                            <td>
+                                                @data.MeterID
+                                            </td>
+                                            <td>
+                                                @HESMDMS.Models.c2d.getvalue(data.Data)
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-secondary">Paid</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-12 col-md-12">
+                <div class="card card-block card-stretch card-height ">
+                    <div class="card-header d-flex justify-content-between  align-items-start ">
+                        <div class="header-title">
+                            <h4 class="card-title">Last 30 Consumption History</h4>
+                        </div>
+                        @*<div class="card-header-toolbar d-flex align-items-center">
+                                <button class="btn btn-outline-secondary btn-sm bg-secondary">Monthly</button>
+
+                            </div>*@
+                    </div>
+                    <div class="loadpanel"></div>
+                    <div class="card-body ">
+                        <div id="customer-chart-02" class="customer-chart-02">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+<script src="~/assets/js/apexcharts.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#lblAddBalance").focus();
+    });
+    $.ajax({
+        url: 'GetChartData', // Replace 'YourController' with your actual controller name
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+
+            var options = {
+                series: [{
+                    name: 'Net Profit',
+                    data: data.amounts
+                }],
+                colors: ['#f56692'],
+                chart: {
+                    type: 'bar',
+                    height: 238,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '25%',
+                        borderRadius: 3,
+
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+
+                xaxis: {
+                    categories: data.categories,
+                    labels: {
+
+                        minWidth: 20,
+                        maxWidth: 20,
+                    }
+
+                },
+                yaxis: {
+                    labels: {
+                        offsetY: 0,
+                        minWidth: 20,
+                        maxWidth: 20,
+                        formatter: function (val, index) {
+                            return val;
+                        }
+
+                    }
+                },
+                fill: {
+                    opacity: 1
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return val + " mmbtu"
+                        }
+                    }
+                }
+            };
+
+
+
+            var chart = new ApexCharts(document.querySelector("#customer-chart-02"), options);
+            chart.render();
+            const body = document.querySelector('body')
+            if (body.classList.contains('dark')) {
+                apexChartUpdate(chart, {
+                    dark: true
+                })
+            }
+
+            document.addEventListener('ChangeColorMode', function (e) {
+                apexChartUpdate(chart, e.detail)
+            })
+        }
+    });
+
+
+    var pld = "@ViewBag.pld";
+    var aid = "@ViewBag.aid";
+    var eeid = "@ViewBag.eid";
+
+</script>
+<script src="~/Scripts/grid/UserBalance.js"></script>

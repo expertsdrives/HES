@@ -7198,6 +7198,7 @@
     <Content Include="Scripts\globalize\number.min.js" />
     <Content Include="Scripts\grid\AMRHealthGraph.js" />
     <Content Include="Scripts\grid\15DayRevenue.js" />
+    <Content Include="Scripts\grid\BackLogs.js" />
     <Content Include="Scripts\grid\BillingParameters.js" />
     <Content Include="Scripts\grid\CustomerRegistration.js" />
     <Content Include="Scripts\grid\15DayConsumption.js" />
@@ -7207,8 +7208,10 @@
     <Content Include="Scripts\grid\D2C.js" />
     <Content Include="Scripts\grid\MeterInformation.js" />
     <Content Include="Scripts\grid\ReplaceMeter.js" />
+    <Content Include="Scripts\grid\SmartUsers.js" />
     <Content Include="Scripts\grid\Terminal.js" />
     <Content Include="Scripts\grid\TerminalControl.js" />
+    <Content Include="Scripts\grid\UserBalance.js" />
     <Content Include="Scripts\grid\VayudutWise.js" />
     <Content Include="Scripts\grid\MagneticTemper.js" />
     <Content Include="Scripts\grid\MeterMaster.js" />
@@ -7227,6 +7230,10 @@
     <Content Include="Areas\SmartMeter\Views\UART\Index.cshtml" />
     <Content Include="Areas\SmartMeter\Views\Terminal\Terminal.cshtml" />
     <Content Include="Areas\SmartMeter\Views\Terminal\BillingParameters.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\Logs\Index.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\User\Index.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\User\Error.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\User\AddUser.cshtml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
@@ -7540,9 +7547,11 @@
     <Compile Include="Areas\Admin\Controllers\RawDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\BillingParameterController.cs" />
+    <Compile Include="Areas\SmartMeter\Controllers\LogsController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\MeterManagmentController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\TerminalController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\UARTController.cs" />
+    <Compile Include="Areas\SmartMeter\Controllers\UserController.cs" />
     <Compile Include="Areas\SmartMeter\SmartMeterAreaRegistration.cs" />
     <Compile Include="Controllers\AzureIOTHubController.cs" />
     <Compile Include="Controllers\CrudOperationController.cs" />
@@ -7559,6 +7568,7 @@
     <Compile Include="Models\15DayReport.cs" />
     <Compile Include="Models\AMRCRCModel.cs" />
     <Compile Include="Models\APIData.cs" />
+    <Compile Include="Models\c2d.cs" />
     <Compile Include="Models\CustomerRaw.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
@@ -7647,6 +7657,15 @@
     <Compile Include="Models\sp_GenerateInvoice_Result.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_MeterResponse_Result.cs">
+      <DependentUpon>SMTPLProd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_ResponseSplited_Result.cs">
+      <DependentUpon>SMTPLProd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_SmartUser_Result.cs">
+      <DependentUpon>SMTPLProd.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_TotalAMR_Result.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
@@ -7664,6 +7683,9 @@
     <Compile Include="Models\tbl_AMRHistory.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_CommandBackLog.cs">
+      <DependentUpon>SMTPLProd.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_CustomerDetails.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
@@ -7671,7 +7693,7 @@
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_JioLogs.cs">
-      <DependentUpon>SMTPL.tt</DependentUpon>
+      <DependentUpon>SMTPLProd.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_MeterMaster.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
@@ -7694,8 +7716,14 @@
     <Compile Include="Models\tbl_SerialNumberMaster.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_SGMAuditLogs.cs">
+      <DependentUpon>SMTPLProd.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_SignalRMaxID.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_SmartMeterUser.cs">
+      <DependentUpon>SMTPLProd.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_SMeterMaster.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>

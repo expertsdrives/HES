@@ -3,6 +3,7 @@
     var aid = "";
     var eeid = "";
     var apidata = "";
+    var modetype = "manual";
     $('#SelectMeter1').dxSelectBox({
         dataSource: DevExpress.data.AspNet.createStore({
             key: "ID",
@@ -84,16 +85,26 @@
             /* showEmployeeInfo(employee);*/
         },
     }).dxLoadPanel('instance');
-
+    $("#chkb").change(function () {
+        if ($(this).is(":checked")) {
+            modetype = "auto";
+            //console.log("auto");
+            // Perform actions when checkbox is checked
+        } else {
+            modetype = "manual";
+            //console.log("manual");
+            // Perform actions when checkbox is unchecked
+        }
+    });
 
     $("#btnAddBalance").click(function () {
         if (pld != "") {
             loadPanel.show();
             var balanceInput = $('#lblAddBalance').val();
             $.ajax({
-                url: '/SmartMeter/Terminal/SendDataAddBalance',
+                url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Add Balance", balanceInput: balanceInput },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Add Balance", modetype: modetype, balanceInput: balanceInput },
                 success: function (result) {
                     //loadPanel.hide();
                     //$("#lblPresentVolume").val(result+" m3");
@@ -126,7 +137,7 @@
             $.ajax({
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Get Balance" },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Get Balance", modetype: modetype, balanceInput:"" },
                 success: function (result) {
                     loadPanel.hide();
 
@@ -169,7 +180,7 @@
             $.ajax({
                 url: '/SmartMeter/Terminal/SendDataAddBalance',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Set Vat", balanceInput: balanceInput },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Set Vat", modetype: modetype, balanceInput: balanceInput },
                 success: function (result) {
                     //loadPanel.hide();
                     //$("#lblPresentVolume").val(result+" m3");
@@ -205,7 +216,7 @@
             $.ajax({
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Get Vat" },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Get Vat", modetype: modetype, balanceInput:"" },
                 success: function (result) {
                     loadPanel.hide();
 
@@ -287,7 +298,7 @@
             $.ajax({
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Get Tariff" },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Get Tariff", modetype: modetype, balanceInput:"" },
                 success: function (result) {
                     loadPanel.hide();
 

@@ -3,6 +3,157 @@
     ViewBag.Title = "Terminal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+
+    /* Switch starts here */
+    .rocker {
+        display: inline-block;
+        position: relative;
+        /*
+  SIZE OF SWITCH
+  ==============
+  All sizes are in em - therefore
+  changing the font-size here
+  will change the size of the switch.
+  See .rocker-small below as example.
+  */
+        font-size: 2em;
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+        color: #888;
+        width: 7em;
+        height: 4em;
+        overflow: hidden;
+        border-bottom: 0.5em solid #eee;
+    }
+
+    .rocker-small {
+        font-size: 0.75em;
+        /* Sizes the switch */
+        margin: 1em;
+    }
+
+    .rocker::before {
+        content: "";
+        position: absolute;
+        top: 0.5em;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #999;
+        border: 0.5em solid #eee;
+        border-bottom: 0;
+    }
+
+    .rocker input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .switch-left,
+    .switch-right {
+        cursor: pointer;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 2.5em;
+        width: 3em;
+        transition: 0.2s;
+        user-select: none;
+    }
+
+    .switch-left {
+        height: 2.4em;
+        width: 2.75em;
+        left: 0.85em;
+        bottom: 0.4em;
+        background-color: #ddd;
+        transform: rotate(15deg) skewX(15deg);
+    }
+
+    .switch-right {
+        right: 0.5em;
+        bottom: 0;
+        background-color: #bd5757;
+        color: #fff;
+    }
+
+        .switch-left::before,
+        .switch-right::before {
+            content: "";
+            position: absolute;
+            width: 0.4em;
+            height: 2.45em;
+            bottom: -0.45em;
+            background-color: #ccc;
+            transform: skewY(-65deg);
+        }
+
+    .switch-left::before {
+        left: -0.4em;
+    }
+
+    .switch-right::before {
+        right: -0.375em;
+        background-color: transparent;
+        transform: skewY(65deg);
+    }
+
+    input:checked + .switch-left {
+        background-color: #0084d0;
+        color: #fff;
+        bottom: 0px;
+        left: 0.5em;
+        height: 2.5em;
+        width: 3em;
+        transform: rotate(0deg) skewX(0deg);
+    }
+
+        input:checked + .switch-left::before {
+            background-color: transparent;
+            width: 3.0833em;
+        }
+
+        input:checked + .switch-left + .switch-right {
+            background-color: #ddd;
+            color: #888;
+            bottom: 0.4em;
+            right: 0.8em;
+            height: 2.4em;
+            width: 2.75em;
+            transform: rotate(-15deg) skewX(-15deg);
+        }
+
+            input:checked + .switch-left + .switch-right::before {
+                background-color: #ccc;
+            }
+
+    /* Keyboard Users */
+    input:focus + .switch-left {
+        color: #333;
+    }
+
+    input:checked:focus + .switch-left {
+        color: #fff;
+    }
+
+    input:focus + .switch-left + .switch-right {
+        color: #fff;
+    }
+
+    input:checked:focus + .switch-left + .switch-right {
+        color: #333;
+    }
+</style>
+<label>Manual OTA</label>
+<label class="rocker rocker-small">
+    <input type="checkbox" id="chkb">
+    <span class="switch-left">Off</span>
+    <span class="switch-right">On</span>
+</label>
 <div class="col-sm-12 col-lg-12">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
@@ -19,141 +170,153 @@
 
 <div class="loadpanel"></div>
 
-    <div class="col-sm-12 col-lg-4">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                    <h4 class="card-title">System Opertation</h4>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                        <button id="connectButton" class="btn btn-primary">Connect via Serial Port</button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="" aria-label="" readonly id="target">
-                </div>
-                @*<div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="btnPassword">Password</button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblPassword">
-                </div>*@
+<div class="col-sm-12 col-lg-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">System Opertation</h4>
             </div>
         </div>
-
+        <div class="card-body">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button id="connectButton" class="btn btn-primary">Connect via Serial Port</button>
+                </div>
+                <input type="text" class="form-control" placeholder="" aria-label="" readonly id="target">
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button id="enableButton" class="btn btn-primary">Enable OTA</button>
+                </div>
+                <input type="text" class="form-control" placeholder="" aria-label="" readonly id="enableOTA">
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button id="disableButton" class="btn btn-primary">Disable OTA</button>
+                </div>
+                <input type="text" class="form-control" placeholder="" aria-label="" readonly id="disableOTA">
+            </div>
+            @*<div class="input-group mb-4">
+            <div class="input-group-prepend">
+                <button class="btn btn-primary" type="button" id="btnPassword">Password</button>
+            </div>
+            <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblPassword">
+        </div>*@
+        </div>
     </div>
 
-    <div class="col-sm-12 col-lg-4">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                    <h4 class="card-title">Volume</h4>
-                </div>
-            </div>
-            <div class="card-body volume">
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="btnPresentVolume">Present Volume</button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="0 m3" aria-label="" readonly id="lblPresentVolume">
-                </div>
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="btnVolumeNVM">Volume (NVM)</button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="0 m3" aria-label="" readonly id="lblVolumeNVM">
-                </div>
+</div>
+
+<div class="col-sm-12 col-lg-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">Volume</h4>
             </div>
         </div>
-
-    </div>
-    <div class="col-sm-12 col-lg-4">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                    <h4 class="card-title">RTC</h4>
+        <div class="card-body volume">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnPresentVolume">Present Volume</button>
                 </div>
+                <input type="text" class="form-control" placeholder="0 m3" aria-label="" readonly id="lblPresentVolume">
             </div>
-            <div class="card-body">
-                @*<div class="input-group mb-4">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnVolumeNVM">Volume (NVM)</button>
+                </div>
+                <input type="text" class="form-control" placeholder="0 m3" aria-label="" readonly id="lblVolumeNVM">
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="col-sm-12 col-lg-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">RTC</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            @*<div class="input-group mb-4">
                     <div class="input-group-prepend">
                         <button class="btn btn-primary" type="button">Set RTC</button>
                     </div>
                     <input type="text" class="form-control" placeholder="dd:mm:yy HH:MM:SS" aria-label="" readonly id="clock">
                 </div>*@
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="btnGetRTC">Get RTC</button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblGetRTC">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnGetRTC">Get RTC</button>
                 </div>
+                <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblGetRTC">
             </div>
         </div>
-
     </div>
 
-    <div class="col-sm-12 col-lg-4">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                    <h4 class="card-title">System Health Check</h4>
-                </div>
+</div>
+
+<div class="col-sm-12 col-lg-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">System Health Check</h4>
             </div>
-            <div class="card-body">
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="btnSOVStatus">SOV Status</button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblSOVStatus">
+        </div>
+        <div class="card-body">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnSOVStatus">SOV Status</button>
                 </div>
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="btnSOVOpen">SOV Open</button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblSOVOpen">
+                <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblSOVStatus">
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnSOVOpen">SOV Open</button>
                 </div>
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="btnSOVClose">SOV Close</button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblSOVClose">
+                <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblSOVOpen">
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnSOVClose">SOV Close</button>
                 </div>
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="btnBatteryVoltage">Battery Voltage</button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="0 Volts" aria-label="" readonly id="lblBatteryVoltage">
+                <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblSOVClose">
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnBatteryVoltage">Battery Voltage</button>
                 </div>
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="btnBatteryLife">Battery Life</button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="0 Years 0 Days" aria-label="" readonly id="lblBatteryLife">
+                <input type="text" class="form-control" placeholder="0 Volts" aria-label="" readonly id="lblBatteryVoltage">
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnBatteryLife">Battery Life</button>
                 </div>
-                @*<div class="input-group mb-4">
+                <input type="text" class="form-control" placeholder="0 Years 0 Days" aria-label="" readonly id="lblBatteryLife">
+            </div>
+            @*<div class="input-group mb-4">
                     <div class="input-group-prepend">
                         <button class="btn btn-primary" type="button">Dispaly All</button>
                     </div>
                     <input type="text" class="form-control" placeholder="" aria-label="" readonly>
                 </div>*@
-                @*<div class="input-group mb-4">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-primary" type="button">Battery Replacement Start</button>
-                        </div>
-                        <input type="text" class="form-control" placeholder="" aria-label="" readonly>
+            @*<div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button">Battery Replacement Start</button>
                     </div>
-                    <div class="input-group mb-4">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-primary" type="button">Battery Replacement End</button>
-                        </div>
-                        <input type="text" class="form-control" placeholder="" aria-label="" readonly>
-                    </div>*@
-            </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" readonly>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button">Battery Replacement End</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" readonly>
+                </div>*@
         </div>
-
     </div>
-    @*<div class="col-sm-12 col-lg-4">
+
+</div>
+@*<div class="col-sm-12 col-lg-4">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div class="header-title">
@@ -212,101 +375,98 @@
 
 
 
-    <div class="col-sm-12 col-lg-4">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                    <h4 class="card-title">Tamper/Error Status</h4>
-                </div>
-            </div>
-            <div class="card-body">
-
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
-                    </div>
-                    <input type="text" class="form-control" readonly value="Tilt Tamper" >
-                    <input type="text" class="form-control" readonly value="0" id="lblTilt">
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
-                    </div>
-                    <input type="text" class="form-control" readonly value="Case Tamper" >
-                    <input type="text" class="form-control" readonly value="0" id="lblCase">
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
-                    </div>
-                    <input type="text" class="form-control" readonly value="Magnet Tamper" >
-                    <input type="text" class="form-control" readonly value="0" id="lblMaganet">
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
-                    </div>
-                    <input type="text" class="form-control" readonly value="Excess Push Key" >
-                    <input type="text" class="form-control" readonly value="0" id="lblExcessPush">
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
-                    </div>
-                    <input type="text" class="form-control" readonly value="Excess Gas Flow" >
-                    <input type="text" class="form-control" readonly value="0" id="lblExcessGas">
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
-                    </div>
-                    <input type="text" class="form-control" readonly value="SOV Tamper" >
-                    <input type="text" class="form-control" readonly value="0" id="lblSOVTamper">
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
-                    </div>
-                    <input type="text" class="form-control" readonly value="Login Error" >
-                    <input type="text" class="form-control" readonly value="0" id="lblLoginError">
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
-                    </div>
-                    <input type="text" class="form-control" readonly value="Battery Tamper" >
-                    <input type="text" class="form-control" readonly value="0" id="lblBatteryTamper">
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="first"><input type="checkbox" /></span>
-                    </div>
-                    <input type="text" class="form-control" readonly value="RF Comm Error" >
-                    <input type="text" class="form-control" readonly value="0" id="lblRFTamper">
-                </div>
-                <br />
-                <br />
-                <button class="btn btn-primary" type="button" id="btnTamperStatus">Tamper Status</button>&nbsp;
-                <button type="submit" class="btn bg-danger">Tamper Reset</button>
-
+<div class="col-sm-12 col-lg-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">Tamper/Error Status</h4>
             </div>
         </div>
+        <div class="card-body">
 
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                </div>
+                <input type="text" class="form-control" readonly value="Tilt Tamper">
+                <input type="text" class="form-control" readonly value="0" id="lblTilt">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                </div>
+                <input type="text" class="form-control" readonly value="Case Tamper">
+                <input type="text" class="form-control" readonly value="0" id="lblCase">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                </div>
+                <input type="text" class="form-control" readonly value="Magnet Tamper">
+                <input type="text" class="form-control" readonly value="0" id="lblMaganet">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                </div>
+                <input type="text" class="form-control" readonly value="Excess Push Key">
+                <input type="text" class="form-control" readonly value="0" id="lblExcessPush">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                </div>
+                <input type="text" class="form-control" readonly value="Excess Gas Flow">
+                <input type="text" class="form-control" readonly value="0" id="lblExcessGas">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                </div>
+                <input type="text" class="form-control" readonly value="SOV Tamper">
+                <input type="text" class="form-control" readonly value="0" id="lblSOVTamper">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                </div>
+                <input type="text" class="form-control" readonly value="Login Error">
+                <input type="text" class="form-control" readonly value="0" id="lblLoginError">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                </div>
+                <input type="text" class="form-control" readonly value="Battery Tamper">
+                <input type="text" class="form-control" readonly value="0" id="lblBatteryTamper">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="first"><input type="checkbox" /></span>
+                </div>
+                <input type="text" class="form-control" readonly value="RF Comm Error">
+                <input type="text" class="form-control" readonly value="0" id="lblRFTamper">
+            </div>
+            <br />
+            <br />
+            <button class="btn btn-primary" type="button" id="btnTamperStatus">Tamper Status</button>&nbsp;
+            <button type="submit" class="btn bg-danger">Tamper Reset</button>
+
+        </div>
     </div>
+
+</div>
 
 <script>
     var Jsondata = @Html.Raw(Json.Encode(ViewBag.data));
-
-</script>
-<script src="~/Scripts/grid/TerminalControl.js"></script>
-<script>
-    $(document).ready(function () {
-
-      
+    
+    $(function () {
+       
     });
+
     let port;
     let log;
- 
+    let writer;
     function toHexString(byteArray) {
         var hexString = '';
         for (var i = 0; i < byteArray.length; i++) {
@@ -328,8 +488,25 @@
             connectSerial();
         }
         else {
-     alert('Web Serial API not supported.');
-      }
+            alert('Web Serial API not supported.');
+        }
+    });
+    $('#disableButton').click(function () {
+        if (navigator.serial) {
+            disableSerial();
+        }
+        else {
+            alert('Web Serial API not supported.');
+        }
+    });
+
+    $('#enableButton').click(function () {
+        if (navigator.serial) {
+            enableSerial();
+        }
+        else {
+            alert('Web Serial API not supported.');
+        }
     });
     //document.getElementById('connectButton').addEventListener('click', () => {
     //    if (navigator.serial) {
@@ -342,7 +519,17 @@
     //    }
     //});
 
-
+    async function disableSerial() {
+        const EnableOTA = "02 03 00 00 3F 01 03";
+        const byteArrayOTA = EnableOTA.split(' ').map(hex => parseInt(hex, 16));
+        const dataOTA = new Uint8Array(byteArrayOTA);
+        await writer.write(dataOTA);
+    } async function enableSerial() {
+        const EnableOTA = "02 03 00 00 3F 00 03";
+        const byteArrayOTA = EnableOTA.split(' ').map(hex => parseInt(hex, 16));
+        const dataOTA = new Uint8Array(byteArrayOTA);
+        await writer.write(dataOTA);
+    }
     async function connectSerial() {
         log = document.getElementById('target');
 
@@ -357,7 +544,7 @@
 
             const inputStream = decoder.readable;
             const reader = inputStream.getReader();
-            const writer = port.writable.getWriter();
+            writer = port.writable.getWriter();
 
             var password = "";
             var passwordInput = document.createElement("input");
@@ -372,8 +559,19 @@
             const byteArray = hexString.split(' ').map(hex => parseInt(hex, 16));
             const data = new Uint8Array(byteArray);
             await writer.write(data);
+            
             // Allow the serial port to be closed later.
-            writer.releaseLock();
+            //writer.releaseLock();
+            setTimeout(function () {
+                // Code to be executed after the sleep
+                console.log("Calling!");
+            }, 5000);
+
+            //const EnableOTA = "02 03 00 00 3F 00 03";
+            //const byteArrayOTA = EnableOTA.split(' ').map(hex => parseInt(hex, 16));
+            //const dataOTA = new Uint8Array(byteArrayOTA);
+            //await writer.write(dataOTA);
+
             if (a == "12345678") {
                 $('#target').val("Authenticated")
             }
@@ -397,3 +595,5 @@
         }
     }
 </script>
+
+<script src="~/Scripts/grid/TerminalControl.js"></script>

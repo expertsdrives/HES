@@ -3,6 +3,7 @@
     var aid = "";
     var eeid = "";
     var apidata = "";
+    var modetype = "manual";
     $('#SelectMeter').dxSelectBox({
         dataSource: DevExpress.data.AspNet.createStore({
             key: "ID",
@@ -85,14 +86,24 @@
         },
     }).dxLoadPanel('instance');
 
-
+    $("#chkb").change(function () {
+        if ($(this).is(":checked")) {
+            modetype = "auto";
+            //console.log("auto");
+            // Perform actions when checkbox is checked
+        } else {
+            modetype = "manual";
+            //console.log("manual");
+            // Perform actions when checkbox is unchecked
+        }
+    });
     $("#btnPresentVolume").click(function () {
         if (pld != "") {
             loadPanel.show();
             $.ajax({
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Present Volume" },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Present Volume", modetype: modetype, balanceInput: "" },
                 success: function (result) {
                     //loadPanel.hide();
                     //$("#lblPresentVolume").val(result+" m3");
@@ -100,7 +111,7 @@
                     ////const myArray = result.split("/");
                     ////var data = myArray[1];
                     //DevExpress.ui.notify(result, "warning", 2000);
-                    if (result != null) {
+                    if (result != "error") {
 
                         $.ajax({
                             url: '/SmartMeter/Terminal/StringToHex',
@@ -118,7 +129,12 @@
                     }
                     else {
                         loadPanel.hide();
-                        $("#lblPresentVolume").val("No Response");
+                        if (result == "Manual Mode Not Activated") {
+                            alert("Manual Mode Not Activated")
+                        }
+                        else {
+                            $("#lblPresentVolume").val("No Response");
+                        }
                     }
                 }
             });
@@ -138,11 +154,11 @@
             $.ajax({
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Volume (NVM)" },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Volume (NVM)", modetype: modetype, balanceInput: "" },
                 success: function (result) {
                     loadPanel.hide();
 
-                    if (result != null) {
+                    if (result != "error") {
                         $.ajax({
                             url: '/SmartMeter/Terminal/StringToHexNVE',
                             type: 'POST',
@@ -159,12 +175,18 @@
                     }
                     else {
                         loadPanel.hide();
-                        $("#lblVolumeNVM").val("No Response");
+
+                        if (result == "Manual Mode Not Activated") {
+                            alert("Manual Mode Not Activated")
+                        }
+                        else {
+                            $("#lblVolumeNVM").val("No Response");
+                        }
                     }
                     //textareaLogs.option('value', result);
                     //const myArray = result.split("/");
                     //var data = myArray[1];
-                    DevExpress.ui.notify(result, "warning", 2000);
+                    
                 }
             });
         }
@@ -182,7 +204,7 @@
             $.ajax({
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Open Valve" },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Open Valve", modetype: modetype, balanceInput: "" },
                 success: function (result) {
                     loadPanel.hide();
 
@@ -192,12 +214,17 @@
                     }
                     else {
                         loadPanel.hide();
-                        $("#lblSOVOpen").val("No Response");
+                        if (result == "Manual Mode Not Activated") {
+                            alert("Manual Mode Not Activated")
+                        }
+                        else {
+                            $("#lblSOVOpen").val("No Response");
+                        }
                     }
                     //textareaLogs.option('value', result);
                     //const myArray = result.split("/");
                     //var data = myArray[1];
-                    DevExpress.ui.notify(result, "warning", 2000);
+                  
                 }
             });
         }
@@ -212,7 +239,7 @@
             $.ajax({
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Close Valve" },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Close Valve", modetype: modetype, balanceInput: "" },
                 success: function (result) {
                     loadPanel.hide();
 
@@ -222,12 +249,17 @@
                     }
                     else {
                         loadPanel.hide();
-                        $("#lblSOVClose").val("No Response");
+                        if (result == "Manual Mode Not Activated") {
+                            alert("Manual Mode Not Activated")
+                        }
+                        else {
+                            $("#lblSOVClose").val("No Response");
+                        }
                     }
                     //textareaLogs.option('value', result);
                     //const myArray = result.split("/");
                     //var data = myArray[1];
-                    DevExpress.ui.notify(result, "warning", 2000);
+                   
                 }
             });
         }
@@ -243,7 +275,7 @@
             $.ajax({
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Get Valve Position" },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Get Valve Position", modetype: modetype, balanceInput: "" },
                 success: function (result) {
                     loadPanel.hide();
 
@@ -257,12 +289,17 @@
                     }
                     else {
                         loadPanel.hide();
-                        $("#lblSOVStatus").val("No Response");
+                        if (result == "Manual Mode Not Activated") {
+                            alert("Manual Mode Not Activated")
+                        }
+                        else {
+                            $("#lblSOVStatus").val("No Response");
+                        }
                     }
                     //textareaLogs.option('value', result);
                     //const myArray = result.split("/");
                     //var data = myArray[1];
-                    DevExpress.ui.notify(result, "warning", 2000);
+                   
                 }
             });
         } else {
@@ -278,7 +315,7 @@
             $.ajax({
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Battery Voltage" },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Battery Voltage", modetype: modetype, balanceInput: "" },
                 success: function (result) {
                     loadPanel.hide();
 
@@ -300,7 +337,12 @@
                     }
                     else {
                         loadPanel.hide();
-                        $("#lblBatteryVoltage").val("No Response");
+                        if (result == "Manual Mode Not Activated") {
+                            alert("Manual Mode Not Activated")
+                        }
+                        else {
+                            $("#lblBatteryVoltage").val("No Response");
+                        }
                     }
                     //textareaLogs.option('value', result);
                     //const myArray = result.split("/");
@@ -321,7 +363,7 @@
             $.ajax({
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
-                data: { aid: aid, pld: pld, eid: eeid, eventname: "Battery Life" },
+                data: { aid: aid, pld: pld, eid: eeid, eventname: "Battery Life", modetype: modetype, balanceInput: "" },
                 success: function (result) {
                     loadPanel.hide();
 
@@ -343,7 +385,12 @@
                     }
                     else {
                         loadPanel.hide();
-                        $("#lblBatteryLife").val("No Response");
+                        if (result == "Manual Mode Not Activated") {
+                            alert("Manual Mode Not Activated")
+                        }
+                        else {
+                            $("#lblBatteryLife").val("No Response");
+                        }
                     }
                     //textareaLogs.option('value', result);
                     //const myArray = result.split("/");
@@ -366,7 +413,7 @@
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
                 data: {
-                    aid: aid, pld: pld, eid: eeid, eventname: "Tamper Status"
+                    aid: aid, pld: pld, eid: eeid, eventname: "Tamper Status", modetype: modetype, balanceInput:""
                 },
                 success: function (result) {
                     loadPanel.hide();
@@ -399,7 +446,12 @@
                     }
                     else {
                         loadPanel.hide();
-                        $("#lblBatteryLife").val("No Response");
+                        if (result == "Manual Mode Not Activated") {
+                            alert("Manual Mode Not Activated")
+                        }
+                        else {
+                            $("#lblBatteryLife").val("No Response");
+                        }
                     }
                     //textareaLogs.option('value', result);
                     //const myArray = result.split("/");
@@ -420,7 +472,7 @@
                 url: '/SmartMeter/Terminal/SendData',
                 type: 'POST',
                 data: {
-                    aid: aid, pld: pld, eid: eeid, eventname: "Get RTC"
+                    aid: aid, pld: pld, eid: eeid, eventname: "Get RTC", modetype: modetype, balanceInput:""
                 },
                 success: function (result) {
                     loadPanel.hide();
@@ -443,7 +495,12 @@
                     }
                     else {
                         loadPanel.hide();
-                        $("#lblGetRTC").val("No Response");
+                        if (result == "Manual Mode Not Activated") {
+                            alert("Manual Mode Not Activated")
+                        }
+                        else {
+                            $("#lblGetRTC").val("No Response");
+                        }
                     }
                     //textareaLogs.option('value', result);
                     //const myArray = result.split("/");

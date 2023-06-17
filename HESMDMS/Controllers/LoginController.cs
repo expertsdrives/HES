@@ -48,8 +48,16 @@ namespace HESMDMS.Controllers
                     Session.Add("RoleID", data.RoleID);
                     Session.Add("FullName", data.FullName);
                     Session.Add("Username", data.Username);
+                    Session.Add("UserID", data.ID);
                     FormsAuthentication.SetAuthCookie(data.FullName, false);
-                    return RedirectToAction("../Admin/Dashboad/Index");
+                    if (data.RoleID == 5)
+                    {
+                        return RedirectToAction("../SmartMeter/User/");
+                    }
+                    else
+                    {
+                        return RedirectToAction("../Admin/Dashboad/Index");
+                    }
                 }
                 else
                 {

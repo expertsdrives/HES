@@ -83,77 +83,7 @@ if (jQuery("#summary-chart-01").length) {
   };
   
   if (jQuery("#customer-chart-02").length) {
-    var options = {
-      series: [{
-        name: 'Net Profit',
-        data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-      }],
-      colors: ['#f56692'],
-      chart: {
-        type: 'bar',
-        height: 238,
-        toolbar: {
-            show: false
-          }
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '25%',
-          borderRadius: 3,
-          
-        },
-      },
-      dataLabels: {
-        enabled: false
-      },
-     
-      xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-        labels: {
-       
-          minWidth: 20,
-          maxWidth: 20,
-        }
-      
-      },
-      yaxis: {
-        labels: {
-          offsetY: 0,
-          minWidth: 20,
-          maxWidth: 20,
-          formatter: function (val, index) {
-            return '$' + val;
-          }
-
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return "$ " + val + " thousands"
-          }
-        }
-      }
-    };
-    var chart = new ApexCharts(document.querySelector("#customer-chart-02"), options);
-    chart.render();
-
-
-
-    const body = document.querySelector('body')
-    if (body.classList.contains('dark')) {
-      apexChartUpdate(chart, {
-        dark: true
-      })
-    }
-
-    document.addEventListener('ChangeColorMode', function (e) {
-      apexChartUpdate(chart, e.detail)
-    })
+ 
 
   };
 

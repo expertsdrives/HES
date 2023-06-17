@@ -12,6 +12,8 @@ namespace HESMDMS.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class SmartMeter_ProdEntities : DbContext
     {
@@ -27,5 +29,35 @@ namespace HESMDMS.Models
     
         public virtual DbSet<tbl_JioLogs> tbl_JioLogs { get; set; }
         public virtual DbSet<tbl_Response> tbl_Response { get; set; }
+        public virtual DbSet<tbl_CommandBackLog> tbl_CommandBackLog { get; set; }
+        public virtual DbSet<tbl_SGMAuditLogs> tbl_SGMAuditLogs { get; set; }
+        public virtual DbSet<tbl_SmartMeterUser> tbl_SmartMeterUser { get; set; }
+    
+        public virtual ObjectResult<sp_MeterResponse_Result> sp_MeterResponse()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MeterResponse_Result>("sp_MeterResponse");
+        }
+    
+        public virtual ObjectResult<sp_ResponseSplited_Result> sp_ResponseSplited(string pld, Nullable<System.DateTime> lDate, Nullable<System.DateTime> mDate)
+        {
+            var pldParameter = pld != null ?
+                new ObjectParameter("pld", pld) :
+                new ObjectParameter("pld", typeof(string));
+    
+            var lDateParameter = lDate.HasValue ?
+                new ObjectParameter("LDate", lDate) :
+                new ObjectParameter("LDate", typeof(System.DateTime));
+    
+            var mDateParameter = mDate.HasValue ?
+                new ObjectParameter("MDate", mDate) :
+                new ObjectParameter("MDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ResponseSplited_Result>("sp_ResponseSplited", pldParameter, lDateParameter, mDateParameter);
+        }
+    
+        public virtual ObjectResult<sp_SmartUser_Result> sp_SmartUser()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_SmartUser_Result>("sp_SmartUser");
+        }
     }
 }
