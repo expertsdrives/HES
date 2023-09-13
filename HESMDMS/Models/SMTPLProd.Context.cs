@@ -32,6 +32,7 @@ namespace HESMDMS.Models
         public virtual DbSet<tbl_CommandBackLog> tbl_CommandBackLog { get; set; }
         public virtual DbSet<tbl_SGMAuditLogs> tbl_SGMAuditLogs { get; set; }
         public virtual DbSet<tbl_SmartMeterUser> tbl_SmartMeterUser { get; set; }
+        public virtual DbSet<tbl_BackLogAPILogs> tbl_BackLogAPILogs { get; set; }
     
         public virtual ObjectResult<sp_MeterResponse_Result> sp_MeterResponse()
         {
