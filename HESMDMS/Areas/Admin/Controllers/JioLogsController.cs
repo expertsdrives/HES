@@ -9,6 +9,7 @@ using System.Web.Script.Serialization;
 
 namespace HESMDMS.Areas.Admin.Controllers
 {
+    [SessionRequired]
     public class JioLogsController : Controller
     {
         SmartMeterEntities clsMeters = new SmartMeterEntities();

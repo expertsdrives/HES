@@ -7,6 +7,7 @@ using HESMDMS.Models;
 namespace HESMDMS.Controllers
 {
     [Authorize]
+    [SessionRequired]
     public class DataReceptionController : Controller
     {
         SmartMeterEntities clsMeter = new SmartMeterEntities();

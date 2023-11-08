@@ -1,0 +1,36 @@
+﻿@model IEnumerable<HESMDMS.Models.tbl_CommandBackLog>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<div id="gridContainer"></div>
+
+<script>
+    $(function () {
+        var grid = $("#gridContainer").dxDataGrid({
+            dataSource: $.connection.gridHub,
+            remoteOperations: true,
+            repaintChangesOnly: true,
+            highlightChanges: true,
+            columns: [
+                // Define your columns here
+                { dataField: "ID", caption: "ID" },
+                { dataField: "pld", caption: "pld" },
+            ],
+            
+            onContentReady: function (e) {
+                // No need for custom loading here
+                $.getJSON("@Url.Action("GetData", "Signal")", function (data) {
+                    e.component.option("dataSource", data);
+                   
+                    // The grid will automatically handle loading indicators
+                });
+            }
+        }).dxDataGrid("instance");
+    });
+</script>
+
+<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+<script type="text/javascript" src="/signalr/hubs"></script>
+<script>
+    $.connection.hub.start();
+</script>

@@ -15,7 +15,7 @@ namespace HESMDMS.Models
     public partial class tbl_SMeterMaster
     {
         public int ID { get; set; }
-        public Nullable<double> MeterID { get; set; }
+        public string TempMeterID { get; set; }
         public string SimICCID { get; set; }
         public Nullable<double> SimNo { get; set; }
         public Nullable<double> IMSI { get; set; }
@@ -28,6 +28,7 @@ namespace HESMDMS.Models
         public string SVC { get; set; }
         public string AID { get; set; }
         public string AppName { get; set; }
+        public string MeterSerialNumber { get; set; }
         public Nullable<double> EID { get; set; }
     }
 }

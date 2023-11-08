@@ -16,10 +16,11 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
     public class MeterManagmentController : Controller
     {
         SmartMeterEntities clsMeters = new SmartMeterEntities();
+        SmartMeter_ProdEntities clsMeters_Prod = new SmartMeter_ProdEntities();
         // GET: SmartMeter/MeterManagment
         public ActionResult Index()
         {
-            var data = clsMeters.tbl_SMeterMaster.ToList();
+            var data = clsMeters_Prod.tbl_SMeterMaster.ToList();
             ViewBag.data = data;
             return View();
         }

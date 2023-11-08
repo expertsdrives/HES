@@ -52,10 +52,12 @@ namespace HESMDMS.Controllers
                     FormsAuthentication.SetAuthCookie(data.FullName, false);
                     if (data.RoleID == 5)
                     {
+                       
                         return RedirectToAction("../SmartMeter/User/");
                     }
                     else
                     {
+                        Session.Add("Admin", "Admin");
                         return RedirectToAction("../Admin/Dashboad/Index");
                     }
                 }
@@ -73,6 +75,8 @@ namespace HESMDMS.Controllers
 
         }
         [Authorize]
+
+        [SessionRequired]
         public ActionResult Dashboard()
         {
             int totalMeter = clsMeter.tbl_CustomerRegistration.Count();
@@ -94,6 +98,10 @@ namespace HESMDMS.Controllers
             FormsAuthentication.SignOut();
             Session.RemoveAll();
             return RedirectToAction("Index");
+        }
+        public ActionResult ForgotPassword()
+        {
+            return View();
         }
     }
 }

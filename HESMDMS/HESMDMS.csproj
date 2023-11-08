@@ -26,6 +26,10 @@
     <TypeScriptToolsVersion>4.3</TypeScriptToolsVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <_MigrateToProjectGuid>
+    </_MigrateToProjectGuid>
+    <_MigrationKind />
+    <_MigrateToProjectPath />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -7139,25 +7143,25 @@
     <Content Include="Invoice\index.html" />
     <Content Include="Invoice\js\jquery_cdn.js" />
     <Content Include="Invoice\js\script.js" />
+    <Content Include="Models\SmartMeter_ProdEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SmartMeter_ProdEntities.edmx</DependentUpon>
+      <LastGenOutput>SmartMeter_ProdEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SmartMeter_ProdEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SmartMeter_ProdEntities.edmx</DependentUpon>
+      <LastGenOutput>SmartMeter_ProdEntities.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\SMTPL.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SMTPL.Context.cs</LastGenOutput>
       <DependentUpon>SMTPL.edmx</DependentUpon>
+      <LastGenOutput>SMTPL.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\SMTPL.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SMTPL.edmx</DependentUpon>
       <LastGenOutput>SMTPL.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\SMTPLProd.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SMTPLProd.edmx</DependentUpon>
-      <LastGenOutput>SMTPLProd.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\SMTPLProd.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SMTPLProd.edmx</DependentUpon>
-      <LastGenOutput>SMTPLProd.cs</LastGenOutput>
     </Content>
     <Content Include="pages-blank-page.html" />
     <Content Include="pages-error-500.html" />
@@ -7206,8 +7210,10 @@
     <Content Include="Scripts\grid\DashboardGraphs.js" />
     <Content Include="Scripts\grid\15DayMeterReport.js" />
     <Content Include="Scripts\grid\D2C.js" />
+    <Content Include="Scripts\grid\FirmwareUpgrade.js" />
     <Content Include="Scripts\grid\MeterInformation.js" />
     <Content Include="Scripts\grid\ReplaceMeter.js" />
+    <Content Include="Scripts\grid\smartmeter.js" />
     <Content Include="Scripts\grid\SmartUsers.js" />
     <Content Include="Scripts\grid\Terminal.js" />
     <Content Include="Scripts\grid\TerminalControl.js" />
@@ -7220,20 +7226,30 @@
     <Content Include="Scripts\grid\DataReception.js" />
     <Content Include="Scripts\grid\CustomerDetails.js" />
     <Content Include="Areas\SmartMeter\Views\Terminal\Demo.cshtml" />
-    <EntityDeploy Include="Models\SMTPLProd.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SMTPLProd.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\SMTPLProd.edmx.diagram">
-      <DependentUpon>SMTPLProd.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\SmartMeter\Views\UART\Index.cshtml" />
     <Content Include="Areas\SmartMeter\Views\Terminal\Terminal.cshtml" />
     <Content Include="Areas\SmartMeter\Views\Terminal\BillingParameters.cshtml" />
     <Content Include="Areas\SmartMeter\Views\Logs\Index.cshtml" />
     <Content Include="Areas\SmartMeter\Views\User\Index.cshtml" />
     <Content Include="Areas\SmartMeter\Views\User\Error.cshtml" />
-    <Content Include="Areas\SmartMeter\Views\User\AddUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\SmartAddUser.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\Firmware\Index.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\Terminal\CommandMonitoring.cshtml" />
+    <EntityDeploy Include="Models\SmartMeter_ProdEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SmartMeter_ProdEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SmartMeter_ProdEntities.edmx.diagram">
+      <DependentUpon>SmartMeter_ProdEntities.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\SmartMeter\Views\SamrtMeterData\Index.cshtml" />
+    <EntityDeploy Include="Models\SMTPL.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SMTPL.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SMTPL.edmx.diagram">
+      <DependentUpon>SMTPL.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
@@ -7244,13 +7260,6 @@
     <Content Include="Scripts\jquery.signalR-2.4.3.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />
     <Content Include="user-add.html" />
-    <EntityDeploy Include="Models\SMTPL.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SMTPL.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\SMTPL.edmx.diagram">
-      <DependentUpon>SMTPL.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\sweetalert\sweet-alert.less" />
     <Content Include="Content\sweetalert\sweet-alert-combine.less" />
     <Content Include="Content\sweetalert\sweet-alert-animations.less" />
@@ -7526,6 +7535,8 @@
     <Content Include="Views\DataReception\InductiveAMR.cshtml" />
     <Content Include="Views\Shared\_LayoutArea.cshtml" />
     <Content Include="Views\Home\SelectPOCLocation.cshtml" />
+    <Content Include="Views\Signal\Index.cshtml" />
+    <Content Include="Views\Login\ForgotPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -7547,8 +7558,10 @@
     <Compile Include="Areas\Admin\Controllers\RawDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\BillingParameterController.cs" />
+    <Compile Include="Areas\SmartMeter\Controllers\FirmwareController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\LogsController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\MeterManagmentController.cs" />
+    <Compile Include="Areas\SmartMeter\Controllers\SamrtMeterDataController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\TerminalController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\UARTController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\UserController.cs" />
@@ -7560,11 +7573,13 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MobileAppController.cs" />
     <Compile Include="Controllers\SampleDataController.cs" />
+    <Compile Include="Controllers\SignalController.cs" />
     <Compile Include="Controllers\SweetController.cs" />
     <Compile Include="Controllers\tbl_RawDataAPIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\GridHub.cs" />
     <Compile Include="Models\15DayReport.cs" />
     <Compile Include="Models\AMRCRCModel.cs" />
     <Compile Include="Models\APIData.cs" />
@@ -7572,7 +7587,11 @@
     <Compile Include="Models\CustomerRaw.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\C__EFMigrationsHistory.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DatabaseContext.cs" />
+    <Compile Include="Models\DataModel.cs" />
     <Compile Include="Models\FetchConsumption_15DayRevenue_Demo_Result.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
@@ -7607,11 +7626,33 @@
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FetchJioLogs.cs" />
+    <Compile Include="Models\fnSplitString_Result.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\fnSplit_Result.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LiveUpdateSignalRHub.cs" />
     <Compile Include="Models\ModelParameter.cs" />
     <Compile Include="Models\MyHub.cs" />
     <Compile Include="Models\SampleData.cs" />
     <Compile Include="Models\SampleOrder.cs" />
+    <Compile Include="Models\SessionRequiredAttribute.cs" />
+    <Compile Include="Models\SmartMeter_ProdEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SmartMeter_ProdEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SmartMeter_ProdEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SmartMeter_ProdEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SmartMeter_ProdEntities.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMTPL.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -7626,21 +7667,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SMTPL.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SMTPLProd.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SMTPLProd.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SMTPLProd.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SMTPLProd.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SMTPLProd.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SMTPLProd.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_AMRHealth_Result.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
@@ -7657,14 +7683,26 @@
     <Compile Include="Models\sp_GenerateInvoice_Result.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_MeterResponse_Result.cs">
-      <DependentUpon>SMTPLProd.tt</DependentUpon>
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_OTAFetch_Result.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_ResponseSplited_Result.cs">
-      <DependentUpon>SMTPLProd.tt</DependentUpon>
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_SmartMeterData_Result.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_SmartUser_Result.cs">
-      <DependentUpon>SMTPLProd.tt</DependentUpon>
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_TotalAMR_Result.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
@@ -7677,14 +7715,26 @@
     </Compile>
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\StockTicker.cs" />
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_AdminCredentials.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_AMRHistory.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_AMRRegistration.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_BackLogAPILogs.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_CommandBackLog.cs">
-      <DependentUpon>SMTPLProd.tt</DependentUpon>
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_ConsumptionDetails.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_CustomerDetails.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
@@ -7692,8 +7742,20 @@
     <Compile Include="Models\tbl_CustomerRegistration.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_DataReception.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_FirmwareHistoty.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_FirmwareStatus.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_JioLogs.cs">
-      <DependentUpon>SMTPLProd.tt</DependentUpon>
+      <DependentUpon>SMTPL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_JioNotification.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_MeterMaster.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
@@ -7707,8 +7769,11 @@
     <Compile Include="Models\tbl_RawData_CRC.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_RegisteredComplain.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_Response.cs">
-      <DependentUpon>SMTPLProd.tt</DependentUpon>
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_RoleMaster.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
@@ -7717,16 +7782,31 @@
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_SGMAuditLogs.cs">
-      <DependentUpon>SMTPLProd.tt</DependentUpon>
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_SignalRMaxID.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_SimCardMaster.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_SmartMeterUser.cs">
-      <DependentUpon>SMTPLProd.tt</DependentUpon>
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_SMeterMaster.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_TicketTypeMaster.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_TransLogs.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Users.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_VayudutMaster.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\V_DistinctMeter.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
@@ -7759,6 +7839,7 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\SmartMeter\Data\" />
     <Folder Include="Areas\SmartMeter\Views\Shared\" />
+    <Folder Include="Uploads\" />
     <Folder Include="Views\SamartMeter\" />
   </ItemGroup>
   <PropertyGroup>

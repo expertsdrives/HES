@@ -13,6 +13,7 @@ namespace HESMDMS.Areas.Admin.Controllers
         SmartMeterEntities clsMeters = new SmartMeterEntities();
         // GET: Admin/Meter
         [Authorize]
+        [SessionRequired]
         public ActionResult Index()
         {
             return View();

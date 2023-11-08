@@ -133,6 +133,7 @@ warning 6002: The table/view 'SmartMeter.dbo.tbl_CustomerDetails' does not have 
           <Property Name="Code" Type="varchar" MaxLength="50" />
           <Property Name="StartingPostion" Type="int" />
           <Property Name="EndingPostion" Type="int" />
+          <Property Name="TimeOut" Type="int" />
         </EntityType>
         <EntityType Name="tbl_RawData_CRC">
           <Key>
@@ -1071,6 +1072,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_FetchInductiveData' does not have
           <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StartingPostion" Type="Int32" />
           <Property Name="EndingPostion" Type="Int32" />
+          <Property Name="TimeOut" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1749,6 +1751,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_FetchInductiveData' does not have
           <EntitySetMapping Name="tbl_OTACommands">
             <EntityTypeMapping TypeName="SmartMeterModel.tbl_OTACommands">
               <MappingFragment StoreEntitySet="tbl_OTACommands">
+                <ScalarProperty Name="TimeOut" ColumnName="TimeOut" />
                 <ScalarProperty Name="EndingPostion" ColumnName="EndingPostion" />
                 <ScalarProperty Name="StartingPostion" ColumnName="StartingPostion" />
                 <ScalarProperty Name="Code" ColumnName="Code" />

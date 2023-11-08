@@ -10,6 +10,7 @@ using System.Web.Mvc;
 namespace HESMDMS.Areas.Admin.Controllers
 {
     [Authorize]
+    [SessionRequired]
     public class ReportsController : Controller
     {
         SmartMeterEntities clsMeter = new SmartMeterEntities();

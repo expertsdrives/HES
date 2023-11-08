@@ -20,5 +20,6 @@ namespace HESMDMS.Models
         public string Code { get; set; }
         public Nullable<int> StartingPostion { get; set; }
         public Nullable<int> EndingPostion { get; set; }
+        public Nullable<int> TimeOut { get; set; }
     }
 }

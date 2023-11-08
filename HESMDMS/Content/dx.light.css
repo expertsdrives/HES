@@ -4848,11 +4848,12 @@
   line-height: normal;
 }
 .dx-popup-wrapper > .dx-overlay-content {
-  border: 1px solid #ddd;
-  background: #fff;
-  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
-  box-shadow: 0 6px 12px rgba(0,0,0,.175);
-  border-radius: 6px;
+    border: 1px solid #ddd;
+    background: #fff;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    border-radius: 6px;
+    margin-top: -40% !important;
 }
 .dx-popup-wrapper > .dx-popup-fullscreen {
   border-radius: 0;

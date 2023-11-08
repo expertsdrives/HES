@@ -6,9 +6,11 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Xml.Linq;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using HESMDMS.Models;
@@ -101,7 +103,7 @@ namespace HESMDMS.Controllers
         {
             return Request.CreateResponse(DataSourceLoader.Load(from post in clsMeters.tbl_MeterMaster
                                                                 join meta in clsMeters.tbl_CustomerDetails on post.Number equals meta.SerialNumber
-                                                                where meta.Street == "Water Lily" || meta.Street == "Dreamland Appartment" || meta.Street == "Richmond Grand"
+                                                                where meta.Street == "Water Lily" || meta.Street == "Dreamland Appartment" || meta.Street == "Richmond Grand" || meta.Street5 == "Khurja"
                                                                 select new { ID = post.ID, Number = post.Number }, loadOptions));
         }
         [Route("InsertCustomerRegistration")]
@@ -117,6 +119,15 @@ namespace HESMDMS.Controllers
             clsMeters.SaveChanges();
             return Request.CreateResponse(HttpStatusCode.Created, newOrder);
         }
+
+        [Route("smartmeterdata")]
+        [HttpGet]
+        public HttpResponseMessage smartmeterdata(DataSourceLoadOptions loaddata)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.sp_SmartMeterData(), loaddata));
+        }
+
+
         [Route("d2c")]
         [HttpGet]
         public HttpResponseMessage d2c(DataSourceLoadOptions loaddata)
@@ -137,35 +148,73 @@ namespace HESMDMS.Controllers
                         int sizes = splitarray.Length;
                         if (sizes == 25)
                         {
-                            model.Add(new ModelParameter
+                            DateTime? datetime = fData.DateTime;
+                            DateTime nonNullableDateTime=DateTime.Now;
+                            if (datetime.HasValue)
                             {
-                                ID = fData.ID,
-                                StartingFrame = splitarray[0].Trim(),
-                                InstrumentID = splitarray[1].Trim(),
-                                Date = splitarray[2],
-                                Time = splitarray[3],
-                                Record = splitarray[4].Trim(),
-                                ActivationStatus = splitarray[5].Trim(),
-                                GasCount = splitarray[6].Trim(),
-                                MeasurementValue = splitarray[7].Trim(),
-                                TotalConsumption = splitarray[8].Trim(),
-                                UnitofMeasurement = splitarray[9].Trim(),
-                                BatteryVoltage = splitarray[10].Trim(),
-                                TamperEvents = splitarray[11].Trim(),
-                                AccountBalance = splitarray[12].Trim(),
-                                eCreditBalance = splitarray[13].Trim(),
-                                StandardCharge = splitarray[14].Trim(),
-                                StandardChargeUnit = splitarray[15].Trim(),
-                                eCreditonoff = splitarray[16].Trim(),
-                                ValvePosition = splitarray[17].Trim(),
-                                SystemHealth = splitarray[18].Trim(),
-                                TransmissionPacket = splitarray[19].Trim(),
-                                Temperature = splitarray[21].Trim(),
-                                TarrifName = splitarray[22].Trim(),
-                                GasCalorific = splitarray[20].Trim(),
-                                Checksum = splitarray[23].Trim(),
-                                EndOfFrame = splitarray[24].Trim()
-                            });
+                                nonNullableDateTime = datetime.Value;
+                                TimeZoneInfo istTimeZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                                nonNullableDateTime = TimeZoneInfo.ConvertTimeFromUtc(nonNullableDateTime, istTimeZone);
+                            }
+                            if (decimal.TryParse(splitarray[10].Trim(), out decimal number))
+                            {
+                                var bt = Convert.ToDecimal(splitarray[10].Trim()) / 1000;
+                                string input = splitarray[11].Trim();
+                                int chunkSize = 2;
+                                string chunk = "";
+                                for (int i = 0; i < input.Length; i += chunkSize)
+                                {
+                                    chunk += input.Substring(i, Math.Min(chunkSize, input.Length - i)) + ",";
+                                }
+                                var splitChunks = chunk.Split(',');
+                                string syshealth = splitarray[18].Trim(); // Example input string
+
+                                var syshealthchunks = Enumerable.Range(0, (syshealth.Length + chunkSize - 1) / chunkSize)
+                                                       .Select(i => syshealth.Substring(i * chunkSize, Math.Min(chunkSize, syshealth.Length - i * chunkSize)));
+                                string result = string.Join(",", syshealthchunks);
+                                var NB =  result.Split(',')[3];
+                                var mwtmerge = result.Split(',')[0] + result.Split(',')[1];
+                                var CC = result.Split(',')[2];
+                                model.Add(new ModelParameter
+                                {
+                                    ID = fData.ID,
+                                    InstrumentID = splitarray[1].Trim(),
+                                    Date = splitarray[2],
+                                    Time = splitarray[3],
+                                    DateRx = nonNullableDateTime.Date.ToString(),
+                                    TimeRx = nonNullableDateTime.ToString("HH:mm:ss"),
+                                    Record = splitarray[4].Trim(),
+                                    MeasurementValue = splitarray[7].Trim(),
+                                    TotalConsumption = splitarray[8].Trim(),
+                                    BatteryVoltage = bt,
+                                    MagnetTamper = Convert.ToInt32(splitChunks[0], 16).ToString(),
+                                    CaseTamper = Convert.ToInt32(splitChunks[1], 16).ToString(),
+                                    BatteryRemovalCount = Convert.ToInt32(splitChunks[2], 16).ToString(),
+                                    ExcessiveGasFlow = Convert.ToInt32(splitChunks[3], 16).ToString(),
+                                    ExcessivePushKey = Convert.ToInt32(splitChunks[4], 16).ToString(),
+                                    SOVTamper = Convert.ToInt32(splitChunks[5], 16).ToString(),
+                                    TiltTamper = Convert.ToInt32(splitChunks[6], 16).ToString(),
+                                    InvalidUserLoginTamper = Convert.ToInt32(splitChunks[7], 16).ToString(),
+                                    NBIoTModuleError = Convert.ToInt32(splitChunks[8], 16).ToString(),
+                                    AccountBalance = splitarray[12].Trim().Replace("+", ""),
+                                    eCreditBalance = splitarray[13].Trim().Replace("+", ""),
+                                    StandardCharge = splitarray[14].Trim(),
+                                    ValvePosition = splitarray[17].Trim() == "0" ? "Unknown" : splitarray[17].Trim() == "1" ? "SOV Not Present" : splitarray[17].Trim() == "2" ? "SOV Opening" : splitarray[17].Trim() == "3" ? "SOV Closing" : splitarray[17].Trim() == "4" ? "SOV Open" : splitarray[17] == "5" ? "SOV Close" : splitarray[17] == "6" ? "SOV Stuck" : "",
+                                    NBIoTRSSI = Convert.ToInt32(NB, 16).ToString(),
+                                    ContinuousConsumption = Convert.ToInt32(CC, 16).ToString(),
+                                    MWT = Convert.ToInt32(mwtmerge, 16).ToString(),
+                                    TransmissionPacket = splitarray[19].Trim(),
+                                    Temperature = splitarray[21].Trim(),
+                                    TarrifName = splitarray[22].Trim() == "01" ? "Standard" : "Undefined",
+                                    GasCalorific = splitarray[20].Trim(),
+                                    Checksum = "Valid",//splitarray[23].Trim(),
+                                });
+                            }
+                            else
+                            {
+
+                            }
+
                         }
 
                     }
@@ -312,24 +361,33 @@ namespace HESMDMS.Controllers
         [HttpGet]
         public HttpResponseMessage SelectSmartMeter(DataSourceLoadOptions loadOptions)
         {
-            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_SMeterMaster, loadOptions));
+            var data = (from log in clsMeters_Prod.tbl_SMeterMaster
+                        select new
+                        {
+                            ID = log.ID,
+                            TempMeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
+                            AID = log.AID,
+                            PLD = log.PLD,
+                        });
+            return Request.CreateResponse(DataSourceLoader.Load(data, loadOptions));
         }
         [Route("SmartMeterBackLogs")]
         [HttpGet]
-        public HttpResponseMessage SmartMeterBackLogs(DataSourceLoadOptions loadOptions) {
+        public HttpResponseMessage SmartMeterBackLogs(DataSourceLoadOptions loadOptions)
+        {
             return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.tbl_CommandBackLog, loadOptions));
         }
         [Route("MeterFromPLD")]
         [HttpGet]
-        public HttpResponseMessage MeterFromPLD(DataSourceLoadOptions loadOptions,string pld)
+        public HttpResponseMessage MeterFromPLD(DataSourceLoadOptions loadOptions, string pld)
         {
-            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_SMeterMaster.Where(x=>x.PLD==pld), loadOptions));
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.tbl_SMeterMaster.Where(x => x.PLD == pld), loadOptions));
         }
         [Route("LoadSmartUser")]
         [HttpGet]
         public HttpResponseMessage LoadSmartUser(DataSourceLoadOptions loadOptions)
         {
-            
+
             return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.sp_SmartUser(), loadOptions));
         }
 
@@ -337,7 +395,7 @@ namespace HESMDMS.Controllers
         [HttpGet]
         public HttpResponseMessage LoadSMeterLookup(DataSourceLoadOptions loadOptions)
         {
-            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_SMeterMaster, loadOptions));
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.tbl_SMeterMaster, loadOptions));
         }
         [Route("InsertSmartUser")]
         [HttpPost]
@@ -360,8 +418,8 @@ namespace HESMDMS.Controllers
             clsMeters_Prod.tbl_SmartMeterUser.Add(SUser);
             clsMeters_Prod.SaveChanges();
             return Request.CreateResponse(HttpStatusCode.Created, newOrder);
-            
+
         }
-        
+
     }
 }

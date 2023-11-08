@@ -15,11 +15,11 @@ namespace HESMDMS.Models
     public partial class tbl_CommandBackLog
     {
         public int ID { get; set; }
+        public string Data { get; set; }
         public string EventName { get; set; }
         public string Status { get; set; }
         public Nullable<System.DateTime> LogDate { get; set; }
-        public Nullable<System.DateTime> CompletedLogDate { get; set; }
-        public string Data { get; set; }
         public string pld { get; set; }
+        public Nullable<System.DateTime> CompletedLogDate { get; set; }
     }
 }

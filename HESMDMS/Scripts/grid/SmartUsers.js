@@ -1,70 +1,8 @@
-﻿$(function () {
-    dataGrid = $("#UsersList").dxDataGrid({
-        dataSource: DevExpress.data.AspNet.createStore({
-            key: "ID",
-            loadUrl: "/LoadSmartUser",
-            insertUrl: "/InsertSmartUser",
-            onBeforeSend: function (method, ajaxOptions) {
-                ajaxOptions.xhrFields = { withCredentials: true };
-            }
-        }),
-        keyExpr: "ID",
-
-        columns: [
-
-            {
-                dataField: "Username",
-                caption: "Username",
-
-            },
-            {
-                dataField: "Password",
-                caption: "Password",
-                visible: false,
-              
-            },
-
-            {
-                dataField: "FullName",
-                caption: "Full Name",
-            },
-            {
-                dataField: "MeterID",
-                caption: "Meter ID",
-                lookup: {
-                    dataSource: DevExpress.data.AspNet.createStore({
-                        key: "ID",
-                        loadUrl: "/LoadSMeterLookup",
-                        onBeforeSend: function (method, ajaxOptions) {
-                            ajaxOptions.xhrFields = { withCredentials: true };
-                        }
-                    }),
-                    displayExpr: "MeterID",
-                    valueExpr: "MeterID"
-                }
-            },
-        ],
-        editing: {
-            mode: "popup",
-            allowUpdating: true,
-
-            allowAdding: true,
-            editEnabled: true,
-            useIcons: true,
-            popup: {
-                title: 'User Registration',
-                showTitle: true,
-                width: 700,
-                height: 525,
-                position: {
-                    my: "top",
-                    at: "top",
-                    of: window
-                }
-            },
-        },
-
-    });
+/***************************************************************************/
+/*                                                                         */
 
 
-});
+
+/*                                                                         */
+/***************************************************************************/
+var _$_7364=["ID","/LoadSmartUser","/InsertSmartUser","xhrFields","createStore","AspNet","data","Username","Password","FullName","Full Name","MeterID","Meter ID","/LoadSMeterLookup","popup","User Registration","top","dxDataGrid","#UsersList"];$(function(){dataGrid= $(_$_7364[18])[_$_7364[17]]({dataSource:DevExpress[_$_7364[6]][_$_7364[5]][_$_7364[4]]({key:_$_7364[0],loadUrl:_$_7364[1],insertUrl:_$_7364[2],onBeforeSend:function(_0x2167E,_0x21648){_0x21648[_$_7364[3]]= {withCredentials:true}}}),keyExpr:_$_7364[0],columns:[{dataField:_$_7364[7],caption:_$_7364[7]},{dataField:_$_7364[8],caption:_$_7364[8],visible:false},{dataField:_$_7364[9],caption:_$_7364[10]},{dataField:_$_7364[11],caption:_$_7364[12],lookup:{dataSource:DevExpress[_$_7364[6]][_$_7364[5]][_$_7364[4]]({key:_$_7364[0],loadUrl:_$_7364[13],onBeforeSend:function(_0x2167E,_0x21648){_0x21648[_$_7364[3]]= {withCredentials:true}}}),displayExpr:_$_7364[11],valueExpr:_$_7364[11]}}],editing:{mode:_$_7364[14],allowUpdating:true,allowAdding:true,editEnabled:true,useIcons:true,popup:{title:_$_7364[15],showTitle:true,width:700,height:525,position:{my:_$_7364[16],at:_$_7364[16],of:window}}}})})

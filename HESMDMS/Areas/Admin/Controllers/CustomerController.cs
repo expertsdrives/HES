@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace HESMDMS.Areas.Admin.Controllers
 {
+    [SessionRequired]
     public class CustomerController : Controller
     {
        
@@ -17,6 +18,10 @@ namespace HESMDMS.Areas.Admin.Controllers
         {
             var Meters = clsMeters.tbl_MeterMaster.Where(x => x.IsActive == true).ToList();
             ViewBag.Meters = Meters;
+            return View();
+        }
+        public ActionResult SmartAddUser()
+        {
             return View();
         }
     }

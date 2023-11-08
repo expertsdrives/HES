@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "Terminal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    /* Switch starts here */
+    .dx-datagrid {
+        color: #333;
+        background-color: transparent !important;
+    }
+
+    .dx-toolbar {
+        background-color: transparent !important;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    .greenColor {
+        color: green;
+    }
+
+    .sub {
+        vertical-align: 0;
+        position: relative;
+        top: -1.2ex;
+        font-size: 76%;
+    }
+
+    .right-side {
+        position: absolute;
+        right: 1px;
+        top: 6px;
+    }
+</style>
+<div class="col-sm-12 col-lg-12">
+    <div class="card card-block card-stretch card-height">
+        <div class="card-header" style="text-align:center">
+            <div class="header-title">
+                <h4 class="card-title">Firmware Upgrade</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12 col-lg-4">
+
+    <!--<div class="card">
+        <div class="card-header" style="text-align:center">
+            <div class="header-title">
+                <h4 class="card-title">File Comparision Upgrade</h4>
+            </div>
+        </div>
+        <div class="card-body">-->
+            @*@using (Html.BeginForm("Index", "Firmware", FormMethod.Post,
+                                   new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()*@
+            <!--<div class="form-group">
+                <label for="email">Select Meter</label>
+                <div id="SelectMeter2"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Upload Old Firmware File</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file1" name="file1">
+                    <label class="custom-file-label" for="customFile1">Choose file</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Upload New Firmware File</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file2" name="file2">
+                    <label class="custom-file-label" for="customFile2">Choose file</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Packetsize">Enter Packate Size (5-2000)</label>
+                <input type="number" class="form-control" id="Packetsize1" name="packetSize">
+            </div>
+            <button type="submit" class="btn btn-primary" id="uploadButton1">Upgrade</button><label id="status">@ViewBag.Status</label>
+            <button type="submit" class="btn btn-primary" id="Cancel" style="display: none;">Abort</button>-->
+            @*}*@
+        <!--</div>
+    </div>-->
+</div>
+<div class="col-sm-12 col-lg-4">
+    
+    <div class="card">
+        <div class="card-header" style="text-align:center">
+            <div class="header-title">
+                <h4 class="card-title">Full Upgradation</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            @*@using (Html.BeginForm("Index", "Firmware", FormMethod.Post,
+                                       new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()*@
+            <div class="form-group">
+                <label for="email">Select Meter</label>
+                <div id="SelectMeter1"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Select File</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file" name="file">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Packetsize">Enter Packate Size (5-2000)</label>
+                <input type="number" class="form-control" id="Packetsize" name="packetSize">
+            </div>
+            <button type="submit" class="btn btn-primary" id="uploadButton">Upgrade</button><label id="status">@ViewBag.Status</label>
+            <button type="submit" class="btn btn-primary" id="Cancel" style="display: none;">Abort</button>
+            @*}*@
+        </div>
+    </div>
+
+</div>
+<div class="col-sm-12 col-lg-4">
+
+
+</div>
+<div class="col-sm-12 col-lg-12">
+    <div class="card">
+
+        <div class="card-body">
+            <div id="gridContainer"></div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        var runningTasks = [];
+        $('#uploadButton').click(function () {
+
+            var MeterID = $('input[name="MeterID"]').val();
+            var Packetsize = $('#Packetsize').val();
+            var fileInput = document.getElementById('file');
+            var file = fileInput.files[0];
+            $("#Cancel").show();
+            if (!MeterID || !Packetsize || !file) {
+                alert("Please fill in all fields and select a file.");
+                return;
+            }
+            var formData = new FormData();
+            formData.append('MeterID', MeterID);
+            formData.append('Packetsize', Packetsize);
+            formData.append('file', file);
+            // Send the AJAX request
+            var task=$.ajax({
+                url: '@Url.Action("IndexData", "Firmware")', // Replace with your controller action URL
+                type: 'POST',
+                data: formData,
+                processData: false, // Don't process the data
+                contentType: false, // Don't set content type (let the browser handle it for multipart/form-data)
+                success: function (result) {
+                    console.log("called");
+                    // Handle the success response
+                    // You can update the page or perform other actions here
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error
+                }
+            });
+            runningTasks.push(task);
+        });
+
+            $('#uploadButton1').click(function () {
+
+            var MeterID = $('input[name="MeterID1"]').val();
+            var Packetsize = $('#Packetsize1').val();
+            var fileInput1 = document.getElementById('file1');
+                var file1 = fileInput1.files[0];
+
+                var fileInput2 = document.getElementById('file2');
+                var file2 = fileInput2.files[0];
+            $("#Cancel1").show();
+            if (!MeterID || !Packetsize || !file) {
+                alert("Please fill in all fields and select a file.");
+                return;
+            }
+            var formData = new FormData();
+            formData.append('MeterID', MeterID);
+            formData.append('Packetsize', Packetsize);
+            formData.append('file1', file1);
+            formData.append('file2', file2);
+            // Send the AJAX request
+            var task=$.ajax({
+                url: '@Url.Action("FirmwareFileComparision", "Firmware")', // Replace with your controller action URL
+                type: 'POST',
+                data: formData,
+                processData: false, // Don't process the data
+                contentType: false, // Don't set content type (let the browser handle it for multipart/form-data)
+                success: function (result) {
+                    console.log("called");
+                    // Handle the success response
+                    // You can update the page or perform other actions here
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error
+                }
+            });
+            runningTasks.push(task);
+        });
+
+    });
+</script>
+<script>
+      var Jsondata = @Html.Raw(Json.Encode(ViewBag.data));
+      var mid = "@ViewBag.mid";
+</script>
+<script src="~/Scripts/grid/FirmwareUpgrade.js"></script>

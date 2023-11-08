@@ -11,6 +11,31 @@ $(() => {
         readOnly: true
 
     }).dxTextArea('instance');
+
+    function formatDate(date) {
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+
+        // Padding single digits with leading zeros
+        day = (day < 10) ? '0' + day : day;
+        month = (month < 10) ? '0' + month : month;
+
+        return day + ':' + month + ':' + year;
+    }
+
+    function formatTime(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+
+        // Padding single digits with leading zeros
+        hours = (hours < 10) ? '0' + hours : hours;
+        minutes = (minutes < 10) ? '0' + minutes : minutes;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+
+        return hours + ':' + minutes + ':' + seconds;
+    }
     $('#SelectMeter').dxSelectBox({
         dataSource: DevExpress.data.AspNet.createStore({
             key: "ID",
@@ -19,8 +44,8 @@ $(() => {
                 ajaxOptions.xhrFields = { withCredentials: true };
             }
         }),
-        displayExpr: 'MeterID',
-        valueExpr: 'MeterID',
+        displayExpr: 'TempMeterID',
+        valueExpr: 'TempMeterID',
         onValueChanged(data) {
 
             var json = Jsondata
@@ -36,7 +61,7 @@ $(() => {
                 }
                 return objects;
             }
-            var meterData = getObjects(json, 'MeterID', data.value);
+            var meterData = getObjects(json, 'TempMeterID', data.value);
             /* var apiJson = {"idType":"PLD","id":"'" + meterData[0].PLD +"' ","transactionId":"245647898489","retentionTime":"2023-02-10","data":[{"aid":"'" + meterData[0].AID + "'","dataformat":"cp"}]};*/
             pld = meterData[0].PLD;
             aid = meterData[0].AID;
@@ -136,4 +161,7 @@ $(() => {
             //DevExpress.ui.notify('The Contained button was clicked');
         },
     });
+
+
+
 });

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 namespace HESMDMS.Areas.Admin.Controllers
 {
     [Authorize]
+    [SessionRequired]
     public class DashboadController : Controller
     {
         SmartMeterEntities clsMeters = new SmartMeterEntities();

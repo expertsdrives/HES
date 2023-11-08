@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "Command Monitoring";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    /* Switch starts here */
+    .dx-datagrid {
+        color: #333;
+        background-color: transparent !important;
+    }
+
+    .dx-toolbar {
+        background-color: transparent !important;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    .greenColor {
+        color: green;
+    }
+
+    .sub {
+        vertical-align: 0;
+        position: relative;
+        top: -1.2ex;
+        font-size: 76%;
+    }
+
+    .right-side {
+        position: absolute;
+        right: 1px;
+        top: 6px;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<div class="card card-block card-stretch card-height">
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <h4 class="card-title">Command Monitoring</h4>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div id="CommandMonitoring"></div>
+    </div>
+</div>
+<script>
+    $(function () {
+        var grid = $("#CommandMonitoring").dxDataGrid({
+            dataSource: $.connection.gridHub,
+            remoteOperations: true,
+            repaintChangesOnly: true,
+            highlightChanges: true,
+            showBorders: true,
+            paging: {
+                pageSize: 10,
+            },
+            export: {
+                enabled: true,
+            },
+            columnFixing: {
+                enabled: true
+            }, searchPanel: { visible: true },
+            columns: [
+                // Define your columns here
+                { dataField: "MeterID", caption: "Meter ID" },
+                { dataField: "Data", caption: "Command" },
+                { dataField: "EventName", caption: "Event Name" },
+                {
+                    dataField: "Status", caption: "Status", cellTemplate: function (container, options) {
+                        if (options.value == "Completed") {
+                            $("<div class='badge badge-success'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        }
+                        else if (options.value == "Pending") {
+                            $("<div class='badge badge-danger'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        }
+                        else if (options.value == "InProcess") {
+                            $("<div class='badge badge-info'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        }
+
+                    }
+                },
+                {
+                    dataField: "LogDate", caption: "Log DateTime", cellTemplate: function (container, options) {
+                        // Input date string
+                        var dateString = options.value;
+
+                        // Extract the numeric part of the date string
+                        var numericPart = dateString.match(/\d+/)[0];
+
+                        // Create a Date object from the numeric timestamp
+                        var date = new Date(parseInt(numericPart));
+
+                        var date = new Date(parseInt(numericPart));
+                        var year = date.getFullYear();
+                        var month = date.getMonth() + 1; // Months are 0-based, so add 1
+                        var day = date.getDate();
+                        var hours = date.getHours();
+                        var minutes = date.getMinutes();
+                        var seconds = date.getSeconds();
+                        $("<div>")
+                            .text(year + '-' + month + '-' + day + " " + hours + ':' + minutes + ':' + seconds)
+                            .appendTo(container);
+                    } },
+                {
+                    dataField: "CompletedLogDate", caption: "Completed Log DateTime", cellTemplate: function (container, options) {
+
+                        // Input date string
+                        var dateString = options.value;
+                        if (dateString != null) {
+                            // Extract the numeric part of the date string
+                            var numericPart = dateString.match(/\d+/)[0];
+
+                            // Create a Date object from the numeric timestamp
+                            var date = new Date(parseInt(numericPart));
+                            var year = date.getFullYear();
+                            var month = date.getMonth() + 1; // Months are 0-based, so add 1
+                            var day = date.getDate();
+                            var hours = date.getHours();
+                            var minutes = date.getMinutes();
+                            var seconds = date.getSeconds();
+                            //// Check if the date is valid
+                            //if (!isNaN(date.getTime())) {
+                            //    // Format the date as yyyy-MM-dd
+                            //    var formattedDate =
+                            //    console.log(formattedDate);
+                            //} else {
+                            //    console.log("Invalid date");
+                            //}
+                            //// Parse the date and format it as needed (e.g., 'dd-MM-yyyy')
+                            //const dateValue = new Date(parseInt(options.value.replace('/Date(', '').replace(')/', '')));
+                            //const formattedDate = dateValue.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                            $("<div>")
+                                .text(year + '-' + month + '-' + day + " " + hours + ':' + minutes + ':' + seconds)
+                                .appendTo(container);
+                        }
+                    } },
+            ],
+            onCellPrepared: function (e) {
+                if (e.rowType == "header") {
+                    e.cellElement.css("text-align", "left");
+                    e.cellElement.css("font-weight", "bold");
+                }
+            }, wordWrapEnabled: true,
+            columnAutoWidth: true,
+            filterRow: {
+                visible: true,
+                applyFilter: 'auto',
+            },
+            pager: {
+                allowedPageSizes: [10, 25, 50, 100],
+                showInfo: true,
+                showNavigationButtons: true,
+                showPageSizeSelector: true,
+                visible: true,
+            },
+            onExporting(e) {
+                const workbook = new ExcelJS.Workbook();
+                const worksheet = workbook.addWorksheet('Command Monitoring');
+
+                DevExpress.excelExporter.exportDataGrid({
+                    component: e.component,
+                    worksheet,
+                    autoFilterEnabled: true,
+                }).then(() => {
+                    workbook.xlsx.writeBuffer().then((buffer) => {
+                        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'Command Monitoring.xlsx');
+                    });
+                });
+            },
+            onContentReady: function (e) {
+                // No need for custom loading here
+                $.getJSON("@Url.Action("CommandMonitoringData", "Terminal")", function (data) {
+                    e.component.option("dataSource", data);
+
+                    // The grid will automatically handle loading indicators
+                });
+            }
+        }).dxDataGrid("instance");
+    });
+</script>

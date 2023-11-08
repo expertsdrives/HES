@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
+using System;
+using System.Threading.Tasks;
 
-[assembly: OwinStartupAttribute(typeof(HESMDMS.Startup))]
+[assembly: OwinStartup(typeof(HESMDMS.Startup))]
 
 namespace HESMDMS
 {

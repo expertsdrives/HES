@@ -38,8 +38,8 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                     DateTime MonthDate = DateTime.UtcNow.Date.AddDays(-30);
                     ViewBag.cur = Prevdate;
                     var UserDetails = clsMetersProd.tbl_SmartMeterUser.Where(x => x.UserID == userID).FirstOrDefault();
-                    var MeterID = Convert.ToDouble(UserDetails.MeterID);
-                    var pldQuery = clsMeters.tbl_SMeterMaster.Where(x => x.MeterID == MeterID).FirstOrDefault();
+                    var MeterID = UserDetails.MeterID;
+                    var pldQuery = clsMetersProd.tbl_SMeterMaster.Where(x => x.TempMeterID == MeterID).FirstOrDefault();
                     var pld = pldQuery.PLD;
                     var AuditLog = clsMetersProd.tbl_SGMAuditLogs.Where(x => x.pld == pld && x.EventName == "Add Balance").OrderByDescending(x => x.ID).Take(5).ToList();
                     ViewBag.AuditLog = AuditLog;
@@ -213,9 +213,11 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
         {
             return View();
         }
-        public ActionResult AddUser()
-        {
-            return View();
-        }
+
+        //[SessionRequired]
+        //public ActionResult AddUser()
+        //{
+        //    return View();
+        //}
     }
 }

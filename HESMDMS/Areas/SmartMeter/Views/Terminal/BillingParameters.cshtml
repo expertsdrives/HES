@@ -148,12 +148,12 @@
         color: #333;
     }
 </style>
-<label>Manual OTA</label>
+@*<label>Manual OTA</label>
 <label class="rocker rocker-small">
     <input type="checkbox" id="chkb">
-    <span class="switch-left">Off</span>
-    <span class="switch-right">On</span>
-</label>
+    <span class="switch-left">On</span>
+    <span class="switch-right">Off</span>
+</label>*@
 <div class="col-sm-12 col-lg-12">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
@@ -162,7 +162,7 @@
             </div>
         </div>
         <div class="card-body">
-            <div id="SelectMeter1"></div>
+            <div id="SelectMeter1"></div> <a id="mtrRefresh" href="">Refresh</a>
         </div>
     </div>
 
@@ -183,12 +183,14 @@
                     <button class="btn btn-primary" type="button" id="btnGetBalance">Get Balance</button>
                 </div>
                 <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblGetBalance">
+                <label id="lblGetBalanceStatus"></label>
             </div>
             <div class="input-group mb-4">
                 <div class="input-group-prepend">
                     <button id="btnAddBalance" class="btn btn-primary">Add Balance</button>
                 </div>
-                <input type="text" class="form-control" placeholder="" aria-label="" id="lblAddBalance">
+                <input type="text" class="form-control" placeholder="" aria-label="" id="lblAddBalance"><br />
+                <label id="lblAddBalanceStatus"></label>
             </div>
 
         </div>
@@ -212,9 +214,9 @@
             </div>
             <div class="input-group mb-4">
                 <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnSetVAT">SET Vat</button>
+                    <button class="btn btn-primary" type="button" id="btnSetVAT">SET VAT</button>
                 </div>
-                <input type="text" class="form-control" placeholder="0 %" aria-label="" id="lblSetVAT">
+                <input type="text" class="form-control" placeholder="0 %" aria-label="" id="lblSetVAT">  <label id="lblSetVatStatus"></label>
             </div>
 
         </div>
@@ -231,14 +233,14 @@
         <div class="card-body">
             <div class="input-group mb-4">
                 <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnGetTariff">Get Tariff</button>
+                    <button class="btn btn-primary" type="button" id="btnGetTariff">GET Present Tariff</button>
                 </div>
                 <input type="text" class="form-control" placeholder="0 Rs" aria-label="" readonly id="lblGetTariff">
             </div>
             <div class="input-group">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="btnSetTraiff">Set Tariff</button>
+                        <button class="btn btn-primary" type="button" id="btnSetTraiff">SET Next Tariff</button>
                     </div>
                     <input type="date" class="form-control" placeholder="Select Date" id="lblTraiffDate">
                     <input type="time" class="form-control" placeholder="Select Time" id="lblTraiffTime">
@@ -251,9 +253,51 @@
     </div>
 
 </div>
+<div class="col-sm-12 col-lg-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">E-Credit/ Calorific Value</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnSetAvgGasCal">Set KCAL/SCM</button>
+                </div>
+                <input type="text" class="form-control" placeholder="-" aria-label="" id="lblSetAvgGasCal">
+                <label id="lblSKCALStatus"></label>
+            </div>
 
+
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnGetAvgGasCal">GET KCAL/SCM</button>
+                </div>
+                <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblGetAvgGasCal">
+            </div>
+
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnSetECredit">Set E-Balance</button>
+                </div>
+                <input type="text" class="form-control" placeholder="-" aria-label="" id="lblSetECredit">
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnReadECredit">Get E-Balance</button>
+                </div>
+                <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblReadECredit">
+            </div>
+
+        </div>
+    </div>
+
+</div>
 <script>
     var Jsondata = @Html.Raw(Json.Encode(ViewBag.data));
+    var mid = "@ViewBag.mid";
+
 </script>
 
 <script src="~/Scripts/grid/BillingParameters.js"></script>

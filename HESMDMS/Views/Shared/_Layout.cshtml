@@ -226,6 +226,26 @@
                                             <i class="las la-minus"></i><span>Billing Parameters</span>
                                         </a>
                                     </li>
+                                    <li class="">
+                                        <a href="/SmartMeter/Terminal/CommandMonitoring">
+                                            <i class="las la-minus"></i><span>Command Monitoring</span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="/Admin/JioLogs/">
+                                            <i class="las la-minus"></i><span>Data Reception</span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="/SmartMeter/Firmware">
+                                            <i class="las la-minus"></i><span>Firmware Upgrade</span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="/SmartMeter/SamrtMeterData">
+                                            <i class="las la-minus"></i><span>Customer Data</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class=" ">
@@ -267,11 +287,7 @@
                                             <i class="las la-minus"></i><span>Temper</span>
                                         </a>
                                     </li>
-                                    <li class="">
-                                        <a href="/Admin/JioLogs/">
-                                            <i class="las la-minus"></i><span>D2C</span>
-                                        </a>
-                                    </li>
+                                   
                                 </ul>
                             </li>
                             <li class="">
@@ -323,7 +339,7 @@
                                         </a>
                                     </li>
                                     <li class="">
-                                        <a href="/SmartMeter/User/AddUser">
+                                        <a href="/Admin/Customer/SmartAddUser">
                                             <i class="las la-minus"></i><span>Smart Users</span>
                                         </a>
                                     </li>
@@ -772,7 +788,13 @@
     <!-- Wrapper End-->
     <!-- Modal list start -->
     <!-- Backend Bundle JavaScript -->
-
+    <script>
+        $(document).ready(function () {
+            $(document).on("contextmenu", function (e) {
+                e.preventDefault();
+            });
+        });
+    </script>
     <script src="~/assets/js/backend-bundle.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
     <script type="text/javascript" src="/signalr/hubs"></script>

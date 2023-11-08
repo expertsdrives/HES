@@ -180,8 +180,8 @@ namespace HESMDMS.Models
                 {
                     hexOutput += splitoutput[i];
                 }
-                var Smeter = clsMeters.tbl_SMeterMaster.Where(x => x.PLD == pld).FirstOrDefault();
-                bool auditLog = SGMAuditLogs(pld, data, Smeter.MeterID, eventname);
+                var Smeter = clsMetersProd.tbl_SMeterMaster.Where(x => x.PLD == pld).FirstOrDefault();
+                bool auditLog = SGMAuditLogs(pld, data, Smeter.TempMeterID, eventname);
             }
             else
             {
@@ -265,7 +265,7 @@ namespace HESMDMS.Models
             return true;
         }
 
-        public static bool SGMAuditLogs(string pld, string data, double? meterID, string eventname)
+        public static bool SGMAuditLogs(string pld, string data, string meterID, string eventname)
         {
             tbl_SGMAuditLogs SGMAuditLogs = new tbl_SGMAuditLogs();
             SGMAuditLogs.pld = pld;
