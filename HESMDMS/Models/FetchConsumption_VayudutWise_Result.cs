@@ -16,7 +16,7 @@ namespace HESMDMS.Models
         public Nullable<long> IndexValue { get; set; }
         public int ID { get; set; }
         public string FullName { get; set; }
-        public Nullable<int> MeterNumber { get; set; }
+        public Nullable<long> MeterNumber { get; set; }
         public Nullable<int> TXID { get; set; }
         public Nullable<long> BusinessPartnerNo { get; set; }
         public string OpeningMeterReading { get; set; }

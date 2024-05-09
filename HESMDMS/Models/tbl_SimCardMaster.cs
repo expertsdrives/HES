@@ -14,12 +14,6 @@ namespace HESMDMS.Models
     
     public partial class tbl_SimCardMaster
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tbl_SimCardMaster()
-        {
-            this.tbl_VayudutMaster = new HashSet<tbl_VayudutMaster>();
-        }
-    
         public int ID { get; set; }
         public long SimNumber { get; set; }
         public long MobileNumber { get; set; }
@@ -31,8 +25,5 @@ namespace HESMDMS.Models
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public bool IsActive { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_VayudutMaster> tbl_VayudutMaster { get; set; }
     }
 }

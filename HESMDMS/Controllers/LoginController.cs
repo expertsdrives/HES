@@ -35,9 +35,13 @@ namespace HESMDMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Authenticate(tbl_AdminCredentials clsAdmin)
         {
-
+            if (Request.Browser.IsMobileDevice)
+            {
+                // Code for mobile devices
+                ViewBag.DeviceType = "Mobile";
+            }
             var data = clsMeter.tbl_AdminCredentials.Where(x => x.Username == clsAdmin.Username && x.Password == clsAdmin.Password).FirstOrDefault();
-            if (data != null)
+            if (data != null && !Request.Browser.IsMobileDevice)
             {
                 if (Convert.ToString(data.Username) != "")
                 {
@@ -54,6 +58,11 @@ namespace HESMDMS.Controllers
                     {
                        
                         return RedirectToAction("../SmartMeter/User/");
+                    }
+                    if (data.RoleID == 8)
+                    {
+
+                        return RedirectToAction("../SmartMeter/SamrtMeterData/ElectricMeterView");
                     }
                     else
                     {

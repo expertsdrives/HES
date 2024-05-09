@@ -7,7 +7,7 @@
     $('#SelectMeter1').dxSelectBox({
         dataSource: DevExpress.data.AspNet.createStore({
             key: "ID",
-            loadUrl: "/SelectSmartMeter",
+            loadUrl: "/SelectSmartMeter?roleid=" + ro,
             onBeforeSend: function (method, ajaxOptions) {
                 ajaxOptions.xhrFields = { withCredentials: true };
             }

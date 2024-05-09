@@ -1,9 +1,10 @@
-﻿$(() => {
+﻿
+$(() => {
     $('#D2C').dxDataGrid({
         //dataSource: JSON.parse(dataj),
         dataSource: DevExpress.data.AspNet.createStore({
             key: "ID",
-            loadUrl: "/d2c",
+            loadUrl: "/d2c?roleid=" + ro,
 
             onBeforeSend: function (method, ajaxOptions) {
                 ajaxOptions.xhrFields = { withCredentials: true };
@@ -66,7 +67,7 @@
                 caption: "SOV Tamper",
             },{
                 dataField: "TiltTamper",
-                caption: "Tilt Tamper",
+                caption: "Unmounted Tamper",
             },{
                 dataField: "InvalidUserLoginTamper",
                 caption: "Invalid User Login Tamper",

@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "sendBillAsync";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<style>
+    .dx-datagrid {
+        color: #333;
+        background-color: transparent !important;
+    }
+
+    .dx-toolbar {
+        background-color: transparent !important;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    .greenColor {
+        color: green;
+    }
+
+    .sub {
+        vertical-align: 0;
+        position: relative;
+        top: -1.2ex;
+        font-size: 76%;
+    }
+</style>
+<div class="loadpanel"></div>
+<!-- The Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Generate Bill</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="bpnumber" hidden />
+                <label>From Date:</label>
+                <div id="fromDate"></div>
+                <br />
+                <label>To Date:</label>
+                <div id="toDate"></div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="billGenerate">Proceed</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card card-block card-stretch card-height">
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <h4 class="card-title">Generate Bill Manually</h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="CustomersGenerateBill"></div>
+    </div>
+</div>
+
+<script src="~/Scripts/grid/ManualBillGenerate.js"></script>

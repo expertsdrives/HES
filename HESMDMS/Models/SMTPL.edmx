@@ -249,6 +249,11 @@ warning 6002: The table/view 'SmartMeter.dbo.tbl_CustomerDetails' does not have 
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="ScheduleDate" Type="varchar" MaxLength="500" />
           <Property Name="RentalFlag" Type="varchar" MaxLength="500" />
+          <Property Name="Installment_Amount" Type="varchar" MaxLength="500" />
+          <Property Name="Installment_Numbers" Type="varchar" MaxLength="500" />
+          <Property Name="Discount_Amount" Type="varchar" MaxLength="500" />
+          <Property Name="Valid_from" Type="varchar" MaxLength="500" />
+          <Property Name="valid_to" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'SmartMeter.dbo.tbl_DataReception' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -812,7 +817,6 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <EntitySet Name="tbl_MeterMaster" EntityType="SmartMeterModel.tbl_MeterMaster" />
           <FunctionImport Name="sp_Get15DayReport" />
           <FunctionImport Name="FetchConsumption_MagneticTemper" ReturnType="Collection(SmartMeterModel.FetchConsumption_MagneticTemper_Result)" />
-          <FunctionImport Name="FetchConsumption_VayudutWise" ReturnType="Collection(SmartMeterModel.FetchConsumption_VayudutWise_Result)" />
           <FunctionImport Name="sp_ZeroConsumption" ReturnType="Collection(SmartMeterModel.sp_ZeroConsumption_Result)" />
           <FunctionImport Name="sp_TotalRevenue" ReturnType="Collection(SmartMeterModel.sp_TotalRevenue_Result)" />
           <FunctionImport Name="sp_ConsumptionGraph" ReturnType="Collection(SmartMeterModel.sp_ConsumptionGraph_Result)" />
@@ -852,6 +856,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <EntitySet Name="tbl_AMRAckData" EntityType="SmartMeterModel.tbl_AMRAckData" />
           <FunctionImport Name="FetchConsumption_POCBilling" />
           <FunctionImport Name="sp_AMRBill" ReturnType="Collection(SmartMeterModel.sp_AMRBill_Result)" />
+          <FunctionImport Name="FetchConsumption_VayudutWise" ReturnType="Collection(SmartMeterModel.FetchConsumption_VayudutWise_Result)" />
         </EntityContainer>
         <EntityType Name="CustomerRaw">
           <Key>
@@ -1020,23 +1025,6 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Property Type="Int32" Name="MagneticTemper" Nullable="true" />
           <Property Type="Int32" Name="CaseTemper" Nullable="true" />
           <Property Type="String" Name="DailyConsumption" Nullable="true" MaxLength="30" />
-        </ComplexType>
-        <ComplexType Name="FetchConsumption_VayudutWise_Result">
-          <Property Type="Int64" Name="IndexValue" Nullable="true" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="FullName" Nullable="true" MaxLength="8000" />
-          <Property Type="Int32" Name="MeterNumber" Nullable="true" />
-          <Property Type="Int32" Name="TXID" Nullable="true" />
-          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
-          <Property Type="String" Name="OpeningMeterReading" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="OpeningAMRReading" Nullable="true" MaxLength="30" />
-          <Property Type="Int64" Name="DataCount" Nullable="true" />
-          <Property Type="DateTime" Name="Date" Nullable="true" />
-          <Property Type="String" Name="Time" Nullable="true" MaxLength="8" />
-          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
-          <Property Type="Decimal" Name="ReadingCount" Nullable="true" Precision="30" Scale="8" />
-          <Property Type="String" Name="SerialNumber" Nullable="true" />
-          <Property Type="String" Name="VAYUDUT_ID" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="sp_ZeroConsumption_Result">
           <Property Type="Int64" Name="IndexValue" Nullable="true" />
@@ -1501,6 +1489,11 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="ScheduleDate" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="RentalFlag" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Installment_Amount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Installment_Numbers" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Discount_Amount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Valid_from" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="valid_to" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_DataReception">
           <Key>
@@ -1618,6 +1611,23 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Property Type="Int32" Name="CaseTamper" Nullable="true" />
           <Property Type="String" Name="Installation" Nullable="true" MaxLength="500" />
           <Property Type="Decimal" Name="ReadingCount" Nullable="true" Precision="27" Scale="5" />
+        </ComplexType>
+        <ComplexType Name="FetchConsumption_VayudutWise_Result">
+          <Property Type="Int64" Name="IndexValue" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="8000" />
+          <Property Type="Int64" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int32" Name="TXID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="String" Name="OpeningMeterReading" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="OpeningAMRReading" Nullable="true" MaxLength="30" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="8" />
+          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="ReadingCount" Nullable="true" Precision="30" Scale="8" />
+          <Property Type="String" Name="SerialNumber" Nullable="true" />
+          <Property Type="String" Name="VAYUDUT_ID" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1852,27 +1862,6 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
                 <ScalarProperty Name="MagneticTemper" ColumnName="MagneticTemper" />
                 <ScalarProperty Name="CaseTemper" ColumnName="CaseTemper" />
                 <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FetchConsumption_VayudutWise" FunctionName="SmartMeterModel.Store.FetchConsumption_VayudutWise">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_VayudutWise_Result">
-                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
-                <ScalarProperty Name="TXID" ColumnName="TXID" />
-                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
-                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
-                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
-                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
-                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
-                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
-                <ScalarProperty Name="VAYUDUT_ID" ColumnName="VAYUDUT_ID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2360,6 +2349,11 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <EntitySetMapping Name="tbl_Customers">
             <EntityTypeMapping TypeName="SmartMeterModel.tbl_Customers">
               <MappingFragment StoreEntitySet="tbl_Customers">
+                <ScalarProperty Name="valid_to" ColumnName="valid_to" />
+                <ScalarProperty Name="Valid_from" ColumnName="Valid_from" />
+                <ScalarProperty Name="Discount_Amount" ColumnName="Discount_Amount" />
+                <ScalarProperty Name="Installment_Numbers" ColumnName="Installment_Numbers" />
+                <ScalarProperty Name="Installment_Amount" ColumnName="Installment_Amount" />
                 <ScalarProperty Name="RentalFlag" ColumnName="RentalFlag" />
                 <ScalarProperty Name="ScheduleDate" ColumnName="ScheduleDate" />
                 <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
@@ -2539,6 +2533,27 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
                 <ScalarProperty Name="CaseTamper" ColumnName="CaseTamper" />
                 <ScalarProperty Name="Installation" ColumnName="Installation" />
                 <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchConsumption_VayudutWise" FunctionName="SmartMeterModel.Store.FetchConsumption_VayudutWise">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel.FetchConsumption_VayudutWise_Result">
+                <ScalarProperty Name="IndexValue" ColumnName="IndexValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="VAYUDUT_ID" ColumnName="VAYUDUT_ID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

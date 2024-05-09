@@ -1,0 +1,201 @@
+﻿<error errorId="c2007924-a382-4505-9721-56e26ee78b3e" application="/LM/W3SVC/2/ROOT" host="EXPERTS" type="System.Web.HttpParseException" message="The if block is missing a closing &quot;}&quot; character.  Make sure you have a matching &quot;}&quot; character for all the &quot;{&quot; characters within this block, and that none of the &quot;}&quot; characters are being interpreted as markup.&#xD;&#xA;" source="System.Web.WebPages.Razor" detail="System.Web.HttpParseException (0x80004005): The if block is missing a closing &quot;}&quot; character.  Make sure you have a matching &quot;}&quot; character for all the &quot;{&quot; characters within this block, and that none of the &quot;}&quot; characters are being interpreted as markup.&#xD;&#xA;&#xD;&#xA;   at System.Web.WebPages.Razor.RazorBuildProvider.EnsureGeneratedCode()&#xD;&#xA;   at System.Web.WebPages.Razor.RazorBuildProvider.get_CodeCompilerType()&#xD;&#xA;   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)&#xD;&#xA;   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()&#xD;&#xA;   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()&#xD;&#xA;   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)&#xD;&#xA;   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)&#xD;&#xA;   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)&#xD;&#xA;   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)&#xD;&#xA;   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)&#xD;&#xA;   at System.Web.WebPages.BuildManagerWrapper.CreateInstanceOfType[T](String virtualPath)&#xD;&#xA;   at System.Web.WebPages.VirtualPathFactoryManager.CreateInstanceOfType[T](String virtualPath)&#xD;&#xA;   at System.Web.WebPages.WebPageBase.CreatePageFromVirtualPath(String virtualPath, HttpContextBase httpContext, Func`2 virtualPathExists, DisplayModeProvider displayModeProvider, IDisplayMode displayMode)&#xD;&#xA;   at System.Web.WebPages.WebPageBase.&lt;&gt;c__DisplayClass3.&lt;RenderPageCore&gt;b__2(TextWriter writer)&#xD;&#xA;   at System.Web.WebPages.WebPageBase.Write(HelperResult result)&#xD;&#xA;   at System.Web.WebPages.WebPageBase.RenderSurrounding(String partialViewName, Action`1 body)&#xD;&#xA;   at System.Web.WebPages.WebPageBase.PopContext()&#xD;&#xA;   at System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;BeginInvokeAction&gt;b__1e(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecuteCore&gt;b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.&lt;BeginProcessRequest&gt;b__5(IAsyncResult asyncResult, ProcessRequestState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="Krutish Ruparelia" time="2024-01-12T15:33:29.4641865Z" statusCode="500" webHostHtmlMessage="&lt;!DOCTYPE html&gt;&#xD;&#xA;&lt;html&gt;&#xD;&#xA;    &lt;head&gt;&#xD;&#xA;        &lt;title&gt;Parser Error&lt;/title&gt;&#xD;&#xA;        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot; /&gt;&#xD;&#xA;        &lt;style&gt;&#xD;&#xA;         body {font-family:&quot;Verdana&quot;;font-weight:normal;font-size: .7em;color:black;} &#xD;&#xA;         p {font-family:&quot;Verdana&quot;;font-weight:normal;color:black;margin-top: -5px}&#xD;&#xA;         b {font-family:&quot;Verdana&quot;;font-weight:bold;color:black;margin-top: -5px}&#xD;&#xA;         H1 { font-family:&quot;Verdana&quot;;font-weight:normal;font-size:18pt;color:red }&#xD;&#xA;         H2 { font-family:&quot;Verdana&quot;;font-weight:normal;font-size:14pt;color:maroon }&#xD;&#xA;         pre {font-family:&quot;Consolas&quot;,&quot;Lucida Console&quot;,Monospace;font-size:11pt;margin:0;padding:0.5em;line-height:14pt}&#xD;&#xA;         .marker {font-weight: bold; color: black;text-decoration: none;}&#xD;&#xA;         .version {color: gray;}&#xD;&#xA;         .error {margin-bottom: 10px;}&#xD;&#xA;         .expandable { text-decoration:underline; font-weight:bold; color:navy; cursor:pointer; }&#xD;&#xA;         @media screen and (max-width: 639px) {&#xD;&#xA;          pre { width: 440px; overflow: auto; white-space: pre-wrap; word-wrap: break-word; }&#xD;&#xA;         }&#xD;&#xA;         @media screen and (max-width: 479px) {&#xD;&#xA;          pre { width: 280px; }&#xD;&#xA;         }&#xD;&#xA;        &lt;/style&gt;&#xD;&#xA;    &lt;/head&gt;&#xD;&#xA;&#xD;&#xA;    &lt;body bgcolor=&quot;white&quot;&gt;&#xD;&#xA;&#xD;&#xA;            &lt;span&gt;&lt;H1&gt;Server Error in '/' Application.&lt;hr width=100% size=1 color=silver&gt;&lt;/H1&gt;&#xD;&#xA;&#xD;&#xA;            &lt;h2&gt; &lt;i&gt;Parser Error&lt;/i&gt; &lt;/h2&gt;&lt;/span&gt;&#xD;&#xA;&#xD;&#xA;            &lt;font face=&quot;Arial, Helvetica, Geneva, SunSans-Regular, sans-serif &quot;&gt;&#xD;&#xA;&#xD;&#xA;            &lt;b&gt; Description: &lt;/b&gt;An error occurred during the parsing of a resource required to service this request.   Please review the following specific parse error details and modify your source file appropriately.&#xD;&#xA;            &lt;br&gt;&lt;br&gt;&#xD;&#xA;&#xD;&#xA;            &lt;b&gt; Parser Error Message: &lt;/b&gt;The if block is missing a closing &amp;quot;}&amp;quot; character. &amp;nbsp;Make sure you have a matching &amp;quot;}&amp;quot; character for all the &amp;quot;{&amp;quot; characters within this block, and that none of the &amp;quot;}&amp;quot; characters are being interpreted as markup.&lt;br&gt;&lt;br&gt;&lt;br&gt;&#xD;&#xA;&#xD;&#xA;            &lt;b&gt;Source Error:&lt;/b&gt; &lt;br&gt;&lt;br&gt;&#xD;&#xA;&#xD;&#xA;            &lt;table width=100% bgcolor=&quot;#ffffcc&quot;&gt;&#xD;&#xA;               &lt;tr&gt;&#xD;&#xA;                  &lt;td&gt;&#xD;&#xA;                      &lt;code&gt;&lt;pre&gt;&#xD;&#xA;&#xD;&#xA;Line 154:            &amp;lt;div class=&amp;quot;data-scrollbar&amp;quot; data-scroll=&amp;quot;1&amp;quot;&amp;gt;&#xD;&#xA;Line 155:                &amp;lt;nav class=&amp;quot;iq-sidebar-menu&amp;quot;&amp;gt;&#xD;&#xA;&lt;font color=red&gt;Line 156:                    @if (Convert.ToString(Session[&amp;quot;UserID&amp;quot;]) != &amp;quot;&amp;quot;)&#xD;&#xA;&lt;/font&gt;Line 157:                    {&#xD;&#xA;Line 158:                        &amp;lt;ul id=&amp;quot;iq-sidebar-toggle&amp;quot; class=&amp;quot;iq-menu&amp;quot;&amp;gt;&lt;/pre&gt;                      &lt;/code&gt;&#xD;&#xA;&#xD;&#xA;                  &lt;/td&gt;&#xD;&#xA;               &lt;/tr&gt;&#xD;&#xA;            &lt;/table&gt;&#xD;&#xA;&#xD;&#xA;            &lt;br&gt;&#xD;&#xA;&#xD;&#xA;            &lt;b&gt; Source File: &lt;/b&gt; /Views/Shared/_Layout.cshtml&lt;b&gt; &amp;nbsp;&amp;nbsp; Line: &lt;/b&gt; 156&#xD;&#xA;            &lt;br&gt;&lt;br&gt;&#xD;&#xA;&#xD;&#xA;            &lt;/font&gt;&#xD;&#xA;&#xD;&#xA;    &lt;/body&gt;&#xD;&#xA;&lt;/html&gt;&#xD;&#xA;">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CACHE_CONTROL:max-age=0&#xD;&#xA;HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, br&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.9&#xD;&#xA;HTTP_COOKIE:__RequestVerificationToken=h7GqUl5W3V4iYuMcgrcBLBxizdps6Y0NvkVzYN16C07_hD9W_DDQkgSclvyY_tfSh_ERb9_bs7nHNaIpzH3sP20ynZcQH06B4tqk8VXOm501; AMP_MKTG_067b9b07c8=JTdCJTdE; ASP.NET_SessionId=eh1wxshriqrmjksueyqst1zj; AMP_067b9b07c8=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjI4NjE4YzMxMi0wNDYxLTRiOWItYTU0Mi02ZDhiY2Y5NGFkNjIlMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNjkxNjUzNTczNTQwJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTcwNTA3Mjg0Njk5OCUyQyUyMmxhc3RFdmVudElkJTIyJTNBNTQ4JTdE; .ASPXAUTH=84C38C5BDE314FFB128AD3090004B9AD5E0492464EF9D713DD82DDDA2B20FEDABA14FC691EFEE6E7F9E304615B0917679EB861AA3BD1D6D169B43E0E53ECBC7104732C7F70DC805C90D516E64FCC7B5C3BE06DEF0EA7BADE5192DF437721B0B0F0AFC22810C9A499FCE1097B399C6DBD&#xD;&#xA;HTTP_HOST:localhost:61077&#xD;&#xA;HTTP_REFERER:http://localhost:61077/&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36&#xD;&#xA;HTTP_UPGRADE_INSECURE_REQUESTS:1&#xD;&#xA;HTTP_SEC_FETCH_SITE:same-origin&#xD;&#xA;HTTP_SEC_FETCH_MODE:navigate&#xD;&#xA;HTTP_SEC_FETCH_USER:?1&#xD;&#xA;HTTP_SEC_FETCH_DEST:document&#xD;&#xA;HTTP_SEC_CH_UA:&quot;Not_A Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;120&quot;, &quot;Google Chrome&quot;;v=&quot;120&quot;&#xD;&#xA;HTTP_SEC_CH_UA_MOBILE:?0&#xD;&#xA;HTTP_SEC_CH_UA_PLATFORM:&quot;Windows&quot;&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Cache-Control: max-age=0&#xD;&#xA;Connection: keep-alive&#xD;&#xA;Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7&#xD;&#xA;Accept-Encoding: gzip, deflate, br&#xD;&#xA;Accept-Language: en-US,en;q=0.9&#xD;&#xA;Cookie: __RequestVerificationToken=h7GqUl5W3V4iYuMcgrcBLBxizdps6Y0NvkVzYN16C07_hD9W_DDQkgSclvyY_tfSh_ERb9_bs7nHNaIpzH3sP20ynZcQH06B4tqk8VXOm501; AMP_MKTG_067b9b07c8=JTdCJTdE; ASP.NET_SessionId=eh1wxshriqrmjksueyqst1zj; AMP_067b9b07c8=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjI4NjE4YzMxMi0wNDYxLTRiOWItYTU0Mi02ZDhiY2Y5NGFkNjIlMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNjkxNjUzNTczNTQwJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTcwNTA3Mjg0Njk5OCUyQyUyMmxhc3RFdmVudElkJTIyJTNBNTQ4JTdE; .ASPXAUTH=84C38C5BDE314FFB128AD3090004B9AD5E0492464EF9D713DD82DDDA2B20FEDABA14FC691EFEE6E7F9E304615B0917679EB861AA3BD1D6D169B43E0E53ECBC7104732C7F70DC805C90D516E64FCC7B5C3BE06DEF0EA7BADE5192DF437721B0B0F0AFC22810C9A499FCE1097B399C6DBD&#xD;&#xA;Host: localhost:61077&#xD;&#xA;Referer: http://localhost:61077/&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36&#xD;&#xA;Upgrade-Insecure-Requests: 1&#xD;&#xA;Sec-Fetch-Site: same-origin&#xD;&#xA;Sec-Fetch-Mode: navigate&#xD;&#xA;Sec-Fetch-User: ?1&#xD;&#xA;Sec-Fetch-Dest: document&#xD;&#xA;sec-ch-ua: &quot;Not_A Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;120&quot;, &quot;Google Chrome&quot;;v=&quot;120&quot;&#xD;&#xA;sec-ch-ua-mobile: ?0&#xD;&#xA;sec-ch-ua-platform: &quot;Windows&quot;&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="E:\Smart Meters\Develpoment\HES\HESMDMS\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="Krutish Ruparelia" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="Krutish Ruparelia" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="Krutish Ruparelia" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/Admin/Dashboad/Index" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="E:\Smart Meters\Develpoment\HES\HESMDMS\Admin\Dashboad\Index" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="19633" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/Admin/Dashboad/Index" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="61077" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/Admin/Dashboad/Index" />
+    </item>
+    <item name="HTTP_CACHE_CONTROL">
+      <value string="max-age=0" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, br" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.9" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="__RequestVerificationToken=h7GqUl5W3V4iYuMcgrcBLBxizdps6Y0NvkVzYN16C07_hD9W_DDQkgSclvyY_tfSh_ERb9_bs7nHNaIpzH3sP20ynZcQH06B4tqk8VXOm501; AMP_MKTG_067b9b07c8=JTdCJTdE; ASP.NET_SessionId=eh1wxshriqrmjksueyqst1zj; AMP_067b9b07c8=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjI4NjE4YzMxMi0wNDYxLTRiOWItYTU0Mi02ZDhiY2Y5NGFkNjIlMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNjkxNjUzNTczNTQwJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTcwNTA3Mjg0Njk5OCUyQyUyMmxhc3RFdmVudElkJTIyJTNBNTQ4JTdE; .ASPXAUTH=84C38C5BDE314FFB128AD3090004B9AD5E0492464EF9D713DD82DDDA2B20FEDABA14FC691EFEE6E7F9E304615B0917679EB861AA3BD1D6D169B43E0E53ECBC7104732C7F70DC805C90D516E64FCC7B5C3BE06DEF0EA7BADE5192DF437721B0B0F0AFC22810C9A499FCE1097B399C6DBD" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:61077" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:61077/" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" />
+    </item>
+    <item name="HTTP_UPGRADE_INSECURE_REQUESTS">
+      <value string="1" />
+    </item>
+    <item name="HTTP_SEC_FETCH_SITE">
+      <value string="same-origin" />
+    </item>
+    <item name="HTTP_SEC_FETCH_MODE">
+      <value string="navigate" />
+    </item>
+    <item name="HTTP_SEC_FETCH_USER">
+      <value string="?1" />
+    </item>
+    <item name="HTTP_SEC_FETCH_DEST">
+      <value string="document" />
+    </item>
+    <item name="HTTP_SEC_CH_UA">
+      <value string="&quot;Not_A Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;120&quot;, &quot;Google Chrome&quot;;v=&quot;120&quot;" />
+    </item>
+    <item name="HTTP_SEC_CH_UA_MOBILE">
+      <value string="?0" />
+    </item>
+    <item name="HTTP_SEC_CH_UA_PLATFORM">
+      <value string="&quot;Windows&quot;" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="__RequestVerificationToken">
+      <value string="h7GqUl5W3V4iYuMcgrcBLBxizdps6Y0NvkVzYN16C07_hD9W_DDQkgSclvyY_tfSh_ERb9_bs7nHNaIpzH3sP20ynZcQH06B4tqk8VXOm501" />
+    </item>
+    <item name="AMP_MKTG_067b9b07c8">
+      <value string="JTdCJTdE" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="eh1wxshriqrmjksueyqst1zj" />
+    </item>
+    <item name="AMP_067b9b07c8">
+      <value string="JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjI4NjE4YzMxMi0wNDYxLTRiOWItYTU0Mi02ZDhiY2Y5NGFkNjIlMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNjkxNjUzNTczNTQwJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTcwNTA3Mjg0Njk5OCUyQyUyMmxhc3RFdmVudElkJTIyJTNBNTQ4JTdE" />
+    </item>
+    <item name=".ASPXAUTH">
+      <value string="84C38C5BDE314FFB128AD3090004B9AD5E0492464EF9D713DD82DDDA2B20FEDABA14FC691EFEE6E7F9E304615B0917679EB861AA3BD1D6D169B43E0E53ECBC7104732C7F70DC805C90D516E64FCC7B5C3BE06DEF0EA7BADE5192DF437721B0B0F0AFC22810C9A499FCE1097B399C6DBD" />
+    </item>
+  </cookies>
+</error>

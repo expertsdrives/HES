@@ -1,0 +1,34 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Payment Successful</h2>
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        $.ajax({
+            url: '/SmartMeter/User/SendData',
+            type: 'POST',
+            data: { aid: "@ViewBag.aid", pld: "@ViewBag.pld", eid: "@ViewBag.eid", eventname: "Add Balance", modetype: "auto", balanceInput: "@ViewBag.amount", },
+            success: function (result) {
+                //loadPanel.hide();
+                //$("#lblPresentVolume").val(result+" m3");
+                ////textareaLogs.option('value', result);
+                ////const myArray = result.split("/");
+                ////var data = myArray[1];
+                //DevExpress.ui.notify(result, "warning", 2000);
+                if (result == "00000000") {
+                    loadPanel.hide();
+                    alert("Balance Added");
+                }
+                else {
+                    loadPanel.hide();
+                    $("#lblAddBalance").val("Balance Added");
+                }
+            }
+        });
+    });
+</script>

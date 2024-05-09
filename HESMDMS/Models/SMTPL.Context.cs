@@ -34,16 +34,25 @@ namespace HESMDMS.Models
         public virtual DbSet<tbl_SerialNumberMaster> tbl_SerialNumberMaster { get; set; }
         public virtual DbSet<tbl_RoleMaster> tbl_RoleMaster { get; set; }
         public virtual DbSet<tbl_AdminCredentials> tbl_AdminCredentials { get; set; }
-        public virtual DbSet<tbl_CustomerRegistration> tbl_CustomerRegistration { get; set; }
         public virtual DbSet<V_FetchInductiveData> V_FetchInductiveData { get; set; }
         public virtual DbSet<V_DistinctMeter> V_DistinctMeter { get; set; }
         public virtual DbSet<V_FetchDailyConsumption> V_FetchDailyConsumption { get; set; }
         public virtual DbSet<tbl_MeterMaster> tbl_MeterMaster { get; set; }
         public virtual DbSet<tbl_AMRHistory> tbl_AMRHistory { get; set; }
         public virtual DbSet<tbl_JioLogs> tbl_JioLogs { get; set; }
-        public virtual DbSet<tbl_SMeterMaster> tbl_SMeterMaster { get; set; }
         public virtual DbSet<tbl_SignalRMaxID> tbl_SignalRMaxID { get; set; }
         public virtual DbSet<tbl_OTACommands> tbl_OTACommands { get; set; }
+        public virtual DbSet<tbl_VayudutMaster> tbl_VayudutMaster { get; set; }
+        public virtual DbSet<tbl_VayudutRegistration> tbl_VayudutRegistration { get; set; }
+        public virtual DbSet<V_RawData> V_RawData { get; set; }
+        public virtual DbSet<tbl_CustomerRegistration> tbl_CustomerRegistration { get; set; }
+        public virtual DbSet<tbl_ATGLPaymentAck> tbl_ATGLPaymentAck { get; set; }
+        public virtual DbSet<tbl_Customers> tbl_Customers { get; set; }
+        public virtual DbSet<tbl_DataReception> tbl_DataReception { get; set; }
+        public virtual DbSet<tbl_BillingAckData> tbl_BillingAckData { get; set; }
+        public virtual DbSet<tbl_Consumption> tbl_Consumption { get; set; }
+        public virtual DbSet<tbl_ConsumptionDetails> tbl_ConsumptionDetails { get; set; }
+        public virtual DbSet<tbl_AMRAckData> tbl_AMRAckData { get; set; }
     
         public virtual ObjectResult<FetchCRCData_Result> FetchCRCData()
         {
@@ -58,11 +67,6 @@ namespace HESMDMS.Models
         public virtual ObjectResult<FetchConsumption_MagneticTemper_Result> FetchConsumption_MagneticTemper()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchConsumption_MagneticTemper_Result>("FetchConsumption_MagneticTemper");
-        }
-    
-        public virtual ObjectResult<FetchConsumption_VayudutWise_Result> FetchConsumption_VayudutWise()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchConsumption_VayudutWise_Result>("FetchConsumption_VayudutWise");
         }
     
         public virtual ObjectResult<sp_ZeroConsumption_Result> sp_ZeroConsumption()
@@ -160,6 +164,21 @@ namespace HESMDMS.Models
         public virtual ObjectResult<FetchConsumption_15DayRevenue_Result> FetchConsumption_15DayRevenue()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchConsumption_15DayRevenue_Result>("FetchConsumption_15DayRevenue");
+        }
+    
+        public virtual int FetchConsumption_POCBilling()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("FetchConsumption_POCBilling");
+        }
+    
+        public virtual ObjectResult<sp_AMRBill_Result> sp_AMRBill()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AMRBill_Result>("sp_AMRBill");
+        }
+    
+        public virtual ObjectResult<FetchConsumption_VayudutWise_Result> FetchConsumption_VayudutWise()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchConsumption_VayudutWise_Result>("FetchConsumption_VayudutWise");
         }
     }
 }

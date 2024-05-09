@@ -1,5 +1,8 @@
 ﻿
 
+<!-- Include Select2 CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 
 @{ 
@@ -16,8 +19,9 @@
             {
                 <div class="new-user-info">
                     <div class="form-group">
-                        <div id="searchBox"></div>
-                        @* @Html.DropDownList("BP", (IEnumerable<SelectListItem>)ViewBag.BP, new { @class = "form-control", @width = "500px" })*@
+                        <select id="bpDropdown" style="width: 100%;" name="BP">
+                            <!-- Options will be added dynamically -->
+                        </select>
                     </div>
                     <hr>
 
@@ -32,17 +36,44 @@
     var jsonModel = serializer.Serialize(ViewBag.BP);
 <script>
     var meterList = @Html.Raw(jsonModel);
+    console.log(meterList);
+     $(document).ready(function() {
+        // Assuming ViewBag.BP is somethig like [{"id": 1, "name": "Option1"}, ...]
+         var data = JSON.parse(meterList);
 
+        // Populate the dropdown
+         if (Array.isArray(data)) {
+             // Populate the dropdown
+             data.forEach(function (item) {
+                 $('#bpDropdown').append($('<option></option>').attr('value', item.Number).text(item.Number));
+             });
+         }
 
+        // Initialize Select2
+        $('#bpDropdown').select2({
+            placeholder: "Select an option",
+            allowClear: true
+        });
+    });
     $(() => {
-        const searchBox = $('#searchBox').dxSelectBox({
-            dataSource: JSON.parse(meterList),
-            displayExpr: 'Number',
-            valueExpr: 'Number',
-            height: 50,
-            name:'BP',
-            searchEnabled: true,
-        }).dxSelectBox('instance');
+        //const searchBox = $('#searchBox').dxSelectBox({
+        //    dataSource: JSON.parse(meterList),
+        //    displayExpr: 'Number',
+        //    valueExpr: 'Number',
+        //    height: 50,
+        //    name:'BP',
+        //    searchEnabled: true,
+        //}).dxSelectBox('instance');
+        //$('#searchBox').dxSelectBox({
+
+        //    dataSource: DevExpress.data.AspNet.createStore({
+        //        key: "ID",
+        //        loadUrl: "/SelectBus",
+        //    }),
+        //    displayExpr: 'Number',
+        //    height: 50,
+        //    valueExpr: 'Number',
+        //}).dxSelectBox('instance');
     });
 </script>
     }

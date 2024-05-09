@@ -1,0 +1,198 @@
+﻿<error errorId="679fdf62-3c24-4090-a220-4ff19f1399dc" application="/LM/W3SVC/2/ROOT" host="EXPERTS" type="System.Web.HttpException" message="A public action method 'Admin' was not found on controller 'HESMDMS.Areas.Admin.Controllers.DashboadController'." source="System.Web.Mvc" detail="System.Web.HttpException (0x80004005): A public action method 'Admin' was not found on controller 'HESMDMS.Areas.Admin.Controllers.DashboadController'.&#xD;&#xA;   at System.Web.Mvc.Controller.HandleUnknownAction(String actionName)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecuteCore&gt;b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.&lt;BeginProcessRequest&gt;b__5(IAsyncResult asyncResult, ProcessRequestState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="Manish Ojha" time="2023-11-22T06:41:42.6056621Z" statusCode="404">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, br&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.9&#xD;&#xA;HTTP_COOKIE:__RequestVerificationToken=NHqaFm6iCawGrQsPxx5UeP3efRq4i33jVWpqA-oCsZjbtm3LgMKoU6CfaGp4jdt7oviHlcTcARCcP59wBXUei8UHK2aiJo9HVnnME5zjsls1; ASP.NET_SessionId=tszfschzv5pet3ojgx3ki0qf; .ASPXAUTH=05C40B2D4D65965D44ABFA3950B8759DC8B836D75EFC9C39D37C8732E99665F9632808F0A40D762B8EB1AB00F709E79563FBFAD0BDB53A0E6AD6E95AE1BD2369D90D7FA534BDA185AB51224F2867962B8C29843BF6AE8788886CCF968DCB6089FCBD17108DAAAAEC3E4A452BDBE7BA3B; AMP_MKTG_067b9b07c8=JTdCJTIycmVmZXJyZXIlMjIlM0ElMjJodHRwJTNBJTJGJTJGbG9jYWxob3N0JTNBNjEwNzclMkYlMjIlMkMlMjJyZWZlcnJpbmdfZG9tYWluJTIyJTNBJTIybG9jYWxob3N0JTNBNjEwNzclMjIlN0Q=; AMP_067b9b07c8=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjI4NjE4YzMxMi0wNDYxLTRiOWItYTU0Mi02ZDhiY2Y5NGFkNjIlMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNjkxNjUzNTczNTQwJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTcwMDYzNTI1NDY5NSUyQyUyMmxhc3RFdmVudElkJTIyJTNBNTI3JTdE&#xD;&#xA;HTTP_HOST:localhost:61077&#xD;&#xA;HTTP_REFERER:http://localhost:61077/Admin/Dashboad/Index&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36&#xD;&#xA;HTTP_SEC_CH_UA:&quot;Google Chrome&quot;;v=&quot;119&quot;, &quot;Chromium&quot;;v=&quot;119&quot;, &quot;Not?A_Brand&quot;;v=&quot;24&quot;&#xD;&#xA;HTTP_SEC_CH_UA_MOBILE:?0&#xD;&#xA;HTTP_SEC_CH_UA_PLATFORM:&quot;Windows&quot;&#xD;&#xA;HTTP_UPGRADE_INSECURE_REQUESTS:1&#xD;&#xA;HTTP_SEC_FETCH_SITE:same-origin&#xD;&#xA;HTTP_SEC_FETCH_MODE:navigate&#xD;&#xA;HTTP_SEC_FETCH_USER:?1&#xD;&#xA;HTTP_SEC_FETCH_DEST:document&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7&#xD;&#xA;Accept-Encoding: gzip, deflate, br&#xD;&#xA;Accept-Language: en-US,en;q=0.9&#xD;&#xA;Cookie: __RequestVerificationToken=NHqaFm6iCawGrQsPxx5UeP3efRq4i33jVWpqA-oCsZjbtm3LgMKoU6CfaGp4jdt7oviHlcTcARCcP59wBXUei8UHK2aiJo9HVnnME5zjsls1; ASP.NET_SessionId=tszfschzv5pet3ojgx3ki0qf; .ASPXAUTH=05C40B2D4D65965D44ABFA3950B8759DC8B836D75EFC9C39D37C8732E99665F9632808F0A40D762B8EB1AB00F709E79563FBFAD0BDB53A0E6AD6E95AE1BD2369D90D7FA534BDA185AB51224F2867962B8C29843BF6AE8788886CCF968DCB6089FCBD17108DAAAAEC3E4A452BDBE7BA3B; AMP_MKTG_067b9b07c8=JTdCJTIycmVmZXJyZXIlMjIlM0ElMjJodHRwJTNBJTJGJTJGbG9jYWxob3N0JTNBNjEwNzclMkYlMjIlMkMlMjJyZWZlcnJpbmdfZG9tYWluJTIyJTNBJTIybG9jYWxob3N0JTNBNjEwNzclMjIlN0Q=; AMP_067b9b07c8=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjI4NjE4YzMxMi0wNDYxLTRiOWItYTU0Mi02ZDhiY2Y5NGFkNjIlMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNjkxNjUzNTczNTQwJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTcwMDYzNTI1NDY5NSUyQyUyMmxhc3RFdmVudElkJTIyJTNBNTI3JTdE&#xD;&#xA;Host: localhost:61077&#xD;&#xA;Referer: http://localhost:61077/Admin/Dashboad/Index&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36&#xD;&#xA;sec-ch-ua: &quot;Google Chrome&quot;;v=&quot;119&quot;, &quot;Chromium&quot;;v=&quot;119&quot;, &quot;Not?A_Brand&quot;;v=&quot;24&quot;&#xD;&#xA;sec-ch-ua-mobile: ?0&#xD;&#xA;sec-ch-ua-platform: &quot;Windows&quot;&#xD;&#xA;Upgrade-Insecure-Requests: 1&#xD;&#xA;Sec-Fetch-Site: same-origin&#xD;&#xA;Sec-Fetch-Mode: navigate&#xD;&#xA;Sec-Fetch-User: ?1&#xD;&#xA;Sec-Fetch-Dest: document&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="E:\Smart Meters\Develpoment\HES\HESMDMS\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="Manish Ojha" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="Manish Ojha" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="Manish Ojha" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/Admin/Dashboad/Admin/Vayudut" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="E:\Smart Meters\Develpoment\HES\HESMDMS\Admin\Dashboad\Admin\Vayudut" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="63455" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/Admin/Dashboad/Admin/Vayudut" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="61077" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/Admin/Dashboad/Admin/Vayudut" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, br" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.9" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="__RequestVerificationToken=NHqaFm6iCawGrQsPxx5UeP3efRq4i33jVWpqA-oCsZjbtm3LgMKoU6CfaGp4jdt7oviHlcTcARCcP59wBXUei8UHK2aiJo9HVnnME5zjsls1; ASP.NET_SessionId=tszfschzv5pet3ojgx3ki0qf; .ASPXAUTH=05C40B2D4D65965D44ABFA3950B8759DC8B836D75EFC9C39D37C8732E99665F9632808F0A40D762B8EB1AB00F709E79563FBFAD0BDB53A0E6AD6E95AE1BD2369D90D7FA534BDA185AB51224F2867962B8C29843BF6AE8788886CCF968DCB6089FCBD17108DAAAAEC3E4A452BDBE7BA3B; AMP_MKTG_067b9b07c8=JTdCJTIycmVmZXJyZXIlMjIlM0ElMjJodHRwJTNBJTJGJTJGbG9jYWxob3N0JTNBNjEwNzclMkYlMjIlMkMlMjJyZWZlcnJpbmdfZG9tYWluJTIyJTNBJTIybG9jYWxob3N0JTNBNjEwNzclMjIlN0Q=; AMP_067b9b07c8=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjI4NjE4YzMxMi0wNDYxLTRiOWItYTU0Mi02ZDhiY2Y5NGFkNjIlMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNjkxNjUzNTczNTQwJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTcwMDYzNTI1NDY5NSUyQyUyMmxhc3RFdmVudElkJTIyJTNBNTI3JTdE" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:61077" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:61077/Admin/Dashboad/Index" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" />
+    </item>
+    <item name="HTTP_SEC_CH_UA">
+      <value string="&quot;Google Chrome&quot;;v=&quot;119&quot;, &quot;Chromium&quot;;v=&quot;119&quot;, &quot;Not?A_Brand&quot;;v=&quot;24&quot;" />
+    </item>
+    <item name="HTTP_SEC_CH_UA_MOBILE">
+      <value string="?0" />
+    </item>
+    <item name="HTTP_SEC_CH_UA_PLATFORM">
+      <value string="&quot;Windows&quot;" />
+    </item>
+    <item name="HTTP_UPGRADE_INSECURE_REQUESTS">
+      <value string="1" />
+    </item>
+    <item name="HTTP_SEC_FETCH_SITE">
+      <value string="same-origin" />
+    </item>
+    <item name="HTTP_SEC_FETCH_MODE">
+      <value string="navigate" />
+    </item>
+    <item name="HTTP_SEC_FETCH_USER">
+      <value string="?1" />
+    </item>
+    <item name="HTTP_SEC_FETCH_DEST">
+      <value string="document" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="__RequestVerificationToken">
+      <value string="NHqaFm6iCawGrQsPxx5UeP3efRq4i33jVWpqA-oCsZjbtm3LgMKoU6CfaGp4jdt7oviHlcTcARCcP59wBXUei8UHK2aiJo9HVnnME5zjsls1" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="tszfschzv5pet3ojgx3ki0qf" />
+    </item>
+    <item name=".ASPXAUTH">
+      <value string="05C40B2D4D65965D44ABFA3950B8759DC8B836D75EFC9C39D37C8732E99665F9632808F0A40D762B8EB1AB00F709E79563FBFAD0BDB53A0E6AD6E95AE1BD2369D90D7FA534BDA185AB51224F2867962B8C29843BF6AE8788886CCF968DCB6089FCBD17108DAAAAEC3E4A452BDBE7BA3B" />
+    </item>
+    <item name="AMP_MKTG_067b9b07c8">
+      <value string="JTdCJTIycmVmZXJyZXIlMjIlM0ElMjJodHRwJTNBJTJGJTJGbG9jYWxob3N0JTNBNjEwNzclMkYlMjIlMkMlMjJyZWZlcnJpbmdfZG9tYWluJTIyJTNBJTIybG9jYWxob3N0JTNBNjEwNzclMjIlN0Q=" />
+    </item>
+    <item name="AMP_067b9b07c8">
+      <value string="JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjI4NjE4YzMxMi0wNDYxLTRiOWItYTU0Mi02ZDhiY2Y5NGFkNjIlMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNjkxNjUzNTczNTQwJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTcwMDYzNTI1NDY5NSUyQyUyMmxhc3RFdmVudElkJTIyJTNBNTI3JTdE" />
+    </item>
+  </cookies>
+</error>

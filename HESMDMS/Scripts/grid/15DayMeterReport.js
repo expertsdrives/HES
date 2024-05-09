@@ -41,10 +41,10 @@ $(function () {
         },
     });
 
-    const statuses = ['All', 'Water Lily', 'Dreamland Appartment', 'Richmond Grand'];
+    const statuses = ['All', 'Water Lily', 'Dreamland Appartment', 'Richmond Grand','Khurja'];
     $('#selectStatus1').dxSelectBox({
         dataSource: statuses,
-        value: statuses[3],
+        value: statuses[4],
         onValueChanged(data) {
             var fromdateBox = $("#fromdate").dxDateBox("instance");
             fromValue = fromdateBox.option('text');

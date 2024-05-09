@@ -55,6 +55,9 @@
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.3.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
     <Reference Include="DevExtreme.AspNet.Data, Version=2.6.1.0, Culture=neutral, PublicKeyToken=982f5dab1439d0f7, processorArchitecture=MSIL">
       <HintPath>..\packages\DevExtreme.AspNet.Data.2.6.1\lib\net452\DevExtreme.AspNet.Data.dll</HintPath>
     </Reference>
@@ -88,14 +91,74 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Enums.NET, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7ea1c1650d506225, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enums.NET.4.0.1\lib\net45\Enums.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=7.1.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.7.1.2\lib\net462\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.6.1.1\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="ExtendedNumerics.BigDecimal, Version=2023.1000.0.230, Culture=neutral, PublicKeyToken=65f1315a45ad8949, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExtendedNumerics.BigDecimal.2023.1000.0.230\lib\net472\ExtendedNumerics.BigDecimal.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.3.3.11, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.3.3\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="IronPdf, Version=2022.4.0.5575, Culture=neutral, PublicKeyToken=94e1c31412563c75, processorArchitecture=MSIL">
       <HintPath>..\packages\IronPdf.Slim.2022.4.5575\lib\net40\IronPdf.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.Signed.5.0.0\lib\net461\MathNet.Numerics.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Core.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.Internal.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Server.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Extensions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Extensions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Amqp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.Amqp.2.5.10\lib\net45\Microsoft.Azure.Amqp.dll</HintPath>
@@ -113,11 +176,20 @@
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.7.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.7.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Hosting.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Hosting.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Http, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Http.7.0.0\lib\net462\Microsoft.Extensions.Http.dll</HintPath>
@@ -128,11 +200,23 @@
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.7.0.0\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Extensions.ObjectPool, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.ObjectPool.2.2.0\lib\netstandard2.0\Microsoft.Extensions.ObjectPool.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Options, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Options.7.0.0\lib\net462\Microsoft.Extensions.Options.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Primitives, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.7.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.WebEncoders, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.WebEncoders.2.2.0\lib\netstandard2.0\Microsoft.Extensions.WebEncoders.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.0\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -155,8 +239,33 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI.Core, Version=2.7.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.0\lib\net472\NPOI.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.7.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.0\lib\net472\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.7.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.0\lib\net472\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.7.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.0\lib\net472\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="Razorpay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Razorpay.3.0.0\lib\net45\Razorpay.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.Fonts.1.0.1\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.ImageSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.ImageSharp.2.1.7\lib\net472\SixLabors.ImageSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Stripe.net, Version=43.21.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stripe.net.43.21.0\lib\net461\Stripe.net.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Compression.Base, Version=20.1450.0.51, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Pdf.AspNet.Mvc5.20.1.0.51\lib\net45\Syncfusion.Compression.Base.dll</HintPath>
@@ -180,6 +289,9 @@
     <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -189,6 +301,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.7.0.0\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -201,6 +314,7 @@
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net" />
     <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
       <Private>True</Private>
@@ -221,10 +335,15 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Security.AccessControl, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.AccessControl.4.5.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.6.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
     </Reference>
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
@@ -236,6 +355,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Security.Cryptography.Pkcs, Version=6.0.0.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Pkcs.6.0.3\lib\net461\System.Security.Cryptography.Pkcs.dll</HintPath>
+    </Reference>
     <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
       <Private>True</Private>
@@ -246,12 +368,26 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.4.5.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    <Reference Include="System.Security.Cryptography.Xml, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Xml.6.0.1\lib\net461\System.Security.Cryptography.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Permissions.4.5.0\lib\net461\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Text.Encoding.CodePages, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.5.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -7095,6 +7231,16 @@
     <Content Include="Content\sweetalert\docs.css" />
     <Content Include="Content\sweetalert\sweet-alert.css" />
     <Content Include="Content\sweetalert\thumbs-up.jpg" />
+    <Content Include="ElectricMeter.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ElectricMeter.edmx</DependentUpon>
+      <LastGenOutput>ElectricMeter.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ElectricMeter.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ElectricMeter.edmx</DependentUpon>
+      <LastGenOutput>ElectricMeter.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\1.png" />
@@ -7202,6 +7348,7 @@
     <Content Include="Scripts\globalize\number.min.js" />
     <Content Include="Scripts\grid\AMRHealthGraph.js" />
     <Content Include="Scripts\grid\15DayRevenue.js" />
+    <Content Include="Scripts\grid\AMRRawData.js" />
     <Content Include="Scripts\grid\BackLogs.js" />
     <Content Include="Scripts\grid\BillingParameters.js" />
     <Content Include="Scripts\grid\CustomerRegistration.js" />
@@ -7210,14 +7357,20 @@
     <Content Include="Scripts\grid\DashboardGraphs.js" />
     <Content Include="Scripts\grid\15DayMeterReport.js" />
     <Content Include="Scripts\grid\D2C.js" />
+    <Content Include="Scripts\grid\ElectricMeterMaster.js" />
     <Content Include="Scripts\grid\FirmwareUpgrade.js" />
+    <Content Include="Scripts\grid\ManualBillGenerateAMR.js" />
+    <Content Include="Scripts\grid\ManualBillGenerate.js" />
     <Content Include="Scripts\grid\MeterInformation.js" />
     <Content Include="Scripts\grid\ReplaceMeter.js" />
+    <Content Include="Scripts\grid\customers.js" />
+    <Content Include="Scripts\grid\ElectricMeter.js" />
     <Content Include="Scripts\grid\smartmeter.js" />
     <Content Include="Scripts\grid\SmartUsers.js" />
     <Content Include="Scripts\grid\Terminal.js" />
     <Content Include="Scripts\grid\TerminalControl.js" />
     <Content Include="Scripts\grid\UserBalance.js" />
+    <Content Include="Scripts\grid\vayudut.js" />
     <Content Include="Scripts\grid\VayudutWise.js" />
     <Content Include="Scripts\grid\MagneticTemper.js" />
     <Content Include="Scripts\grid\MeterMaster.js" />
@@ -7250,6 +7403,24 @@
     <Content Include="Models\SMTPL.edmx.diagram">
       <DependentUpon>SMTPL.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\RawData\AMRRawData.cshtml" />
+    <Content Include="Areas\Admin\Views\Vayudut\Index.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\User\Payment.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\User\PaymentSuccess.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\SamrtMeterData\Customers.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\SamrtMeterData\sendBillAsync.cshtml" />
+    <Content Include="Areas\Admin\Views\Meter\AMRBilling.cshtml" />
+    <EntityDeploy Include="ElectricMeter.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ElectricMeter.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="ElectricMeter.edmx.diagram">
+      <DependentUpon>ElectricMeter.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\SmartMeter\Views\SamrtMeterData\ElectricMeterView.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\SamrtMeterData\EleMeterMaster.cshtml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
@@ -7537,6 +7708,9 @@
     <Content Include="Views\Home\SelectPOCLocation.cshtml" />
     <Content Include="Views\Signal\Index.cshtml" />
     <Content Include="Views\Login\ForgotPassword.cshtml" />
+    <Content Include="Views\qrcode\Index.cshtml" />
+    <Content Include="Views\SAPIntegration\Index.cshtml" />
+    <Content Include="Views\PaymentDemo\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -7557,6 +7731,7 @@
     <Compile Include="Areas\Admin\Controllers\MeterController.cs" />
     <Compile Include="Areas\Admin\Controllers\RawDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VayudutController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\BillingParameterController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\FirmwareController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\LogsController.cs" />
@@ -7567,15 +7742,34 @@
     <Compile Include="Areas\SmartMeter\Controllers\UserController.cs" />
     <Compile Include="Areas\SmartMeter\SmartMeterAreaRegistration.cs" />
     <Compile Include="Controllers\AzureIOTHubController.cs" />
+    <Compile Include="Controllers\BasicAuthenticationAttribute.cs" />
     <Compile Include="Controllers\CrudOperationController.cs" />
     <Compile Include="Controllers\DataReceptionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MobileAppController.cs" />
+    <Compile Include="Controllers\PaymentDemoController.cs" />
+    <Compile Include="Controllers\qrcodeController.cs" />
     <Compile Include="Controllers\SampleDataController.cs" />
+    <Compile Include="Controllers\SAPIntegrationController.cs" />
     <Compile Include="Controllers\SignalController.cs" />
     <Compile Include="Controllers\SweetController.cs" />
     <Compile Include="Controllers\tbl_RawDataAPIController.cs" />
+    <Compile Include="ElectricMeter.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElectricMeter.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ElectricMeter.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElectricMeter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ElectricMeter.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElectricMeter.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -7583,6 +7777,11 @@
     <Compile Include="Models\15DayReport.cs" />
     <Compile Include="Models\AMRCRCModel.cs" />
     <Compile Include="Models\APIData.cs" />
+    <Compile Include="Models\BasicAuthenticationHandler.cs" />
+    <Compile Include="Models\BillingCustomer_Result.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BillingData.cs" />
     <Compile Include="Models\c2d.cs" />
     <Compile Include="Models\CustomerRaw.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
@@ -7668,6 +7867,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SMTPL.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_AMRBill_Result.cs">
+      <DependentUpon>SMTPL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_AMRHealth_Result.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
@@ -7693,6 +7895,9 @@
       <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_OTAFetch_Result.cs">
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_ResponseSplited_Billing_Result.cs">
       <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_ResponseSplited_Result.cs">
@@ -7721,17 +7926,29 @@
     <Compile Include="Models\tbl_AdminCredentials.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_AMRAckData.cs">
+      <DependentUpon>SMTPL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_AMRHistory.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tbl_AMRRegistration.cs">
+    <Compile Include="Models\tbl_AssignSmartMeter.cs">
       <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_ATGLPaymentAck.cs">
+      <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_BackLogAPILogs.cs">
       <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_BillingAckData.cs">
+      <DependentUpon>SMTPL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_CommandBackLog.cs">
       <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Consumption.cs">
+      <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_ConsumptionDetails.cs">
       <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
@@ -7740,6 +7957,9 @@
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_CustomerRegistration.cs">
+      <DependentUpon>SMTPL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Customers.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_DataReception.cs">
@@ -7752,7 +7972,7 @@
       <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_JioLogs.cs">
-      <DependentUpon>SMTPL.tt</DependentUpon>
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_JioNotification.cs">
       <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
@@ -7794,7 +8014,7 @@
       <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_SMeterMaster.cs">
-      <DependentUpon>SMTPL.tt</DependentUpon>
+      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_TicketTypeMaster.cs">
       <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
@@ -7806,7 +8026,10 @@
       <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_VayudutMaster.cs">
-      <DependentUpon>SmartMeter_ProdEntities.tt</DependentUpon>
+      <DependentUpon>SMTPL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_VayudutRegistration.cs">
+      <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\V_DistinctMeter.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
@@ -7817,8 +8040,26 @@
     <Compile Include="Models\V_FetchInductiveData.cs">
       <DependentUpon>SMTPL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\V_RawData.cs">
+      <DependentUpon>SMTPL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sp_FetchData_Result.cs">
+      <DependentUpon>ElectricMeter.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="tbl_AdminUser.cs">
+      <DependentUpon>ElectricMeter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_MeterData.cs">
+      <DependentUpon>ElectricMeter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_MeterMasterRelay.cs">
+      <DependentUpon>ElectricMeter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ParameterMaster.cs">
+      <DependentUpon>ElectricMeter.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -7838,7 +8079,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\SmartMeter\Data\" />
-    <Folder Include="Areas\SmartMeter\Views\Shared\" />
     <Folder Include="Uploads\" />
     <Folder Include="Views\SamartMeter\" />
   </ItemGroup>

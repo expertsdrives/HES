@@ -22,25 +22,15 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <EntityType Name="tbl_AMRRegistration">
+        <EntityType Name="tbl_AssignSmartMeter">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Image" Type="varbinary(max)" />
-          <Property Name="CustomerID" Type="int" Nullable="false" />
-          <Property Name="VayudutID" Type="int" Nullable="false" />
-          <Property Name="OpeningMeterReading" Type="int" Nullable="false" />
-          <Property Name="OpeningAMRReading" Type="nvarchar(max)" />
-          <Property Name="SerialNumber" Type="nvarchar(max)" />
-          <Property Name="TXID" Type="nvarchar(max)" />
-          <Property Name="Altitude" Type="nvarchar(max)" />
-          <Property Name="Longitude" Type="nvarchar(max)" />
-          <Property Name="InstallationDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="Status" Type="nvarchar(max)" />
-          <Property Name="Remarks" Type="nvarchar(max)" />
-          <Property Name="CreatedBy" Type="nvarchar(max)" />
-          <Property Name="ApprovedBy" Type="nvarchar(max)" />
+          <Property Name="CustomerInstallationID" Type="int" />
+          <Property Name="MeterID" Type="int" />
+          <Property Name="pld" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tbl_BackLogAPILogs">
           <Key>
@@ -207,13 +197,11 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="MeterID" Type="varchar(max)" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tbl_SMeterMaster">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TempMeterID" Type="varchar" MaxLength="500" />
           <Property Name="SimICCID" Type="nvarchar" MaxLength="255" />
           <Property Name="SimNo" Type="float" />
@@ -256,31 +244,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
           <Property Name="Password" Type="nvarchar(max)" />
           <Property Name="Role" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="tbl_VayudutMaster">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SimCardID" Type="int" Nullable="false" />
-          <Property Name="Number" Type="bigint" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar(max)" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_tbl_AMRRegistration_tbl_VayudutMaster_VayudutID">
-          <End Role="tbl_VayudutMaster" Type="Self.tbl_VayudutMaster" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="tbl_AMRRegistration" Type="Self.tbl_AMRRegistration" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_VayudutMaster">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tbl_AMRRegistration">
-              <PropertyRef Name="VayudutID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tbl_RegisteredComplain_tbl_TicketTypeMaster_TicketTypeID">
           <End Role="tbl_TicketTypeMaster" Type="Self.tbl_TicketTypeMaster" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -295,20 +258,7 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbl_VayudutMaster_tbl_SimCardMaster_SimCardID">
-          <End Role="tbl_SimCardMaster" Type="Self.tbl_SimCardMaster" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="tbl_VayudutMaster" Type="Self.tbl_VayudutMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_SimCardMaster">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tbl_VayudutMaster">
-              <PropertyRef Name="SimCardID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <Function Name="BillingCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="CamelCase" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="Str" Type="varchar" Mode="In" />
         </Function>
@@ -380,13 +330,18 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
           <Parameter Name="LDate" Type="date" Mode="In" />
           <Parameter Name="MDate" Type="date" Mode="In" />
         </Function>
+        <Function Name="sp_ResponseSplited_Billing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pld" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="LDate" Type="date" Mode="In" />
+          <Parameter Name="MDate" Type="date" Mode="In" />
+        </Function>
         <Function Name="sp_SmartMeterData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_SmartUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="SmartMeter_ProdModelStoreContainer">
           <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl_AMRRegistration" EntityType="Self.tbl_AMRRegistration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_AssignSmartMeter" EntityType="Self.tbl_AssignSmartMeter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_BackLogAPILogs" EntityType="Self.tbl_BackLogAPILogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_CommandBackLog" EntityType="Self.tbl_CommandBackLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ConsumptionDetails" EntityType="Self.tbl_ConsumptionDetails" Schema="dbo" store:Type="Tables" />
@@ -399,10 +354,10 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
           <EntitySet Name="tbl_SGMAuditLogs" EntityType="Self.tbl_SGMAuditLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_SimCardMaster" EntityType="Self.tbl_SimCardMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_SmartMeterUser" EntityType="Self.tbl_SmartMeterUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SMeterMaster" EntityType="Self.tbl_SMeterMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_TicketTypeMaster" EntityType="Self.tbl_TicketTypeMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_TransLogs" EntityType="Self.tbl_TransLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Users" EntityType="Self.tbl_Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl_VayudutMaster" EntityType="Self.tbl_VayudutMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_DataReception" EntityType="Self.tbl_DataReception" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [tbl_DataReception].[ID] AS [ID], 
@@ -426,37 +381,9 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
     [tbl_DataReception].[AMR_CRC_STATUS] AS [AMR_CRC_STATUS]
     FROM [dbo].[tbl_DataReception] AS [tbl_DataReception]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="tbl_SMeterMaster" EntityType="Self.tbl_SMeterMaster" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tbl_SMeterMaster].[ID] AS [ID], 
-    [tbl_SMeterMaster].[TempMeterID] AS [TempMeterID], 
-    [tbl_SMeterMaster].[SimICCID] AS [SimICCID], 
-    [tbl_SMeterMaster].[SimNo] AS [SimNo], 
-    [tbl_SMeterMaster].[IMSI] AS [IMSI], 
-    [tbl_SMeterMaster].[IMEI] AS [IMEI], 
-    [tbl_SMeterMaster].[DeviceName] AS [DeviceName], 
-    [tbl_SMeterMaster].[MUNumber] AS [MUNumber], 
-    [tbl_SMeterMaster].[PLD] AS [PLD], 
-    [tbl_SMeterMaster].[PLDLength] AS [PLDLength], 
-    [tbl_SMeterMaster].[VID] AS [VID], 
-    [tbl_SMeterMaster].[SVC] AS [SVC], 
-    [tbl_SMeterMaster].[AID] AS [AID], 
-    [tbl_SMeterMaster].[AppName] AS [AppName], 
-    [tbl_SMeterMaster].[EID] AS [EID], 
-    [tbl_SMeterMaster].[MeterSerialNumber] AS [MeterSerialNumber]
-    FROM [dbo].[tbl_SMeterMaster] AS [tbl_SMeterMaster]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK_tbl_AMRRegistration_tbl_VayudutMaster_VayudutID" Association="Self.FK_tbl_AMRRegistration_tbl_VayudutMaster_VayudutID">
-            <End Role="tbl_VayudutMaster" EntitySet="tbl_VayudutMaster" />
-            <End Role="tbl_AMRRegistration" EntitySet="tbl_AMRRegistration" />
-          </AssociationSet>
           <AssociationSet Name="FK_tbl_RegisteredComplain_tbl_TicketTypeMaster_TicketTypeID" Association="Self.FK_tbl_RegisteredComplain_tbl_TicketTypeMaster_TicketTypeID">
             <End Role="tbl_TicketTypeMaster" EntitySet="tbl_TicketTypeMaster" />
             <End Role="tbl_RegisteredComplain" EntitySet="tbl_RegisteredComplain" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_VayudutMaster_tbl_SimCardMaster_SimCardID" Association="Self.FK_tbl_VayudutMaster_tbl_SimCardMaster_SimCardID">
-            <End Role="tbl_SimCardMaster" EntitySet="tbl_SimCardMaster" />
-            <End Role="tbl_VayudutMaster" EntitySet="tbl_VayudutMaster" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -486,27 +413,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="tbl_AMRRegistration">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="CustomerID" Type="Int32" Nullable="false" />
-          <Property Name="VayudutID" Type="Int32" Nullable="false" />
-          <Property Name="OpeningMeterReading" Type="Int32" Nullable="false" />
-          <Property Name="OpeningAMRReading" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SerialNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TXID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Altitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Longitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="InstallationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ApprovedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tbl_VayudutMaster" Relationship="Self.FK_tbl_AMRRegistration_tbl_VayudutMaster_VayudutID" FromRole="tbl_AMRRegistration" ToRole="tbl_VayudutMaster" />
-        </EntityType>
         <EntityType Name="tbl_BackLogAPILogs">
           <Key>
             <PropertyRef Name="ID" />
@@ -528,26 +434,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
           <Property Name="LogDate" Type="DateTime" Precision="3" />
           <Property Name="pld" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="CompletedLogDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="tbl_ConsumptionDetails">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Rnk" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeterNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TXID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BusinessPartnerNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OpeningMeterReading" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OpeningAMRReading" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DataCount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Time" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="InstallationDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ReadingCount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="AMRSerialNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DailyConsumption" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="tbl_FirmwareHistoty">
           <Key>
@@ -638,7 +524,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
           <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="tbl_VayudutMaster" Relationship="Self.FK_tbl_VayudutMaster_tbl_SimCardMaster_SimCardID" FromRole="tbl_SimCardMaster" ToRole="tbl_VayudutMaster" />
         </EntityType>
         <EntityType Name="tbl_SmartMeterUser">
           <Key>
@@ -675,19 +560,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
           <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="tbl_VayudutMaster">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SimCardID" Type="Int32" Nullable="false" />
-          <Property Name="Number" Type="Int64" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="tbl_AMRRegistration" Relationship="Self.FK_tbl_AMRRegistration_tbl_VayudutMaster_VayudutID" FromRole="tbl_VayudutMaster" ToRole="tbl_AMRRegistration" />
-          <NavigationProperty Name="tbl_SimCardMaster" Relationship="Self.FK_tbl_VayudutMaster_tbl_SimCardMaster_SimCardID" FromRole="tbl_VayudutMaster" ToRole="tbl_SimCardMaster" />
-        </EntityType>
         <EntityType Name="tbl_DataReception">
           <Key>
             <PropertyRef Name="ID" />
@@ -712,20 +584,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
           <Property Name="AMR_CRC8" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AMR_CRC_STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="FK_tbl_AMRRegistration_tbl_VayudutMaster_VayudutID">
-          <End Role="tbl_VayudutMaster" Type="Self.tbl_VayudutMaster" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="tbl_AMRRegistration" Type="Self.tbl_AMRRegistration" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_VayudutMaster">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tbl_AMRRegistration">
-              <PropertyRef Name="VayudutID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tbl_RegisteredComplain_tbl_TicketTypeMaster_TicketTypeID">
           <End Role="tbl_TicketTypeMaster" Type="Self.tbl_TicketTypeMaster" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -740,27 +598,11 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbl_VayudutMaster_tbl_SimCardMaster_SimCardID">
-          <End Role="tbl_SimCardMaster" Type="Self.tbl_SimCardMaster" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="tbl_VayudutMaster" Type="Self.tbl_VayudutMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_SimCardMaster">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tbl_VayudutMaster">
-              <PropertyRef Name="SimCardID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="SmartMeter_ProdEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__EFMigrationsHistory" EntityType="Self.C__EFMigrationsHistory" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="tbl_AMRRegistration" EntityType="Self.tbl_AMRRegistration" />
           <EntitySet Name="tbl_BackLogAPILogs" EntityType="Self.tbl_BackLogAPILogs" />
           <EntitySet Name="tbl_CommandBackLog" EntityType="Self.tbl_CommandBackLog" />
-          <EntitySet Name="tbl_ConsumptionDetails" EntityType="Self.tbl_ConsumptionDetails" />
           <EntitySet Name="tbl_FirmwareHistoty" EntityType="Self.tbl_FirmwareHistoty" />
           <EntitySet Name="tbl_FirmwareStatus" EntityType="Self.tbl_FirmwareStatus" />
           <EntitySet Name="tbl_JioLogs" EntityType="Self.tbl_JioLogs" />
@@ -773,19 +615,10 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
           <EntitySet Name="tbl_TicketTypeMaster" EntityType="Self.tbl_TicketTypeMaster" />
           <EntitySet Name="tbl_TransLogs" EntityType="Self.tbl_TransLogs" />
           <EntitySet Name="tbl_Users" EntityType="Self.tbl_Users" />
-          <EntitySet Name="tbl_VayudutMaster" EntityType="Self.tbl_VayudutMaster" />
           <EntitySet Name="tbl_DataReception" EntityType="Self.tbl_DataReception" />
-          <AssociationSet Name="FK_tbl_AMRRegistration_tbl_VayudutMaster_VayudutID" Association="Self.FK_tbl_AMRRegistration_tbl_VayudutMaster_VayudutID">
-            <End Role="tbl_VayudutMaster" EntitySet="tbl_VayudutMaster" />
-            <End Role="tbl_AMRRegistration" EntitySet="tbl_AMRRegistration" />
-          </AssociationSet>
           <AssociationSet Name="FK_tbl_RegisteredComplain_tbl_TicketTypeMaster_TicketTypeID" Association="Self.FK_tbl_RegisteredComplain_tbl_TicketTypeMaster_TicketTypeID">
             <End Role="tbl_TicketTypeMaster" EntitySet="tbl_TicketTypeMaster" />
             <End Role="tbl_RegisteredComplain" EntitySet="tbl_RegisteredComplain" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_VayudutMaster_tbl_SimCardMaster_SimCardID" Association="Self.FK_tbl_VayudutMaster_tbl_SimCardMaster_SimCardID">
-            <End Role="tbl_SimCardMaster" EntitySet="tbl_SimCardMaster" />
-            <End Role="tbl_VayudutMaster" EntitySet="tbl_VayudutMaster" />
           </AssociationSet>
           <FunctionImport Name="fnSplit" IsComposable="true" ReturnType="Collection(SmartMeter_ProdModel.fnSplit_Result)">
             <Parameter Name="sInputList" Mode="In" Type="String" />
@@ -840,6 +673,14 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="sp_SmartMeterData" ReturnType="Collection(SmartMeter_ProdModel.sp_SmartMeterData_Result)" />
           <EntitySet Name="tbl_SMeterMaster" EntityType="SmartMeter_ProdModel.tbl_SMeterMaster" />
+          <EntitySet Name="tbl_AssignSmartMeter" EntityType="SmartMeter_ProdModel.tbl_AssignSmartMeter" />
+          <FunctionImport Name="BillingCustomer" ReturnType="Collection(SmartMeter_ProdModel.BillingCustomer_Result)" />
+          <FunctionImport Name="sp_ResponseSplited_Billing" ReturnType="Collection(SmartMeter_ProdModel.sp_ResponseSplited_Billing_Result)">
+            <Parameter Name="pld" Mode="In" Type="String" />
+            <Parameter Name="LDate" Mode="In" Type="DateTime" />
+            <Parameter Name="MDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="tbl_ConsumptionDetails" EntityType="SmartMeter_ProdModel.tbl_ConsumptionDetails" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -968,6 +809,90 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
           <Property Name="EID" Type="Double" />
           <Property Name="MeterSerialNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="tbl_AssignSmartMeter">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerInstallationID" Type="Int32" />
+          <Property Name="MeterID" Type="Int32" />
+          <Property Name="pld" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <ComplexType Name="BillingCustomer_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="BusinessPatner" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Installation" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ContractAcct" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="MeterType" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="MeterNumber" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ScheduleDate" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street3" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street4" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Street5" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_ResponseSplited_Billing_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="DateTime" Name="LogDate" Nullable="true" />
+          <Property Type="Time" Name="LogTime" Nullable="true" />
+          <Property Type="String" Name="pld" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="aid" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="eid" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StartingFrame" Nullable="true" />
+          <Property Type="String" Name="InstrumentID" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="BusinessPatner" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Installation" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Time" Nullable="true" />
+          <Property Type="String" Name="ActivationStatus" Nullable="true" />
+          <Property Type="String" Name="GasCount" Nullable="true" />
+          <Property Type="String" Name="MeasurementValue" Nullable="true" />
+          <Property Type="Decimal" Name="TotalConsumption" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="String" Name="UnitofMeasurement" Nullable="true" />
+          <Property Type="String" Name="BatteryVoltage" Nullable="true" />
+          <Property Type="String" Name="TamperEvents" Nullable="true" />
+          <Property Type="Decimal" Name="AccountBalance" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="String" Name="eCreditBalance" Nullable="true" />
+          <Property Type="String" Name="StandardCharge" Nullable="true" />
+          <Property Type="String" Name="StandardChargeUnit" Nullable="true" />
+          <Property Type="String" Name="eCreditonoff" Nullable="true" />
+          <Property Type="String" Name="ValvePosition" Nullable="true" />
+          <Property Type="String" Name="SystemHealth" Nullable="true" />
+          <Property Type="String" Name="TransmissionPacket" Nullable="true" />
+          <Property Type="String" Name="GasCalorific" Nullable="true" />
+          <Property Type="String" Name="Temperature" Nullable="true" />
+          <Property Type="String" Name="TarrifName" Nullable="true" />
+          <Property Type="String" Name="Checksum" Nullable="true" />
+          <Property Type="String" Name="EndOfFrame" Nullable="true" />
+          <Property Type="Decimal" Name="previous_value" Nullable="false" Precision="18" Scale="3" />
+          <Property Type="Decimal" Name="ActualConsumption" Nullable="false" Precision="19" Scale="3" />
+          <Property Type="String" Name="MeterNumber" Nullable="true" MaxLength="500" />
+          <Property Type="Int64" Name="rn" Nullable="true" />
+          <Property Type="Decimal" Name="TotalConsumptionDifference" Nullable="true" Precision="19" Scale="3" />
+        </ComplexType>
+        <EntityType Name="tbl_ConsumptionDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rnk" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MeterNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TXID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessPartnerNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OpeningMeterReading" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OpeningAMRReading" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DataCount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="InstallationDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReadingCount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AMRSerialNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DailyConsumption" Type="Decimal" Precision="18" Scale="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -993,27 +918,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_AMRRegistration">
-            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_AMRRegistration">
-              <MappingFragment StoreEntitySet="tbl_AMRRegistration">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="VayudutID" ColumnName="VayudutID" />
-                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
-                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
-                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
-                <ScalarProperty Name="TXID" ColumnName="TXID" />
-                <ScalarProperty Name="Altitude" ColumnName="Altitude" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_BackLogAPILogs">
             <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_BackLogAPILogs">
               <MappingFragment StoreEntitySet="tbl_BackLogAPILogs">
@@ -1035,27 +939,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
                 <ScalarProperty Name="LogDate" ColumnName="LogDate" />
                 <ScalarProperty Name="pld" ColumnName="pld" />
                 <ScalarProperty Name="CompletedLogDate" ColumnName="CompletedLogDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_ConsumptionDetails">
-            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_ConsumptionDetails">
-              <MappingFragment StoreEntitySet="tbl_ConsumptionDetails">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
-                <ScalarProperty Name="TXID" ColumnName="TXID" />
-                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
-                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
-                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
-                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
-                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
-                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
-                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1191,18 +1074,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_VayudutMaster">
-            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_VayudutMaster">
-              <MappingFragment StoreEntitySet="tbl_VayudutMaster">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="SimCardID" ColumnName="SimCardID" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1403,6 +1274,100 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_SMeterMaster' does not hav
                 <ScalarProperty Name="SimNo" ColumnName="SimNo" />
                 <ScalarProperty Name="SimICCID" ColumnName="SimICCID" />
                 <ScalarProperty Name="TempMeterID" ColumnName="TempMeterID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_AssignSmartMeter">
+            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_AssignSmartMeter">
+              <MappingFragment StoreEntitySet="tbl_AssignSmartMeter">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="pld" ColumnName="pld" />
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+                <ScalarProperty Name="CustomerInstallationID" ColumnName="CustomerInstallationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="BillingCustomer" FunctionName="SmartMeter_ProdModel.Store.BillingCustomer">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeter_ProdModel.BillingCustomer_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BusinessPatner" ColumnName="BusinessPatner" />
+                <ScalarProperty Name="Installation" ColumnName="Installation" />
+                <ScalarProperty Name="ContractAcct" ColumnName="ContractAcct" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterType" ColumnName="MeterType" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="ScheduleDate" ColumnName="ScheduleDate" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Street2" ColumnName="Street2" />
+                <ScalarProperty Name="Street3" ColumnName="Street3" />
+                <ScalarProperty Name="Street4" ColumnName="Street4" />
+                <ScalarProperty Name="Street5" ColumnName="Street5" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ResponseSplited_Billing" FunctionName="SmartMeter_ProdModel.Store.sp_ResponseSplited_Billing">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeter_ProdModel.sp_ResponseSplited_Billing_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="LogTime" ColumnName="LogTime" />
+                <ScalarProperty Name="pld" ColumnName="pld" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="eid" ColumnName="eid" />
+                <ScalarProperty Name="StartingFrame" ColumnName="StartingFrame" />
+                <ScalarProperty Name="InstrumentID" ColumnName="InstrumentID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="BusinessPatner" ColumnName="BusinessPatner" />
+                <ScalarProperty Name="Installation" ColumnName="Installation" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="ActivationStatus" ColumnName="ActivationStatus" />
+                <ScalarProperty Name="GasCount" ColumnName="GasCount" />
+                <ScalarProperty Name="MeasurementValue" ColumnName="MeasurementValue" />
+                <ScalarProperty Name="TotalConsumption" ColumnName="TotalConsumption" />
+                <ScalarProperty Name="UnitofMeasurement" ColumnName="UnitofMeasurement" />
+                <ScalarProperty Name="BatteryVoltage" ColumnName="BatteryVoltage" />
+                <ScalarProperty Name="TamperEvents" ColumnName="TamperEvents" />
+                <ScalarProperty Name="AccountBalance" ColumnName="AccountBalance" />
+                <ScalarProperty Name="eCreditBalance" ColumnName="eCreditBalance" />
+                <ScalarProperty Name="StandardCharge" ColumnName="StandardCharge" />
+                <ScalarProperty Name="StandardChargeUnit" ColumnName="StandardChargeUnit" />
+                <ScalarProperty Name="eCreditonoff" ColumnName="eCreditonoff" />
+                <ScalarProperty Name="ValvePosition" ColumnName="ValvePosition" />
+                <ScalarProperty Name="SystemHealth" ColumnName="SystemHealth" />
+                <ScalarProperty Name="TransmissionPacket" ColumnName="TransmissionPacket" />
+                <ScalarProperty Name="GasCalorific" ColumnName="GasCalorific" />
+                <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+                <ScalarProperty Name="TarrifName" ColumnName="TarrifName" />
+                <ScalarProperty Name="Checksum" ColumnName="Checksum" />
+                <ScalarProperty Name="EndOfFrame" ColumnName="EndOfFrame" />
+                <ScalarProperty Name="previous_value" ColumnName="previous_value" />
+                <ScalarProperty Name="ActualConsumption" ColumnName="ActualConsumption" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="rn" ColumnName="rn" />
+                <ScalarProperty Name="TotalConsumptionDifference" ColumnName="TotalConsumptionDifference" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_ConsumptionDetails">
+            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_ConsumptionDetails">
+              <MappingFragment StoreEntitySet="tbl_ConsumptionDetails">
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

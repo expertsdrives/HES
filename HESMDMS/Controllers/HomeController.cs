@@ -27,9 +27,12 @@ namespace HESMDMS.Controllers
                 product.FullName = customerDetails.FullName;
                 product.Address = customerDetails.HouseNumber + ", " + customerDetails.Street + ", " + customerDetails.Street2 + ", " + customerDetails.Street3 + ", " + customerDetails.Street4 + ", " + customerDetails.Street5;
                 //product.MobileNumber = customerDetails.MobileNumber;
-                product.MeterNumber = Convert.ToInt32(customerDetails.SerialNumber);
+                var aa = customerDetails.SerialNumber;
+                product.MeterNumber =customerDetails.SerialNumber;
                 var serialNumber = clsMeter.tbl_SerialNumberMaster.Where(x => x.IsAssigned == false);
                 ViewBag.serialNumbers = JsonConvert.SerializeObject(serialNumber);
+                var vayudut = clsMeter.tbl_VayudutRegistration.Where(x => x.IsAssigned == false || x.IsAssigned == null);
+                ViewBag.vayudut = JsonConvert.SerializeObject(vayudut);
                 return View(product);
             }
             else
@@ -44,7 +47,7 @@ namespace HESMDMS.Controllers
             {
                 var BPNo = from post in clsMeter.tbl_MeterMaster
                            join meta in clsMeter.tbl_CustomerDetails on post.Number equals meta.SerialNumber
-                           where meta.Street == "Water Lily" || meta.Street== "Dreamland Appartment" || meta.Street == "Richmond Grand"
+                           where meta.City.ToLower() == "khurja" || meta.Street5 == "plant"
                            select new { ID = post.ID, Number = post.Number };
 
                 //List<SelectListItem> items = new List<SelectListItem>();
@@ -75,11 +78,11 @@ namespace HESMDMS.Controllers
 
                 List<SelectListItem> items = new List<SelectListItem>();
 
-               
-                    items.Add(new SelectListItem
-                    { Text = "Water Lily", Value = "Water Lily" });
+
                 items.Add(new SelectListItem
-                { Text = "Richmond Grand", Value = "Richmond Grand" });items.Add(new SelectListItem
+                { Text = "Water Lily", Value = "Water Lily" });
+                items.Add(new SelectListItem
+                { Text = "Richmond Grand", Value = "Richmond Grand" }); items.Add(new SelectListItem
                 { Text = "Dreamland Appartment", Value = "Dreamland Appartment" });
 
 
@@ -123,14 +126,14 @@ namespace HESMDMS.Controllers
                 collection.SerialNumber = slNumber;
                 collection.Status = "Pending";
                 collection.CreatedBy = Convert.ToString(Session["FullName"]);
-                
+
                 var model = clsMeter.tbl_CustomerRegistration;
                 model.Add(collection);
                 clsMeter.SaveChanges();
 
                 clsMeter.Database.ExecuteSqlCommand("UPDATE tbl_SerialNumberMaster SET IsAssigned = 1 WHERE [Serial Number] = '" + slNumber + "'");
-
-                return View("Sucess");
+                clsMeter.Database.ExecuteSqlCommand("UPDATE tbl_VayudutRegistration SET IsAssigned = 1 WHERE [VayudutSrNo] = '" + collection.VayudutSerialNo + "'");
+                return RedirectToAction("../Login/Dashboard");
             }
             else
             {
@@ -143,7 +146,17 @@ namespace HESMDMS.Controllers
             var id = clsMeter.tbl_SerialNumberMaster.Where(x => x.Serial_Number == serialNumber).FirstOrDefault();
             Session.Add("snum", serialNumber);
             txid = id.TXID.ToString();
+            ViewBag.SerialNum= id.AMROpeningCount.ToString();
             return txid;
+        }
+        public string getOpening(string serialNumber)
+        {
+            string txid = "";
+            var id = clsMeter.tbl_SerialNumberMaster.Where(x => x.Serial_Number == serialNumber).FirstOrDefault();
+            Session.Add("snum", serialNumber);
+            txid = id.TXID.ToString();
+            ViewBag.SerialNum= id.AMROpeningCount.ToString();
+            return id.AMROpeningCount.ToString();
         }
         public ActionResult Sucess()
         {

@@ -18,5 +18,6 @@ namespace HESMDMS.Models
         public string Serial_Number { get; set; }
         public Nullable<double> TXID { get; set; }
         public Nullable<bool> IsAssigned { get; set; }
+        public string AMROpeningCount { get; set; }
     }
 }

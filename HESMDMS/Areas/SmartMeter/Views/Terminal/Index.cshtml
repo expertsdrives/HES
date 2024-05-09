@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var role = @Convert.ToString(Session["RoleID"]);
 }
 <style>
 
@@ -81,7 +82,7 @@
 </div>
 <script>
     var Jsondata = @Html.Raw(Json.Encode(ViewBag.data));
-    
+     var ro = @role;
 </script>
 
 <script src="~/Scripts/grid/Terminal.js"></script>

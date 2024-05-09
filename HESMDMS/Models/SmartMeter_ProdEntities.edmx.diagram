@@ -7,10 +7,8 @@
       <Diagram DiagramId="c2ae632092264677acf016f46dac4bbb" Name="Diagram1">
         <EntityTypeShape EntityType="SmartMeter_ProdModel.C__EFMigrationsHistory" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_AMRRegistration" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_BackLogAPILogs" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_CommandBackLog" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_ConsumptionDetails" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_FirmwareHistoty" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_FirmwareStatus" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_JioLogs" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
@@ -23,12 +21,11 @@
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_TicketTypeMaster" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_TransLogs" Width="1.5" PointX="11.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_Users" Width="1.5" PointX="11.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_VayudutMaster" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_DataReception" Width="1.5" PointX="11.75" PointY="9.75" IsExpanded="true" />
-        <AssociationConnector Association="SmartMeter_ProdModel.FK_tbl_AMRRegistration_tbl_VayudutMaster_VayudutID" ManuallyRouted="false" />
         <AssociationConnector Association="SmartMeter_ProdModel.FK_tbl_RegisteredComplain_tbl_TicketTypeMaster_TicketTypeID" ManuallyRouted="false" />
-        <AssociationConnector Association="SmartMeter_ProdModel.FK_tbl_VayudutMaster_tbl_SimCardMaster_SimCardID" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_SMeterMaster" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_AssignSmartMeter" Width="1.5" PointX="5.375" PointY="13.75" />
+        <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_ConsumptionDetails" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

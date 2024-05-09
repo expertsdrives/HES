@@ -7,22 +7,31 @@
       <Diagram DiagramId="2c34db13794a4ae4a86888427cd8ee1d" Name="Diagram1" ZoomLevel="115">
         <EntityTypeShape EntityType="SmartMeterModel.tbl_RawData_CRC" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeterModel.tbl_RawDataAPI" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartMeterModel.tbl_CustomerDetails" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_CustomerDetails" Width="1.75" PointX="4.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeterModel.CustomerRaw" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="SmartMeterModel.tbl_SerialNumberMaster" Width="1.5" PointX="7.375" PointY="4.75" />
         <EntityTypeShape EntityType="SmartMeterModel.tbl_RoleMaster" Width="1.5" PointX="7.375" PointY="8.125" />
         <EntityTypeShape EntityType="SmartMeterModel.tbl_AdminCredentials" Width="1.5" PointX="9.625" PointY="7.875" />
         <AssociationConnector Association="SmartMeterModel.FK_tbl_AdminCredentials_tbl_RoleMaster" />
-        <EntityTypeShape EntityType="SmartMeterModel.tbl_CustomerRegistration" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="SmartMeterModel.V_FetchInductiveData" Width="1.5" PointX="9.375" PointY="0.75" />
         <EntityTypeShape EntityType="SmartMeterModel.V_DistinctMeter" Width="1.5" PointX="3.375" PointY="9.75" />
         <EntityTypeShape EntityType="SmartMeterModel.V_FetchDailyConsumption" Width="1.5" PointX="5.375" PointY="10.75" />
         <EntityTypeShape EntityType="SmartMeterModel.tbl_MeterMaster" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="SmartMeterModel.tbl_AMRHistory" Width="1.5" PointX="7.375" PointY="11.75" />
         <EntityTypeShape EntityType="SmartMeterModel.tbl_JioLogs" Width="1.5" PointX="11.375" PointY="3.75" />
-        <EntityTypeShape EntityType="SmartMeterModel.tbl_SMeterMaster" Width="1.5" PointX="9.375" PointY="11.75" />
         <EntityTypeShape EntityType="SmartMeterModel.tbl_SignalRMaxID" Width="1.5" PointX="11.375" PointY="11.75" />
         <EntityTypeShape EntityType="SmartMeterModel.tbl_OTACommands" Width="1.5" PointX="12.375" PointY="6.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_VayudutMaster" Width="1.5" PointX="13.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_VayudutRegistration" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.V_RawData" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_CustomerRegistration" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_ATGLPaymentAck" Width="1.5" PointX="13.375" PointY="10.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_Customers" Width="1.5" PointX="11.375" PointY="14.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_DataReception" Width="1.5" PointX="14.375" PointY="4.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_BillingAckData" Width="1.5" PointX="13.375" PointY="14.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_Consumption" Width="1.5" PointX="15.375" PointY="10.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_ConsumptionDetails" Width="1.5" PointX="15.375" PointY="15.75" />
+        <EntityTypeShape EntityType="SmartMeterModel.tbl_AMRAckData" Width="1.5" PointX="16.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

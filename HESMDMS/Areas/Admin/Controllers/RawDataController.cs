@@ -14,5 +14,9 @@ namespace HESMDMS.Areas.Admin.Controllers
         {
             return View(_db.FetchConsumption().ToList());
         }
+
+        public ActionResult AMRRawData() { 
+            return View();
+        }
     }
 }

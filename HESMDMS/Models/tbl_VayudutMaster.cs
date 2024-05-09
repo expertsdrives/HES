@@ -14,21 +14,13 @@ namespace HESMDMS.Models
     
     public partial class tbl_VayudutMaster
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tbl_VayudutMaster()
-        {
-            this.tbl_AMRRegistration = new HashSet<tbl_AMRRegistration>();
-        }
-    
         public int ID { get; set; }
-        public int SimCardID { get; set; }
-        public long Number { get; set; }
-        public System.DateTime CreatedDate { get; set; }
+        public Nullable<int> VayudutID { get; set; }
+        public Nullable<int> VayudutNumber { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
+        public string Location { get; set; }
+        public string IsActive { get; set; }
         public string CreatedBy { get; set; }
-        public bool IsActive { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_AMRRegistration> tbl_AMRRegistration { get; set; }
-        public virtual tbl_SimCardMaster tbl_SimCardMaster { get; set; }
     }
 }

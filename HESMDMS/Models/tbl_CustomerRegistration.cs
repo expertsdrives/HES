@@ -17,7 +17,7 @@ namespace HESMDMS.Models
         public int ID { get; set; }
         public string Image { get; set; }
         public Nullable<int> BusinessPartnerNo { get; set; }
-        public Nullable<int> MeterNumber { get; set; }
+        public string MeterNumber { get; set; }
         public Nullable<decimal> OpeningMeterReading { get; set; }
         public Nullable<decimal> OpeningAMRReading { get; set; }
         public string SerialNumber { get; set; }
@@ -37,5 +37,7 @@ namespace HESMDMS.Models
         public string Remarks { get; set; }
         public string CreatedBy { get; set; }
         public string ApprovedBy { get; set; }
+        public string SealNo { get; set; }
+        public string VayudutSerialNo { get; set; }
     }
 }

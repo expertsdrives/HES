@@ -28,7 +28,7 @@ namespace HESMDMS.Models
         public string SVC { get; set; }
         public string AID { get; set; }
         public string AppName { get; set; }
-        public string MeterSerialNumber { get; set; }
         public Nullable<double> EID { get; set; }
+        public string MeterSerialNumber { get; set; }
     }
 }

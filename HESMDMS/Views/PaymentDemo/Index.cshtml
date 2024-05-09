@@ -1,0 +1,16 @@
+﻿
+@{
+    Layout = null;
+}
+
+<form action="/PaymentDemo/Charge" method="post">
+    <label for="card-number">Card Number</label>
+    <input type="text" id="card-number" name="card-number" />
+    <label for="exp-month">Expiration Month</label>
+    <input type="text" id="exp-month" name="exp-month" />
+    <label for="exp-year">Expiration Year</label>
+    <input type="text" id="exp-year" name="exp-year" />
+    <label for="cvc">CVC</label>
+    <input type="text" id="cvc" name="cvc" />
+    <input type="submit" value="Pay" />
+</form>

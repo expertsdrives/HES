@@ -37,19 +37,23 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
         // GET: SmartMeter/Terminal
         public ActionResult Index()
         {
+            
 
-            //var data = clsMetersProd.tbl_SMeterMaster.ToList();
-            var data = (from log in clsMetersProd.tbl_SMeterMaster
-                        select new
-                        {
-                            ID = log.ID,
-                            TempMeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
-                            AID = log.AID,
-                            PLD = log.PLD,
-                        }).ToList();
-            ViewBag.data = data;
+                //var data = clsMetersProd.tbl_SMeterMaster.ToList();
+                var data = (from log in clsMetersProd.tbl_SMeterMaster
+                            select new
+                            {
+                                ID = log.ID,
+                                TempMeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
+                                AID = log.AID,
+                                PLD = log.PLD,
+                            }).ToList();
+                ViewBag.data = data;
+            
             return View();
         }
+
+
 
 
         public ActionResult Terminal()
@@ -116,6 +120,51 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                             var command1 = clsMeters.tbl_OTACommands.Where(x => x.Name == s).FirstOrDefault();
                             var data1 = command1.Command;
                             DateTime time1 = DateTime.UtcNow;
+                            if (eventname == "Add Balance" || eventname == "Set Vat" || eventname == "Set Average Gas Calorific Value" || eventname == "Set E-Credit Threshold")
+                            {
+                                if (eventname.Contains("Set Vat"))
+                                    intValue = float.Parse(balanceInput, CultureInfo.InvariantCulture.NumberFormat) / 100;
+                                else
+                                    intValue = float.Parse(balanceInput, CultureInfo.InvariantCulture.NumberFormat);
+                                string balanceString = ToHexString(intValue);
+                                //if (eventname == "Set Average Gas Calorific Value")
+                                //{
+
+                                //    balanceString = ConvertMsbToLsb(balanceString);
+                                //}
+                                var balanceutput = string.Join(",", SplitIntoChunks(balanceString, 2));
+                                if (eventname == "Set Average Gas Calorific Value" || eventname == "Set E-Credit Threshold")
+                                {
+                                    // Reverse the array
+                                    string[] splitArray = balanceutput.Split(',');
+
+                                    // Reverse the array
+                                    Array.Reverse(splitArray);
+
+                                    // Join the array elements back into a string using a comma as the separator
+                                    balanceutput = string.Join(",", splitArray);
+
+                                }
+
+                                string modifiedString = data1.Replace("-", balanceutput);
+                                var length = balanceutput.Split(',').Length.ToString("D2");
+                                data1 = modifiedString;
+                                string[] values = data1.Split(',');
+                                if (values.Length >= 3)
+                                {
+                                    // Replace the third value with the new variable
+                                    values[3] = length;
+
+                                    // Join the array back into a string with commas
+                                    string resultString = string.Join(",", values);
+
+                                    // Now, resultString will be "value1,value2,newvalue,value4,value5"
+
+                                    // You can use the resultString in your view or further processing
+                                    data1 = resultString;
+                                }
+
+                            }
                             var cData1 = clsMetersProd.tbl_CommandBackLog;
                             tbl_CommandBackLog clsCmd1 = new tbl_CommandBackLog();
                             clsCmd1.Data = data1;
@@ -489,212 +538,53 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
             bool dataFound = false;
             float intValue = 0;
             var lstdata = "?02,03,00,00,A1,03,##,23,07,27,10,38,00!";
-            Random rnd = new Random();
-            double rndNumber = Convert.ToDouble(DateTime.Now.ToString("ddMMyyHHmmsss"));
-            int size = rndNumber.ToString().Length;
-            if (size != 12)
+            var command = clsMeters.tbl_OTACommands.Where(x => x.Name == eventname).FirstOrDefault();
+            var data = command.Command;
+            DateTime time2 = DateTime.UtcNow;
+            DateTime datetime = Convert.ToDateTime(date + " " + time);
+            string inputDate = Convert.ToDateTime(datetime).ToString("ddMMyyHHmmss");
+            string hex = "";
+            for (int i = 0; i < inputDate.Length; i += 2)
             {
-                rndNumber = Convert.ToDouble(string.Format("{0}{1}", rndNumber, 0));
+                string pair = inputDate.Substring(i, 2);
+                int value = int.Parse(pair);
+
+                // convert the decimal value to a two-digit hexadecimal string
+                string hexPair = value.ToString("X2");
+                hex += hexPair;
             }
-            var bob = new
+            intValue = float.Parse(Tariff, CultureInfo.InvariantCulture.NumberFormat);
+            string balanceString = ToHexString(intValue);
+            var dateput = string.Join(",", SplitIntoChunks(hex, 2));
+            var balanceutput = string.Join(",", SplitIntoChunks(balanceString, 2));
+            string modifiedString = data.Replace("-", dateput + "," + balanceutput);
+            data = modifiedString;
+            var length = ((dateput.Split(',').Length + Convert.ToInt16(balanceutput.Split(',').Length.ToString("D2"))) + 1).ToString("X");
+            string[] values = data.Split(',');
+            if (values.Length >= 3)
             {
-                idType = "PLD",
-                id = pld,
-                transactionId = rndNumber.ToString(),
-                retentionTime = DateTime.Now.ToString(),
-                data = new[] {
-                 new  { aid =aid, dataformat = "cp",dataType="JSON",
-                 ext="{'data': '"+lstdata+"'}"
-                 },
+                // Replace the third value with the new variable
+                values[3] = "0" + length;
 
+                // Join the array back into a string with commas
+                string resultString = string.Join(",", values);
+
+                // Now, resultString will be "value1,value2,newvalue,value4,value5"
+
+                // You can use the resultString in your view or further processing
+                data = resultString;
             }
-            };
-            var logdate = DateTime.UtcNow;
-            var content = JsonConvert.SerializeObject(bob);
-            var objClint1 = new System.Net.Http.HttpClient();
-            //C2D.SendDataAsync(bob, eid);
-            Uri requestUri = new Uri("https://com.api.cats.jvts.net:8082/auth-engine/v2.2/login"); //replace your Url  
-            var converter = new ExpandoObjectConverter();
-            c2dProd users = new c2dProd();
-            users.grant_type = "password";
-            users.username = "2025000_2890001@iot.jio.com";
-            users.password = "a737b902951ec15cff735357a850b09cd941818095527a1925760b5a4e471464";
-            users.client_id = "db2f04a5e72547cbb68331f406946494";
-            users.client_secret = "d95578aa9b1eb30e";
-            string json = "";
-            json = Newtonsoft.Json.JsonConvert.SerializeObject(users);
-            var objClint = new System.Net.Http.HttpClient();
-            System.Net.Http.HttpResponseMessage respon = await objClint.PostAsync(requestUri, new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
-            string responJsonText = await respon.Content.ReadAsStringAsync();
-            var bearerToken = JsonConvert.DeserializeObject<c2dTokenProd>(responJsonText);
+            var cData = clsMetersProd.tbl_CommandBackLog;
+            tbl_CommandBackLog clsCmd = new tbl_CommandBackLog();
+            clsCmd.Data = data;
+            clsCmd.EventName = eventname;
+            clsCmd.LogDate = DateTime.UtcNow;
+            clsCmd.Status = "Pending";
+            clsCmd.pld = pld;
+            clsMetersProd.tbl_CommandBackLog.Add(clsCmd);
+            clsMetersProd.SaveChanges();
+            return Json("Command Added In Queue", JsonRequestBehavior.AllowGet);
 
-            Console.WriteLine(bearerToken);
-            if (Convert.ToString(bearerToken.access_token) != null)
-            {
-                Uri requestUri1 = new Uri("https://com.api.cats.jvts.net:8080/c2d-services/iot/jioutils/v2/c2d-message/unified"); //replace your Url  
-                objClint1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                objClint1.DefaultRequestHeaders.Add("Authorization", "Bearer " + bearerToken.access_token);
-                objClint1.DefaultRequestHeaders.Add("eid", eid);
-                System.Net.Http.HttpResponseMessage respon1 = await objClint1.PostAsync(requestUri1, new StringContent(content, System.Text.Encoding.UTF8, "application/json"));
-                Thread.Sleep(12000);
-                var responJsonText1 = respon1.Content.ReadAsStringAsync();
-                var st = respon1.StatusCode;
-
-            }
-            var checkData = clsMetersProd.tbl_Response.Where(x => x.pld == pld).OrderByDescending(x => x.ID).FirstOrDefault();
-            if (checkData.Data.Contains("A1"))
-            {
-                DateTime resDate = Convert.ToDateTime(checkData.LogDate);
-                DateTime ckDate = logdate;
-                if (resDate >= ckDate)
-                {
-                    dataFound = true;
-                }
-            }
-            if (dataFound)
-            {
-                DateTime datetime = Convert.ToDateTime(date + " " + time);
-                string inputDate = Convert.ToDateTime(datetime).ToString("ddMMyyHHmmss");
-                string hex = "";
-                for (int i = 0; i < inputDate.Length; i += 2)
-                {
-                    string pair = inputDate.Substring(i, 2);
-                    int value = int.Parse(pair);
-
-                    // convert the decimal value to a two-digit hexadecimal string
-                    string hexPair = value.ToString("X2");
-                    hex += hexPair;
-                }
-                var command = clsMeters.tbl_OTACommands.Where(x => x.Name == eventname).FirstOrDefault();
-                var data = command.Command;
-                float intValue1 = 0;
-                intValue = float.Parse(Tariff, CultureInfo.InvariantCulture.NumberFormat);
-                string balanceString = ToHexString(intValue);
-                var dateput = string.Join(",", SplitIntoChunks(hex, 2));
-                var balanceutput = string.Join(",", SplitIntoChunks(balanceString, 2));
-                string modifiedString = data.Replace("-", dateput + "," + balanceutput);
-
-                data = modifiedString;
-                Random rnd1 = new Random();
-                double rndNumber1 = Convert.ToDouble(DateTime.Now.ToString("ddMMyyHHmmsss"));
-                int size1 = rndNumber1.ToString().Length;
-                if (size1 != 12)
-                {
-                    rndNumber1 = Convert.ToDouble(string.Format("{0}{1}", rndNumber1, 0));
-                }
-                List<string> substrings = new List<string>();
-
-                for (int i = 0; i < rndNumber1.ToString().Length; i += 2)
-                {
-                    int length = Math.Min(2, rndNumber1.ToString().Length - i);
-                    substrings.Add(rndNumber1.ToString().Substring(i, length));
-                }
-                var tid = string.Join(",", substrings);
-                data = "?" + data + ",##," + tid.ToString() + "!";
-                var bob1 = new
-                {
-                    idType = "PLD",
-                    id = pld,
-                    transactionId = rndNumber1.ToString(),
-                    retentionTime = DateTime.Now.ToString(),
-                    data = new[] {
-                 new  { aid =aid, dataformat = "cp",dataType="JSON",
-                 ext="{'data': '"+data+"'}"
-                 },
-
-            }
-                };
-                //APIData apiData = new APIData()
-                //{
-                //    idType = "PLD",
-                //    id = pld,
-                //    transactionId = rndNumber.ToString(),
-                //    retentionTime = DateTime.Now.ToString(),
-                //    data = ""
-                //};
-                string stringjson = JsonConvert.SerializeObject(bob1);
-                Uri requestUri1 = new Uri("https://com.api.cats.jvts.net:8082/auth-engine/v2.2/login"); //replace your Url  
-                var converter1 = new ExpandoObjectConverter();
-                c2dProd users1 = new c2dProd();
-                users1.grant_type = "password";
-                users1.username = "2025000_2890001@iot.jio.com";
-                users1.password = "a737b902951ec15cff735357a850b09cd941818095527a1925760b5a4e471464";
-                users1.client_id = "db2f04a5e72547cbb68331f406946494";
-                users1.client_secret = "d95578aa9b1eb30e";
-                string json1 = "";
-                json1 = Newtonsoft.Json.JsonConvert.SerializeObject(users1);
-                var objClint2 = new System.Net.Http.HttpClient();
-                System.Net.Http.HttpResponseMessage respon1 = await objClint2.PostAsync(requestUri1, new StringContent(json1, System.Text.Encoding.UTF8, "application/json"));
-                string responJsonText2 = await respon1.Content.ReadAsStringAsync();
-                var bearerToken1 = JsonConvert.DeserializeObject<c2dTokenProd>(responJsonText2);
-
-                Console.WriteLine(bearerToken1);
-                if (Convert.ToString(bearerToken1.access_token) != null)
-                {
-                    Uri requestUri2 = new Uri("https://com.api.cats.jvts.net:8080/c2d-services/iot/jioutils/v2/c2d-message/unified"); //replace your Url  
-
-                    var content2 = JsonConvert.SerializeObject(bob1);
-
-                    var objClint3 = new System.Net.Http.HttpClient();
-                    objClint3.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    objClint3.DefaultRequestHeaders.Add("Authorization", "Bearer " + bearerToken1.access_token);
-                    objClint3.DefaultRequestHeaders.Add("eid", eid);
-                    System.Net.Http.HttpResponseMessage respon2 = await objClint3.PostAsync(requestUri2, new StringContent(content2, System.Text.Encoding.UTF8, "application/json"));
-                    var responJsonText1 = respon2.Content.ReadAsStringAsync();
-                    MyHub.SendMessages();
-                    var logdate1 = DateTime.Now;
-                    Thread.Sleep(1500);
-                    int start = Convert.ToInt32(command.StartingPostion);
-                    int end = Convert.ToInt32(command.EndingPostion);
-                    var hexOutput = getData(pld, command.Code, start, end, logdate, data, eventname, "");
-                    //var balanceString = 0.0;
-                    if (hexOutput != null)
-                    {
-                        return Json(hexOutput, JsonRequestBehavior.AllowGet);
-                    }
-                    else
-                    {
-                        return Json("error", JsonRequestBehavior.AllowGet);
-                    }
-
-
-                }
-            }
-            else
-            {
-                var command = clsMeters.tbl_OTACommands.Where(x => x.Name == eventname).FirstOrDefault();
-                var data = command.Command;
-                DateTime time2 = DateTime.UtcNow;
-                DateTime datetime = Convert.ToDateTime(date + " " + time);
-                string inputDate = Convert.ToDateTime(datetime).ToString("ddMMyyHHmmss");
-                string hex = "";
-                for (int i = 0; i < inputDate.Length; i += 2)
-                {
-                    string pair = inputDate.Substring(i, 2);
-                    int value = int.Parse(pair);
-
-                    // convert the decimal value to a two-digit hexadecimal string
-                    string hexPair = value.ToString("X2");
-                    hex += hexPair;
-                }
-                intValue = float.Parse(Tariff, CultureInfo.InvariantCulture.NumberFormat);
-                string balanceString = ToHexString(intValue);
-                var dateput = string.Join(",", SplitIntoChunks(hex, 2));
-                var balanceutput = string.Join(",", SplitIntoChunks(balanceString, 2));
-                string modifiedString = data.Replace("-", dateput + "," + balanceutput);
-                data = modifiedString;
-                var cData = clsMetersProd.tbl_CommandBackLog;
-                tbl_CommandBackLog clsCmd = new tbl_CommandBackLog();
-                clsCmd.Data = data;
-                clsCmd.EventName = eventname;
-                clsCmd.LogDate = DateTime.UtcNow;
-                clsCmd.Status = "Pending";
-                clsCmd.pld = pld;
-                clsMetersProd.tbl_CommandBackLog.Add(clsCmd);
-                clsMetersProd.SaveChanges();
-                return Json("Command Added In Queue", JsonRequestBehavior.AllowGet);
-            }
-            return Json("error", JsonRequestBehavior.AllowGet);
 
         }
         public JsonResult StringToHexNVE(string data)
@@ -771,6 +661,26 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
             bal.ToString("F2");
             return Json(bal, JsonRequestBehavior.AllowGet);
         }
+        public string HexToString(string hex)
+        {
+            if (hex.Length % 2 != 0)
+            {
+                throw new ArgumentException("Invalid hexadecimal string length.");
+            }
+
+            // Create a byte array to hold the hexadecimal values
+            byte[] bytes = new byte[hex.Length / 2];
+
+            // Iterate through the hexadecimal string and convert each pair of characters to a byte
+            for (int i = 0; i < hex.Length; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            }
+
+            // Convert the byte array to a string using ASCII encoding
+            string result = System.Text.Encoding.ASCII.GetString(bytes);
+            return result;
+        }
         public string ConvertHex(string hexString)
         {
             try
@@ -805,7 +715,7 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
             {
                 if (sdci != "")
                 {
-                    op += ConvertHex(sdci);
+                    op += HexToString(sdci);
                 }
             }
             StringBuilder myStringBuilder = new StringBuilder(op);
@@ -1078,21 +988,42 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
         }
         public ActionResult CommandMonitoringData()
         {
-            var data = (from backLog in clsMetersProd.tbl_CommandBackLog
-                        join log in clsMetersProd.tbl_SMeterMaster on backLog.pld equals log.PLD
-                        orderby backLog.ID descending
-                        select new
-                        {
-                            ID = log.ID,
-                            MeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
-                            Data = backLog.Data,
-                            EventName = backLog.EventName,
-                            Status = backLog.Status,
-                            LogDate = backLog.LogDate,
-                            CompletedLogDate = backLog.CompletedLogDate,
-                        }).ToList();
+            if (Convert.ToString(Session["RoleID"]) == "9")
+            {
+                var data = (from backLog in clsMetersProd.tbl_CommandBackLog
+                            join log in clsMetersProd.tbl_SMeterMaster on backLog.pld equals log.PLD
+                            orderby backLog.ID descending
+                            select new
+                            {
+                                ID = log.ID,
+                                MeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
+                                Data = backLog.Data,
+                                EventName = backLog.EventName,
+                                Status = backLog.Status,
+                                LogDate = backLog.LogDate,
+                                CompletedLogDate = backLog.CompletedLogDate,
+                            });
+                return Json(data.Where(x=>x.MeterID== "100111").ToList(), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var data = (from backLog in clsMetersProd.tbl_CommandBackLog
+                            join log in clsMetersProd.tbl_SMeterMaster on backLog.pld equals log.PLD
+                            orderby backLog.ID descending
+                            select new
+                            {
+                                ID = log.ID,
+                                MeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
+                                Data = backLog.Data,
+                                EventName = backLog.EventName,
+                                Status = backLog.Status,
+                                LogDate = backLog.LogDate,
+                                CompletedLogDate = backLog.CompletedLogDate,
+                            }).ToList();
+                return Json(data.ToList(), JsonRequestBehavior.AllowGet);
+            }
 
-            return Json(data, JsonRequestBehavior.AllowGet);
+            
         }
 
 

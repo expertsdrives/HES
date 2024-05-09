@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ElectricMeterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_AdminUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="500" />
+          <Property Name="Password" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_MeterData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MeterID" Type="int" Nullable="false" />
+          <Property Name="PhaseCurrent" Type="nvarchar" MaxLength="500" />
+          <Property Name="Voltage" Type="nvarchar" MaxLength="500" />
+          <Property Name="Clock" Type="nvarchar" MaxLength="500" />
+          <Property Name="Frequency" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="NeutralCurrent" Type="nvarchar" MaxLength="500" />
+          <Property Name="ApparentPower" Type="nvarchar" MaxLength="500" />
+          <Property Name="ActivePower" Type="nvarchar" MaxLength="500" />
+          <Property Name="ActiveEnergy" Type="nvarchar" MaxLength="500" />
+          <Property Name="ApparentEnergy" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tbl_MeterMasterRelay">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IPAddress" Type="varchar" MaxLength="500" />
+          <Property Name="Password" Type="varchar" MaxLength="500" />
+          <Property Name="SystemTitle" Type="varchar" MaxLength="500" />
+          <Property Name="BlockCipherKey" Type="varchar" MaxLength="500" />
+          <Property Name="AuthenticationKey" Type="varchar" MaxLength="500" />
+          <Property Name="Authentication" Type="varchar" MaxLength="500" />
+          <Property Name="ServerAddres" Type="varchar" MaxLength="500" />
+          <Property Name="ClientAddress" Type="varchar" MaxLength="500" />
+          <Property Name="InterfaceType" Type="varchar" MaxLength="500" />
+          <Property Name="Security" Type="varchar" MaxLength="500" />
+          <Property Name="Port" Type="varchar" MaxLength="500" />
+          <Property Name="InvocationCounter" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_ParameterMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Parameter" Type="varchar" MaxLength="500" />
+          <Property Name="OBISCode" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <Function Name="sp_FetchData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ElectricMeterModelStoreContainer">
+          <EntitySet Name="tbl_AdminUser" EntityType="Self.tbl_AdminUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MeterData" EntityType="Self.tbl_MeterData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MeterMasterRelay" EntityType="Self.tbl_MeterMasterRelay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ParameterMaster" EntityType="Self.tbl_ParameterMaster" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ElectricMeterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_AdminUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_MeterData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeterID" Type="Int32" Nullable="false" />
+          <Property Name="PhaseCurrent" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Voltage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Frequency" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Clock" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NeutralCurrent" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ApparentPower" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActivePower" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveEnergy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ApparentEnergy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_ParameterMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Parameter" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OBISCode" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="ElectricMeterEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_AdminUser" EntityType="Self.tbl_AdminUser" />
+          <EntitySet Name="tbl_MeterData" EntityType="Self.tbl_MeterData" />
+          <EntitySet Name="tbl_ParameterMaster" EntityType="Self.tbl_ParameterMaster" />
+          <FunctionImport Name="sp_FetchData" ReturnType="Collection(ElectricMeterModel.sp_FetchData_Result)" />
+          <EntitySet Name="tbl_MeterMasterRelay" EntityType="ElectricMeterModel.tbl_MeterMasterRelay" />
+        </EntityContainer>
+        <ComplexType Name="sp_FetchData_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="MeterID" Nullable="false" />
+          <Property Type="String" Name="PhaseCurrent" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Voltage" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Clock" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Frequency" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="NeutralCurrent" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ApparentPower" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ActivePower" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ActiveEnergy" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ApparentEnergy" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="IPAddress" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="MeterName" Nullable="false" MaxLength="7" />
+        </ComplexType>
+        <EntityType Name="tbl_MeterMasterRelay">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IPAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SystemTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BlockCipherKey" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="AuthenticationKey" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Authentication" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ServerAddres" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ClientAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="InterfaceType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Security" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Port" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="InvocationCounter" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ElectricMeterModelStoreContainer" CdmEntityContainer="ElectricMeterEntities">
+          <EntitySetMapping Name="tbl_AdminUser">
+            <EntityTypeMapping TypeName="ElectricMeterModel.tbl_AdminUser">
+              <MappingFragment StoreEntitySet="tbl_AdminUser">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MeterData">
+            <EntityTypeMapping TypeName="ElectricMeterModel.tbl_MeterData">
+              <MappingFragment StoreEntitySet="tbl_MeterData">
+                <ScalarProperty Name="ApparentEnergy" ColumnName="ApparentEnergy" />
+                <ScalarProperty Name="ActiveEnergy" ColumnName="ActiveEnergy" />
+                <ScalarProperty Name="ActivePower" ColumnName="ActivePower" />
+                <ScalarProperty Name="ApparentPower" ColumnName="ApparentPower" />
+                <ScalarProperty Name="NeutralCurrent" ColumnName="NeutralCurrent" />
+                <ScalarProperty Name="Clock" ColumnName="Clock" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+                <ScalarProperty Name="PhaseCurrent" ColumnName="PhaseCurrent" />
+                <ScalarProperty Name="Voltage" ColumnName="Voltage" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ParameterMaster">
+            <EntityTypeMapping TypeName="ElectricMeterModel.tbl_ParameterMaster">
+              <MappingFragment StoreEntitySet="tbl_ParameterMaster">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Parameter" ColumnName="Parameter" />
+                <ScalarProperty Name="OBISCode" ColumnName="OBISCode" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_FetchData" FunctionName="ElectricMeterModel.Store.sp_FetchData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ElectricMeterModel.sp_FetchData_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+                <ScalarProperty Name="PhaseCurrent" ColumnName="PhaseCurrent" />
+                <ScalarProperty Name="Voltage" ColumnName="Voltage" />
+                <ScalarProperty Name="Clock" ColumnName="Clock" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="NeutralCurrent" ColumnName="NeutralCurrent" />
+                <ScalarProperty Name="ApparentPower" ColumnName="ApparentPower" />
+                <ScalarProperty Name="ActivePower" ColumnName="ActivePower" />
+                <ScalarProperty Name="ActiveEnergy" ColumnName="ActiveEnergy" />
+                <ScalarProperty Name="ApparentEnergy" ColumnName="ApparentEnergy" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="MeterName" ColumnName="MeterName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_MeterMasterRelay">
+            <EntityTypeMapping TypeName="ElectricMeterModel.tbl_MeterMasterRelay">
+              <MappingFragment StoreEntitySet="tbl_MeterMasterRelay">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="InvocationCounter" ColumnName="InvocationCounter" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+                <ScalarProperty Name="Security" ColumnName="Security" />
+                <ScalarProperty Name="InterfaceType" ColumnName="InterfaceType" />
+                <ScalarProperty Name="ClientAddress" ColumnName="ClientAddress" />
+                <ScalarProperty Name="ServerAddres" ColumnName="ServerAddres" />
+                <ScalarProperty Name="Authentication" ColumnName="Authentication" />
+                <ScalarProperty Name="AuthenticationKey" ColumnName="AuthenticationKey" />
+                <ScalarProperty Name="BlockCipherKey" ColumnName="BlockCipherKey" />
+                <ScalarProperty Name="SystemTitle" ColumnName="SystemTitle" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

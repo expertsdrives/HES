@@ -54,16 +54,16 @@ namespace HESMDMS.Areas.Admin.Controllers
                 decimal test =Convert.ToDecimal(tc);
                 ViewBag.TotalConsumption = test.ToString("N", setPrecision);
 
-                var Months = clsMeters.sp_GenerateInvoice().Select(x => x.MonthOfSales).Distinct().ToList();
-                for (int i = 0; i < Months.Count; i++)
-                {
-                    s[i] = Months[i].ToString();
-                    lstMonth.Add(Months[i].ToString());
-                    var countZeroSales = clsMeters.sp_GenerateInvoice().Where(x => x.GasSales == 0 && x.MonthOfSales == Months[i].ToString()).Count();
-                    var countSales = clsMeters.sp_GenerateInvoice().Where(x => x.GasSales != 0 && x.MonthOfSales == Months[i].ToString()).Count();
-                    lstZero.Add(countZeroSales);
-                    lstConsump.Add(countSales);
-                }
+                //var Months = clsMeters.sp_GenerateInvoice().Select(x => x.MonthOfSales).Distinct().ToList();
+                //for (int i = 0; i < Months.Count; i++)
+                //{
+                //    s[i] = Months[i].ToString();
+                //    lstMonth.Add(Months[i].ToString());
+                //    var countZeroSales = clsMeters.sp_GenerateInvoice().Where(x => x.GasSales == 0 && x.MonthOfSales == Months[i].ToString()).Count();
+                //    var countSales = clsMeters.sp_GenerateInvoice().Where(x => x.GasSales != 0 && x.MonthOfSales == Months[i].ToString()).Count();
+                //    lstZero.Add(countZeroSales);
+                //    lstConsump.Add(countSales);
+                //}
                 ViewBag.ZeroArray = lstZero.ToArray();
                 ViewBag.IntArray = lstConsump.ToArray();
                 ViewBag.MonthArray = lstMonth.ToArray();

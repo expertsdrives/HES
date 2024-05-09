@@ -74,7 +74,15 @@
                         @Html.TextBoxFor(model => model.InstallationDate, new { @class = "form-control", @placeholder = "Installation Date", @type = "date", required = "required" })
                         @*                                    <input type="date" class="form-control" id="InstallationDate" placeholder="Installation Date">*@
                     </div>
-
+                    <div class="form-group">
+                        <label for="InstallationDate">Vayudut Number</label>
+                        <div id="vayudut"></div>
+                        @Html.HiddenFor(model => model.VayudutSerialNo, new { @class = "form-control", @id = "VayudutSerialNo" })
+                    </div>
+                    <div class="form-group">
+                        <label for="InstallationDate">Seal Number</label>
+                        @Html.TextBoxFor(model => model.SealNo, new { @class = "form-control", @placeholder = "Seal Number", required = "required" })
+                    </div>
                 </div>
             </div>
         </div>
@@ -165,6 +173,7 @@
 }
 <script>
          var meterList = @Html.Raw(Json.Encode(ViewBag.serialNumbers));
+         var vayu = @Html.Raw(Json.Encode(ViewBag.vayudut));
 
 
     $(() => {
@@ -180,6 +189,14 @@
                     url: "getTxid?serialNumber=" + data.value,
                     success: function (result) {
                         $("#TXID").val(result);
+                        $("#OpeningAMRReading").val(@ViewBag.SerialNum);
+                    }
+                });
+                $.ajax({
+                    url: "getOpening?serialNumber=" + data.value,
+                    success: function (result) {
+
+                        $("#OpeningAMRReading").val(result);
                     }
                 });
             },
@@ -189,7 +206,29 @@
                 message: 'Serial Number is required',
             }],
         });
+
+        $('#vayudut').dxSelectBox({
+            dataSource: JSON.parse(vayu),
+            displayExpr: 'VayudutSrNo',
+            valueExpr: 'VayudutSrNo',
+            height: 50,
+            name: 'VayudutSrNo',
+            searchEnabled: true,
+            onValueChanged(data) {
+                $("#VayudutSerialNo").val(data.value);
+            },
+        }).dxValidator({
+            validationRules: [{
+                type: 'required',
+                message: 'Vayudut Serial Number is required',
+            }],
+        });
+
+
+
     });
+
+
         $(document).ready(function () {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);

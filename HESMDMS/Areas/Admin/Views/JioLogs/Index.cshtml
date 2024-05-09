@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var role = @Convert.ToString(Session["RoleID"]);
 }
 
 
@@ -43,5 +44,5 @@
         <div id="D2C"></div>
     </div>
 </div>
-
+<script>     var ro = @role;</script>
 <script src="~/Scripts/grid/D2C.js"></script>

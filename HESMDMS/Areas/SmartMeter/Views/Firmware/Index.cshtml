@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Terminal";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var role = @Convert.ToString(Session["RoleID"]);
 }
 
 <style>
@@ -54,41 +55,41 @@
             </div>
         </div>
         <div class="card-body">-->
-            @*@using (Html.BeginForm("Index", "Firmware", FormMethod.Post,
+    @*@using (Html.BeginForm("Index", "Firmware", FormMethod.Post,
                                    new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()*@
-            <!--<div class="form-group">
-                <label for="email">Select Meter</label>
-                <div id="SelectMeter2"></div>
-            </div>
+    <!--<div class="form-group">
+        <label for="email">Select Meter</label>
+        <div id="SelectMeter2"></div>
+    </div>
 
-            <div class="form-group">
-                <label for="email">Upload Old Firmware File</label>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="file1" name="file1">
-                    <label class="custom-file-label" for="customFile1">Choose file</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="email">Upload New Firmware File</label>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="file2" name="file2">
-                    <label class="custom-file-label" for="customFile2">Choose file</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="Packetsize">Enter Packate Size (5-2000)</label>
-                <input type="number" class="form-control" id="Packetsize1" name="packetSize">
-            </div>
-            <button type="submit" class="btn btn-primary" id="uploadButton1">Upgrade</button><label id="status">@ViewBag.Status</label>
-            <button type="submit" class="btn btn-primary" id="Cancel" style="display: none;">Abort</button>-->
-            @*}*@
-        <!--</div>
+    <div class="form-group">
+        <label for="email">Upload Old Firmware File</label>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="file1" name="file1">
+            <label class="custom-file-label" for="customFile1">Choose file</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">Upload New Firmware File</label>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="file2" name="file2">
+            <label class="custom-file-label" for="customFile2">Choose file</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Packetsize">Enter Packate Size (5-2000)</label>
+        <input type="number" class="form-control" id="Packetsize1" name="packetSize">
+    </div>
+    <button type="submit" class="btn btn-primary" id="uploadButton1">Upgrade</button><label id="status">@ViewBag.Status</label>
+    <button type="submit" class="btn btn-primary" id="Cancel" style="display: none;">Abort</button>-->
+    @*}*@
+    <!--</div>
     </div>-->
 </div>
 <div class="col-sm-12 col-lg-4">
-    
+
     <div class="card">
         <div class="card-header" style="text-align:center">
             <div class="header-title">
@@ -97,9 +98,9 @@
         </div>
         <div class="card-body">
             @*@using (Html.BeginForm("Index", "Firmware", FormMethod.Post,
-                                       new { enctype = "multipart/form-data" }))
-            {
-                @Html.AntiForgeryToken()*@
+                                           new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()*@
             <div class="form-group">
                 <label for="email">Select Meter</label>
                 <div id="SelectMeter1"></div>
@@ -215,6 +216,7 @@
 </script>
 <script>
       var Jsondata = @Html.Raw(Json.Encode(ViewBag.data));
-      var mid = "@ViewBag.mid";
+    var mid = "@ViewBag.mid";
+        var ro = @role;
 </script>
 <script src="~/Scripts/grid/FirmwareUpgrade.js"></script>

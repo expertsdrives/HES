@@ -155,526 +155,601 @@
                 <nav class="iq-sidebar-menu">
                     @if (Convert.ToString(Session["UserID"]) != "")
                     {
-                    <ul id="iq-sidebar-toggle" class="iq-menu">
-                        @if (Convert.ToString(Session["RoleID"]) == "5")
-                        {
-                            <li>
-                                <a href="/SmartMeter/User/" class="svg-icon dashboard">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
-                                        <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm9 4a1 1 0 10-2 0v6a1 1 0 102 0V7zm-3 2a1 1 0 10-2 0v4a1 1 0 102 0V9zm-3 3a1 1 0 10-2 0v1a1 1 0 102 0v-1z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span class="ml-3">Dashboard</span>
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="/Admin/Dashboad/Index" class="svg-icon dashboard">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
-                                        <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm9 4a1 1 0 10-2 0v6a1 1 0 102 0V7zm-3 2a1 1 0 10-2 0v4a1 1 0 102 0V9zm-3 3a1 1 0 10-2 0v1a1 1 0 102 0v-1z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span class="ml-3">Dashboard</span>
-                                </a>
-                            </li>
-                        }
-                        @if (Convert.ToString(Session["RoleID"]) != "5")
-                        {
-                            <li class="">
-                                <a href="#table" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                         width="20" height="20">
-                                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-                                    </svg>
-                                    <span class="ml-3">Meter Readings</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="table" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                        <ul id="iq-sidebar-toggle" class="iq-menu">
+                            @if (Convert.ToString(Session["RoleID"]) == "5" && Convert.ToString(Session["RoleID"]) != "9")
+                            {
+                                <li>
+                                    <a href="/SmartMeter/User/" class="svg-icon dashboard">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                            <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm9 4a1 1 0 10-2 0v6a1 1 0 102 0V7zm-3 2a1 1 0 10-2 0v4a1 1 0 102 0V9zm-3 3a1 1 0 10-2 0v1a1 1 0 102 0v-1z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        <span class="ml-3">Dashboard</span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                if (Convert.ToString(Session["RoleID"]) == "8" && Convert.ToString(Session["RoleID"]) != "9")
+                                {
                                     <li class="">
-                                        <a href="/DataReception/AMRDataReceptionWithCRC">
-                                            <i class="las la-minus"></i><span>Domestic PNG Gas</span>
+                                        <a href="#table" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                                 width="20" height="20">
+                                                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                                <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                                            </svg>
+                                            <span class="ml-3">Eelctric Meter</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                                         </a>
+                                        <ul id="table" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li class="">
+                                                <a href="/SmartMeter/SamrtMeterData/ElectricMeterView">
+                                                    <i class="las la-minus"></i><span>Schedule Data</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/SmartMeter/SamrtMeterData/EleMeterMaster">
+                                                    <i class="las la-minus"></i><span>Device Control</span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
                                     </li>
-                                </ul>
-                            </li>
-                            <li class=" ">
-                                <a href="#Stable" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                         width="20" height="20">
-                                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-                                    </svg>
-                                    <span class="ml-3">Smart Gas Meter</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="Stable" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    <li class="">
-                                        <a href="/Smartmeter/Terminal">
-                                            <i class="las la-minus"></i><span>Terminal</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="/Smartmeter/Terminal/Terminal">
-                                            <i class="las la-minus"></i><span>Basic Information</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="/Smartmeter/Terminal/BillingParameters">
-                                            <i class="las la-minus"></i><span>Billing Parameters</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="/SmartMeter/Terminal/CommandMonitoring">
-                                            <i class="las la-minus"></i><span>Command Monitoring</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="/Admin/JioLogs/">
-                                            <i class="las la-minus"></i><span>Data Reception</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="/SmartMeter/Firmware">
-                                            <i class="las la-minus"></i><span>Firmware Upgrade</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="/SmartMeter/SamrtMeterData">
-                                            <i class="las la-minus"></i><span>Customer Data</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class=" ">
-                                <a href="#Reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                         width="20" height="20">
-                                        <path fill-rule="evenodd"
-                                              d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                                              clip-rule="evenodd" />
-                                    </svg>
-                                    <span class="ml-3">Reports</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="Reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    @*<li class="">
-                                            <a href="/DataReception/Index">
-                                                <i class="las la-minus"></i><span>AMR Data</span>
+                                }
+                                else
+                                {
+                                    if (Convert.ToString(Session["RoleID"]) != "9")
+                                    {
+                                        <li>
+                                            <a href="/Admin/Dashboad/Index" class="svg-icon dashboard">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                                    <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm9 4a1 1 0 10-2 0v6a1 1 0 102 0V7zm-3 2a1 1 0 10-2 0v4a1 1 0 102 0V9zm-3 3a1 1 0 10-2 0v1a1 1 0 102 0v-1z" clip-rule="evenodd"></path>
+                                                </svg>
+                                                <span class="ml-3">Dashboard</span>
                                             </a>
-                                        </li>*@
+                                        </li>
+                                    }
+                                }
+                            }
+                            @if (Convert.ToString(Session["RoleID"]) != "5" && Convert.ToString(Session["RoleID"]) != "8")
+                            {
+
+                                if (Convert.ToString(Session["RoleID"]) != "9")
+                                {
                                     <li class="">
-                                        <a href="/Admin/Reports/LastMeterReading">
-                                            <i class="las la-minus"></i><span>Date Wise Reading</span>
+                                        <a href="#table" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                                 width="20" height="20">
+                                                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                                <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                                            </svg>
+                                            <span class="ml-3">Meter Readings</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                                         </a>
+                                        <ul id="table" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li class="">
+                                                <a href="/DataReception/AMRDataReceptionWithCRC">
+                                                    <i class="las la-minus"></i><span>Domestic PNG Gas</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Admin/RawData/AMRRawData">
+                                                    <i class="las la-minus"></i><span>AMR Raw Data</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Admin/Meter/AMRBilling">
+                                                    <i class="las la-minus"></i><span>Generate Bill</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+                                if (Convert.ToString(Session["RoleID"]) != "7")
+                                {
+                                    <li class=" ">
+                                        <a href="#Stable" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                                 width="20" height="20">
+                                                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                                <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                                            </svg>
+                                            <span class="ml-3">Smart Gas Meter</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                                        </a>
+                                        <ul id="Stable" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li class="">
+                                                <a href="/Smartmeter/Terminal">
+                                                    <i class="las la-minus"></i><span>Terminal</span>
+                                                </a>
+                                            </li>
+                                            @if (Convert.ToString(Session["RoleID"]) != "9")
+                                            {
+                                                <li class="">
+                                                    <a href="/SmartMeter/SamrtMeterData/Customers">
+                                                        <i class="las la-minus"></i><span>Customers</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            <li class="">
+                                                <a href="/Smartmeter/Terminal/Terminal">
+                                                    <i class="las la-minus"></i><span>Basic Information</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Smartmeter/Terminal/BillingParameters">
+                                                    <i class="las la-minus"></i><span>Billing Parameters</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/SmartMeter/Terminal/CommandMonitoring">
+                                                    <i class="las la-minus"></i><span>Command Monitoring</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Admin/JioLogs/">
+                                                    <i class="las la-minus"></i><span>Data Reception</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/SmartMeter/Firmware">
+                                                    <i class="las la-minus"></i><span>Firmware Upgrade</span>
+                                                </a>
+                                            </li>
+                                            @if (Convert.ToString(Session["RoleID"]) != "9")
+                                            {
+                                                <li class="">
+                                                    <a href="/SmartMeter/SamrtMeterData">
+                                                        <i class="las la-minus"></i><span>Customer Data</span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="/SmartMeter/SamrtMeterData/sendBillAsync">
+                                                        <i class="las la-minus"></i><span>Generate Bill</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                                if (Convert.ToString(Session["RoleID"]) != "9")
+                                {
+                                    <li class=" ">
+                                        <a href="#Reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                                 width="20" height="20">
+                                                <path fill-rule="evenodd"
+                                                      d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                                                      clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="ml-3">Reports</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                                        </a>
+                                        <ul id="Reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            @*<li class="">
+                                                    <a href="/DataReception/Index">
+                                                        <i class="las la-minus"></i><span>AMR Data</span>
+                                                    </a>
+                                                </li>*@
+                                            <li class="">
+                                                <a href="/Admin/Reports/LastMeterReading">
+                                                    <i class="las la-minus"></i><span>Date Wise Reading</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Admin/Reports/LastMeterRevenue">
+                                                    <i class="las la-minus"></i><span>Date Wise Revenue</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Admin/Reports/VayudutWise">
+                                                    <i class="las la-minus"></i><span>Vayudut</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="">
+                                                <a href="/Admin/Reports/Tamper">
+                                                    <i class="las la-minus"></i><span>Temper</span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
                                     </li>
                                     <li class="">
-                                        <a href="/Admin/Reports/LastMeterRevenue">
-                                            <i class="las la-minus"></i><span>Date Wise Revenue</span>
+                                        <a href="#form" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                                 width="20" height="20">
+                                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                      clip-rule="evenodd" />
+                                            </svg>
+
+                                            <span class="ml-3">Registration</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                                         </a>
+                                        <ul id="form" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li class="">
+                                                <a href="/Admin/Customer">
+                                                    <i class="las la-minus"></i><span class="">Customer</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Login/Dashboard">
+                                                    <i class="las la-minus"></i><span class="">AMR</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+                                if (Convert.ToString(Session["RoleID"]) != "7" && Convert.ToString(Session["RoleID"]) != "9")
+                                {
+                                    <li class=" ">
+                                        <a href="#Meter" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                                 width="20" height="20">
+                                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                            </svg>
+                                            <span class="ml-3">Masters</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                                        </a>
+                                        <ul id="Meter" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            @*<li class="">
+                                                    <a href="/DataReception/Index">
+                                                        <i class="las la-minus"></i><span>AMR Data</span>
+                                                    </a>
+                                                </li>*@
+                                            <li class="">
+                                                <a href="/Admin/Meter">
+                                                    <i class="las la-minus"></i><span>Meter</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Admin/Vayudut">
+                                                    <i class="las la-minus"></i><span>Vayudut</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Admin/Customer/SmartAddUser">
+                                                    <i class="las la-minus"></i><span>Smart Users</span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
                                     </li>
                                     <li class="">
-                                        <a href="/Admin/Reports/VayudutWise">
-                                            <i class="las la-minus"></i><span>Vayudut</span>
+                                        <a href="#sales" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                                <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clip-rule="evenodd"></path>
+                                            </svg>
+
+                                            <span class="ml-3">Sales</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                                         </a>
+                                        <ul id="sales" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=391&model=sale.order&view_type=list&cids=1&menu_id=242">
+                                                    <i class="las la-minus"></i><span class="">Quotations </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=435&model=crm.lead&view_type=kanban&cids=1&menu_id=302">
+                                                    <i class="las la-minus"></i><span class="">CRM </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#">
+                                                    <i class="las la-minus"></i><span class="">Point of Sale  </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=964&model=sale.order&view_type=list&cids=1&menu_id=636">
+                                                    <i class="las la-minus"></i><span class="">Subscriptions</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=416&model=res.partner&view_type=kanban&cids=1&menu_id=289">
+                                                    <i class="las la-minus"></i><span class="">Contacts </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=994&model=appointment.type&view_type=kanban&cids=1&menu_id=659">
+                                                    <i class="las la-minus"></i><span class=""> Appointments  </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#">
+                                                    <i class="las la-minus"></i><span class="">VoIP  </span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="">
+                                        <a href="#Services" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                                <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                            </svg>
+
+                                            <span class="ml-3">Services</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                                        </a>
+                                        <ul id="Services" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=503&model=project.project&view_type=kanban&cids=1&menu_id=357">
+                                                    <i class="las la-minus"></i><span class="">Project </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=menu&cids=1&menu_id=15">
+                                                    <i class="las la-minus"></i><span class="">Timesheet </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=561&model=project.task&view_type=kanban&cids=1&menu_id=391">
+                                                    <i class="las la-minus"></i><span class="">Field Service </span>
+                                                </a>
+                                            </li>
+
+
+                                        </ul>
+                                    </li>
+                                    <li class="">
+                                        <a href="#Accounting" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                                <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"></path>
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span class="ml-3">Accounting</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                                        </a>
+                                        <ul id="Accounting" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=361&model=account.journal&view_type=kanban&cids=1&menu_id=426" target="_blank">
+                                                    <i class="las la-minus"></i><span class="">Accounting</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=326&active_id=1&model=account.move&view_type=list&cids=1&menu_id=426" target="_blank">
+                                                    <i class="las la-minus"></i><span class="">Invoicing</span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="">
+                                        <a href="#Inventory" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                                <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span class="ml-3">Inventory</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                                        </a>
+                                        <ul id="Inventory" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=738&model=stock.picking.type&view_type=kanban&cids=1&menu_id=467">
+                                                    <i class="las la-minus"></i><span class="">Inventory   </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=808&model=purchase.order&view_type=list&cids=1&menu_id=531">
+                                                    <i class="las la-minus"></i><span class="">Purchase  </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=822&model=repair.order&view_type=list&cids=1&menu_id=550">
+                                                    <i class="las la-minus"></i><span class="">Repairs  </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=828&cids=1&menu_id=556">
+                                                    <i class="las la-minus"></i><span class="">Barcode   </span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
 
                                     <li class="">
-                                        <a href="/Admin/Reports/Tamper">
-                                            <i class="las la-minus"></i><span>Temper</span>
+                                        <a href="#Manu" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 317.666 317.666" width="20" height="20" xmlns:v="https://vecta.io/nano"><path d="M44.616 155.49L54.651 33.065c.834-10.17 9.331-18 19.535-18h21.642c10.204 0 18.702 7.829 19.535 18l10.035 122.425" fill="#222260" /><path d="M192.267 155.49l10.035-122.425c.834-10.17 9.331-18 19.535-18h21.642c10.204 0 18.702 7.829 19.535 18L273.05 155.49" fill="#222260" /><path d="M116.776 95.492H53.239c-8.284 0-15-6.716-15-15s6.716-15 15-15h63.537c8.284 0 15 6.716 15 15s-6.716 15-15 15z" fill="#222260" /><path d="M264.427 95.492H200.89c-8.284 0-15-6.716-15-15s6.716-15 15-15h63.537c8.284 0 15 6.716 15 15s-6.715 15-15 15zm45.239 207.109H8a8 8 0 0 1-8-8V160.304a8 8 0 0 1 8-8h301.666a8 8 0 0 1 8 8v134.297a8 8 0 0 1-8 8z" fill="#222260" /><path d="M158.833 302.601H8a8 8 0 0 1-8-8V160.304a8 8 0 0 1 8-8h150.833v150.297z" fill="#29556e" /><use xlink:href="#B" fill="#222260" /><path d="M173.714 242.453h-29.761c-8.284 0-15-6.716-15-15s6.716-15 15-15h29.761c8.284 0 15 6.716 15 15s-6.716 15-15 15z" fill="#222260" /><path d="M158.833 242.453h-14.88c-8.284 0-15-6.716-15-15s6.716-15 15-15h14.88v30z" fill="#222260" /><use xlink:href="#B" x="169.495" fill="#222260" /><defs><path id="B" d="M88.966 242.453h-29.76c-8.284 0-15-6.716-15-15s6.716-15 15-15h29.76c8.284 0 15 6.716 15 15s-6.716 15-15 15z" /></defs></svg>
+                                            <span class="ml-3">Manufacturing</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                                         </a>
+                                        <ul id="Manu" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=871&model=mrp.production&view_type=list&cids=1&menu_id=557">
+                                                    <i class="las la-minus"></i><span class="">Manufacturing</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=918&model=maintenance.team&view_type=kanban&cids=1&menu_id=585">
+                                                    <i class="las la-minus"></i><span class="">Maintenance </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=934&model=quality.alert.team&view_type=kanban&cids=1&menu_id=604">
+                                                    <i class="las la-minus"></i><span class="">Quality</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=948&model=mrp.eco.type&view_type=kanban&cids=1&menu_id=621">
+                                                    <i class="las la-minus"></i><span class="">PLM</span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
-                                   
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a href="#form" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                         width="20" height="20">
-                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                              clip-rule="evenodd" />
-                                    </svg>
 
-                                    <span class="ml-3">Registration</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="form" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
                                     <li class="">
-                                        <a href="/Admin/Customer">
-                                            <i class="las la-minus"></i><span class="">Customer</span>
+                                        <a href="#Marketing" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                                <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                                <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path>
+                                            </svg>
+                                            <span class="ml-3">Marketing</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                                         </a>
+                                        <ul id="Marketing" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li class="">
+                                                <a href="#">
+                                                    <i class="las la-minus"></i><span class="">Email Marketing </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#">
+                                                    <i class="las la-minus"></i><span class="">Events  </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#">
+                                                    <i class="las la-minus"></i><span class="">Marketing Automation </span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#">
+                                                    <i class="las la-minus"></i><span class="">Surveys</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#">
+                                                    <i class="las la-minus"></i><span class="">SMS Marketing </span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
                                     <li class="">
-                                        <a href="/Login/Dashboard">
-                                            <i class="las la-minus"></i><span class="">AMR</span>
+                                        <a href="#Productivity" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
+                                            <img src="~/Images/productivity.png" />
+                                            <span class="ml-3">Productivity</span>
+                                            <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                            <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                                         </a>
+                                        <ul id="Productivity" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=591&model=documents.document&view_type=kanban&cids=1&folder_id=1&menu_id=416">
+                                                    <i class="las la-minus"></i><span class="">Documents</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=1007&model=data_merge.record&view_type=list&cids=1&menu_id=675">
+                                                    <i class="las la-minus"></i><span class="">Data Cleaning</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="http://52.156.88.127:8069/web#action=547&model=project.task&view_type=kanban&cids=1&menu_id=386">
+                                                    <i class="las la-minus"></i><span class="">Notes</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+
+                                            </li>
+
+                                        </ul>
                                     </li>
-                                </ul>
-                            </li>
+                                }
 
-
-                            <li class=" ">
-                                <a href="#Meter" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                         width="20" height="20">
-                                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                                    </svg>
-                                    <span class="ml-3">Masters</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="Meter" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    @*<li class="">
-                                            <a href="/DataReception/Index">
-                                                <i class="las la-minus"></i><span>AMR Data</span>
+                            }
+                            @*Master*@
+                            @*<li class=" ">
+                                    <a href="#pricing" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                             width="20" height="20">
+                                            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
+                                            <path fill-rule="evenodd"
+                                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
+                                                  clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="ml-3">Pricing</span>
+                                        <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                        <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                                    </a>
+                                    <ul id="pricing" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                        <li class="">
+                                            <a href="../backend/pricing.html">
+                                                <i class="las la-minus"></i><span>Pricing 1</span>
                                             </a>
-                                        </li>*@
-                                    <li class="">
-                                        <a href="/Admin/Meter">
-                                            <i class="las la-minus"></i><span>Meter</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="/Admin/Customer/SmartAddUser">
-                                            <i class="las la-minus"></i><span>Smart Users</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a href="#sales" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
-                                        <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clip-rule="evenodd"></path>
-                                    </svg>
+                                        </li>
+                                        <li class="">
+                                            <a href="../backend/pricing-2.html">
+                                                <i class="las la-minus"></i><span>Pricing 2</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                                    <span class="ml-3">Sales</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="sales" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Quotations </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">CRM </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Point of Sale  </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Subscriptions</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Contacts </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class=""> Appointments  </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">VoIP  </span>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a href="#Services" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
-                                        <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                                    </svg>
-
-                                    <span class="ml-3">Services</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="Services" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Project </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Timesheet </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Field Service </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Planing</span>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a href="#Accounting" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
-                                        <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"></path>
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span class="ml-3">Accounting</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="Accounting" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    <li class="">
-                                        <a href="http://168.62.160.58:8069/web#action=274&model=account.journal&view_type=kanban&menu_id=121" target="_blank">
-                                            <i class="las la-minus"></i><span class="">Accounting</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="http://52.152.148.90:8069/web#cids=1&menu_id=108&action=213&model=account.move&view_type=list" target="_blank">
-                                            <i class="las la-minus"></i><span class="">Invoicing</span>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a href="#Inventory" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
-                                        <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span class="ml-3">Inventory</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="Inventory" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Inventory   </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Purchase  </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Repairs  </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Barcode   </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="">
-                                <a href="#Manu" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 317.666 317.666" width="20" height="20" xmlns:v="https://vecta.io/nano"><path d="M44.616 155.49L54.651 33.065c.834-10.17 9.331-18 19.535-18h21.642c10.204 0 18.702 7.829 19.535 18l10.035 122.425" fill="#222260" /><path d="M192.267 155.49l10.035-122.425c.834-10.17 9.331-18 19.535-18h21.642c10.204 0 18.702 7.829 19.535 18L273.05 155.49" fill="#222260" /><path d="M116.776 95.492H53.239c-8.284 0-15-6.716-15-15s6.716-15 15-15h63.537c8.284 0 15 6.716 15 15s-6.716 15-15 15z" fill="#222260" /><path d="M264.427 95.492H200.89c-8.284 0-15-6.716-15-15s6.716-15 15-15h63.537c8.284 0 15 6.716 15 15s-6.715 15-15 15zm45.239 207.109H8a8 8 0 0 1-8-8V160.304a8 8 0 0 1 8-8h301.666a8 8 0 0 1 8 8v134.297a8 8 0 0 1-8 8z" fill="#222260" /><path d="M158.833 302.601H8a8 8 0 0 1-8-8V160.304a8 8 0 0 1 8-8h150.833v150.297z" fill="#29556e" /><use xlink:href="#B" fill="#222260" /><path d="M173.714 242.453h-29.761c-8.284 0-15-6.716-15-15s6.716-15 15-15h29.761c8.284 0 15 6.716 15 15s-6.716 15-15 15z" fill="#222260" /><path d="M158.833 242.453h-14.88c-8.284 0-15-6.716-15-15s6.716-15 15-15h14.88v30z" fill="#222260" /><use xlink:href="#B" x="169.495" fill="#222260" /><defs><path id="B" d="M88.966 242.453h-29.76c-8.284 0-15-6.716-15-15s6.716-15 15-15h29.76c8.284 0 15 6.716 15 15s-6.716 15-15 15z" /></defs></svg>
-                                    <span class="ml-3">Manufacturing</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="Manu" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Manufacturing</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Maintenance </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Quality</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">PLM</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-
-                            <li class="">
-                                <a href="#Marketing" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
-                                        <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                                        <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path>
-                                    </svg>
-                                    <span class="ml-3">Marketing</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="Marketing" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Email Marketing </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Events  </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Marketing Automation </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Surveys</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">SMS Marketing </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a href="#Productivity" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
-                                    <img src="~/Images/productivity.png" />
-                                    <span class="ml-3">Productivity</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="Productivity" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Documents</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Data Cleaning</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="las la-minus"></i><span class="">Notes</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-
-                                    </li>
-
-                                </ul>
-                            </li>
-                        }
-                        @*Master*@
-                        @*<li class=" ">
-                                <a href="#pricing" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                         width="20" height="20">
-                                        <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
-                                        <path fill-rule="evenodd"
-                                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
-                                              clip-rule="evenodd" />
-                                    </svg>
-                                    <span class="ml-3">Pricing</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="pricing" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    <li class="">
-                                        <a href="../backend/pricing.html">
-                                            <i class="las la-minus"></i><span>Pricing 1</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="../backend/pricing-2.html">
-                                            <i class="las la-minus"></i><span>Pricing 2</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class=" ">
-                                <a href="#pages-error" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                         width="20" height="20">
-                                        <path fill-rule="evenodd"
-                                              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                              clip-rule="evenodd" />
-                                    </svg>
-                                    <span class="ml-3">Error</span>
-                                    <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                    <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                </a>
-                                <ul id="pages-error" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    <li class="">
-                                        <a href="../backend/pages-error.html">
-                                            <i class="las la-minus"></i><span>Error 404</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="../backend/pages-error-500.html">
-                                            <i class="las la-minus"></i><span>Error 500</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a href="../backend/timeline.html">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                         width="20" height="20">
-                                        <path fill-rule="evenodd"
-                                              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                              clip-rule="evenodd" />
-                                    </svg>
-                                    <span class="ml-3">Timeline</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="../backend/pages-blank-page.html">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                         width="20" height="20">
-                                        <path fill-rule="evenodd"
-                                              d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                                              clip-rule="evenodd" />
-                                    </svg>
-                                    <span class="ml-3">Blank Page</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="../backend/pages-maintenance.html">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                         width="20" height="20">
-                                        <path fill-rule="evenodd"
-                                              d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
-                                              clip-rule="evenodd" />
-                                        <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
-                                    </svg>
-                                    <span class="ml-3">Maintenance</span>
-                                </a>
-                            </li>*@
-                    </ul>
+                                <li class=" ">
+                                    <a href="#pages-error" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                             width="20" height="20">
+                                            <path fill-rule="evenodd"
+                                                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                                  clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="ml-3">Error</span>
+                                        <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                        <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                                    </a>
+                                    <ul id="pages-error" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                        <li class="">
+                                            <a href="../backend/pages-error.html">
+                                                <i class="las la-minus"></i><span>Error 404</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="../backend/pages-error-500.html">
+                                                <i class="las la-minus"></i><span>Error 500</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="">
+                                    <a href="../backend/timeline.html">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                             width="20" height="20">
+                                            <path fill-rule="evenodd"
+                                                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                                  clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="ml-3">Timeline</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="../backend/pages-blank-page.html">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                             width="20" height="20">
+                                            <path fill-rule="evenodd"
+                                                  d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                                                  clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="ml-3">Blank Page</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="../backend/pages-maintenance.html">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                             width="20" height="20">
+                                            <path fill-rule="evenodd"
+                                                  d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                                                  clip-rule="evenodd" />
+                                            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+                                        </svg>
+                                        <span class="ml-3">Maintenance</span>
+                                    </a>
+                                </li>*@
+                        </ul>
                     }
-                    else {
+                    else
+                    {
                         Response.Redirect("/Login");
                     }
                 </nav>

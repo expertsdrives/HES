@@ -36,11 +36,12 @@
         var data3 = myArray[2].CommandResponse;
         for (i = 0; i <= data3.length; i++) {
             var d = data3[i].Data;
-            if (d.split(',')[8].includes("EB")) {
-                csting = d.split(',');
-                data3date = convertTicksToDate(data3[i].LogDate);
-                break;
-            }
+            if (d.split(',').length > 9)
+                if (d.split(',')[8].includes("EB")) {
+                    csting = d.split(',');
+                    data3date = convertTicksToDate(data3[i].LogDate);
+                    break;
+                }
         }
         var balancestring = csting[9] + csting[10] + csting[11] + csting[12] + csting[13] + csting[14] + csting[15] + csting[16];
         var pendingData = getObjects1(data2, 'Status', "Pending");
@@ -88,11 +89,12 @@
         var data3 = myArray[2].CommandResponse;
         for (i = 0; i <= data3.length; i++) {
             var d = data3[i].Data;
-            if (d.split(',')[8].includes("35")) {
-                csting = d.split(',');
-                data3date = convertTicksToDate(data3[i].LogDate);
-                break;
-            }
+            if (d.split(',').length > 9)
+                if (d.split(',')[8].includes("35")) {
+                    csting = d.split(',');
+                    data3date = convertTicksToDate(data3[i].LogDate);
+                    break;
+                }
         }
         var balancestring = csting[13] + csting[14] + csting[15] + csting[16];
         var pendingData = getObjects1(data2, 'Status', "Pending");
@@ -138,11 +140,12 @@
         var data3 = myArray[2].CommandResponse;
         for (i = 0; i <= data3.length; i++) {
             var d = data3[i].Data;
-            if (d.split(',')[8].includes("2B")) {
-                csting = d.split(',');
-                data3date = convertTicksToDate(data3[i].LogDate);
-                break;
-            }
+            if (d.split(',').length > 9)
+                if (d.split(',')[8].includes("2B")) {
+                    csting = d.split(',');
+                    data3date = convertTicksToDate(data3[i].LogDate);
+                    break;
+                }
         }
         var balancestring = csting[14] + csting[15] + csting[16] + csting[17];
         var pendingData = getObjects1(data2, 'Status', "Pending");
@@ -189,7 +192,7 @@
         var data1 = myArray[0].Resposne;
         var data2 = myArray[1].Resposne1;
         var data3 = myArray[2].CommandResponse;
-        for (i = 0; i <= data3.length; i++) {
+        for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.includes("29")) {
                 csting = d.split(',');
@@ -229,13 +232,15 @@
         var data1 = myArray[0].Resposne;
         var data2 = myArray[1].Resposne1;
         var data3 = myArray[2].CommandResponse;
-        for (i = 0; i <= data3.length; i++) {
+        for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
-            if (d.split(',')[8].includes("37")) {
-                csting = d.split(',');
-                data3date = convertTicksToDate(data3[i].LogDate);
-                break;
-            }
+            if (d.split(',').length > 9)
+                if (d.split(',')[8].includes("37")) {
+
+                    csting = d.split(',');
+                    data3date = convertTicksToDate(data3[i].LogDate);
+                    break;
+                }
         }
         var balancestring = csting[9] + csting[10] + csting[11] + csting[12] + csting[13] + csting[14] + csting[15] + csting[16];
         var pendingData = getObjects1(data2, 'Status', "Pending");
@@ -273,12 +278,12 @@
         for (i = 0; i < data3.length; i++) {
             console.log(data3);
             var d = data3[i].Data;
-
-            if (d.split(',')[8].includes("EE")) {
-                csting = d.split(',');
-                data3date = convertTicksToDate(data3[i].LogDate);
-                break;
-            }
+            if (d.split(',').length > 9)
+                if (d.split(',')[8].includes("EE")) {
+                    csting = d.split(',');
+                    data3date = convertTicksToDate(data3[i].LogDate);
+                    break;
+                }
         }
         var balancestring = csting[9] + csting[10] + csting[11] + csting[12];
         var pendingData = getObjects1(data2, 'Status', "Pending");
@@ -327,11 +332,12 @@
         var data3 = myArray[2].CommandResponse;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
-            if (d.split(',')[8].includes("E6")) {
-                csting = d.split(',');
-                data3date = convertTicksToDate(data3[i].LogDate);
-                break;
-            }
+            if (d.split(',').length > 9)
+                if (d.split(',')[8].includes("E6")) {
+                    csting = d.split(',');
+                    data3date = convertTicksToDate(data3[i].LogDate);
+                    break;
+                }
         }
         var balancestring = csting[9] + csting[10] + csting[11] + csting[12];
         var pendingData = getObjects1(data2, 'Status', "Pending");
@@ -365,11 +371,12 @@
         var data3 = myArray[2].CommandResponse;
         for (i = 0; i <= data3.length; i++) {
             var d = data3[i].Data;
-            if (d.split(',')[8].includes("F2")) {
-                csting = d.split(',');
-                data3date = convertTicksToDate(data3[i].LogDate);
-                break;
-            }
+            if (d.split(',').length > 9)
+                if (d.split(',')[8].includes("F2")) {
+                    csting = d.split(',');
+                    data3date = convertTicksToDate(data3[i].LogDate);
+                    break;
+                }
         }
         var balancestring = csting[9] + csting[10] + csting[11] + csting[12];
         var pendingData = getObjects1(data2, 'Status', "Pending");
@@ -421,7 +428,7 @@
     $('#SelectMeter1').dxSelectBox({
         dataSource: DevExpress.data.AspNet.createStore({
             key: "ID",
-            loadUrl: "/SelectSmartMeter",
+            loadUrl: "/SelectSmartMeter?roleid=" + ro,
             onBeforeSend: function (method, ajaxOptions) {
                 ajaxOptions.xhrFields = { withCredentials: true };
             }

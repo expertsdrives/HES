@@ -16,6 +16,8 @@ using DevExtreme.AspNet.Mvc;
 using HESMDMS.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using OfficeOpenXml.Drawing.Slicer.Style;
+using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace HESMDMS.Controllers
 {
@@ -25,6 +27,7 @@ namespace HESMDMS.Controllers
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         SmartMeterEntities clsMeters = new SmartMeterEntities();
         SmartMeter_ProdEntities clsMeters_Prod = new SmartMeter_ProdEntities();
+        ElectricMeterEntities electric = new ElectricMeterEntities();
         [Route("CustomerLoad")]
         [HttpGet]
         public HttpResponseMessage CustomerLoad(DataSourceLoadOptions loadOptions)
@@ -37,6 +40,21 @@ namespace HESMDMS.Controllers
         {
             return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_RawDataAPI.OrderByDescending(X => X.ID), loadOptions));
         }
+        [Route("AMRRawData")]
+        [HttpGet]
+        public HttpResponseMessage AMRRawData(DataSourceLoadOptions loadOptions)
+        {
+            var date = Convert.ToDateTime("2024-01-15");
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.V_RawData.OrderByDescending(X => X.ID).Where(x => x.DateTime >= date).Take(100000), loadOptions));
+        }
+
+        [Route("DisplayVayudut")]
+        [HttpGet]
+        public HttpResponseMessage DisplayVayudut(DataSourceLoadOptions loadOptions)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_VayudutRegistration, loadOptions));
+        }
+
         [Route("AMRDataReceptionCRC")]
         [HttpGet]
         public HttpResponseMessage AMRDataReceptionCRC(DataSourceLoadOptions loadOptions, string roleid)
@@ -48,7 +66,7 @@ namespace HESMDMS.Controllers
             }
             else
             {
-                DateTime date1 = Convert.ToDateTime("1-11-2022");
+                DateTime date1 = Convert.ToDateTime("2024-01-01");
                 return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_POC().Where(x => x.Date >= date1), loadOptions));
             }
 
@@ -79,6 +97,21 @@ namespace HESMDMS.Controllers
             clsMeters.SaveChanges();
             return Request.CreateResponse(HttpStatusCode.Created, newOrder);
         }
+        [Route("InsertVayudut")]
+        [HttpPost]
+        public HttpResponseMessage InsertVayudut(FormDataCollection form)
+        {
+            var values = form.Get("values");
+
+            var newOrder = new tbl_VayudutRegistration();
+            JsonConvert.PopulateObject(values, newOrder);
+            newOrder.IsAssigned = false;
+            newOrder.CreatedDate = DateTime.Now;
+            Validate(newOrder);
+            clsMeters.tbl_VayudutRegistration.Add(newOrder);
+            clsMeters.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.Created, newOrder);
+        }
         [HttpPut]
         [Route("UpdateMeterMaster")]
         public HttpResponseMessage UpdateMeterMaster(FormDataCollection form)
@@ -86,6 +119,18 @@ namespace HESMDMS.Controllers
             var key = Convert.ToInt32(form.Get("key"));
             var values = form.Get("values");
             var order = clsMeters.tbl_MeterMaster.First(o => o.ID == key);
+            JsonConvert.PopulateObject(values, order);
+            Validate(order);
+            clsMeters.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.OK, order);
+        }
+        [HttpPut]
+        [Route("UpdateVayudut")]
+        public HttpResponseMessage UpdateVayudut(FormDataCollection form)
+        {
+            var key = Convert.ToInt32(form.Get("key"));
+            var values = form.Get("values");
+            var order = clsMeters.tbl_VayudutRegistration.First(o => o.ID == key);
             JsonConvert.PopulateObject(values, order);
             Validate(order);
             clsMeters.SaveChanges();
@@ -103,7 +148,16 @@ namespace HESMDMS.Controllers
         {
             return Request.CreateResponse(DataSourceLoader.Load(from post in clsMeters.tbl_MeterMaster
                                                                 join meta in clsMeters.tbl_CustomerDetails on post.Number equals meta.SerialNumber
-                                                                where meta.Street == "Water Lily" || meta.Street == "Dreamland Appartment" || meta.Street == "Richmond Grand" || meta.Street5 == "Khurja"
+                                                                where meta.Street5.ToLower() == "khurja" || meta.Street5.ToLower() == "plant"
+                                                                select new { ID = post.ID, Number = post.Number }, loadOptions));
+        }
+        [Route("SelectBus")]
+        [HttpGet]
+        public HttpResponseMessage SelectBus(DataSourceLoadOptions loadOptions)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(from post in clsMeters.tbl_MeterMaster
+                                                                join meta in clsMeters.tbl_CustomerDetails on post.Number equals meta.SerialNumber
+                                                                where meta.City.ToLower() == "khurja" || meta.Street5 == "plant"
                                                                 select new { ID = post.ID, Number = post.Number }, loadOptions));
         }
         [Route("InsertCustomerRegistration")]
@@ -120,20 +174,63 @@ namespace HESMDMS.Controllers
             return Request.CreateResponse(HttpStatusCode.Created, newOrder);
         }
 
+        [Route("InsertElectricMeterMaster")]
+        [HttpPost]
+        public HttpResponseMessage InsertElectricMeterMaster(FormDataCollection form)
+        {
+            var values = form.Get("values");
+
+            var newOrder = new tbl_MeterMasterRelay();
+            JsonConvert.PopulateObject(values, newOrder);
+            newOrder.Port = "4059";
+            newOrder.ClientAddress = "48";
+            newOrder.ServerAddres = "1";
+            newOrder.Authentication = "2";
+            newOrder.Password = "wwwwwwwwwwwwwwww";
+            newOrder.InterfaceType = "1";
+            newOrder.Security = "48";
+            newOrder.BlockCipherKey = "62626262626262626262626262626262";
+            newOrder.AuthenticationKey = "62626262626262626262626262626262";
+            newOrder.InvocationCounter = "0.0.43.1.3.255";
+            Validate(newOrder);
+            electric.tbl_MeterMasterRelay.Add(newOrder);
+            electric.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.Created, newOrder);
+        }
+
         [Route("smartmeterdata")]
         [HttpGet]
         public HttpResponseMessage smartmeterdata(DataSourceLoadOptions loaddata)
         {
             return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.sp_SmartMeterData(), loaddata));
         }
+        [Route("electricsmartmeterdata")]
+        [HttpGet]
+        public HttpResponseMessage electricsmartmeterdata(DataSourceLoadOptions loaddata)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(electric.sp_FetchData(), loaddata));
+        }
+        [Route("ElectricMeterMaster")]
+        [HttpGet]
+        public HttpResponseMessage ElectricMeterMaster(DataSourceLoadOptions loaddata)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(electric.tbl_MeterMasterRelay, loaddata));
+        }
 
+        [Route("DeltaCustomers")]
+        [HttpGet]
+        public HttpResponseMessage DeltaCustomers(DataSourceLoadOptions loaddata)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_Customers, loaddata));
+        }
 
         [Route("d2c")]
         [HttpGet]
-        public HttpResponseMessage d2c(DataSourceLoadOptions loaddata)
+        public HttpResponseMessage d2c(DataSourceLoadOptions loaddata, string roleid)
         {
             FetchJioLogs fetchLogs = new FetchJioLogs();
             DateTime date1 = Convert.ToDateTime("01-03-2023");
+
             var data = clsMeters_Prod.tbl_JioLogs.Where(x => x.DateTime >= date1).OrderByDescending(x => x.DateTime).ToList();
             List<ModelParameter> model = new List<ModelParameter>();
             foreach (var fData in data)
@@ -149,7 +246,7 @@ namespace HESMDMS.Controllers
                         if (sizes == 25)
                         {
                             DateTime? datetime = fData.DateTime;
-                            DateTime nonNullableDateTime=DateTime.Now;
+                            DateTime nonNullableDateTime = DateTime.Now;
                             if (datetime.HasValue)
                             {
                                 nonNullableDateTime = datetime.Value;
@@ -172,43 +269,86 @@ namespace HESMDMS.Controllers
                                 var syshealthchunks = Enumerable.Range(0, (syshealth.Length + chunkSize - 1) / chunkSize)
                                                        .Select(i => syshealth.Substring(i * chunkSize, Math.Min(chunkSize, syshealth.Length - i * chunkSize)));
                                 string result = string.Join(",", syshealthchunks);
-                                var NB =  result.Split(',')[3];
+                                var NB = result.Split(',')[3];
                                 var mwtmerge = result.Split(',')[0] + result.Split(',')[1];
                                 var CC = result.Split(',')[2];
-                                model.Add(new ModelParameter
+                                if (roleid == "9")
                                 {
-                                    ID = fData.ID,
-                                    InstrumentID = splitarray[1].Trim(),
-                                    Date = splitarray[2],
-                                    Time = splitarray[3],
-                                    DateRx = nonNullableDateTime.Date.ToString(),
-                                    TimeRx = nonNullableDateTime.ToString("HH:mm:ss"),
-                                    Record = splitarray[4].Trim(),
-                                    MeasurementValue = splitarray[7].Trim(),
-                                    TotalConsumption = splitarray[8].Trim(),
-                                    BatteryVoltage = bt,
-                                    MagnetTamper = Convert.ToInt32(splitChunks[0], 16).ToString(),
-                                    CaseTamper = Convert.ToInt32(splitChunks[1], 16).ToString(),
-                                    BatteryRemovalCount = Convert.ToInt32(splitChunks[2], 16).ToString(),
-                                    ExcessiveGasFlow = Convert.ToInt32(splitChunks[3], 16).ToString(),
-                                    ExcessivePushKey = Convert.ToInt32(splitChunks[4], 16).ToString(),
-                                    SOVTamper = Convert.ToInt32(splitChunks[5], 16).ToString(),
-                                    TiltTamper = Convert.ToInt32(splitChunks[6], 16).ToString(),
-                                    InvalidUserLoginTamper = Convert.ToInt32(splitChunks[7], 16).ToString(),
-                                    NBIoTModuleError = Convert.ToInt32(splitChunks[8], 16).ToString(),
-                                    AccountBalance = splitarray[12].Trim().Replace("+", ""),
-                                    eCreditBalance = splitarray[13].Trim().Replace("+", ""),
-                                    StandardCharge = splitarray[14].Trim(),
-                                    ValvePosition = splitarray[17].Trim() == "0" ? "Unknown" : splitarray[17].Trim() == "1" ? "SOV Not Present" : splitarray[17].Trim() == "2" ? "SOV Opening" : splitarray[17].Trim() == "3" ? "SOV Closing" : splitarray[17].Trim() == "4" ? "SOV Open" : splitarray[17] == "5" ? "SOV Close" : splitarray[17] == "6" ? "SOV Stuck" : "",
-                                    NBIoTRSSI = Convert.ToInt32(NB, 16).ToString(),
-                                    ContinuousConsumption = Convert.ToInt32(CC, 16).ToString(),
-                                    MWT = Convert.ToInt32(mwtmerge, 16).ToString(),
-                                    TransmissionPacket = splitarray[19].Trim(),
-                                    Temperature = splitarray[21].Trim(),
-                                    TarrifName = splitarray[22].Trim() == "01" ? "Standard" : "Undefined",
-                                    GasCalorific = splitarray[20].Trim(),
-                                    Checksum = "Valid",//splitarray[23].Trim(),
-                                });
+                                    if (deserializedProduct.pld == "PALTMaYpNqExrvpg")
+                                    {
+                                        model.Add(new ModelParameter
+                                        {
+                                            ID = fData.ID,
+                                            InstrumentID = splitarray[1].Trim(),
+                                            Date = splitarray[2],
+                                            Time = splitarray[3],
+                                            DateRx = nonNullableDateTime.Date.ToString(),
+                                            TimeRx = nonNullableDateTime.ToString("HH:mm:ss"),
+                                            Record = splitarray[4].Trim(),
+                                            MeasurementValue = splitarray[7].Trim(),
+                                            TotalConsumption = splitarray[8].Trim(),
+                                            BatteryVoltage = bt,
+                                            MagnetTamper = Convert.ToInt32(splitChunks[0], 16).ToString(),
+                                            CaseTamper = Convert.ToInt32(splitChunks[1], 16).ToString(),
+                                            BatteryRemovalCount = Convert.ToInt32(splitChunks[2], 16).ToString(),
+                                            ExcessiveGasFlow = Convert.ToInt32(splitChunks[3], 16).ToString(),
+                                            ExcessivePushKey = Convert.ToInt32(splitChunks[4], 16).ToString(),
+                                            SOVTamper = Convert.ToInt32(splitChunks[5], 16).ToString(),
+                                            TiltTamper = Convert.ToInt32(splitChunks[6], 16).ToString(),
+                                            InvalidUserLoginTamper = Convert.ToInt32(splitChunks[7], 16).ToString(),
+                                            NBIoTModuleError = Convert.ToInt32(splitChunks[8], 16).ToString(),
+                                            AccountBalance = splitarray[12].Trim().Replace("+", ""),
+                                            eCreditBalance = splitarray[13].Trim().Replace("+", ""),
+                                            StandardCharge = splitarray[14].Trim(),
+                                            ValvePosition = splitarray[17].Trim() == "0" ? "Unknown" : splitarray[17].Trim() == "1" ? "SOV Not Present" : splitarray[17].Trim() == "2" ? "SOV Opening" : splitarray[17].Trim() == "3" ? "SOV Closing" : splitarray[17].Trim() == "4" ? "SOV Open" : splitarray[17] == "5" ? "SOV Close" : splitarray[17] == "6" ? "SOV Stuck" : "",
+                                            NBIoTRSSI = Convert.ToInt32(NB, 16).ToString(),
+                                            ContinuousConsumption = Convert.ToInt32(CC, 16).ToString(),
+                                            MWT = Convert.ToInt32(mwtmerge, 16).ToString(),
+                                            TransmissionPacket = splitarray[19].Trim(),
+                                            Temperature = splitarray[21].Trim(),
+                                            TarrifName = splitarray[22].Trim() == "01" ? "Standard" : "Undefined",
+                                            GasCalorific = splitarray[20].Trim(),
+                                            Checksum = "Valid",//splitarray[23].Trim(),
+                                        });
+                                    }
+                                }
+                                else
+                                {
+                                    model.Add(new ModelParameter
+                                    {
+                                        ID = fData.ID,
+                                        InstrumentID = splitarray[1].Trim(),
+                                        Date = splitarray[2],
+                                        Time = splitarray[3],
+                                        DateRx = nonNullableDateTime.Date.ToString(),
+                                        TimeRx = nonNullableDateTime.ToString("HH:mm:ss"),
+                                        Record = splitarray[4].Trim(),
+                                        MeasurementValue = splitarray[7].Trim(),
+                                        TotalConsumption = splitarray[8].Trim(),
+                                        BatteryVoltage = bt,
+                                        MagnetTamper = Convert.ToInt32(splitChunks[0], 16).ToString(),
+                                        CaseTamper = Convert.ToInt32(splitChunks[1], 16).ToString(),
+                                        BatteryRemovalCount = Convert.ToInt32(splitChunks[2], 16).ToString(),
+                                        ExcessiveGasFlow = Convert.ToInt32(splitChunks[3], 16).ToString(),
+                                        ExcessivePushKey = Convert.ToInt32(splitChunks[4], 16).ToString(),
+                                        SOVTamper = Convert.ToInt32(splitChunks[5], 16).ToString(),
+                                        TiltTamper = Convert.ToInt32(splitChunks[6], 16).ToString(),
+                                        InvalidUserLoginTamper = Convert.ToInt32(splitChunks[7], 16).ToString(),
+                                        NBIoTModuleError = Convert.ToInt32(splitChunks[8], 16).ToString(),
+                                        AccountBalance = splitarray[12].Trim().Replace("+", ""),
+                                        eCreditBalance = splitarray[13].Trim().Replace("+", ""),
+                                        StandardCharge = splitarray[14].Trim(),
+                                        ValvePosition = splitarray[17].Trim() == "0" ? "Unknown" : splitarray[17].Trim() == "1" ? "SOV Not Present" : splitarray[17].Trim() == "2" ? "SOV Opening" : splitarray[17].Trim() == "3" ? "SOV Closing" : splitarray[17].Trim() == "4" ? "SOV Open" : splitarray[17] == "5" ? "SOV Close" : splitarray[17] == "6" ? "SOV Stuck" : "",
+                                        NBIoTRSSI = Convert.ToInt32(NB, 16).ToString(),
+                                        ContinuousConsumption = Convert.ToInt32(CC, 16).ToString(),
+                                        MWT = Convert.ToInt32(mwtmerge, 16).ToString(),
+                                        TransmissionPacket = splitarray[19].Trim(),
+                                        Temperature = splitarray[21].Trim(),
+                                        TarrifName = splitarray[22].Trim() == "01" ? "Standard" : "Undefined",
+                                        GasCalorific = splitarray[20].Trim(),
+                                        Checksum = "Valid",//splitarray[23].Trim(),
+                                    });
+                                }
                             }
                             else
                             {
@@ -295,7 +435,7 @@ namespace HESMDMS.Controllers
             }
             else
             {
-                return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_VayudutWise(), loadOptions));
+                return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_VayudutWise().Take(10), loadOptions));
             }
         }
         [Route("LastMeterReading")]
@@ -313,6 +453,7 @@ namespace HESMDMS.Controllers
                 }
                 else
                 {
+
                     var a = clsMeters.FetchConsumption_POC().Where(x => x.Date >= fromdate && x.Date <= todate && x.Street == data).Count();
                     return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_POC().Where(x => x.Date >= fromdate && x.Date <= todate), loadOptions));
                 }
@@ -350,6 +491,26 @@ namespace HESMDMS.Controllers
                 return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_15DayRevenue().Where(x => x.Date >= fromdate && x.Date <= todate), loadOptions));
             }
         }
+        [Route("GetDataBilling")]
+        [HttpGet]
+        public HttpResponseMessage GetDataBilling(DataSourceLoadOptions loadOptions)
+        {
+
+
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.BillingCustomer(), loadOptions));
+
+
+        }
+        [Route("GetDataBillingAMR")]
+        [HttpGet]
+        public HttpResponseMessage GetDataBillingAMR(DataSourceLoadOptions loadOptions)
+        {
+
+
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.sp_AMRBill().OrderByDescending(x => x.Date), loadOptions));
+
+
+        }
         [Route("GetAMRHealth")]
         [HttpGet]
         public HttpResponseMessage GetAMRHealth(DataSourceLoadOptions loadOptions)
@@ -359,17 +520,33 @@ namespace HESMDMS.Controllers
 
         [Route("SelectSmartMeter")]
         [HttpGet]
-        public HttpResponseMessage SelectSmartMeter(DataSourceLoadOptions loadOptions)
+        public HttpResponseMessage SelectSmartMeter(DataSourceLoadOptions loadOptions, string roleid)
         {
-            var data = (from log in clsMeters_Prod.tbl_SMeterMaster
-                        select new
-                        {
-                            ID = log.ID,
-                            TempMeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
-                            AID = log.AID,
-                            PLD = log.PLD,
-                        });
-            return Request.CreateResponse(DataSourceLoader.Load(data, loadOptions));
+            if (roleid == "9")
+            {
+                var data = (from log in clsMeters_Prod.tbl_SMeterMaster
+                            select new
+                            {
+                                ID = log.ID,
+                                TempMeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
+                                AID = log.AID,
+                                PLD = log.PLD,
+                            });
+                return Request.CreateResponse(DataSourceLoader.Load(data.Where(x => x.PLD == "PALTMaYpNqExrvpg"), loadOptions));
+            }
+            else
+            {
+                var data = (from log in clsMeters_Prod.tbl_SMeterMaster
+                            select new
+                            {
+                                ID = log.ID,
+                                TempMeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
+                                AID = log.AID,
+                                PLD = log.PLD,
+                            });
+                return Request.CreateResponse(DataSourceLoader.Load(data, loadOptions));
+            }
+
         }
         [Route("SmartMeterBackLogs")]
         [HttpGet]

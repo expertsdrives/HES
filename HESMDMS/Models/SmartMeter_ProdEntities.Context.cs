@@ -29,10 +29,8 @@ namespace HESMDMS.Models
     
         public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<tbl_AMRRegistration> tbl_AMRRegistration { get; set; }
         public virtual DbSet<tbl_BackLogAPILogs> tbl_BackLogAPILogs { get; set; }
         public virtual DbSet<tbl_CommandBackLog> tbl_CommandBackLog { get; set; }
-        public virtual DbSet<tbl_ConsumptionDetails> tbl_ConsumptionDetails { get; set; }
         public virtual DbSet<tbl_FirmwareHistoty> tbl_FirmwareHistoty { get; set; }
         public virtual DbSet<tbl_FirmwareStatus> tbl_FirmwareStatus { get; set; }
         public virtual DbSet<tbl_JioLogs> tbl_JioLogs { get; set; }
@@ -45,9 +43,10 @@ namespace HESMDMS.Models
         public virtual DbSet<tbl_TicketTypeMaster> tbl_TicketTypeMaster { get; set; }
         public virtual DbSet<tbl_TransLogs> tbl_TransLogs { get; set; }
         public virtual DbSet<tbl_Users> tbl_Users { get; set; }
-        public virtual DbSet<tbl_VayudutMaster> tbl_VayudutMaster { get; set; }
         public virtual DbSet<tbl_DataReception> tbl_DataReception { get; set; }
         public virtual DbSet<tbl_SMeterMaster> tbl_SMeterMaster { get; set; }
+        public virtual DbSet<tbl_AssignSmartMeter> tbl_AssignSmartMeter { get; set; }
+        public virtual DbSet<tbl_ConsumptionDetails> tbl_ConsumptionDetails { get; set; }
     
         [DbFunction("SmartMeter_ProdEntities", "fnSplit")]
         public virtual IQueryable<fnSplit_Result> fnSplit(string sInputList, string sDelimiter)
@@ -232,6 +231,28 @@ namespace HESMDMS.Models
         public virtual ObjectResult<sp_SmartMeterData_Result> sp_SmartMeterData()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_SmartMeterData_Result>("sp_SmartMeterData");
+        }
+    
+        public virtual ObjectResult<BillingCustomer_Result> BillingCustomer()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BillingCustomer_Result>("BillingCustomer");
+        }
+    
+        public virtual ObjectResult<sp_ResponseSplited_Billing_Result> sp_ResponseSplited_Billing(string pld, Nullable<System.DateTime> lDate, Nullable<System.DateTime> mDate)
+        {
+            var pldParameter = pld != null ?
+                new ObjectParameter("pld", pld) :
+                new ObjectParameter("pld", typeof(string));
+    
+            var lDateParameter = lDate.HasValue ?
+                new ObjectParameter("LDate", lDate) :
+                new ObjectParameter("LDate", typeof(System.DateTime));
+    
+            var mDateParameter = mDate.HasValue ?
+                new ObjectParameter("MDate", mDate) :
+                new ObjectParameter("MDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ResponseSplited_Billing_Result>("sp_ResponseSplited_Billing", pldParameter, lDateParameter, mDateParameter);
         }
     }
 }
