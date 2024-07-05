@@ -1003,7 +1003,7 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                                 LogDate = backLog.LogDate,
                                 CompletedLogDate = backLog.CompletedLogDate,
                             });
-                return Json(data.Where(x=>x.MeterID== "100111").ToList(), JsonRequestBehavior.AllowGet);
+                return Json(data.Where(x=>x.MeterID== "100111" || x.MeterID== "100115").ToList(), JsonRequestBehavior.AllowGet);
             }
             else
             {

@@ -29,7 +29,6 @@ namespace HESMDMS.Models
     
         public virtual DbSet<tbl_RawData_CRC> tbl_RawData_CRC { get; set; }
         public virtual DbSet<tbl_RawDataAPI> tbl_RawDataAPI { get; set; }
-        public virtual DbSet<tbl_CustomerDetails> tbl_CustomerDetails { get; set; }
         public virtual DbSet<CustomerRaw> CustomerRaws { get; set; }
         public virtual DbSet<tbl_SerialNumberMaster> tbl_SerialNumberMaster { get; set; }
         public virtual DbSet<tbl_RoleMaster> tbl_RoleMaster { get; set; }
@@ -46,13 +45,14 @@ namespace HESMDMS.Models
         public virtual DbSet<tbl_VayudutRegistration> tbl_VayudutRegistration { get; set; }
         public virtual DbSet<V_RawData> V_RawData { get; set; }
         public virtual DbSet<tbl_CustomerRegistration> tbl_CustomerRegistration { get; set; }
-        public virtual DbSet<tbl_ATGLPaymentAck> tbl_ATGLPaymentAck { get; set; }
         public virtual DbSet<tbl_Customers> tbl_Customers { get; set; }
         public virtual DbSet<tbl_DataReception> tbl_DataReception { get; set; }
         public virtual DbSet<tbl_BillingAckData> tbl_BillingAckData { get; set; }
         public virtual DbSet<tbl_Consumption> tbl_Consumption { get; set; }
-        public virtual DbSet<tbl_ConsumptionDetails> tbl_ConsumptionDetails { get; set; }
         public virtual DbSet<tbl_AMRAckData> tbl_AMRAckData { get; set; }
+        public virtual DbSet<tbl_ATGLPaymentAck> tbl_ATGLPaymentAck { get; set; }
+        public virtual DbSet<tbl_CustomerDetails> tbl_CustomerDetails { get; set; }
+        public virtual DbSet<tbl_ConsumptionDetails> tbl_ConsumptionDetails { get; set; }
     
         public virtual ObjectResult<FetchCRCData_Result> FetchCRCData()
         {
@@ -179,6 +179,11 @@ namespace HESMDMS.Models
         public virtual ObjectResult<FetchConsumption_VayudutWise_Result> FetchConsumption_VayudutWise()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchConsumption_VayudutWise_Result>("FetchConsumption_VayudutWise");
+        }
+    
+        public virtual int FetchConsumption_Suspense()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("FetchConsumption_Suspense");
         }
     }
 }

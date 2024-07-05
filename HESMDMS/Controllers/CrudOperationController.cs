@@ -71,6 +71,16 @@ namespace HESMDMS.Controllers
             }
 
         }
+        [Route("OutofRange")]
+        [HttpGet]
+        public HttpResponseMessage OutofRange(DataSourceLoadOptions loadOptions)
+        {
+
+            DateTime date1 = Convert.ToDateTime("2024-01-01");
+            decimal upperLimit = Convert.ToDecimal(1.5);
+            decimal lowerLimit = Convert.ToDecimal(0);
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_POC().Where(x => x.Date >= date1 && (x.DailyConsumption > upperLimit || x.DailyConsumption < lowerLimit) && x.Street.ToLower()=="khurja"), loadOptions));
+        }
         [Route("LoadMeterMaster")]
         [HttpGet]
         public HttpResponseMessage LoadMeterMaster(DataSourceLoadOptions loadOptions)
@@ -274,7 +284,7 @@ namespace HESMDMS.Controllers
                                 var CC = result.Split(',')[2];
                                 if (roleid == "9")
                                 {
-                                    if (deserializedProduct.pld == "PALTMaYpNqExrvpg")
+                                    if (splitarray[1].Trim() == "00100111" || splitarray[1].Trim() == "00100115")
                                     {
                                         model.Add(new ModelParameter
                                         {
@@ -393,6 +403,7 @@ namespace HESMDMS.Controllers
                     //Exception in parsing json
                     Console.WriteLine(jex.Message);
                     return false;
+
                 }
                 catch (Exception ex) //some other exception
                 {
@@ -429,14 +440,9 @@ namespace HESMDMS.Controllers
         [HttpGet]
         public HttpResponseMessage VayudutWise(DataSourceLoadOptions loadOptions, string roleid)
         {
-            if (roleid == "5")
-            {
-                return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_VayudutWise_Demo(), loadOptions));
-            }
-            else
-            {
-                return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_VayudutWise().Take(10), loadOptions));
-            }
+
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_VayudutWise(), loadOptions));
+
         }
         [Route("LastMeterReading")]
         [HttpGet]
@@ -532,7 +538,7 @@ namespace HESMDMS.Controllers
                                 AID = log.AID,
                                 PLD = log.PLD,
                             });
-                return Request.CreateResponse(DataSourceLoader.Load(data.Where(x => x.PLD == "PALTMaYpNqExrvpg"), loadOptions));
+                return Request.CreateResponse(DataSourceLoader.Load(data.Where(x => x.PLD == "PALTMaYpNqExrvpg" || x.PLD == "PAJcdKb3Wx0iVqJc"), loadOptions));
             }
             else
             {

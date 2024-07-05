@@ -76,6 +76,7 @@ warning 6002: The table/view 'SmartMeter.dbo.tbl_AMRHistory' does not have a pri
           <Property Name="PaymentMode" Type="varchar" MaxLength="500" />
           <Property Name="TransactionID" Type="varchar" MaxLength="500" />
           <Property Name="TransactionDate" Type="datetime" />
+          <Property Name="Status" Type="varchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tbl_BillingAckData">
@@ -513,6 +514,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
         <Function Name="FetchConsumption_MagneticTemper" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="FetchConsumption_POC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="FetchConsumption_POCBilling" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchConsumption_Suspense" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="FetchConsumption_VayudutWise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="FetchConsumption_VayudutWise_Demo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="FetchCRCData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -778,30 +780,9 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Property Name="DataCount" Type="Int32" />
           <Property Name="BatteryPower" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
-        <EntityType Name="tbl_CustomerDetails">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BusinessPartnerNo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ContractAccount" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="MeterReadingUnit" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ConnectionObject" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="HouseNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Street" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Street2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Street3" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Street4" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Street5" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="PostalCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="SerialNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityContainer Name="SmartMeterEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_RawData_CRC" EntityType="Self.tbl_RawData_CRC" />
           <EntitySet Name="tbl_RawDataAPI" EntityType="Self.tbl_RawDataAPI" />
-          <EntitySet Name="tbl_CustomerDetails" EntityType="Self.tbl_CustomerDetails" />
           <EntitySet Name="CustomerRaws" EntityType="SmartMeterModel.CustomerRaw" />
           <EntitySet Name="tbl_SerialNumberMaster" EntityType="SmartMeterModel.tbl_SerialNumberMaster" />
           <EntitySet Name="tbl_RoleMaster" EntityType="SmartMeterModel.tbl_RoleMaster" />
@@ -847,16 +828,18 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <EntitySet Name="tbl_VayudutRegistration" EntityType="SmartMeterModel.tbl_VayudutRegistration" />
           <EntitySet Name="V_RawData" EntityType="SmartMeterModel.V_RawData" />
           <EntitySet Name="tbl_CustomerRegistration" EntityType="SmartMeterModel.tbl_CustomerRegistration" />
-          <EntitySet Name="tbl_ATGLPaymentAck" EntityType="SmartMeterModel.tbl_ATGLPaymentAck" />
           <EntitySet Name="tbl_Customers" EntityType="SmartMeterModel.tbl_Customers" />
           <EntitySet Name="tbl_DataReception" EntityType="SmartMeterModel.tbl_DataReception" />
           <EntitySet Name="tbl_BillingAckData" EntityType="SmartMeterModel.tbl_BillingAckData" />
           <EntitySet Name="tbl_Consumption" EntityType="SmartMeterModel.tbl_Consumption" />
-          <EntitySet Name="tbl_ConsumptionDetails" EntityType="SmartMeterModel.tbl_ConsumptionDetails" />
           <EntitySet Name="tbl_AMRAckData" EntityType="SmartMeterModel.tbl_AMRAckData" />
           <FunctionImport Name="FetchConsumption_POCBilling" />
           <FunctionImport Name="sp_AMRBill" ReturnType="Collection(SmartMeterModel.sp_AMRBill_Result)" />
           <FunctionImport Name="FetchConsumption_VayudutWise" ReturnType="Collection(SmartMeterModel.FetchConsumption_VayudutWise_Result)" />
+          <FunctionImport Name="FetchConsumption_Suspense" />
+          <EntitySet Name="tbl_ATGLPaymentAck" EntityType="SmartMeterModel.tbl_ATGLPaymentAck" />
+          <EntitySet Name="tbl_CustomerDetails" EntityType="SmartMeterModel.tbl_CustomerDetails" />
+          <EntitySet Name="tbl_ConsumptionDetails" EntityType="SmartMeterModel.tbl_ConsumptionDetails" />
         </EntityContainer>
         <EntityType Name="CustomerRaw">
           <Key>
@@ -1421,18 +1404,6 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Property Name="SealNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="VayudutSerialNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="tbl_ATGLPaymentAck">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="PaymentAmount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="PaymentMode" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="TransactionID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="tbl_Customers">
           <Key>
             <PropertyRef Name="ID" />
@@ -1555,31 +1526,6 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Property Name="MagneticTamper" Type="Int32" />
           <Property Name="CaseTamper" Type="Int32" />
         </EntityType>
-        <EntityType Name="tbl_ConsumptionDetails">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Rnk" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Row_" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FullName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="MeterNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="TXID" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="BusinessPartnerNo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="OpeningMeterReading" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="OpeningAMRReading" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="DataCount" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Date" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Time" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="InstallationDate" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="ReadingCount" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="AMRSerialNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="VAYUDUT_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MagneticTemper" Type="Int32" />
-          <Property Name="CaseTemper" Type="Int32" />
-          <Property Name="Row__" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DailyConsumption" Type="Decimal" Precision="18" Scale="3" />
-        </EntityType>
         <EntityType Name="tbl_AMRAckData">
           <Key>
             <PropertyRef Name="ID" />
@@ -1629,6 +1575,64 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Property Type="String" Name="SerialNumber" Nullable="true" />
           <Property Type="String" Name="VAYUDUT_ID" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="tbl_ATGLPaymentAck">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentAmount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentMode" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_CustomerDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BusinessPartnerNo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ContractAccount" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="MeterReadingUnit" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ConnectionObject" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="HouseNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Street2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Street3" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Street4" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Street5" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SerialNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_ConsumptionDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rnk" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Row_" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="MeterNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="TXID" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="BusinessPartnerNo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="OpeningMeterReading" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="OpeningAMRReading" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DataCount" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Time" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="InstallationDate" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ReadingCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="AMRSerialNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="VAYUDUT_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MagneticTemper" Type="Int32" />
+          <Property Name="CaseTemper" Type="Int32" />
+          <Property Name="Row__" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DailyConsumption" Type="Decimal" Precision="18" Scale="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1670,27 +1674,6 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
                 <ScalarProperty Name="TXID" ColumnName="TXID" />
                 <ScalarProperty Name="DataCount" ColumnName="DataCount" />
                 <ScalarProperty Name="BatteryPower" ColumnName="BatteryPower" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_CustomerDetails">
-            <EntityTypeMapping TypeName="SmartMeterModel.tbl_CustomerDetails">
-              <MappingFragment StoreEntitySet="tbl_CustomerDetails">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
-                <ScalarProperty Name="ContractAccount" ColumnName="ContractAccount" />
-                <ScalarProperty Name="MeterReadingUnit" ColumnName="MeterReadingUnit" />
-                <ScalarProperty Name="ConnectionObject" ColumnName="ConnectionObject" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="Street2" ColumnName="Street2" />
-                <ScalarProperty Name="Street3" ColumnName="Street3" />
-                <ScalarProperty Name="Street4" ColumnName="Street4" />
-                <ScalarProperty Name="Street5" ColumnName="Street5" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2333,19 +2316,6 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_ATGLPaymentAck">
-            <EntityTypeMapping TypeName="SmartMeterModel.tbl_ATGLPaymentAck">
-              <MappingFragment StoreEntitySet="tbl_ATGLPaymentAck">
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
-                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
-                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
-                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_Customers">
             <EntityTypeMapping TypeName="SmartMeterModel.tbl_Customers">
               <MappingFragment StoreEntitySet="tbl_Customers">
@@ -2472,32 +2442,6 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_ConsumptionDetails">
-            <EntityTypeMapping TypeName="SmartMeterModel.tbl_ConsumptionDetails">
-              <MappingFragment StoreEntitySet="tbl_ConsumptionDetails">
-                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
-                <ScalarProperty Name="Row__" ColumnName="Row##" />
-                <ScalarProperty Name="CaseTemper" ColumnName="CaseTemper" />
-                <ScalarProperty Name="MagneticTemper" ColumnName="MagneticTemper" />
-                <ScalarProperty Name="VAYUDUT_ID" ColumnName="VAYUDUT_ID" />
-                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
-                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
-                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
-                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
-                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
-                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
-                <ScalarProperty Name="TXID" ColumnName="TXID" />
-                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Row_" ColumnName="Row#" />
-                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_AMRAckData">
             <EntityTypeMapping TypeName="SmartMeterModel.tbl_AMRAckData">
               <MappingFragment StoreEntitySet="tbl_AMRAckData">
@@ -2557,6 +2501,68 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchConsumption_Suspense" FunctionName="SmartMeterModel.Store.FetchConsumption_Suspense" />
+          <EntitySetMapping Name="tbl_ATGLPaymentAck">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_ATGLPaymentAck">
+              <MappingFragment StoreEntitySet="tbl_ATGLPaymentAck">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_CustomerDetails">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_CustomerDetails">
+              <MappingFragment StoreEntitySet="tbl_CustomerDetails">
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Street5" ColumnName="Street5" />
+                <ScalarProperty Name="Street4" ColumnName="Street4" />
+                <ScalarProperty Name="Street3" ColumnName="Street3" />
+                <ScalarProperty Name="Street2" ColumnName="Street2" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ConnectionObject" ColumnName="ConnectionObject" />
+                <ScalarProperty Name="MeterReadingUnit" ColumnName="MeterReadingUnit" />
+                <ScalarProperty Name="ContractAccount" ColumnName="ContractAccount" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ConsumptionDetails">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_ConsumptionDetails">
+              <MappingFragment StoreEntitySet="tbl_ConsumptionDetails">
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+                <ScalarProperty Name="Row__" ColumnName="Row##" />
+                <ScalarProperty Name="CaseTemper" ColumnName="CaseTemper" />
+                <ScalarProperty Name="MagneticTemper" ColumnName="MagneticTemper" />
+                <ScalarProperty Name="VAYUDUT_ID" ColumnName="VAYUDUT_ID" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Row_" ColumnName="Row#" />
+                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

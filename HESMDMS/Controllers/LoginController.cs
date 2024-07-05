@@ -41,39 +41,32 @@ namespace HESMDMS.Controllers
                 ViewBag.DeviceType = "Mobile";
             }
             var data = clsMeter.tbl_AdminCredentials.Where(x => x.Username == clsAdmin.Username && x.Password == clsAdmin.Password).FirstOrDefault();
-            if (data != null && !Request.Browser.IsMobileDevice)
-            {
-                if (Convert.ToString(data.Username) != "")
-                {
-                    if (Convert.ToString(Session["Uthorized"]) == "Uthorized")
-                    {
-                        Session.Remove("Uthorized");
-                    }
-                    Session.Add("RoleID", data.RoleID);
-                    Session.Add("FullName", data.FullName);
-                    Session.Add("Username", data.Username);
-                    Session.Add("UserID", data.ID);
-                    FormsAuthentication.SetAuthCookie(data.FullName, false);
-                    if (data.RoleID == 5)
-                    {
-                       
-                        return RedirectToAction("../SmartMeter/User/");
-                    }
-                    if (data.RoleID == 8)
-                    {
 
-                        return RedirectToAction("../SmartMeter/SamrtMeterData/ElectricMeterView");
-                    }
-                    else
-                    {
-                        Session.Add("Admin", "Admin");
-                        return RedirectToAction("../Admin/Dashboad/Index");
-                    }
+            if (Convert.ToString(data.Username) != "")
+            {
+                if (Convert.ToString(Session["Uthorized"]) == "Uthorized")
+                {
+                    Session.Remove("Uthorized");
+                }
+                Session.Add("RoleID", data.RoleID);
+                Session.Add("FullName", data.FullName);
+                Session.Add("Username", data.Username);
+                Session.Add("UserID", data.ID);
+                FormsAuthentication.SetAuthCookie(data.FullName, false);
+                if (data.RoleID == 5)
+                {
+
+                    return RedirectToAction("../SmartMeter/User/");
+                }
+                if (data.RoleID == 8)
+                {
+
+                    return RedirectToAction("../SmartMeter/SamrtMeterData/ElectricMeterView");
                 }
                 else
                 {
-                    Session.Add("Uthorized", "Uthorized");
-                    return RedirectToAction("Index");
+                    Session.Add("Admin", "Admin");
+                    return RedirectToAction("../Admin/Dashboad/Index");
                 }
             }
             else
@@ -82,15 +75,16 @@ namespace HESMDMS.Controllers
                 return RedirectToAction("Index");
             }
 
+
         }
         [Authorize]
 
         [SessionRequired]
         public ActionResult Dashboard()
         {
-            int totalMeter = clsMeter.tbl_CustomerRegistration.Count();
-            int totalApproved = clsMeter.tbl_CustomerRegistration.Where(x => x.Status == "Approved").Count();
-            int totalPending = clsMeter.tbl_CustomerRegistration.Where(x => x.Status == "Pending").Count();
+            int totalMeter = clsMeter.tbl_CustomerRegistration.Where(x => x.Address.Contains("Khurja")).Count();
+            int totalApproved = clsMeter.tbl_CustomerRegistration.Where(x => x.Status == "Approved" && x.Address.Contains("Khurja")).Count();
+            int totalPending = clsMeter.tbl_CustomerRegistration.Where(x => x.Status == "Pending" && x.Address.Contains("Khurja")).Count();
             ViewBag.totalmeter = totalMeter;
             ViewBag.totalappmeter = totalApproved;
             ViewBag.totalpenmeter = totalPending;

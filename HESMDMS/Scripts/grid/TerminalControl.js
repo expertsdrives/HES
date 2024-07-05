@@ -211,7 +211,7 @@
         var data1 = myArray[0].Resposne;
         var data2 = myArray[1].Resposne1;
         var data3 = myArray[2].CommandResponse;
-        for (i = 0; i <= data3.length; i++) {
+        for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("D0")) {
                 csting = d.split(',');
@@ -261,7 +261,7 @@
         var data1 = myArray[0].Resposne;
         var data2 = myArray[1].Resposne1;
         var data3 = myArray[2].CommandResponse;
-        for (i = 0; i <= data3.length; i++) {
+        for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("EC")) {
                 csting = d.split(',');
@@ -310,7 +310,7 @@
         var data1 = myArray[0].Resposne;
         var data2 = myArray[1].Resposne1;
         var data3 = myArray[2].CommandResponse;
-        for (i = 0; i <= data3.length; i++) {
+        for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("1D")) {
                 csting = d.split(',');
@@ -324,22 +324,22 @@
         var CompletedData = getObjects1(data2, 'Status', "Completed");
         //var ResponseData = 
         //Get Balance Started
+        if (balancestring == "NaN") {
 
+            $.ajax({
+                url: '/SmartMeter/Terminal/GetRTC',
+                type: 'POST',
+                data: { data: balancestring.replace(",", "") },
+                success: function (result1) {
+                    loadPanel.hide();
+                    $("#lblGetRTC").val(result1);
+                    //textareaLogs.option('value', result);
+                    //const myArray = result.split("/");
+                    //var data = myArray[1];
 
-        $.ajax({
-            url: '/SmartMeter/Terminal/GetRTC',
-            type: 'POST',
-            data: { data: balancestring.replace(",", "") },
-            success: function (result1) {
-                loadPanel.hide();
-                $("#lblGetRTC").val(result1);
-                //textareaLogs.option('value', result);
-                //const myArray = result.split("/");
-                //var data = myArray[1];
-
-            }
-        });
-
+                }
+            });
+        }
     }
 
 
@@ -351,7 +351,7 @@
         var data1 = myArray[0].Resposne;
         var data2 = myArray[1].Resposne1;
         var data3 = myArray[2].CommandResponse;
-        for (i = 0; i <= data3.length; i++) {
+        for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("D4")) {
                 csting = d.split(',');
@@ -378,7 +378,7 @@
         var data1 = myArray[0].Resposne;
         var data2 = myArray[1].Resposne1;
         var data3 = myArray[2].CommandResponse;
-        for (i = 0; i <= data3.length; i++) {
+        for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("07")) {
                 csting = d.split(',');

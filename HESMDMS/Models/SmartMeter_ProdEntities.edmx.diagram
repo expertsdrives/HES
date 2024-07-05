@@ -11,7 +11,6 @@
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_CommandBackLog" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_FirmwareHistoty" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_FirmwareStatus" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_JioLogs" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_JioNotification" Width="1.5" PointX="2.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_RegisteredComplain" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_Response" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
@@ -25,6 +24,7 @@
         <AssociationConnector Association="SmartMeter_ProdModel.FK_tbl_RegisteredComplain_tbl_TicketTypeMaster_TicketTypeID" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_SMeterMaster" Width="1.5" PointX="0.75" PointY="13.75" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_AssignSmartMeter" Width="1.5" PointX="5.375" PointY="13.75" />
+        <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_JioLogs" Width="1.5" PointX="7.375" PointY="13.75" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel.tbl_ConsumptionDetails" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>

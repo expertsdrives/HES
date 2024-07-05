@@ -33,7 +33,6 @@ namespace HESMDMS.Models
         public virtual DbSet<tbl_CommandBackLog> tbl_CommandBackLog { get; set; }
         public virtual DbSet<tbl_FirmwareHistoty> tbl_FirmwareHistoty { get; set; }
         public virtual DbSet<tbl_FirmwareStatus> tbl_FirmwareStatus { get; set; }
-        public virtual DbSet<tbl_JioLogs> tbl_JioLogs { get; set; }
         public virtual DbSet<tbl_JioNotification> tbl_JioNotification { get; set; }
         public virtual DbSet<tbl_RegisteredComplain> tbl_RegisteredComplain { get; set; }
         public virtual DbSet<tbl_Response> tbl_Response { get; set; }
@@ -46,6 +45,7 @@ namespace HESMDMS.Models
         public virtual DbSet<tbl_DataReception> tbl_DataReception { get; set; }
         public virtual DbSet<tbl_SMeterMaster> tbl_SMeterMaster { get; set; }
         public virtual DbSet<tbl_AssignSmartMeter> tbl_AssignSmartMeter { get; set; }
+        public virtual DbSet<tbl_JioLogs> tbl_JioLogs { get; set; }
         public virtual DbSet<tbl_ConsumptionDetails> tbl_ConsumptionDetails { get; set; }
     
         [DbFunction("SmartMeter_ProdEntities", "fnSplit")]

@@ -20,6 +20,7 @@ namespace HESMDMS.Models
         public string PaymentMode { get; set; }
         public string TransactionID { get; set; }
         public Nullable<System.DateTime> TransactionDate { get; set; }
+        public string Status { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
     }
 }

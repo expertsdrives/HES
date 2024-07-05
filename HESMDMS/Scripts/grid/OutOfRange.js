@@ -1,47 +1,10 @@
-﻿var uniqueValues = [];
-var dataGrid = null;
-let prev = 0;
-let next = 0;
+﻿var dataGrid = null;
 $(function () {
-    dataGrid = $("#VayudutWise").dxDataGrid({
+    dataGrid = $("#OutofRange").dxDataGrid({
         dataSource: DevExpress.data.AspNet.createStore({
             key: "ID",
-            load: function (loadOptions) {
-                var deferred = $.Deferred(),
-                    args = {};
+            loadUrl: "/OutofRange",
 
-                // Sorting
-                if (loadOptions.sort) {
-                    args.sortField = loadOptions.sort[0].selector;
-                    args.sortOrder = loadOptions.sort[0].desc ? "desc" : "asc";
-                }
-
-                // Pagination
-                args.skip = loadOptions.skip || 0;
-                args.take = loadOptions.take || 300;
-
-                // Filtering
-                if (loadOptions.filter) {
-                    args.filter = JSON.stringify(loadOptions.filter);
-                }
-
-          
-               
-
-                $.ajax({
-                    url: "/Admin/Reports/GetData",
-                    dataType: "json",
-                    data: args,
-                    success: function (result) {
-                        deferred.resolve(result.data, { totalCount: result.totalCount });
-                    },
-                    error: function () {
-                        deferred.reject("Data loading error");
-                    }
-                });
-
-                return deferred.promise();
-            },
             onBeforeSend: function (method, ajaxOptions) {
                 ajaxOptions.xhrFields = { withCredentials: true };
             }
@@ -55,19 +18,15 @@ $(function () {
         columnAutoWidth: true,
         groupPanel: {
             visible: true,
-            
-        },
-        grouping: {
-            autoExpandAll: false,
         },
         showBorders: true,
-        wordWrapEnabled: true,
         scrolling: {
             columnRenderingMode: 'virtual',
         },
         paging: {
-            pageSize: 300,
+            pageSize: 50,
         },
+        columnHidingEnabled: true,
         filterRow: {
             visible: true,
             applyFilter: 'auto',
@@ -75,15 +34,18 @@ $(function () {
         export: {
             enabled: true,
         },
+        columnChooser: {
+            enabled: true
+        },
         columnFixing: {
             enabled: true
         },
-        
         columns: [
             {
                 dataField: "IndexValue",
                 caption: "Sr.No",
-                width: 80
+                width: 80,
+                allowSorting: false,
 
             },
             {
@@ -98,7 +60,12 @@ $(function () {
                 width: 140,
 
             },
-           
+
+            {
+                dataField: "DailyConsumption",
+                headerCellTemplate: $('<span>Gas Sold (m</span><span class="sub">3</span><span>)</span>'),
+                width: 110
+            },
             {
                 dataField: "ReadingCount",
                 headerCellTemplate: $('<span>Meter Reading (m</span><span class="sub">3</span><span>)</span>'),
@@ -111,17 +78,14 @@ $(function () {
 
             },
             {
-                dataField: "VAYUDUT_ID",
-                groupIndex: 0,
-            },
-            {
                 dataField: "Date",
                 caption: "Rx Date",
                 dataType: "date",
                 format: 'dd-MM-yyyy',
-                width: 115,
-                groupIndex: 1,
+                width: 100,
+                groupIndex: 0,
                 sortOrder: 'desc',
+
             },
             {
                 dataField: "Date",
@@ -135,10 +99,9 @@ $(function () {
                 dataField: "Time",
                 caption: "Time",
                 width: 100,
-                sortOrder: 'asc',
             },
             {
-                dataField: "SerialNumber",
+                dataField: "AMRSerialNumber",
                 caption: "AMR UID",
                 width: 140,
             },
@@ -147,15 +110,20 @@ $(function () {
                 caption: "AMR TXID",
                 width: 120,
             },
+            {
+                dataField: "Street",
+                visible: false
+
+            }
         ],
 
         searchPanel: { visible: true },
-     
+
         onEditingStart: function (e) {
 
         },
         pager: {
-            allowedPageSizes: [200, 300, 400, 500],
+            allowedPageSizes: [50, 100, 150, 200],
             showInfo: true,
             showNavigationButtons: true,
             showPageSizeSelector: true,
@@ -163,7 +131,7 @@ $(function () {
         },
         onCellPrepared: function (e) {
             if (e.rowType == "header") {
-                e.cellElement.css("text-align", "center");
+                e.cellElement.css("text-align", "left");
                 e.cellElement.css("font-weight", "bold");
             }
         },
@@ -181,10 +149,28 @@ $(function () {
         //        });
         //}
     });
+    //function imageEditorTemplate(cellElement, cellInfo) {
+    //    return $("<div>").dxFileUploader({
+    //        selectButtonText: "Select photo",
+    //        labelText: "",
+    //        name: "myFile",
 
+    //        uploadMode: "instantly",
+    //        uploadUrl: "Upload",
+    //        accept: "image/*",
+
+    //        onValueChanged: function (e) {
+    //            var files = e.value;
+    //            $.each(files, function (i, file) {
+    //                var fileURL = URL.createObjectURL(file);
+    //                cellInfo.setValue(file.name);
+    //            });
+
+    //        }
+    //    });
+    //}
 
 });
-
 function getClick(data) {
     $.ajax({
         url: "ApproveMeter?ID=" + data,

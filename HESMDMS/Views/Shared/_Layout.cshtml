@@ -156,7 +156,19 @@
                     @if (Convert.ToString(Session["UserID"]) != "")
                     {
                         <ul id="iq-sidebar-toggle" class="iq-menu">
-                            @if (Convert.ToString(Session["RoleID"]) == "5" && Convert.ToString(Session["RoleID"]) != "9")
+                            @if (Convert.ToString(Session["RoleID"]) == "9")
+                            {
+                                <li>
+                                    <a href="/Admin/Dashboad/Index" class="svg-icon dashboard">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                            <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm9 4a1 1 0 10-2 0v6a1 1 0 102 0V7zm-3 2a1 1 0 10-2 0v4a1 1 0 102 0V9zm-3 3a1 1 0 10-2 0v1a1 1 0 102 0v-1z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        <span class="ml-3">Dashboard</span>
+                                    </a>
+                                </li>
+
+                            }
+                            @if (Convert.ToString(Session["RoleID"]) == "5")
                             {
                                 <li>
                                     <a href="/SmartMeter/User/" class="svg-icon dashboard">
@@ -356,7 +368,14 @@
                                                     <i class="las la-minus"></i><span>Temper</span>
                                                 </a>
                                             </li>
-
+                                            @if (Convert.ToString(Session["RoleID"]) == "10")
+                                            {
+                                                <li class="">
+                                                    <a href="/Admin/Reports/OutOfRange">
+                                                        <i class="las la-minus"></i><span>Out Of Range</span>
+                                                    </a>
+                                                </li>
+                                            }
                                         </ul>
                                     </li>
                                     <li class="">
@@ -762,7 +781,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light p-0">
                     <div class="iq-navbar-logo d-flex align-items-center justify-content-between">
                         <i class="ri-menu-line wrapper-menu"></i>
-                        <a href="../backend/index.html" class="header-logo">
+                        <a href="#" class="header-logo">
                             <h4 class="logo-title text-uppercase">SMTPL</h4>
                         </a>
                     </div>

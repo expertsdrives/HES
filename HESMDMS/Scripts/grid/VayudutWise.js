@@ -1,8 +1,165 @@
-/***************************************************************************/
-/*                                                                         */
+var uniqueValues = [];
+var dataGrid = null;
+let prev = 0;
+let next = 0;
+$(function () {
+    dataGrid = $("#VayudutWise").dxDataGrid({
+        dataSource: DevExpress.data.AspNet.createStore({
+            key: "ID",
+            loadUrl: "/VayudutWise?roleid=" + ro,
+
+            onBeforeSend: function (method, ajaxOptions) {
+                ajaxOptions.xhrFields = { withCredentials: true };
+            }
+        }), remoteOperations: true,
+        scrolling: {
+            mode: 'virtual',
+            rowRenderingMode: 'virtual',
+        },
+        keyExpr: "ID",
+        grouping: {
+            autoExpandAll: true,
+        },
+        allowColumnReordering: true,
+        allowColumnResizing: true,
+        columnAutoWidth: true,
+        groupPanel: {
+            visible: true,
+
+        },
+        grouping: {
+            autoExpandAll: false,
+        },
+        showBorders: true,
+        wordWrapEnabled: true,
+        scrolling: {
+            columnRenderingMode: 'virtual',
+        },
+        paging: {
+            pageSize: 50,
+        },
+        filterRow: {
+            visible: true,
+            applyFilter: 'auto',
+        },
+        export: {
+            enabled: true,
+        },
+        columnFixing: {
+            enabled: true
+        },
+
+        columns: [
+            {
+                dataField: "IndexValue",
+                caption: "Sr.No",
+                width: 80
+
+            },
+            {
+                dataField: "FullName",
+                caption: "Customer Name",
+                width: 250
+
+            },
+            {
+                dataField: "BusinessPartnerNo",
+                caption: "Business Partner",
+                width: 140,
+
+            },
+
+            {
+                dataField: "ReadingCount",
+                headerCellTemplate: $('<span>Meter Reading (m</span><span class="sub">3</span><span>)</span>'),
+                width: 120,
+            },
+            {
+                dataField: "MeterNumber",
+                caption: "Meter Number",
+                width: 120
+
+            },
+            {
+                dataField: "VAYUDUT_ID",
+                groupIndex: 0,
+            },
+            {
+                dataField: "Date",
+                caption: "Rx Date",
+                dataType: "date",
+                format: 'dd-MM-yyyy',
+                width: 115,
+                groupIndex: 1,
+                sortOrder: 'desc',
+            },
+            {
+                dataField: "Date",
+                caption: "Rx Date",
+                dataType: "date",
+                format: 'dd-MM-yyyy',
+                width: 115,
+                sortOrder: 'desc',
+            },
+            {
+                dataField: "Time",
+                caption: "Time",
+                width: 100,
+                sortOrder: 'asc',
+            },
+            {
+                dataField: "SerialNumber",
+                caption: "AMR UID",
+                width: 140,
+            },
+            {
+                dataField: "TXID",
+                caption: "AMR TXID",
+                width: 120,
+            },
+        ],
+
+        searchPanel: { visible: true },
+
+        onEditingStart: function (e) {
+
+        },
+        pager: {
+            allowedPageSizes: [50, 100, 150, 200, 300, 400, 500],
+            showInfo: true,
+            showNavigationButtons: true,
+            showPageSizeSelector: true,
+            visible: true,
+        },
+        onCellPrepared: function (e) {
+            if (e.rowType == "header") {
+                e.cellElement.css("text-align", "center");
+                e.cellElement.css("font-weight", "bold");
+            }
+        },
+        onInitNewRow: function (e) {
+
+        },
+        //onContentReady: function (e) {
+        //    var saveButton = $(".dx-button[aria-label='Save']");
+        //    if (saveButton.length > 0)
+        //        saveButton.click(function (event) {
+        //            if (!isUpdateCanceled) {
+        //                DoSomething(e.component);
+        //                event.stopPropagation();
+        //            }
+        //        });
+        //}
+    });
 
 
+});
 
-/*                                                                         */
-/***************************************************************************/
-var _$_b65d=["ID","/VayudutWise?roleid=","xhrFields","createStore","AspNet","data","virtual","auto","IndexValue","Sr.No","FullName","Customer Name","BusinessPartnerNo","Business Partner","ReadingCount","<span>Meter Reading (m</span><span class=\"sub\">3</span><span>)</span>","MeterNumber","Meter Number","VAYUDUT_ID","Date","Rx Date","date","dd-MM-yyyy","desc","Time","asc","SerialNumber","AMR UID","TXID","AMR TXID","rowType","header","text-align","center","css","cellElement","font-weight","bold","dxDataGrid","#VayudutWise","ApproveMeter?ID=","refresh","instance","ajax"];var uniqueValues=[];var dataGrid=null;let prev=0;let next=0;$(function(){dataGrid= $(_$_b65d[39])[_$_b65d[38]]({dataSource:DevExpress[_$_b65d[5]][_$_b65d[4]][_$_b65d[3]]({key:_$_b65d[0],loadUrl:_$_b65d[1]+ ro,onBeforeSend:function(_0x2167E,_0x21648){_0x21648[_$_b65d[2]]= {withCredentials:true}}}),keyExpr:_$_b65d[0],grouping:{autoExpandAll:true},allowColumnReordering:true,allowColumnResizing:true,columnAutoWidth:true,groupPanel:{visible:true},grouping:{autoExpandAll:false},showBorders:true,wordWrapEnabled:true,scrolling:{columnRenderingMode:_$_b65d[6]},paging:{pageSize:300},filterRow:{visible:true,applyFilter:_$_b65d[7]},export:{enabled:true},columnFixing:{enabled:true},columns:[{dataField:_$_b65d[8],caption:_$_b65d[9],width:80},{dataField:_$_b65d[10],caption:_$_b65d[11],width:250},{dataField:_$_b65d[12],caption:_$_b65d[13],width:140},{dataField:_$_b65d[14],headerCellTemplate:$(_$_b65d[15]),width:120},{dataField:_$_b65d[16],caption:_$_b65d[17],width:120},{dataField:_$_b65d[18],groupIndex:0},{dataField:_$_b65d[19],caption:_$_b65d[20],dataType:_$_b65d[21],format:_$_b65d[22],width:115,groupIndex:1,sortOrder:_$_b65d[23]},{dataField:_$_b65d[19],caption:_$_b65d[20],dataType:_$_b65d[21],format:_$_b65d[22],width:115,sortOrder:_$_b65d[23]},{dataField:_$_b65d[24],caption:_$_b65d[24],width:100,sortOrder:_$_b65d[25]},{dataField:_$_b65d[26],caption:_$_b65d[27],width:140},{dataField:_$_b65d[28],caption:_$_b65d[29],width:120}],searchPanel:{visible:true},onEditingStart:function(_0x22218){},pager:{allowedPageSizes:[200,300,400,500],showInfo:true,showNavigationButtons:true,showPageSizeSelector:true,visible:true},onCellPrepared:function(_0x22218){if(_0x22218[_$_b65d[30]]== _$_b65d[31]){_0x22218[_$_b65d[35]][_$_b65d[34]](_$_b65d[32],_$_b65d[33]);_0x22218[_$_b65d[35]][_$_b65d[34]](_$_b65d[36],_$_b65d[37])}},onInitNewRow:function(_0x22218){}})});function getClick(_0x216B4){$[_$_b65d[43]]({url:_$_b65d[40]+ _0x216B4,success:function(_0x2178C){dataGrid[_$_b65d[38]](_$_b65d[42])[_$_b65d[41]]()}})}
+function getClick(data) {
+    $.ajax({
+        url: "ApproveMeter?ID=" + data,
+        success: function (result) {
+            dataGrid.dxDataGrid("instance").refresh();
+        }
+    });
+}

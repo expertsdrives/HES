@@ -1,4 +1,5 @@
-﻿using HESMDMS.Models;
+﻿using DevExtreme.AspNet.Data;
+using HESMDMS.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace HESMDMS.Areas.Admin.Controllers
 {
@@ -61,5 +63,14 @@ namespace HESMDMS.Areas.Admin.Controllers
         {
             return View();
         }
+        public ActionResult OutofRange()
+        {
+            return View();
+        }
+        public ActionResult magnetictamper()
+        {
+            return View();
+        }
+
     }
 }

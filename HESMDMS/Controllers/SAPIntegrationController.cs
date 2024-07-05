@@ -764,7 +764,7 @@ namespace HESMDMS.Controllers
                     tbl_ATGLPaymentAck.CreatedDate = DateTime.Now;
                     clsMeters.tbl_ATGLPaymentAck.Add(tbl_ATGLPaymentAck);
                     clsMeters.SaveChanges();
-                    return Request.CreateResponse(HttpStatusCode.OK, "Billing Data Acknowledgement successfully");
+                    return Request.CreateResponse(HttpStatusCode.OK, "Success");
                 }
             }
             catch (Exception ex)

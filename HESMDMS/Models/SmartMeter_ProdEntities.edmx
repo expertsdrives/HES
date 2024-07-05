@@ -456,15 +456,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
           <Property Name="Status" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="LogDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="tbl_JioLogs">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DateTime" Type="DateTime" Precision="3" />
-          <Property Name="JioRequest" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SMTPLResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="tbl_JioNotification">
           <Key>
             <PropertyRef Name="ID" />
@@ -605,7 +596,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
           <EntitySet Name="tbl_CommandBackLog" EntityType="Self.tbl_CommandBackLog" />
           <EntitySet Name="tbl_FirmwareHistoty" EntityType="Self.tbl_FirmwareHistoty" />
           <EntitySet Name="tbl_FirmwareStatus" EntityType="Self.tbl_FirmwareStatus" />
-          <EntitySet Name="tbl_JioLogs" EntityType="Self.tbl_JioLogs" />
           <EntitySet Name="tbl_JioNotification" EntityType="Self.tbl_JioNotification" />
           <EntitySet Name="tbl_RegisteredComplain" EntityType="Self.tbl_RegisteredComplain" />
           <EntitySet Name="tbl_Response" EntityType="Self.tbl_Response" />
@@ -680,6 +670,7 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
             <Parameter Name="LDate" Mode="In" Type="DateTime" />
             <Parameter Name="MDate" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="tbl_JioLogs" EntityType="SmartMeter_ProdModel.tbl_JioLogs" />
           <EntitySet Name="tbl_ConsumptionDetails" EntityType="SmartMeter_ProdModel.tbl_ConsumptionDetails" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -873,6 +864,15 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
           <Property Type="Int64" Name="rn" Nullable="true" />
           <Property Type="Decimal" Name="TotalConsumptionDifference" Nullable="true" Precision="19" Scale="3" />
         </ComplexType>
+        <EntityType Name="tbl_JioLogs">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <Property Name="JioRequest" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SMTPLResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="tbl_ConsumptionDetails">
           <Key>
             <PropertyRef Name="ID" />
@@ -962,16 +962,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
                 <ScalarProperty Name="pld" ColumnName="pld" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="LogDate" ColumnName="LogDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_JioLogs">
-            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_JioLogs">
-              <MappingFragment StoreEntitySet="tbl_JioLogs">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
-                <ScalarProperty Name="JioRequest" ColumnName="JioRequest" />
-                <ScalarProperty Name="SMTPLResponse" ColumnName="SMTPLResponse" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1351,6 +1341,16 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_JioLogs">
+            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_JioLogs">
+              <MappingFragment StoreEntitySet="tbl_JioLogs">
+                <ScalarProperty Name="SMTPLResponse" ColumnName="SMTPLResponse" />
+                <ScalarProperty Name="JioRequest" ColumnName="JioRequest" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_ConsumptionDetails">
             <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_ConsumptionDetails">
               <MappingFragment StoreEntitySet="tbl_ConsumptionDetails">
