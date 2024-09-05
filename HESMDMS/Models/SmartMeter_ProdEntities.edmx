@@ -54,26 +54,6 @@
           <Property Name="pld" Type="nvarchar" MaxLength="4000" />
           <Property Name="CompletedLogDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="tbl_ConsumptionDetails">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Rnk" Type="nvarchar(max)" />
-          <Property Name="FullName" Type="nvarchar(max)" />
-          <Property Name="MeterNumber" Type="nvarchar(max)" />
-          <Property Name="TXID" Type="nvarchar(max)" />
-          <Property Name="BusinessPartnerNo" Type="nvarchar(max)" />
-          <Property Name="OpeningMeterReading" Type="nvarchar(max)" />
-          <Property Name="OpeningAMRReading" Type="nvarchar(max)" />
-          <Property Name="DataCount" Type="nvarchar(max)" />
-          <Property Name="Date" Type="nvarchar(max)" />
-          <Property Name="Time" Type="nvarchar(max)" />
-          <Property Name="InstallationDate" Type="nvarchar(max)" />
-          <Property Name="ReadingCount" Type="nvarchar(max)" />
-          <Property Name="AMRSerialNumber" Type="nvarchar(max)" />
-          <Property Name="DailyConsumption" Type="decimal" Precision="18" Scale="3" />
-        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tbl_DataReception">
@@ -301,6 +281,7 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
           <Parameter Name="version" Type="int" Mode="In" />
           <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
         </Function>
+        
         <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -344,7 +325,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
           <EntitySet Name="tbl_AssignSmartMeter" EntityType="Self.tbl_AssignSmartMeter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_BackLogAPILogs" EntityType="Self.tbl_BackLogAPILogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_CommandBackLog" EntityType="Self.tbl_CommandBackLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl_ConsumptionDetails" EntityType="Self.tbl_ConsumptionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_FirmwareHistoty" EntityType="Self.tbl_FirmwareHistoty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_FirmwareStatus" EntityType="Self.tbl_FirmwareStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_JioLogs" EntityType="Self.tbl_JioLogs" Schema="dbo" store:Type="Tables" />
@@ -671,7 +651,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
             <Parameter Name="MDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="tbl_JioLogs" EntityType="SmartMeter_ProdModel.tbl_JioLogs" />
-          <EntitySet Name="tbl_ConsumptionDetails" EntityType="SmartMeter_ProdModel.tbl_ConsumptionDetails" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -872,26 +851,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
           <Property Name="DateTime" Type="DateTime" Precision="3" />
           <Property Name="JioRequest" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SMTPLResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tbl_ConsumptionDetails">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Rnk" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeterNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TXID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BusinessPartnerNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OpeningMeterReading" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OpeningAMRReading" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DataCount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Time" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="InstallationDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ReadingCount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="AMRSerialNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DailyConsumption" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1347,27 +1306,6 @@ warning 6002: The table/view 'SmartMeter_Prod.dbo.tbl_DataReception' does not ha
                 <ScalarProperty Name="SMTPLResponse" ColumnName="SMTPLResponse" />
                 <ScalarProperty Name="JioRequest" ColumnName="JioRequest" />
                 <ScalarProperty Name="DateTime" ColumnName="DateTime" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_ConsumptionDetails">
-            <EntityTypeMapping TypeName="SmartMeter_ProdModel.tbl_ConsumptionDetails">
-              <MappingFragment StoreEntitySet="tbl_ConsumptionDetails">
-                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
-                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
-                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
-                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
-                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
-                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
-                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
-                <ScalarProperty Name="TXID" ColumnName="TXID" />
-                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Rnk" ColumnName="Rnk" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
