@@ -78,6 +78,7 @@ warning 6002: The table/view 'SmartMeter.dbo.tbl_AMRHistory' does not have a pri
           <Property Name="TransactionDate" Type="datetime" />
           <Property Name="Status" Type="varchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Server" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="tbl_BillingAckData">
           <Key>
@@ -304,6 +305,15 @@ warning 6002: The table/view 'SmartMeter.dbo.tbl_DataReception' does not have a 
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="date" />
         </EntityType>
+        <EntityType Name="tbl_MQTTBroker">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MeterID" Type="nvarchar" MaxLength="500" />
+          <Property Name="Data" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="tbl_OTACommands">
           <Key>
             <PropertyRef Name="ID" />
@@ -376,6 +386,25 @@ warning 6002: The table/view 'SmartMeter.dbo.tbl_DataReception' does not have a 
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaxID" Type="int" />
           <Property Name="PLD" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_VayadutMasterDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VayadutNo" Type="varchar" MaxLength="50" />
+          <Property Name="PcbNo" Type="varchar" MaxLength="50" />
+          <Property Name="CardNo" Type="varchar" MaxLength="50" />
+          <Property Name="VayadutId" Type="varchar" MaxLength="50" />
+          <Property Name="Latitude" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="Longitude" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="SealNo1" Type="varchar" MaxLength="100" />
+          <Property Name="SealNo2" Type="varchar" MaxLength="100" />
+          <Property Name="Area" Type="varchar" MaxLength="100" />
+          <Property Name="Remark" Type="varchar" MaxLength="100" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="TpiName" Type="varchar" MaxLength="100" />
+          <Property Name="GatewayStatus" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tbl_VayudutMaster">
           <Key>
@@ -521,6 +550,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
         <Function Name="FetchDataConsumption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BusninessPartner" Type="varchar" Mode="In" />
         </Function>
+        
         <Function Name="sp_AMRBill" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_AMRHealth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_ConsumptionGraph" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -531,6 +561,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="sp_Get15DayReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        
         <Function Name="sp_TotalAMR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_TotalRevenue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_ZeroConsumption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -544,12 +575,14 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_JioLogs" EntityType="Self.tbl_JioLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MeterMaster" EntityType="Self.tbl_MeterMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MQTTBroker" EntityType="Self.tbl_MQTTBroker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OTACommands" EntityType="Self.tbl_OTACommands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_RawData_CRC" EntityType="Self.tbl_RawData_CRC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_RawDataAPI" EntityType="Self.tbl_RawDataAPI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_RoleMaster" EntityType="Self.tbl_RoleMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_SerialNumberMaster" EntityType="Self.tbl_SerialNumberMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_SignalRMaxID" EntityType="Self.tbl_SignalRMaxID" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_VayadutMasterDetails" EntityType="Self.tbl_VayadutMasterDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_VayudutMaster" EntityType="Self.tbl_VayudutMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_VayudutRegistration" EntityType="Self.tbl_VayudutRegistration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_AMRHistory" EntityType="Self.tbl_AMRHistory" store:Type="Tables" store:Schema="dbo">
@@ -840,6 +873,8 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <EntitySet Name="tbl_ATGLPaymentAck" EntityType="SmartMeterModel.tbl_ATGLPaymentAck" />
           <EntitySet Name="tbl_CustomerDetails" EntityType="SmartMeterModel.tbl_CustomerDetails" />
           <EntitySet Name="tbl_ConsumptionDetails" EntityType="SmartMeterModel.tbl_ConsumptionDetails" />
+          <EntitySet Name="tbl_MQTTBroker" EntityType="SmartMeterModel.tbl_MQTTBroker" />
+          <EntitySet Name="tbl_VayadutMasterDetails" EntityType="SmartMeterModel.tbl_VayadutMasterDetails" />
         </EntityContainer>
         <EntityType Name="CustomerRaw">
           <Key>
@@ -1587,6 +1622,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Property Name="TransactionDate" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Server" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_CustomerDetails">
           <Key>
@@ -1632,6 +1668,34 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Property Name="CaseTemper" Type="Int32" />
           <Property Name="Row__" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DailyConsumption" Type="Decimal" Precision="18" Scale="3" />
+        </EntityType>
+        <EntityType Name="tbl_MQTTBroker">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeterID" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_VayadutMasterDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VayadutNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PcbNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VayadutId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="Longitude" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="SealNo1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SealNo2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="TpiName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GatewayStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2505,6 +2569,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <EntitySetMapping Name="tbl_ATGLPaymentAck">
             <EntityTypeMapping TypeName="SmartMeterModel.tbl_ATGLPaymentAck">
               <MappingFragment StoreEntitySet="tbl_ATGLPaymentAck">
+                <ScalarProperty Name="Server" ColumnName="Server" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
@@ -2559,6 +2624,36 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Row_" ColumnName="Row#" />
                 <ScalarProperty Name="Rnk" ColumnName="Rnk" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MQTTBroker">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_MQTTBroker">
+              <MappingFragment StoreEntitySet="tbl_MQTTBroker">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_VayadutMasterDetails">
+            <EntityTypeMapping TypeName="SmartMeterModel.tbl_VayadutMasterDetails">
+              <MappingFragment StoreEntitySet="tbl_VayadutMasterDetails">
+                <ScalarProperty Name="GatewayStatus" ColumnName="GatewayStatus" />
+                <ScalarProperty Name="TpiName" ColumnName="TpiName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="SealNo2" ColumnName="SealNo2" />
+                <ScalarProperty Name="SealNo1" ColumnName="SealNo1" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="VayadutId" ColumnName="VayadutId" />
+                <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+                <ScalarProperty Name="PcbNo" ColumnName="PcbNo" />
+                <ScalarProperty Name="VayadutNo" ColumnName="VayadutNo" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
