@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var role = @Convert.ToString(Session["RoleID"]);
@@ -30,6 +29,7 @@
         top: -1.2ex;
         font-size: 76%;
     }
+
     .dx-popup-draggable {
         margin-top: -40% !important;
     }
@@ -41,8 +41,18 @@
         </div>
     </div>
     <div class="card-body">
+        <div class="filter-container">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" class="date-picker" />
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" class="date-picker" />
+            <button id="applyFilter" class="btn btn-primary">Apply Filter</button>
+        </div>
         <div id="D2C"></div>
     </div>
 </div>
-<script>     var ro = @role;</script>
+
+<script>
+    var ro = @role;
+</script>
 <script src="~/Scripts/grid/D2C.js"></script>

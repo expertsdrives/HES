@@ -206,7 +206,27 @@
                                                 </a>
                                             </li>
 
+                                            <li class="">
+                                                <a href="/SmartMeter/electricBLE/blelogs">
+                                                    <i class="las la-minus"></i><span>Bluetooth Logs</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/SmartMeter/ElectricBLE">
+                                                    <i class="las la-minus"></i><span>Connect Device Via Bluetooth</span>
+                                                </a>
+                                            </li>
+
                                         </ul>
+                                    </li>
+                                }
+                                if (Convert.ToString(Session["RoleID"]) == "11" || Convert.ToString(Session["RoleID"]) == "12")
+                                {
+
+                                    <li class="">
+                                        <a href="/SmartMeter/electricBLE/blelogs">
+                                            <i class="las la-minus"></i><span>Bluetooth Logs</span>
+                                        </a>
                                     </li>
                                 }
                                 else
@@ -227,7 +247,7 @@
                             @if (Convert.ToString(Session["RoleID"]) != "5" && Convert.ToString(Session["RoleID"]) != "8")
                             {
 
-                                if (Convert.ToString(Session["RoleID"]) != "9")
+                                if (Convert.ToString(Session["RoleID"]) != "9" && Convert.ToString(Session["RoleID"]) != "11" && Convert.ToString(Session["RoleID"]) != "12")
                                 {
                                     <li class="">
                                         <a href="#table" class="collapsed" data-toggle="collapse" aria-expanded="false">
@@ -259,7 +279,7 @@
                                         </ul>
                                     </li>
                                 }
-                                if (Convert.ToString(Session["RoleID"]) != "7")
+                                if (Convert.ToString(Session["RoleID"]) != "7" && Convert.ToString(Session["RoleID"]) != "11" && Convert.ToString(Session["RoleID"]) != "12")
                                 {
                                     <li class=" ">
                                         <a href="#Stable" class="collapsed" data-toggle="collapse" aria-expanded="false">
@@ -278,7 +298,7 @@
                                                     <i class="las la-minus"></i><span>Terminal</span>
                                                 </a>
                                             </li>
-                                            @if (Convert.ToString(Session["RoleID"]) != "9")
+                                            @if (Convert.ToString(Session["RoleID"]) != "9" && Convert.ToString(Session["RoleID"]) != "11" && Convert.ToString(Session["RoleID"]) != "12")
                                             {
                                                 <li class="">
                                                     <a href="/SmartMeter/SamrtMeterData/Customers">
@@ -289,6 +309,11 @@
                                             <li class="">
                                                 <a href="/Smartmeter/Terminal/Terminal">
                                                     <i class="las la-minus"></i><span>Basic Information</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Admin/JioLogs/CustomerLogs">
+                                                    <i class="las la-minus"></i><span>Customer Data Reception</span>
                                                 </a>
                                             </li>
                                             <li class="">
@@ -311,7 +336,12 @@
                                                     <i class="las la-minus"></i><span>Firmware Upgrade</span>
                                                 </a>
                                             </li>
-                                            @if (Convert.ToString(Session["RoleID"]) != "9")
+                                            <li class="">
+                                                <a href="/SmartMeter/SamrtMeterData/SGMBLEConnection">
+                                                    <i class="las la-minus"></i><span>Connect Via BLE</span>
+                                                </a>
+                                            </li>
+                                            @if (Convert.ToString(Session["RoleID"]) != "9" && Convert.ToString(Session["RoleID"]) != "11" && Convert.ToString(Session["RoleID"]) != "12")
                                             {
                                                 <li class="">
                                                     <a href="/SmartMeter/SamrtMeterData">
@@ -327,7 +357,7 @@
                                         </ul>
                                     </li>
                                 }
-                                if (Convert.ToString(Session["RoleID"]) != "9")
+                                if (Convert.ToString(Session["RoleID"]) != "9" && Convert.ToString(Session["RoleID"]) != "11" && Convert.ToString(Session["RoleID"]) != "12")
                                 {
                                     <li class=" ">
                                         <a href="#Reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
@@ -343,29 +373,56 @@
                                         </a>
                                         <ul id="Reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                             @*<li class="">
-                                                    <a href="/DataReception/Index">
-                                                        <i class="las la-minus"></i><span>AMR Data</span>
-                                                    </a>
-                                                </li>*@
+            <a href="/DataReception/Index">
+                <i class="las la-minus"></i><span>AMR Data</span>
+            </a>
+        </li>*@
                                             <li class="">
                                                 <a href="/Admin/Reports/LastMeterReading">
                                                     <i class="las la-minus"></i><span>Date Wise Reading</span>
                                                 </a>
                                             </li>
-                                            <li class="">
-                                                <a href="/Admin/Reports/LastMeterRevenue">
-                                                    <i class="las la-minus"></i><span>Date Wise Revenue</span>
-                                                </a>
-                                            </li>
-                                            <li class="">
-                                                <a href="/Admin/Reports/VayudutWise">
-                                                    <i class="las la-minus"></i><span>Vayudut</span>
-                                                </a>
-                                            </li>
+                                            @if (Convert.ToString(Session["RoleID"]) != "7")
+                                            {
+                                                <li class="">
+                                                    <a href="/Admin/Reports/LastMeterRevenue">
+                                                        <i class="las la-minus"></i><span>Date Wise Revenue</span>
+                                                    </a>
+                                                </li>
 
+                                                <li class="">
+                                                    <a href="/Admin/Reports/VayudutWise">
+                                                        <i class="las la-minus"></i><span>Vayudut</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            @if (Convert.ToString(Session["RoleID"]) != "7")
+                                            {
+                                                <li class="">
+                                                    <a href="/Admin/Reports/Tamper">
+                                                        <i class="las la-minus"></i><span>Temper</span>
+                                                    </a>
+                                                </li>
+
+                                                <li class="">
+                                                    <a href="/Admin/Reports/SLAReport">
+                                                        <i class="las la-minus"></i><span>SLA Report</span>
+                                                    </a>
+                                                </li>
+                                            }
                                             <li class="">
-                                                <a href="/Admin/Reports/Tamper">
-                                                    <i class="las la-minus"></i><span>Temper</span>
+                                                <a href="/GIS">
+                                                    <i class="las la-minus"></i><span>GIS Report</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Admin/Reports/Circle1Report">
+                                                    <i class="las la-minus"></i><span>Circle 1 Report</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Admin/Reports/ClusterReport">
+                                                    <i class="las la-minus"></i><span>Cluster Report</span>
                                                 </a>
                                             </li>
                                             @if (Convert.ToString(Session["RoleID"]) == "10")
@@ -404,7 +461,7 @@
                                         </ul>
                                     </li>
                                 }
-                                if (Convert.ToString(Session["RoleID"]) != "7" && Convert.ToString(Session["RoleID"]) != "9")
+                                if (Convert.ToString(Session["RoleID"]) != "7" && Convert.ToString(Session["RoleID"]) != "9" && Convert.ToString(Session["RoleID"]) != "11" && Convert.ToString(Session["RoleID"]) != "12")
                                 {
                                     <li class=" ">
                                         <a href="#Meter" class="collapsed" data-toggle="collapse" aria-expanded="false">

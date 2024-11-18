@@ -20,6 +20,9 @@ using System.Web.UI.WebControls;
 using System.Data.Entity;
 using Microsoft.Ajax.Utilities;
 using DotNetty.Codecs.Mqtt.Packets;
+using Microsoft.AspNet.SignalR.Messaging;
+using NPOI.POIFS.Crypt.Dsig;
+using System.Net;
 
 namespace HESMDMS.Areas.SmartMeter.Controllers
 {
@@ -64,18 +67,29 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                     }
                     int counti = 1;
                     Task backgroundTask = Task.Run(async () => await insertData(fileContent, "52", pld.PLD, counti, TotalPacket, pld.AID, pld.EID.ToString(), MeterID));
-                 
+
 
                 }
             }
             if (fileExtension == ".bin")
             {
-                string hexString = ConvertBinaryFileToHexString(file, packetSize);
+                //string hexString = ConvertBinaryFileToHexString(file, packetSize);
+                byte[] fileData;
+                using (var binaryReader = new BinaryReader(file.InputStream))
+                {
+                    fileData = binaryReader.ReadBytes(file.ContentLength);
+                }
 
-              
+                // Convert binary data to Base64 string
+                string base64String = Convert.ToBase64String(fileData);
+                int chunkSize = packetSize;
+                for (int i = chunkSize; i < base64String.Length; i += chunkSize + 2) // +2 to account for inserted characters
+                {
+                    base64String = base64String.Insert(i, "\r\n");
+                }
                 int counti = 1;
-                Task backgroundTask = Task.Run(async () => await insertData(hexString, "52", pld.PLD, counti, TotalPacket, pld.AID, pld.EID.ToString(), MeterID));
-                
+                Task backgroundTask = Task.Run(async () => await insertData(base64String, "52", pld.PLD, counti, TotalPacket, pld.AID, pld.EID.ToString(), MeterID));
+
                 // Now, 'fileData' contains the binary data from the uploaded file
                 // You can work with 'fileData' as needed
 
@@ -216,7 +230,7 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                 TotalPacket = splitsize.Length;
                 tbl_FirmwareStatus fir = new tbl_FirmwareStatus();
                 fir.pld = pld;
-                fir.Status = "Started";
+                fir.Status = "Pending";
                 fir.LogDate = DateTime.UtcNow;
                 clsMetersProd.tbl_FirmwareStatus.Add(fir);
                 clsMetersProd.SaveChanges();
@@ -224,7 +238,7 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                 foreach (var data in splitsize)
                 {
                     counter++;
-                  
+
                     var chcStatus = clsMetersProd.tbl_FirmwareStatus.Where(x => x.Status == "Aborted" && x.pld == pld).OrderByDescending(x => x.ID).Count();
                     if (chcStatus == 0)
                     {
@@ -263,50 +277,18 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                         byte msbCheckSum = byteArrayCheckSum[1]; // MSB is the second byte (index 1).
 
                         string command = "02,03," + hexString + $",{cmd},{msbCount:X2}{lsbCount:X2},{msbPacket:X2}{lsbPacket:X2}," + PacketChunks + $",{msbCheckSum:X2}{lsbCheckSum:X2},03";
+                        var cData1 = clsMetersProd.tbl_CommandBackLog;
+                        //tbl_CommandBackLog clsCmd1 = new tbl_CommandBackLog();
+                        //clsCmd1.Data = command;
+                        //clsCmd1.EventName = "Firware Upgrade";
+                        //clsCmd1.LogDate = DateTime.UtcNow;
+                        //clsCmd1.Status = "Pending";
+                        //clsCmd1.pld = pld;
+                        //clsMetersProd.tbl_CommandBackLog.Add(clsCmd1);
+                        //clsMetersProd.SaveChanges();
                         command = "?" + command + "##," + tid.ToString() + "!";
-                        var bob1 = new
-                        {
-                            idType = "PLD",
-                            id = pld,
-                            transactionId = rndNumber1.ToString(),
-                            retentionTime = DateTime.Now.ToString(),
-                            data = new[] {
-                 new  { aid =AID, dataformat = "cp",dataType="JSON",
-                 ext="{'data': '"+command+"'}"
-                 },
 
-            }
-                        };
-                        var content1 = JsonConvert.SerializeObject(bob1);
-                        var objClint2 = new System.Net.Http.HttpClient();
-                        Uri requestUri1 = new Uri("https://com.api.cats.jvts.net:8082/auth-engine/v2.2/login"); //replace your Url  
-                        var converter1 = new ExpandoObjectConverter();
-                        c2dProd users1 = new c2dProd();
-                        users1.grant_type = "password";
-                        users1.username = "2025000_2890001@iot.jio.com";
-                        users1.password = "a737b902951ec15cff735357a850b09cd941818095527a1925760b5a4e471464";
-                        users1.client_id = "db2f04a5e72547cbb68331f406946494";
-                        users1.client_secret = "d95578aa9b1eb30e";
-                        string json1 = "";
-                        json1 = Newtonsoft.Json.JsonConvert.SerializeObject(users1);
-                        var objClint3 = new System.Net.Http.HttpClient();
-                        System.Net.Http.HttpResponseMessage respon3 = await objClint3.PostAsync(requestUri1, new StringContent(json1, System.Text.Encoding.UTF8, "application/json"));
-                        string responJsonText1 = await respon3.Content.ReadAsStringAsync();
-                        var bearerToken1 = JsonConvert.DeserializeObject<c2dTokenProd>(responJsonText1);
-                        var st = "";
-                        Console.WriteLine(bearerToken1);
-                        if (Convert.ToString(bearerToken1.access_token) != null)
-                        {
-                            Uri requestUri2 = new Uri("https://com.api.cats.jvts.net:8080/c2d-services/iot/jioutils/v2/c2d-message/unified"); //replace your Url  
-                            objClint2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                            objClint2.DefaultRequestHeaders.Add("Authorization", "Bearer " + bearerToken1.access_token);
-                            objClint2.DefaultRequestHeaders.Add("eid", EID.ToString());
-                            System.Net.Http.HttpResponseMessage respon1 = await objClint2.PostAsync(requestUri2, new StringContent(content1, System.Text.Encoding.UTF8, "application/json"));
-                            //Thread.Sleep(10000);
-                            var responJsonText2 = respon1.Content.ReadAsStringAsync();
-                            st = respon1.StatusCode.ToString();
-
-                        }
+                        
                         tbl_FirmwareHistoty cmdBack1 = new tbl_FirmwareHistoty();
                         cmdBack1.MeterID = MeterID.ToString();
                         cmdBack1.pld = pld;
@@ -314,11 +296,11 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                         cmdBack1.PacketData = command;
                         cmdBack1.pld = pld;
                         cmdBack1.CreatedDate = DateTime.Now;
-                        cmdBack1.JioResponse = st;
+                        cmdBack1.JioResponse = null;
                         clsMetersProd.tbl_FirmwareHistoty.Add(cmdBack1);
                         clsMetersProd.SaveChanges();
                         counti++;
-                        Thread.Sleep(1000);
+                        //Thread.Sleep(1000);
 
                     }
                     else
@@ -339,7 +321,7 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
 
                 }
 
-               
+
 
 
 
@@ -364,5 +346,7 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
             }
             return Json(new { status = "completed" });
         }
+        
+
     }
 }

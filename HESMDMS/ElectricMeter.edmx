@@ -14,6 +14,17 @@
           <Property Name="Password" Type="varchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="tbl_BLEDemo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MeterID" Type="varchar" MaxLength="50" />
+          <Property Name="CapturedBy" Type="varchar" MaxLength="50" />
+          <Property Name="User Type" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Currentkw" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="tbl_MeterData">
           <Key>
             <PropertyRef Name="ID" />
@@ -62,6 +73,7 @@
         <Function Name="sp_FetchData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ElectricMeterModelStoreContainer">
           <EntitySet Name="tbl_AdminUser" EntityType="Self.tbl_AdminUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_BLEDemo" EntityType="Self.tbl_BLEDemo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MeterData" EntityType="Self.tbl_MeterData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MeterMasterRelay" EntityType="Self.tbl_MeterMasterRelay" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ParameterMaster" EntityType="Self.tbl_ParameterMaster" Schema="dbo" store:Type="Tables" />
@@ -111,6 +123,7 @@
           <EntitySet Name="tbl_ParameterMaster" EntityType="Self.tbl_ParameterMaster" />
           <FunctionImport Name="sp_FetchData" ReturnType="Collection(ElectricMeterModel.sp_FetchData_Result)" />
           <EntitySet Name="tbl_MeterMasterRelay" EntityType="ElectricMeterModel.tbl_MeterMasterRelay" />
+          <EntitySet Name="tbl_BLEDemo" EntityType="ElectricMeterModel.tbl_BLEDemo" />
         </EntityContainer>
         <ComplexType Name="sp_FetchData_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -146,6 +159,17 @@
           <Property Name="Port" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="InvocationCounter" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_BLEDemo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeterID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CapturedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Currentkw" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -227,6 +251,18 @@
                 <ScalarProperty Name="SystemTitle" ColumnName="SystemTitle" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_BLEDemo">
+            <EntityTypeMapping TypeName="ElectricMeterModel.tbl_BLEDemo">
+              <MappingFragment StoreEntitySet="tbl_BLEDemo">
+                <ScalarProperty Name="Currentkw" ColumnName="Currentkw" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="User_Type" ColumnName="User Type" />
+                <ScalarProperty Name="CapturedBy" ColumnName="CapturedBy" />
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

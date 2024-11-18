@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "BLELogs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dx-datagrid {
+        color: #333;
+        background-color: transparent !important;
+    }
+
+    .dx-toolbar {
+        background-color: transparent !important;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    .greenColor {
+        color: green;
+    }
+
+    .sub {
+        vertical-align: 0;
+        position: relative;
+        top: -1.2ex;
+        font-size: 76%;
+    }
+
+    .dx-popup-draggable {
+        margin-top: -40% !important;
+    }
+</style>
+<div class="card card-block card-stretch card-height">
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <h4 class="card-title">Bluetooth Logs</h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="blelogs"></div>
+    </div>
+</div>
+
+<script src="~/Scripts/grid/blelogs.js"></script>

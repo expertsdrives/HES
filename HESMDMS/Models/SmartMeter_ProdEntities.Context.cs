@@ -46,7 +46,6 @@ namespace HESMDMS.Models
         public virtual DbSet<tbl_SMeterMaster> tbl_SMeterMaster { get; set; }
         public virtual DbSet<tbl_AssignSmartMeter> tbl_AssignSmartMeter { get; set; }
         public virtual DbSet<tbl_JioLogs> tbl_JioLogs { get; set; }
-        public virtual DbSet<tbl_ConsumptionDetails> tbl_ConsumptionDetails { get; set; }
     
         [DbFunction("SmartMeter_ProdEntities", "fnSplit")]
         public virtual IQueryable<fnSplit_Result> fnSplit(string sInputList, string sDelimiter)

@@ -20,6 +20,8 @@ namespace HESMDMS.Models
         public int RoleID { get; set; }
         public string FullName { get; set; }
         public Nullable<int> AccessFailedCount { get; set; }
+        public string MobileNumber { get; set; }
+        public Nullable<System.DateTime> LastLoggedInDate { get; set; }
     
         public virtual tbl_RoleMaster tbl_RoleMaster { get; set; }
     }

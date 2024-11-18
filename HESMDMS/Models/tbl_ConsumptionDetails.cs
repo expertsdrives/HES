@@ -16,6 +16,7 @@ namespace HESMDMS.Models
     {
         public int ID { get; set; }
         public string Rnk { get; set; }
+        public string Row_ { get; set; }
         public string FullName { get; set; }
         public string MeterNumber { get; set; }
         public string TXID { get; set; }
@@ -26,8 +27,12 @@ namespace HESMDMS.Models
         public string Date { get; set; }
         public string Time { get; set; }
         public string InstallationDate { get; set; }
-        public string ReadingCount { get; set; }
+        public Nullable<decimal> ReadingCount { get; set; }
         public string AMRSerialNumber { get; set; }
+        public string VAYUDUT_ID { get; set; }
+        public Nullable<int> MagneticTemper { get; set; }
+        public Nullable<int> CaseTemper { get; set; }
+        public string Row__ { get; set; }
         public Nullable<decimal> DailyConsumption { get; set; }
     }
 }

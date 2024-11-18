@@ -7,7 +7,7 @@
 
 <!doctype html>
 <html lang="en">
-
+@Html.AntiForgeryToken()
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -80,8 +80,8 @@
                                                 <button type="submit" class="btn btn-primary">Sign In</button>
                                             }
                                             <!--<p class="mt-3">
-       Create an Account <a href="auth-sign-up.html" class=" text-underline">Sign Up</a>
-    </p>-->
+                                               Create an Account <a href="auth-sign-up.html" class=" text-underline">Sign Up</a>
+                                            </p>-->
 
                                         </div>
                                     </div>
@@ -121,8 +121,11 @@
                 if ("@Html.Raw(Convert.ToString(Session["Uthorized"]))" == "Uthorized") {
                     DevExpress.ui.notify("Incorrect Username/Password", "error", 600);
                 }
+                if ("@Html.Raw(Convert.ToString(Session["MobileNotfound"]))" == "MobileNotfound") {
+                    alert("Mobile Number not registered. Kindly email krutish.ruparelia@expertsllp.com to register your mobile number");
+                }
             });
-            
+
         });
 
     </script>

@@ -1,0 +1,245 @@
+﻿
+@{
+    ViewBag.Title = "Cluster Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<style>
+    .dx-datagrid {
+        color: #333;
+        background-color: transparent !important;
+    }
+
+    .dx-toolbar {
+        background-color: transparent !important;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    .greenColor {
+        color: green;
+    }
+
+    .sub {
+        vertical-align: 0;
+        position: relative;
+        top: -1.2ex;
+        font-size: 76%;
+    }
+
+    .right-side {
+        position: absolute;
+        right: 1px;
+        top: 6px;
+    }
+</style>
+<div class="card card-block card-stretch card-height">
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <h4 class="card-title">Cluster Report</h4>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+        Communicating AMR:<label for="Communicating"></label>
+        Non Communicating AMR:<label for="NonCommunicating"></label><br />
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" class="date-picker" />
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" class="date-picker" />
+        <button id="applyFilter" class="btn btn-primary">Apply Filter</button>
+        <div class="loadPanel"></div>
+        <div id="Cluster"></div>
+    </div>
+</div>
+<script>
+   
+    $("#applyFilter").on("click", function () {
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
+        if (!startDate || !endDate) {
+
+            alert("Please select both start and end dates.");
+
+            return;
+
+        }
+        const loadPanel = $('.loadpanel').dxLoadPanel({
+            shadingColor: 'rgba(0,0,0,0.4)',
+            position: { of: '.container' },
+            visible: false,
+            showIndicator: true,
+            showPane: true,
+            shading: true,
+            hideOnOutsideClick: false,
+            onShown() {
+            },
+            onHidden() {
+                /* showEmployeeInfo(employee);*/
+            },
+        }).dxLoadPanel('instance');
+        console.log("Applying filter: Start Date = " + startDate + ", End Date = " + endDate);
+        loadPanel.show();
+        $.ajax({
+            type: 'POST',                    // HTTP method
+            url: '/ADmin/Reports/clusterReportData',    // Controller URL (replace with actual controller/action)
+            data: { startDate: startDate, endDate: endDate }, // Data sent as key-value pairs
+            success: function (response) {
+                loadPanel.hide();// Success callback
+                var amr = response;
+                $("label[for='Communicating']").text(response.OtherData1);
+                $("label[for='NonCommunicating']").text(response.OtherData2);
+                dataGrid = $("#Cluster").dxDataGrid({
+                    dataSource: response.ActiveAMR,
+                    keyExpr: "BusinessPartnerNo",
+                    grouping: {
+                        autoExpandAll: true,
+                    },
+                    allowColumnReordering: true,
+                    allowColumnResizing: true,
+                    columnAutoWidth: true,
+                    groupPanel: {
+                        visible: true,
+                    },
+                    showBorders: true,
+                    wordWrapEnabled: true,
+                    scrolling: {
+                        columnRenderingMode: 'virtual',
+                    },
+                    paging: {
+                        pageSize: 50,
+                    },
+                    summary: {
+                        groupItems: [
+                            {
+                                column: "ChargeAreaNameZoneName", // Grouped column name
+                                summaryType: "count",
+                                displayFormat: "{0} AMR" // Display format for count
+                            } ,{
+                                name: "customSummary1",
+                                summaryType: "custom",
+                                displayFormat: "Communication: {0}",
+                                showInColumn: "communication_status"
+                            }, {
+                                name: "customSummary2",
+                                summaryType: "custom",
+                                displayFormat: "Non Communication: {0}",
+                                showInColumn: "communication_status"
+                            } 
+                        ],
+                        totalItems: [
+                            {
+                                name: "customSummary1",
+                                summaryType: "custom",
+                                displayFormat: "Communication: {0}",
+                                showInColumn: "communication_status"
+                            },
+                            {
+                                name: "customSummary2",
+                                summaryType: "custom",
+                                displayFormat: "Non Communication: {0}",
+                                showInColumn: "ChargeAreaNameZoneName"
+                            }
+                        ],
+                        calculateCustomSummary: function (options) {
+                            // Calculating "customSummary1" for "Communication" status
+                            if (options.name === "customSummary1") {
+                                switch (options.summaryProcess) {
+                                    case "start":
+                                        options.totalValue = 0;
+                                        break;
+                                    case "calculate":
+                                        if (options.value.communication_status === "Communication") {
+                                            options.totalValue++;
+                                        }
+                                        break;
+                                    case "finalize":
+                                        options.value = options.totalValue;
+                                        break;
+                                }
+                            }
+                            
+                            // Calculating "customSummary2" for "Non Communication" status
+                            if (options.name === "customSummary2") {
+                                switch (options.summaryProcess) {
+                                    case "start":
+                                        options.totalValue = 0;
+                                        break;
+                                    case "calculate":
+                                        if (options.value.communication_status === "Non Communication") {
+                                            options.totalValue++;
+                                        }
+                                        break;
+                                    case "finalize":
+                                        options.value = options.totalValue;
+                                        break;
+                                }
+                            }
+                        }
+                    },
+                    filterRow: {
+                        visible: true,
+                        applyFilter: 'auto',
+                    },
+                    export: {
+                        enabled: true,
+                    },
+                    columnFixing: {
+                        enabled: true
+                    },
+                    columns: [
+                        { dataField: "VendorName", caption: "Vendor Name" },
+                        { dataField: "BusinessPartnerNo", caption: "Business Partner No" },
+                        { dataField: "ContractAcct", caption: "Contract Account" },
+                        { dataField: "ConnectionObject", caption: "Connection Object" },
+                        { dataField: "ChargeAreaNameZoneName", caption: "Charge Area/Zone Name" },
+                        { dataField: "AreaType", caption: "Area Type" },
+                        { dataField: "FullName", caption: "Full Name" },
+                        { dataField: "HouseNo", caption: "House No" },
+                        { dataField: "Street", caption: "Street" },
+                        { dataField: "Street2", caption: "Street 2" },
+                        { dataField: "Street3", caption: "Street 3" },
+                        { dataField: "Street4", caption: "Street 4" },
+                        { dataField: "Street5", caption: "Street 5" },
+                        { dataField: "MobileNumber", caption: "Mobile Number" },
+                        { dataField: "MeterNumber", caption: "Meter Number" },
+                        { dataField: "MeterMake", caption: "Meter Make" },
+                        { dataField: "PostalCode", caption: "Postal Code" },
+                        { dataField: "City", caption: "City" },
+                        { dataField: "MeterReadingUnit", caption: "Meter Reading Unit" },
+                        { dataField: "MoveInCreatedBy", caption: "Move In Created By" },
+                        { dataField: "SerialNumber", caption: "Serial Number" },
+                        { dataField: "Latitude", caption: "Latitude" },
+                        { dataField: "Longitude", caption: "Longitude" },
+                        { dataField: "communication_status", caption: "Communication Status" }
+                    ],
+                    searchPanel: { visible: true },
+                    pager: {
+                        allowedPageSizes: [50, 100, 150, 200],
+                        showInfo: true,
+                        showNavigationButtons: true,
+                        showPageSizeSelector: true,
+                        visible: true,
+                    },
+                    onCellPrepared: function (e) {
+                        if (e.rowType == "header") {
+                            e.cellElement.css("text-align", "center");
+                            e.cellElement.css("font-weight", "bold");
+                        }
+                    },
+                    onExporting: function (e) {
+                        e.fileName = "ClusterAMRAMR" + startDate + "_" + endDate;
+                    }
+                });
+
+            },
+            error: function (xhr, status, error) { // Error callback
+                console.error('Error occurred: ' + error);
+            }
+        });
+    });
+</script>

@@ -295,6 +295,31 @@
     </div>
 
 </div>
+<div class="col-sm-12 col-lg-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">Mode</h4>
+            </div>
+        </div>
+        <div class="card-body volume">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnPrepaid">Prepaid</button>
+                </div>
+               
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" id="btnPostpaid">Postpaid</button>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+
+</div>
 <script>
     var Jsondata = @Html.Raw(Json.Encode(ViewBag.data));
     var mid = "@ViewBag.mid";

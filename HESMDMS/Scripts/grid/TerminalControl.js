@@ -75,20 +75,20 @@
                         GetRTC(result);
                         SOVPosition(result);
                         //$("#lblPresentVolume").val(parseFloat(myArray[0].Resposne.MeasurementValue).toFixed(2) + " m3");
-                        $("#lblVolumeNVM").val(parseFloat(myArray[0].Resposne.TotalConsumption).toFixed(2) + " m3");
+                        $("#lblVolumeNVM").val(parseFloat(myArray[0].CommandResponse.TotalConsumption).toFixed(2) + " m3");
                         ValvePosition(result);
                         batteryLife(result);
-                        $("#lblBatteryVoltage").val(myArray[0].Resposne.BatteryVoltage / 1000 + " V");
+                        $("#lblBatteryVoltage").val(myArray[0].CommandResponse.BatteryVoltage / 1000 + " V");
                         var tamper = myArray[0].Resposne.TamperEvents;
                         var substrings = tamper.match(/.{1,2}/g);
-                        var titlt = substrings[0] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
+                        var titlt = substrings[6] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
                         var caseT = substrings[1] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var managetT = substrings[2] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var ExcessPush = substrings[3] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var Excessgas = substrings[4] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
+                        var managetT = substrings[0] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
+                        var ExcessPush = substrings[4] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
+                        var Excessgas = substrings[3] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
                         var SovStuck = substrings[5] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var Invalid = substrings[6] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var main = substrings[7] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
+                        var Invalid = substrings[7] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
+                        var main = substrings[2] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
                         var Rf = substrings[8] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
                         $("#lblTilt").val(titlt);
                         $("#lblCase").val(caseT);
@@ -160,37 +160,11 @@
                         GetRTC(result);
                         SOVPosition(result);
                         //$("#lblPresentVolume").val(parseFloat(myArray[0].Resposne.MeasurementValue).toFixed(2) + " m3");
-                        $("#lblVolumeNVM").val(parseFloat(myArray[0].Resposne.TotalConsumption).toFixed(2) + " m3");
+                        BatteryVoltage(result)
                         ValvePosition(result);
                         batteryLife(result);
-                        $("#lblBatteryVoltage").val(myArray[0].Resposne.BatteryVoltage / 1000 + " V");
-                        var tamper = myArray[0].Resposne.TamperEvents;
-                        var substrings = tamper.match(/.{1,2}/g);
-                        var titlt = substrings[0] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var caseT = substrings[1] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var managetT = substrings[2] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var ExcessPush = substrings[3] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var Excessgas = substrings[4] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var SovStuck = substrings[5] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var Invalid = substrings[6] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var main = substrings[7] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var Rf = substrings[8] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        $("#lblTilt").val(titlt);
-                        $("#lblCase").val(caseT);
-                        $("#lblMaganet").val(managetT);
-                        $("#lblExcessPush").val(ExcessPush);
-                        $("#lblExcessGas").val(Excessgas)
-                        $("#lblSOVTamper").val(SovStuck);
-                        $("#lblLoginError").val(Invalid);
-                        $("#lblBatteryTamper").val(main);
-                        $("#lblRFTamper").val(Rf);
-                        //var a2 = JSON.parse(result);
-                        //tbl.empty();
-                        //var i = 1;
-                        //$.each(a2, function (key, value) {
-                        //    tbl.append('<tr>' + '<td>' + i + '</td>' + '<td>' + value.empName + '</td>' + '<td>' + value.Salary + '</td>' + '<td>' + value.DeptName + '</td>' + '<td>' + value.Designation + '</td>' + '</tr>');
-                        //    i = i + 1;
-                        //});
+                        TamperEvents(result);
+                       
                     }
                 });
                 console.log(meterData);
@@ -224,7 +198,7 @@
         var CompletedData = getObjects1(data2, 'Status', "Completed");
         //var ResponseData = 
         //Get Balance Started
-       
+
 
         $.ajax({
             url: '/SmartMeter/Terminal/BatteryLife',
@@ -236,12 +210,12 @@
                 //textareaLogs.option('value', result);
                 //const myArray = result.split("/");
                 //var data = myArray[1];
-               
+
             }
         });
 
     }
-    
+
     function formatDate(date) {
         var day = date.getDate();
         var month = date.getMonth() + 1;
@@ -277,7 +251,7 @@
         var CompletedGetBalance = getObjects1(CompletedData, 'EventName', "Present Volume");
         var PendingGetBalance = getObjects1(pendingData, 'EventName', "Present Volume");
 
-        var date1 = convertTicksToDate(data1.LogDate);
+        //var date1 = convertTicksToDate(data1.LogDate);
         var date2 = CompletedGetBalance.length > 0 ? convertTicksToDate(CompletedGetBalance[0].LogDate) : "";
         var date3 = PendingGetBalance.length > 0 ? convertTicksToDate(PendingGetBalance[0].LogDate) : "";
 
@@ -318,13 +292,13 @@
                 break;
             }
         }
-       
+
         var balancestring = csting[13] + csting[14] + csting[15] + csting[16] + csting[17] + csting[18] + csting[19] + csting[20] + csting[21] + csting[22] + csting[23] + csting[24];
         var pendingData = getObjects1(data2, 'Status', "Pending");
         var CompletedData = getObjects1(data2, 'Status', "Completed");
         //var ResponseData = 
         //Get Balance Started
-        if (balancestring == "NaN") {
+        if (balancestring.toString() != "NaN") {
 
             $.ajax({
                 url: '/SmartMeter/Terminal/GetRTC',
@@ -359,7 +333,7 @@
                 break;
             }
         }
-       
+
         var balancestring = csting[9];
         var pendingData = getObjects1(data2, 'Status', "Pending");
         var CompletedData = getObjects1(data2, 'Status', "Completed");
@@ -368,6 +342,68 @@
         $("#lblLive").val(balancestring == "AA" ? "Stuck" : balancestring == "BB" ? "Open" : "Close");
 
 
+
+    }
+    function BatteryVoltage(result) {
+        var i = 0;
+        var csting = "";
+        var data3date = "";
+        const myArray = JSON.parse(result);
+        var data1 = myArray[0].Resposne;
+        var data2 = myArray[1].Resposne1;
+        var data3 = myArray[2].CommandResponse;
+        for (i = 0; i < data3.length; i++) {
+            var d = data3[i].Data;
+            if (d.split(',')[8].includes("D8")) {
+                csting = d.split(',');
+                data3date = convertTicksToDate(data3[i].LogDate);
+                break;
+            }
+        }
+        var balancestring = csting[13] + csting[14] + csting[15] + csting[16];
+        var decimalValue = parseInt(balancestring, 16);
+
+        // Format to 3 decimal places
+        var formattedDecimal = decimalValue.toFixed(3);
+        $("#lblBatteryVoltage").val(formattedDecimal / 1000 + " V" + "(" + data3date + ")");
+
+    }
+    function TamperEvents(result) {
+        var i = 0;
+        var csting = "";
+        var data3date = "";
+        const myArray = JSON.parse(result);
+        var data1 = myArray[0].Resposne;
+        var data2 = myArray[1].Resposne1;
+        var data3 = myArray[2].CommandResponse;
+        for (i = 0; i < data3.length; i++) {
+            var d = data3[i].Data;
+            if (d.split(',')[8].includes("1A")) {
+                csting = d.split(',');
+                data3date = convertTicksToDate(data3[i].LogDate);
+                break;
+            }
+        }
+        var balancestring = csting[13] + csting[14] + csting[15] + csting[16] + csting[17] + csting[18] + csting[19] + csting[20] + csting[20];
+        var substrings = balancestring.match(/.{1,2}/g);
+        var titlt = substrings[0] + " (" + data3date + ")";
+        var caseT = substrings[1] + " (" + data3date + ")";
+        var managetT = substrings[2] + " (" + data3date + ")";
+        var ExcessPush = substrings[3] + " (" + data3date + ")";
+        var Excessgas = substrings[4] + " (" + data3date + ")";
+        var SovStuck = substrings[5] + " (" + data3date + ")";
+        var Invalid = substrings[6] + " (" + data3date + ")";
+        var main = substrings[7] + " (" + data3date + ")";
+        var Rf = substrings[8] + " (" + data3date + ")";
+        $("#lblTilt").val(titlt);
+        $("#lblCase").val(caseT);
+        $("#lblMaganet").val(managetT);
+        $("#lblExcessPush").val(ExcessPush);
+        $("#lblExcessGas").val(Excessgas)
+        $("#lblSOVTamper").val(SovStuck);
+        $("#lblLoginError").val(Invalid);
+        $("#lblBatteryTamper").val(main);
+        $("#lblRFTamper").val(Rf);
 
     }
     function ValvePosition(result) {
@@ -386,7 +422,7 @@
                 break;
             }
         }
- 
+
         var balancestring = csting[13];
         var pendingData = getObjects1(data2, 'Status', "Pending");
         var CompletedData = getObjects1(data2, 'Status', "Completed");
@@ -862,7 +898,54 @@
         }
     });
 
+    $("#btnSetRTC").click(function () {
+        if (pld != "") {
+            loadPanel.show();
+            $.ajax({
+                url: '/SmartMeter/Terminal/SendData',
+                type: 'POST',
+                data: {
+                    aid: aid, pld: pld, eid: eeid, eventname: "Set RTC", modetype: modetype, balanceInput: ""
+                },
+                success: function (result) {
+                    loadPanel.hide();
 
+                    if (result != "Command Added In Queue") {
+
+                        $.ajax({
+                            url: '/SmartMeter/Terminal/GetRTC',
+                            type: 'POST',
+                            data: { data: result },
+                            success: function (result1) {
+                                loadPanel.hide();
+                                $("#lblGetRTC").val(result1);
+                                //textareaLogs.option('value', result);
+                                //const myArray = result.split("/");
+                                //var data = myArray[1];
+                                DevExpress.ui.notify(result, "warning", 2000);
+                            }
+                        });
+                    }
+                    else {
+                        loadPanel.hide();
+                        if (result == "Manual Mode Not Activated") {
+                            alert("Manual Mode Not Activated")
+                        }
+                        else {
+                            $("#lblGetRTC").val("Command Added In Queue");
+                        }
+                    }
+                    //textareaLogs.option('value', result);
+                    //const myArray = result.split("/");
+                    //var data = myArray[1];
+                    DevExpress.ui.notify(result, "warning", 2000);
+                }
+            });
+        }
+        else {
+            alert("Please Select Meter");
+        }
+    });
     $("#btnGetRTC").click(function () {
         if (pld != "") {
             loadPanel.show();
@@ -912,37 +995,6 @@
         }
     });
     $("#btnSovCalibration").click(function () {
-        if (pld != "") {
-            loadPanel.show();
-            $.ajax({
-                url: '/SmartMeter/Terminal/SendData',
-                type: 'POST',
-                data: {
-                    aid: aid, pld: pld, eid: eeid, eventname: "SOV Calibration", modetype: modetype, balanceInput: ""
-                },
-                success: function (result) {
-                    loadPanel.hide();
-
-                    if (result == "00000000") {
-                        loadPanel.hide();
-                        $("#lblSovCalb").val("SOV Calibrated");
-                    }
-                    else {
-                        loadPanel.hide();
-                        if (result == "Manual Mode Not Activated") {
-                            alert("Manual Mode Not Activated")
-                        }
-                        else {
-                            $("#lblSovCalb").val("Command Added In Queue");
-                        }
-                    }
-                }
-            });
-        }
-        else {
-            alert("Please Select Meter");
-        }
-    }); $("#btnSovCalibration").click(function () {
         if (pld != "") {
             loadPanel.show();
             $.ajax({

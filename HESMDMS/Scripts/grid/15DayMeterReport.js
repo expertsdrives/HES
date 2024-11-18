@@ -93,13 +93,14 @@ $(function () {
             },
             dataSource: {
                 // ...
-                fields: [{
-                    dataField: "FullName",
-                    caption: "Customer Name",
-                    area: "row",
-                    width: 150,
-                    expanded: true
-                },
+                fields: [
+                //    {
+                //    dataField: "FullName",
+                //    caption: "Customer Name",
+                //    area: "row",
+                //    width: 150,
+                //    expanded: true
+                //},
 
                 {
                     dataField: "BusinessPartnerNo",
@@ -114,12 +115,26 @@ $(function () {
                     area: "row",
 
                     expanded: true
-                },
-                {
-                    dataField: "Street",
-                    area: "row",
-                    expanded: true
-                },
+                    },
+                    {
+                        dataField: "ConnectionObject",
+                        caption: "Connection Object",
+                        area: "row",
+
+                        expanded: true
+                    },
+                    {
+                        dataField: "ChargeAreaNameZoneName",
+                        caption: "Zone Name",
+                        area: "row",
+
+                        expanded: true
+                    },
+                //{
+                //    dataField: "Street",
+                //    area: "row",
+                //    expanded: true
+                //},
                 {
                     dataField: "Date",
                     area: "column",

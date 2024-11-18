@@ -15,6 +15,7 @@
         displayExpr: 'TempMeterID',
         valueExpr: 'TempMeterID',
         value: mid,
+        searchEnabled: true,
         name: 'TempMeterID',
         id: 'TempMeterID',
         onValueChanged: function (data) {
@@ -32,7 +33,7 @@
                 return objects;
             }
 
-            var meterData = getObjects(json, 'TempMeterID', data.value);
+            var meterData = getObjects(json, 'MeterSerialNumber', data.value);
             mid = data.value;
             pld = meterData[0].PLD;
             console.log(pld);

@@ -1,0 +1,389 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-block card-stretch card-height">
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <h4 class="card-title">Bluetooth Communication</h4>
+        </div>
+    </div>
+    <p id="status">Status: Not connected</p>
+    <div class="col-sm-12 col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title">System Operation</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="connectButton">Connect To BLE</button>
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="testButton">Test Mode Enable</button>
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="input-group-prepend">
+                        <button id="testButtonDisable" class="btn btn-primary">Test Mode Disable</button>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    @*<div class="input-group-prepend">
+                            <button class="btn btn-primary" type="button" id="calmode">Cal Mode Enable</button>
+                        </div>*@
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="sovOpen">SOV Open</button>
+                    </div>
+                    &nbsp;&nbsp;
+                    @*<div class="input-group-prepend">
+                            <button class="btn btn-primary" type="button" id="calDisable">Cal Mode Disable</button>
+                        </div>*@
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="sovClose">SOV Close</button>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="sovStatus">Sov Status</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblsovstats">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="presentVolume">Present Volume</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblpresentVolume">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-12 col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title">Billing</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="AddBlance">Add Balance</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" id="lblAddBlance">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="GetBlance">Get Balance</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblGetBlance">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    let device;
+    let server;
+    let service;
+    let writeCharacteristic;
+    let readCharacteristic;
+
+    const serviceUUID = '0783b03e-8535-b5a0-7140-a304d2495cb7';
+    const readCharacteristicUUID = '0783b03e-8535-b5a0-7140-a304d2495cb8';
+    const writeCharacteristicUUID = '0783b03e-8535-b5a0-7140-a304d2495cba';
+    const header = [0x02, 0x03, 0x00, 0x08, 0x7E];
+    const footer = [0x03, 0x0D];
+    // Hex data for PWD Mode
+    const hexDataPWD = new Uint8Array([0x02, 0x03, 0x00, 0x08, 0x7E, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x03, 0x0D]);
+    // Hex data for Test Mode
+    const hexDataTest = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0x1E, 0x03]);
+    // Hex data for SOV Open
+    const hexDataSOVOpen = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0x05, 0x03]);
+    const testDisable = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0x1F, 0x03]);
+    const calEnable = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0x2E, 0x03]);
+    const calDisable = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0x2F, 0x03]);
+    const sovStatus = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0x07, 0x03]);
+    const sovOpen = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0x05, 0x03]);
+    const sovClose = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0x06, 0x03]);
+    const getBalance = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0xEB, 0x03]);
+    const presentVolume = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0xEC, 0x03]);
+    const balanceheader = new Uint8Array([0x02, 0x03, 0x00, 0x03, 0x29]);
+    const balanceFooter = new Uint8Array([0x03]);
+    // Function to convert a string to an array of hex values
+    function stringToHex(str) {
+        const hexArray = [];
+        for (let i = 0; i < str.length; i++) {
+            hexArray.push(str.charCodeAt(i));
+        }
+        return hexArray;
+    }
+
+    function toHexString(floatValue) {
+        // Convert the float to an integer and then to a hex string
+        const intValue = Math.round(floatValue * 100); // Assuming balance is in 2 decimal places
+        return intValue.toString(16).padStart(4, '0').toUpperCase(); // Ensure 4 characters (2 bytes)
+    }
+
+    function hexStringToByteArray(hexString) {
+        let byteArray = [];
+        for (let i = 0; i < hexString.length; i += 2) {
+            byteArray.push(parseInt(hexString.substring(i, i + 2), 16));
+        }
+        return byteArray;
+    }
+    function floatToHexArray(floatValue) {
+        const floatArray = new ArrayBuffer(4); // 4 bytes for single-precision float
+        new DataView(floatArray).setFloat32(0, floatValue, false); // Big-endian
+        return Array.from(new Uint8Array(floatArray)); // Convert buffer to byte array
+    }
+    $('#connectButton').on('click', async function () {
+        try {
+            // Request device
+            device = await navigator.bluetooth.requestDevice({
+                filters: [{ services: [serviceUUID] }],
+                optionalServices: [serviceUUID]
+            });
+
+            $('#status').text('Status: Device selected, connecting...');
+
+            // Connect to the GATT server
+            server = await device.gatt.connect();
+            $('#status').text('Status: Connected to GATT server');
+
+            // Get the primary service
+            service = await server.getPrimaryService(serviceUUID);
+
+            // Get the write characteristic
+            writeCharacteristic = await service.getCharacteristic(writeCharacteristicUUID);
+
+            // Get the read characteristic and start notifications
+            readCharacteristic = await service.getCharacteristic(readCharacteristicUUID);
+            await readCharacteristic.startNotifications();
+            $('#status').text('Status: Notifications started for read characteristic');
+
+            // Enable buttons for PWD Mode, Test Mode, and SOV Open after connection
+            $('#pwdButton').prop('disabled', false);
+            $('#testButton').prop('disabled', false);
+            $('#sovOpenButton').prop('disabled', false);
+
+            // Handle incoming notifications
+            readCharacteristic.addEventListener('characteristicvaluechanged', handleNotification);
+            const password = prompt("Enter the password:");
+
+            if (password) {
+                // Convert password to hex
+                const passwordHex = stringToHex(password);
+
+                // Combine header, passwordHex, and footer
+                const dataToSend = new Uint8Array([...header, ...passwordHex, ...footer]);
+
+                // Send the combined hex data
+                await writeCharacteristic.writeValue(dataToSend);
+                $('#status').text('Status: Password data sent, waiting for response...');
+            } else {
+                $('#status').text('Status: No password entered.');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            $('#status').text('Status: ' + error);
+        }
+    });
+
+    // Send PWD Mode data on button click
+    $('#pwdButton').on('click', async function () {
+        try {
+            await writeCharacteristic.writeValue(hexDataPWD);
+            $('#status').text('Status: PWD Mode data sent, waiting for response...');
+        } catch (error) {
+            console.error('Error sending PWD Mode data:', error);
+        }
+    });
+
+    // Send Test Mode data on button click
+    $('#testButton').on('click', async function () {
+        try {
+            await writeCharacteristic.writeValue(hexDataTest);
+            $('#status').text('Status: Test Mode data sent, waiting for response...');
+        } catch (error) {
+            console.error('Error sending Test Mode data:', error);
+        }
+    });
+    $('#AddBlance').on('click', async function () {
+        try {
+            const fixByte = [0x02, 0x03, 0x00, 0x03, 0x29];
+            const endByte = [0x03, 0x0D];
+            const balanceInput = parseFloat(document.getElementById("lblAddBlance").value);
+            if (isNaN(balanceInput)) {
+                alert('Please enter a valid balance');
+                return;
+            }
+            const balanceByte = floatToHexArray(balanceInput);
+            const combinedArray = new Uint8Array([...fixByte, ...balanceByte, ...endByte]);
+            //const balanceHex = toHexString(balanceInput);
+            //const balanceBytes = hexStringToByteArray(balanceHex);
+            //const rv = new Uint8Array(fixByte.length + balanceBytes.length + endByte.length);
+            //rv.set(fixByte, 0);
+            //rv.set(balanceBytes, fixByte.length);
+            //rv.set(endByte, fixByte.length + balanceBytes.length);
+
+            writeCharacteristic.writeValue(combinedArray).then(() => {
+                $('#status').text('Balance data sent, waiting for response...');
+            }).catch(error => {
+                console.error('Error sending balance:', error);
+            });
+        } catch (error) {
+            console.error('Error sending Test Mode data:', error);
+        }
+    });
+    $('#presentVolume').on('click', async function () {
+        try {
+            await writeCharacteristic.writeValue(presentVolume);
+            $('#status').text('Status: Present Volume data sent, waiting for response...');
+        } catch (error) {
+            console.error('Error sending Test Mode data:', error);
+        }
+    });
+    $('#GetBlance').on('click', async function () {
+        try {
+            await writeCharacteristic.writeValue(getBalance);
+            $('#status').text('Status: Get Balance data sent, waiting for response...');
+        } catch (error) {
+            console.error('Error sending Test Mode data:', error);
+        }
+    });
+    $('#calDisable').on('click', async function () {
+        try {
+            await writeCharacteristic.writeValue(calDisable);
+            $('#status').text('Status: Cal Mode Disable data sent, waiting for response...');
+        } catch (error) {
+            console.error('Error sending Test Mode data:', error);
+        }
+    });
+    $('#sovOpen').on('click', async function () {
+        try {
+            await writeCharacteristic.writeValue(sovOpen);
+            $('#status').text('Status: Sov Open data sent, waiting for response...');
+        } catch (error) {
+            console.error('Error sending Test Mode data:', error);
+        }
+    });
+    $('#sovClose').on('click', async function () {
+        try {
+            await writeCharacteristic.writeValue(sovClose);
+            $('#status').text('Status: Sov Close data sent, waiting for response...');
+        } catch (error) {
+            console.error('Error sending Test Mode data:', error);
+        }
+    });
+    $('#sovStatus').on('click', async function () {
+        try {
+            await writeCharacteristic.writeValue(sovStatus);
+            $('#status').text('Status: Sov Status data sent, waiting for response...');
+        } catch (error) {
+            console.error('Error sending Test Mode data:', error);
+        }
+    });
+    $('#calmode').on('click', async function () {
+        try {
+            await writeCharacteristic.writeValue(calEnable);
+            $('#status').text('Status: Cal Mode Enable, waiting for response...');
+        } catch (error) {
+            console.error('Error sending Test Mode data:', error);
+        }
+    });
+    $('#testButtonDisable').on('click', async function () {
+        try {
+            await writeCharacteristic.writeValue(testDisable);
+            $('#status').text('Status: Test Mode Disable data sent, waiting for response...');
+        } catch (error) {
+            console.error('Error sending Test Mode data:', error);
+        }
+    });
+
+
+    // Send SOV Open data on button click
+    $('#sovOpenButton').on('click', async function () {
+        try {
+            await writeCharacteristic.writeValue(hexDataSOVOpen);
+            $('#status').text('Status: SOV Open data sent, waiting for response...');
+        } catch (error) {
+            console.error('Error sending SOV Open data:', error);
+        }
+    });
+
+    // Function to handle notifications and convert to hex
+    function handleNotification(event) {
+        const value = event.target.value;
+        let hexResult = '';
+        for (let i = 0; i < value.byteLength; i++) {
+            const hex = ('00' + value.getUint8(i).toString(16)).slice(-2); // Convert to hex and pad with 0 if necessary
+            hexResult += hex + ' ';
+        }
+        console.log('Notification received in hex: ', hexResult.trim());
+        $('#status').append('<br>Notification received: ' + hexResult.trim());
+        splitOutput = hexResult.trim().split(' ');
+
+        if (splitOutput[4] == "07") {
+            // Process SOV Status response
+            let hexOutput = "0x" + splitOutput[9]; // Get the 9th index value from splitOutput
+            let hexString = parseInt(hexOutput, 16); // Convert hex to integer
+
+            if (hexString === 0) {
+                $("#lblsovstats").val("Opened");
+            } else if (hexString === 1) {
+                $("#lblsovstats").val("Closed");
+            } else {
+                $("#lblsovstats").val("Stuck");
+            }
+        }
+        else if (splitOutput[4] == "ec") {
+            let hexOutput = "";
+
+            // Combine splitOutput[5] to splitOutput[8] into a single hex string
+            for (let i = 5; i <= 8; i++) {
+                hexOutput += splitOutput[i];
+            }
+
+            // Convert the hex string to an integer
+            let intValue = parseInt(hexOutput, 16);
+
+            // Convert integer to float (if needed) and display the value
+            // Example conversion (if the integer is meant to represent a float value in a specific format)
+            let floatValue = intValue / 100;
+            $("#lblpresentVolume").val(floatValue);
+        }
+        else if (splitOutput[4] == "eb") {
+            let hexOutput = '';
+            for (let i = 5; i <= 12; i++) {
+                hexOutput += splitOutput[i];
+            }
+
+            // Convert the hex string to an integer
+            // Convert the concatenated hex string into a long value
+            const longValue = parseInt(hexOutput, 16);
+
+            // Convert the long value to a double using JavaScript's Buffer
+            const buffer = new ArrayBuffer(8);
+            const dataView = new DataView(buffer);
+            dataView.setBigUint64(0, BigInt(longValue), false); // Big-endian conversion
+
+            // Convert the 64-bit integer to a double
+            const doubleValue = dataView.getFloat64(0, false); // Big-endi
+            $("#lblGetBlance").val(doubleValue);
+        }
+        else {
+            console.log('Notification received in hex: ', hexResult.trim());
+            // $('#status').append('<br>Notification received: ' + hexResult.trim());
+        }
+    }
+</script>
+
+

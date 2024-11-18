@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Generate QR Code for UPI Payment";
+}
+
+<h2>Generate QR Code for UPI Payment</h2>
+
+@using (Html.BeginForm("GenerateQRCode", "PayU", FormMethod.Post))
+{
+    <div>
+        <label for="amount">Enter Amount:</label>
+        <input type="text" id="amount" name="amount" />
+        <button type="submit">Generate QR Code</button>
+    </div>
+}
+
+@if (ViewBag.QRCodeImage != null)
+{
+    <div>
+        <h3>Scan this QR Code to Pay:</h3>
+        <img src="@ViewBag.QRCodeImage" alt="QR Code" />
+    </div>
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div style="color:red;">
+        <p>@ViewBag.ErrorMessage</p>
+    </div>
+}
+
+

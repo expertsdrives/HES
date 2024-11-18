@@ -22,5 +22,6 @@ namespace HESMDMS.Models
         public Nullable<System.DateTime> TransactionDate { get; set; }
         public string Status { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string Server { get; set; }
     }
 }

@@ -31,6 +31,8 @@
           <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="50" />
           <Property Name="AccessFailedCount" Type="int" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
+          <Property Name="LastLoggedInDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tbl_AMRAckData">
           <Key>
@@ -550,7 +552,6 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
         <Function Name="FetchDataConsumption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BusninessPartner" Type="varchar" Mode="In" />
         </Function>
-        
         <Function Name="sp_AMRBill" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_AMRHealth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_ConsumptionGraph" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -561,7 +562,6 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="sp_Get15DayReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        
         <Function Name="sp_TotalAMR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_TotalRevenue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_ZeroConsumption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -853,7 +853,8 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="FetchConsumption_POC" ReturnType="Collection(SmartMeterModel.FetchConsumption_POC_Result)" />
+          <FunctionImport Name="FetchConsumption_POC" ReturnType="Collection(SmartMeterModel.FetchConsumption_POC_Result)" >
+            </FunctionImport>
           <FunctionImport Name="FetchConsumption_15DayRevenue" ReturnType="Collection(SmartMeterModel.FetchConsumption_15DayRevenue_Result)" />
           <EntitySet Name="tbl_SignalRMaxID" EntityType="SmartMeterModel.tbl_SignalRMaxID" />
           <EntitySet Name="tbl_OTACommands" EntityType="SmartMeterModel.tbl_OTACommands" />
@@ -921,6 +922,8 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tbl_RoleMaster" Relationship="SmartMeterModel.FK_tbl_AdminCredentials_tbl_RoleMaster" FromRole="tbl_AdminCredentials" ToRole="tbl_RoleMaster" />
           <Property Name="AccessFailedCount" Type="Int32" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastLoggedInDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_tbl_AdminCredentials_tbl_RoleMaster">
           <End Type="SmartMeterModel.tbl_RoleMaster" Role="tbl_RoleMaster" Multiplicity="1" />
@@ -1780,6 +1783,8 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <EntitySetMapping Name="tbl_AdminCredentials">
             <EntityTypeMapping TypeName="SmartMeterModel.tbl_AdminCredentials">
               <MappingFragment StoreEntitySet="tbl_AdminCredentials">
+                <ScalarProperty Name="LastLoggedInDate" ColumnName="LastLoggedInDate" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />

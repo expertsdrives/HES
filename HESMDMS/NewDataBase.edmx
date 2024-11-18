@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SmartMeterModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="sp_Circle1Temp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="startdate" Type="datetime" Mode="In" />
+          <Parameter Name="enddate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_ClusterWiseReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="startdate" Type="datetime" Mode="In" />
+          <Parameter Name="enddate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_FetchConsumptionData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="SmartMeterModel1StoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SmartMeterModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SmartMeterEntities1" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="sp_Circle1Temp" ReturnType="Collection(SmartMeterModel1.sp_Circle1Temp_Result)">
+            <Parameter Name="startdate" Mode="In" Type="DateTime" />
+            <Parameter Name="enddate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ClusterWiseReport" ReturnType="Collection(SmartMeterModel1.sp_ClusterWiseReport_Result)">
+            <Parameter Name="startdate" Mode="In" Type="DateTime" />
+            <Parameter Name="enddate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FetchConsumptionData" ReturnType="Collection(SmartMeterModel1.sp_FetchConsumptionData_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_Circle1Temp_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="FullName" Nullable="true" />
+          <Property Type="Int64" Name="MeterNumber" Nullable="true" />
+          <Property Type="Int64" Name="TXID" Nullable="true" />
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="Decimal" Name="OpeningAMRReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Decimal" Name="OpeningMeterReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="InstallationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="AMRSerialNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Vayudut_ID" Nullable="true" />
+          <Property Type="Int32" Name="MagneticTamper" Nullable="true" />
+          <Property Type="Int32" Name="CaseTamper" Nullable="true" />
+          <Property Type="Double" Name="AMRBattery" Nullable="true" />
+          <Property Type="Double" Name="VayudutBattery" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ClusterWiseReport_Result">
+          <Property Type="String" Name="VendorName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="BusinessPartnerNo" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ContractAcct" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ConnectionObject" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ChargeAreaNameZoneName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="AreaType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="CreationDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="BPReleaseDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="NRel" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="JobDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="JobNo" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="MoveInDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="MoveOutDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="HouseNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Street" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Street2" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Street3" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Street4" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Street5" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="GeyserPoint" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="KitchenPoint" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MobileNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MeterNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MeterMake" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Plant" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RegStGrp" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PostalCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Plan" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Counter" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DRS" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="BPSubType" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="BPType" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MarketingPerName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="OldCustIDFormNo" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Vendor" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="MoveInCreatedOn" Nullable="true" Precision="23" />
+          <Property Type="String" Name="MeterReadingUnit" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MoveInCreatedBy" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SerialNumber" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Latitude" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Longitude" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="communication_status" Nullable="false" MaxLength="17" />
+        </ComplexType>
+        <ComplexType Name="sp_FetchConsumptionData_Result">
+          <Property Type="Int64" Name="BusinessPartnerNo" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="Decimal" Name="OpeningMeterReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Int64" Name="DataCount" Nullable="true" />
+          <Property Type="Decimal" Name="OpeningAMRReading" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Decimal" Name="ReadingCount" Nullable="true" Precision="27" Scale="5" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MeterNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ContractAcct" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ConnectionObject" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ChargeAreaNameZoneName" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="TXID" Nullable="true" />
+          <Property Type="Decimal" Name="DailyConsumption" Nullable="true" Precision="28" Scale="5" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SmartMeterModel1StoreContainer" CdmEntityContainer="SmartMeterEntities1" >
+          <FunctionImportMapping FunctionImportName="sp_Circle1Temp" FunctionName="SmartMeterModel1.Store.sp_Circle1Temp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel1.sp_Circle1Temp_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="AMRSerialNumber" ColumnName="AMRSerialNumber" />
+                <ScalarProperty Name="Vayudut_ID" ColumnName="Vayudut_ID" />
+                <ScalarProperty Name="MagneticTamper" ColumnName="MagneticTamper" />
+                <ScalarProperty Name="CaseTamper" ColumnName="CaseTamper" />
+                <ScalarProperty Name="AMRBattery" ColumnName="AMRBattery" />
+                <ScalarProperty Name="VayudutBattery" ColumnName="VayudutBattery" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ClusterWiseReport" FunctionName="SmartMeterModel1.Store.sp_ClusterWiseReport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel1.sp_ClusterWiseReport_Result">
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="ContractAcct" ColumnName="ContractAcct" />
+                <ScalarProperty Name="ConnectionObject" ColumnName="ConnectionObject" />
+                <ScalarProperty Name="ChargeAreaNameZoneName" ColumnName="ChargeAreaNameZoneName" />
+                <ScalarProperty Name="AreaType" ColumnName="AreaType" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="BPReleaseDate" ColumnName="BPReleaseDate" />
+                <ScalarProperty Name="NRel" ColumnName="NRel" />
+                <ScalarProperty Name="JobDate" ColumnName="JobDate" />
+                <ScalarProperty Name="JobNo" ColumnName="JobNo" />
+                <ScalarProperty Name="MoveInDate" ColumnName="MoveInDate" />
+                <ScalarProperty Name="MoveOutDate" ColumnName="MoveOutDate" />
+                <ScalarProperty Name="HouseNo" ColumnName="HouseNo" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Street2" ColumnName="Street2" />
+                <ScalarProperty Name="Street3" ColumnName="Street3" />
+                <ScalarProperty Name="Street4" ColumnName="Street4" />
+                <ScalarProperty Name="Street5" ColumnName="Street5" />
+                <ScalarProperty Name="GeyserPoint" ColumnName="GeyserPoint" />
+                <ScalarProperty Name="KitchenPoint" ColumnName="KitchenPoint" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="MeterMake" ColumnName="MeterMake" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="RegStGrp" ColumnName="RegStGrp" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Plan" ColumnName="Plan" />
+                <ScalarProperty Name="Counter" ColumnName="Counter" />
+                <ScalarProperty Name="DRS" ColumnName="DRS" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="BPSubType" ColumnName="BPSubType" />
+                <ScalarProperty Name="BPType" ColumnName="BPType" />
+                <ScalarProperty Name="MarketingPerName" ColumnName="MarketingPerName" />
+                <ScalarProperty Name="OldCustIDFormNo" ColumnName="OldCustIDFormNo" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="MoveInCreatedOn" ColumnName="MoveInCreatedOn" />
+                <ScalarProperty Name="MeterReadingUnit" ColumnName="MeterReadingUnit" />
+                <ScalarProperty Name="MoveInCreatedBy" ColumnName="MoveInCreatedBy" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="communication_status" ColumnName="communication_status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_FetchConsumptionData" FunctionName="SmartMeterModel1.Store.sp_FetchConsumptionData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel1.sp_FetchConsumptionData_Result">
+                <ScalarProperty Name="BusinessPartnerNo" ColumnName="BusinessPartnerNo" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="OpeningMeterReading" ColumnName="OpeningMeterReading" />
+                <ScalarProperty Name="DataCount" ColumnName="DataCount" />
+                <ScalarProperty Name="OpeningAMRReading" ColumnName="OpeningAMRReading" />
+                <ScalarProperty Name="ReadingCount" ColumnName="ReadingCount" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="ContractAcct" ColumnName="ContractAcct" />
+                <ScalarProperty Name="ConnectionObject" ColumnName="ConnectionObject" />
+                <ScalarProperty Name="ChargeAreaNameZoneName" ColumnName="ChargeAreaNameZoneName" />
+                <ScalarProperty Name="TXID" ColumnName="TXID" />
+                <ScalarProperty Name="DailyConsumption" ColumnName="DailyConsumption" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

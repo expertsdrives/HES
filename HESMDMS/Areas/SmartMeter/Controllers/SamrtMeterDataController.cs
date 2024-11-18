@@ -526,5 +526,9 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
             }
           
         }
+        public ActionResult SGMBLEConnection()
+        {
+            return View();
+        }
     }
 }

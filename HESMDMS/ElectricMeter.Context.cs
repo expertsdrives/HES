@@ -31,6 +31,7 @@ namespace HESMDMS
         public virtual DbSet<tbl_MeterData> tbl_MeterData { get; set; }
         public virtual DbSet<tbl_ParameterMaster> tbl_ParameterMaster { get; set; }
         public virtual DbSet<tbl_MeterMasterRelay> tbl_MeterMasterRelay { get; set; }
+        public virtual DbSet<tbl_BLEDemo> tbl_BLEDemo { get; set; }
     
         public virtual ObjectResult<sp_FetchData_Result> sp_FetchData()
         {

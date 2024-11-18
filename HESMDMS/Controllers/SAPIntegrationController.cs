@@ -18,6 +18,7 @@ using System.Security.Cryptography;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using static HESMDMS.Controllers.SAPIntegrationController;
 using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace HESMDMS.Controllers
@@ -111,13 +112,13 @@ namespace HESMDMS.Controllers
                         existingCustomer.Plant = (string)rec["Plant"];
                         existingCustomer.MeterReadingUnit = (string)rec["MeterReadingUnit"];
                         existingCustomer.BPSubType = (string)rec["BPSubType"];
-                        existingCustomer.ScheduleDate= (string)rec["ScheduleDate"]; 
-                        existingCustomer.RentalFlag = (string)rec["RentalFlag"]; 
-                        existingCustomer.Installment_Amount = (string)rec["Installment_Amount"]; 
-                        existingCustomer.Installment_Numbers = (string)rec["Installment_Numbers"]; 
-                        existingCustomer.Discount_Amount = (string)rec["Discount_Amount"]; 
-                        existingCustomer.Valid_from = (string)rec["Valid_from"]; 
-                        existingCustomer.valid_to = (string)rec["Valid_to"]; 
+                        existingCustomer.ScheduleDate = (string)rec["ScheduleDate"];
+                        existingCustomer.RentalFlag = (string)rec["RentalFlag"];
+                        existingCustomer.Installment_Amount = (string)rec["Installment_Amount"];
+                        existingCustomer.Installment_Numbers = (string)rec["Installment_Numbers"];
+                        existingCustomer.Discount_Amount = (string)rec["Discount_Amount"];
+                        existingCustomer.Valid_from = (string)rec["Valid_from"];
+                        existingCustomer.valid_to = (string)rec["Valid_to"];
                         // Date in UTC
                         DateTime utcDate = DateTime.UtcNow;
 
@@ -485,7 +486,7 @@ namespace HESMDMS.Controllers
         public class FetchBalance
         {
             public string CustomerID { get; set; }
-          
+
         }
 
         public class AMRAck_Data
@@ -754,7 +755,7 @@ namespace HESMDMS.Controllers
         {
             try
             {
-                var tid = clsMeters.tbl_ATGLPaymentAck.Where(x=>x.TransactionID== tbl_ATGLPaymentAck.TransactionID).Count();
+                var tid = clsMeters.tbl_ATGLPaymentAck.Where(x => x.TransactionID == tbl_ATGLPaymentAck.TransactionID).Count();
                 if (tid != 0)
                 {
                     return Request.CreateResponse(HttpStatusCode.Unauthorized, "Duplicate Transcation ID Not Allowed");
@@ -766,6 +767,111 @@ namespace HESMDMS.Controllers
                     clsMeters.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, "Success");
                 }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+
+            }
+        }
+        public class BillingData
+        {
+            public DateTime? Date { get; set; }
+            public decimal MMBtu { get; set; }
+            public decimal SCM { get; set; }
+            public decimal Amount { get; set; }
+        }
+        public class BalanceData
+        {
+            public DateTime? Date { get; set; }
+            public decimal Balance { get; set; }
+        }
+        [System.Web.Http.Route("GetSmartCustomerData")]
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage GetSmartCustomerData(string CustomerID, string startdate, string enddate)
+        {
+            try
+            {
+                DateTime fromDate = Convert.ToDateTime(startdate);
+                DateTime toDate = Convert.ToDateTime(enddate);
+                var getData = clsMeters.tbl_Customers.Where(c => c.ContractAcct == CustomerID).FirstOrDefault();
+                if (getData == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Customer not found");
+                }
+                var getMeterDetails = clsMetersProd.tbl_AssignSmartMeter.Where(c => c.CustomerInstallationID == getData.ID).FirstOrDefault();
+                if (getMeterDetails == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Meter details not found");
+                }
+                var pld = getMeterDetails.pld;
+                var data = clsMetersProd.sp_ResponseSplited_Billing(pld, fromDate, toDate).ToList().OrderBy(x => x.Date);
+                if (data == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Data Found");
+                }
+                var billingDataList = new List<BillingData>();
+                foreach (var billingData in data)
+                {
+                    var gcv = "10085.968";
+                    var kkcal = Convert.ToDecimal(billingData.TotalConsumptionDifference) * Convert.ToDecimal(10085.968);
+                    var btu = Convert.ToDecimal(kkcal) * Convert.ToDecimal(3.968321);
+                    var mmbtu = Convert.ToDecimal(btu) / Convert.ToDecimal(Math.Pow(10, 6));
+                    var gasAmount = Convert.ToDecimal(billingData.StandardCharge) * mmbtu;
+                    var vatCharges = gasAmount * Convert.ToDecimal(0.15);
+                    var billingDataItem = new BillingData
+                    {
+                        Date = billingData.Date,
+                        MMBtu = mmbtu,
+                        SCM = Convert.ToDecimal(billingData.TotalConsumptionDifference),  // Assuming TotalConsumptionDifference is the SCM
+                        Amount = gasAmount + vatCharges  // Adding gas amount and VAT charges
+                    };
+
+                    // Add the object to the list
+                    billingDataList.Add(billingDataItem);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, billingDataList);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+
+            }
+        }
+        [System.Web.Http.Route("FetchLatestBalance")]
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage FetchLatestBalance(string CustomerID)
+        {
+            try
+            {
+                DateTime FromDate = DateTime.Now.AddDays(-15).Date;
+                DateTime todate = DateTime.Now.Date;
+                var getData = clsMeters.tbl_Customers.Where(c => c.ContractAcct == CustomerID).FirstOrDefault();
+                if (getData == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Customer not found");
+                }
+                var getMeterDetails = clsMetersProd.tbl_AssignSmartMeter.Where(c => c.CustomerInstallationID == getData.ID).FirstOrDefault();
+                if (getMeterDetails == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Meter details not found");
+                }
+                var pld = getMeterDetails.pld;
+                var data = clsMetersProd.sp_ResponseSplited_Billing(pld, FromDate, todate).OrderByDescending(x=>x.Date).FirstOrDefault();
+                if (data == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Data Found");
+                }
+                var accountBalance = data.AccountBalance;
+                var ebal= data.eCreditBalance;
+                var totalBalance= Convert.ToDecimal(ebal)+Convert.ToDecimal(accountBalance);
+                var balance = new BalanceData
+                {
+                    Date = data.Date,
+                
+                    Balance = totalBalance  // Adding gas amount and VAT charges
+                };
+                return Request.CreateResponse(HttpStatusCode.OK, balance);
             }
             catch (Exception ex)
             {

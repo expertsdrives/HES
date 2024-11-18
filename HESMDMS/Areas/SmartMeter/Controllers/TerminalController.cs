@@ -37,19 +37,19 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
         // GET: SmartMeter/Terminal
         public ActionResult Index()
         {
-            
 
-                //var data = clsMetersProd.tbl_SMeterMaster.ToList();
-                var data = (from log in clsMetersProd.tbl_SMeterMaster
-                            select new
-                            {
-                                ID = log.ID,
-                                TempMeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
-                                AID = log.AID,
-                                PLD = log.PLD,
-                            }).ToList();
-                ViewBag.data = data;
-            
+
+            //var data = clsMetersProd.tbl_SMeterMaster.ToList();
+            var data = (from log in clsMetersProd.tbl_SMeterMaster
+                        select new
+                        {
+                            ID = log.ID,
+                            TempMeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
+                            AID = log.AID,
+                            PLD = log.PLD,
+                        }).ToList();
+            ViewBag.data = data;
+
             return View();
         }
 
@@ -88,8 +88,9 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                 var query = clsMetersProd.sp_ResponseSplited(pld, CurrentDate, CurrentDate).OrderByDescending(x => x.ID).FirstOrDefault();
                 var data = clsMetersProd.tbl_CommandBackLog.Where(x => x.pld == pld).OrderByDescending(x => x.ID).ToList();
                 var response = clsMetersProd.tbl_Response.Where(x => x.Data.Contains("&") && x.pld == pld).OrderByDescending(c => c.ID).ToList();
-                var balance = query.AccountBalance;
-                var tariff = query.StandardCharge;
+
+                var balance = query != null ? query.AccountBalance : 0;
+                var tariff = query != null? query.StandardCharge:"";
                 var commonQuery = new JSONData { Resposne = query };
                 var commonData = new JSONData { Resposne1 = data };
                 var commonResponse = new JSONData { CommandResponse = response };
@@ -120,6 +121,21 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                             var command1 = clsMeters.tbl_OTACommands.Where(x => x.Name == s).FirstOrDefault();
                             var data1 = command1.Command;
                             DateTime time1 = DateTime.UtcNow;
+                            if (eventname == "Set RTC")
+                            {
+                                string inputDate = Convert.ToDateTime(DateTime.Now).ToString("ddMMyyHHmmss");
+                                string hex = "";
+                                for (int i = 0; i < inputDate.Length; i += 2)
+                                {
+                                    string pair = inputDate.Substring(i, 2);
+                                    int value = int.Parse(pair);
+
+                                    // convert the decimal value to a two-digit hexadecimal string
+                                    string hexPair = value.ToString("X2");
+                                    hex += hexPair;
+                                }
+                                data1 = data1.Replace("-", string.Concat(hex.Select((c, i) => i > 0 && i % 2 == 0 ? "," + c : c.ToString())));
+                            }
                             if (eventname == "Add Balance" || eventname == "Set Vat" || eventname == "Set Average Gas Calorific Value" || eventname == "Set E-Credit Threshold")
                             {
                                 if (eventname.Contains("Set Vat"))
@@ -734,13 +750,20 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
         }
         public JsonResult BatteryLife(string data)
         {
-            var hexString = Convert.ToInt32(data, 16);
-            int ndays = 0, year = 0, week = 0, days = 0, DAYSINWEEK = 7;
-            ndays = hexString;
-            year = ndays / 365;
-            week = (ndays % 365) / DAYSINWEEK;
-            days = (ndays % 365);
-            return Json(year.ToString() + " Years " + days.ToString() + " days", JsonRequestBehavior.AllowGet);
+            if (data != "NaN")
+            {
+                var hexString = Convert.ToInt32(data, 16);
+                int ndays = 0, year = 0, week = 0, days = 0, DAYSINWEEK = 7;
+                ndays = hexString;
+                year = ndays / 365;
+                week = (ndays % 365) / DAYSINWEEK;
+                days = (ndays % 365);
+                return Json(year.ToString() + " Years " + days.ToString() + " days", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
         }
         public static IEnumerable<string> SplitIntoChunks(string input, int chunkSize)
         {
@@ -1003,7 +1026,7 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                                 LogDate = backLog.LogDate,
                                 CompletedLogDate = backLog.CompletedLogDate,
                             });
-                return Json(data.Where(x=>x.MeterID== "100111" || x.MeterID== "100115").ToList(), JsonRequestBehavior.AllowGet);
+                return Json(data.Where(x => x.MeterID == "100111" || x.MeterID == "100115").ToList(), JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -1023,7 +1046,7 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                 return Json(data.ToList(), JsonRequestBehavior.AllowGet);
             }
 
-            
+
         }
 
 

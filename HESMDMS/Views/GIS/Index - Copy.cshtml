@@ -1,0 +1,296 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/tokml/tokml.min.js"></script> <!-- For KML parsing -->
+<script src="https://unpkg.com/jszip/dist/jszip.min.js"></script> <!-- For handling KMZ -->
+<script src="https://unpkg.com/leaflet-filelayer/leaflet.filelayer.js"></script> <!-- For loading files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/togeojson/0.16.0/togeojson.min.js"></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+<style>
+    #map {
+        height: 800px;
+        width: 100%;
+    }
+</style>
+<div class="card card-block card-stretch card-height">
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" class="date-picker" />
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" class="date-picker" />
+            <button id="applyFilter" class="btn btn-primary">Show GIS Tagging</button>
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="loadpanel"></div>
+        <p id="distance"></p>
+        <p style="display:none" id="details">Active AMR: <label id="activeamr"></label> &nbsp;| Active Vayudut: <label id="activevayudut"></label> &nbsp;| AMR No Reception: <lable id="inactiveamr"></lable> &nbsp;| Vayudut No Reception: <lable id="inactivevayu"></lable> </p>
+        <div id="map"></div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        const loadPanel = $('.loadpanel').dxLoadPanel({
+            shadingColor: 'rgba(0,0,0,0.4)',
+            position: { of: '.container' },
+            visible: false,
+            showIndicator: true,
+            showPane: true,
+            shading: true,
+            hideOnOutsideClick: false,
+            onShown() {
+            },
+            onHidden() {
+                /* showEmployeeInfo(employee);*/
+            },
+        }).dxLoadPanel('instance');
+        $("#applyFilter").on("click", function () {
+            loadPanel.show();
+            var startDate = $("#startDate").val();
+            var endDate = $("#endDate").val();
+            var dataToSend = {
+                name: $('#name').val(),
+                age: $('#age').val()
+            };
+            if (!startDate || !endDate) {
+
+                alert("Please select both start and end dates.");
+
+                return;
+
+            }
+            console.log("Applying filter: Start Date = " + startDate + ", End Date = " + endDate);
+            $.ajax({
+                type: 'POST',                    // HTTP method
+                url: '/GIS/CallToMap',    // Controller URL (replace with actual controller/action)
+                data: { startDate: startDate, endDate: endDate }, // Data sent as key-value pairs
+                success: function (response) {     // Success callback
+                    var missingARMJson = response.missingARMJson;
+                    var ActiveAMRJson = response.ActiveAMRJson;
+                    var ActiveVayudutJson = response.ActiveVayudutJson;
+                    var missingVayudutJson = response.missingVayudutJson;
+                    var ActiveAMRCount = response.ActiveAMRCount;
+                    var inactiveAMRCount = response.inactiveAMRCount;
+                    var ActiveVayudutCount = response.ActiveVayudutCount;
+                    var missingVayudutCount = response.missingVayudutCount;
+                    var largeCircleLocations = JSON.parse(response.ActiveVayudutJson);
+                    var markerLocations = JSON.parse(response.missingARMJson);
+                    var smallCircleLocations = JSON.parse(response.ActiveAMRJson);
+                    var vayu = JSON.parse(response.missingVayudutJson);
+                    var largeCircles = [];
+                    var vayuCircles = [];
+                    $('#details').show();
+                    $('#activeamr').text(ActiveAMRCount);
+                    $('#activevayudut').text(ActiveVayudutCount);
+                    $('#inactiveamr').text(inactiveAMRCount);
+                    $('#inactivevayu').text(missingVayudutCount);
+                    var map = L.map('map').setView([28.1924017, 77.8829483], 13);
+                    var customIcon = L.icon({
+                        iconUrl: 'https://hesmdms.com/assets/images/favicon.ico',
+                        iconSize: [12, 12], // size of the icon
+                        iconAnchor: [16, 12], // point of the icon which will correspond to marker's location
+                        popupAnchor: [0, -12] // point from which the popup should open relative to the iconAnchor
+                    });
+                    // Add a tile layer to the map
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 18,
+                    }).addTo(map);
+
+                    // Add Mapbox Satellite tile layer with your access token (if required)
+
+                    //map.addControl(new L.Control.Fullscreen());  // Uncomment if fullscreen control is required
+
+                    // Array to store the markers
+                    var markers = [];
+                    var polyline = null; // Variable to store the polyline
+
+                    // Add click event listener to the map
+                    map.on('click', function (e) {
+                        // Add a new marker at the clicked location
+                        var marker = L.marker(e.latlng, { icon: customIcon }).addTo(map)
+                            .bindPopup('Lat: ' + e.latlng.lat + '<br>Lon: ' + e.latlng.lng)
+                            .openPopup();
+
+                        // Add mouseover event to show latitude and longitude on hover
+                        marker.on('mouseover', function () {
+                            marker.bindTooltip('Lat: ' + e.latlng.lat + '<br>Lon: ' + e.latlng.lng, {
+                                permanent: false,
+                                direction: 'top'
+                            }).openTooltip();
+                        });
+
+                        // Add mouseout event to hide the tooltip
+                        marker.on('mouseout', function () {
+                            marker.closeTooltip();
+                        });
+
+                        markers.push(marker); // Add the new marker to the array
+                    });
+                    function drawLinesToMarkers(circle, centerLatLng, isVayu) {
+                        var radius = circle.getRadius();
+                        var centerLatLngObj = L.latLng(centerLatLng); // Ensure centerLatLng is an L.latLng object
+
+                        // Remove previous lines
+                        if (isVayu) {
+                            vayuCircles.forEach(function (vc) {
+                                if (vc.circle === circle) {
+                                    vc.lines.forEach(function (line) {
+                                        map.removeLayer(line);
+                                    });
+                                    vc.lines = [];
+                                }
+                            });
+                        } else {
+                            largeCircles.forEach(function (lc) {
+                                if (lc.circle === circle) {
+                                    lc.lines.forEach(function (line) {
+                                        map.removeLayer(line);
+                                    });
+                                    lc.lines = [];
+                                }
+                            });
+                        }
+
+                        // Loop through marker locations and draw lines for those within the circle's radius
+                        markerLocations.forEach(function (latlon) {
+                            var markerLatLng = L.latLng(latlon);
+                            var distance = centerLatLngObj.distanceTo(markerLatLng); // Use distanceTo method correctly
+
+                            if (distance <= radius) {
+                                // Draw a line from the circle center to the marker
+                                var line = L.polyline([centerLatLngObj, markerLatLng], { color: 'blue' }).addTo(map);
+
+                                // Save the line to the appropriate circle for future removal
+                                if (isVayu) {
+                                    vayuCircles.forEach(function (vc) {
+                                        if (vc.circle === circle) {
+                                            vc.lines.push(line);
+                                        }
+                                    });
+                                } else {
+                                    largeCircles.forEach(function (lc) {
+                                        if (lc.circle === circle) {
+                                            lc.lines.push(line);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
+                        // Loop through small circle locations and draw lines for those within the circle's radius
+                        smallCircleLocations.forEach(function (latlon) {
+                            var smallLatLng = L.latLng(latlon);
+                            var distance = centerLatLngObj.distanceTo(smallLatLng);
+
+                            if (distance <= radius) {
+                                var line = L.polyline([centerLatLngObj, smallLatLng], { color: 'green' }).addTo(map);
+
+                                // Save the line to the appropriate circle for future removal
+                                if (isVayu) {
+                                    vayuCircles.forEach(function (vc) {
+                                        if (vc.circle === circle) {
+                                            vc.lines.push(line);
+                                        }
+                                    });
+                                } else {
+                                    largeCircles.forEach(function (lc) {
+                                        if (lc.circle === circle) {
+                                            lc.lines.push(line);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                    // Function to create a draggable circle with marker
+                    function createDraggableCircle(latlon, radius, color, isVayu = false) {
+                        var circle = L.circle(latlon, {
+                            color: color,
+                            fillColor: color,
+                            fillOpacity: 0.5,
+                            radius: radius // radius in meters,
+                        }).addTo(map);
+
+                        var draggableMarker = L.marker(latlon, { draggable: true, icon: customIcon }).addTo(map);
+
+                        // Add mouseover event to display lat/lon on hover
+                        draggableMarker.on('mouseover', function (e) {
+                            var latLng = e.target.getLatLng();
+                            draggableMarker.bindTooltip('Lat: ' + latLng.lat + '<br>Lon: ' + latLng.lng, {
+                                permanent: false,
+                                direction: 'top'
+                            }).openTooltip();
+                        });
+
+                        // Add mouseout event to hide the tooltip
+                        draggableMarker.on('mouseout', function () {
+                            draggableMarker.closeTooltip();
+                        });
+
+                        // Event listener to update circle position and redraw lines on marker drag
+                        draggableMarker.on('dragend', function (e) {
+                            var newLatLng = e.target.getLatLng();
+                            circle.setLatLng(newLatLng);
+                            drawLinesToMarkers(circle, newLatLng, isVayu);
+                        });
+
+                        drawLinesToMarkers(circle, latlon, isVayu);
+                    }
+
+                    // Draw large circles
+                    largeCircleLocations.forEach(function (latlon) {
+                        createDraggableCircle(latlon, 150, 'blue');
+                    });
+
+                    // Draw small circles inside the large ones
+                    smallCircleLocations.forEach(function (latlon) {
+                        L.circle(latlon, {
+                            color: 'green',
+                            fillColor: '#0f3',
+                            fillOpacity: 0.7,
+                            radius: 5 // radius in meters for smaller circle
+                        }).bindTooltip('Lat: ' + latlon[0] + '<br>Lon: ' + latlon[1], { permanent: false }).addTo(map);
+                    });
+
+                    // Add cross markers with tooltips
+                    markerLocations.forEach(function (latlon) {
+                        L.circle(latlon, {
+                            color: 'red',
+                            fillColor: '#ff0000',
+                            fillOpacity: 0.7,
+                            radius: 5 // radius in meters for smaller circle
+                        }).bindTooltip('Lat: ' + latlon[0] + '<br>Lon: ' + latlon[1], { permanent: false }).addTo(map);
+                    });
+
+                    // Create draggable circles for Vayu
+                    vayu.forEach(function (latlon) {
+                        createDraggableCircle(latlon, 150, 'yellow', true);
+                    });
+
+                    // Hide the loading panel
+                    loadPanel.hide();
+
+
+                },
+                error: function (xhr, status, error) { // Error callback
+                    console.error('Error occurred: ' + error);
+                }
+            });
+        });
+
+
+    });
+</script>

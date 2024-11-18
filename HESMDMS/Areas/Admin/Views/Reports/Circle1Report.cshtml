@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewBag.Title = "Circle1Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<div class="card card-block card-stretch card-height">
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <h4 class="card-title">Circle 1 Report</h4>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" class="date-picker" />
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" class="date-picker" />
+        <button id="applyFilter" class="btn btn-primary">Apply Filter</button>
+        <div id="circle1"></div>
+    </div>
+</div>
+<script>
+    $("#applyFilter").on("click", function () {
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
+        if (!startDate || !endDate) {
+
+            alert("Please select both start and end dates.");
+
+            return;
+
+        }
+        console.log("Applying filter: Start Date = " + startDate + ", End Date = " + endDate);
+        $.ajax({
+            type: 'POST',                    // HTTP method
+            url: '/ADmin/Reports/circle1Data',    // Controller URL (replace with actual controller/action)
+            data: { startDate: startDate, endDate: endDate }, // Data sent as key-value pairs
+            success: function (response) {     // Success callback
+                var amr = response.amr;
+                dataGrid = $("#circle1").dxDataGrid({
+                    dataSource: JSON.parse(amr),
+                    keyExpr: "ID",
+                    grouping: {
+                        autoExpandAll: true,
+                    },
+                    allowColumnReordering: true,
+                    allowColumnResizing: true,
+                    columnAutoWidth: true,
+                    groupPanel: {
+                        visible: true,
+                    },
+                    showBorders: true,
+                    wordWrapEnabled: true,
+                    scrolling: {
+                        columnRenderingMode: 'virtual',
+                    },
+                    paging: {
+                        pageSize: 50,
+                    },
+                    filterRow: {
+                        visible: true,
+                        applyFilter: 'auto',
+                    },
+                    export: {
+                        enabled: true,
+                    },
+                    columnFixing: {
+                        enabled: true
+                    },
+
+                
+
+                    searchPanel: { visible: true },
+
+                    onEditingStart: function (e) {
+
+                    },
+                    pager: {
+                        allowedPageSizes: [50, 100, 150, 200],
+                        showInfo: true,
+                        showNavigationButtons: true,
+                        showPageSizeSelector: true,
+                        visible: true,
+                    },
+                    onCellPrepared: function (e) {
+                        if (e.rowType == "header") {
+                            e.cellElement.css("text-align", "center");
+                            e.cellElement.css("font-weight", "bold");
+                        }
+                    },
+                    onInitNewRow: function (e) {
+
+                    }, onExporting: function (e) {
+                        e.fileName = "Circle1ActiveAMR" + startDate + "_" + endDate; // Set your desired file name here
+                    }
+                    //onContentReady: function (e) {
+                    //    var saveButton = $(".dx-button[aria-label='Save']");
+                    //    if (saveButton.length > 0)
+                    //        saveButton.click(function (event) {
+                    //            if (!isUpdateCanceled) {
+                    //                DoSomething(e.component);
+                    //                event.stopPropagation();
+                    //            }
+                    //        });
+                    //}
+                });
+
+            },
+            error: function (xhr, status, error) { // Error callback
+                console.error('Error occurred: ' + error);
+            }
+        });
+    });
+</script>

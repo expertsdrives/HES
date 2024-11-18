@@ -11,13 +11,13 @@ namespace HESMDMS.Models
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var sessionValue = HttpContext.Current.Session["Admin"];
-            if (sessionValue.ToString() != "Admin")
+            if ( Convert.ToString(sessionValue) != "Admin")
             {
                 // Check if the session is available
                 //if (HttpContext.Current.Session == null)
                 //{
                     // Session is not available, redirect to an error page or perform some other action
-                    filterContext.Result = new RedirectResult("~/Error/SessionError"); // Redirect to an error page
+                    filterContext.Result = new RedirectResult("~/Login"); // Redirect to an error page
                     return;
                 //}
             }

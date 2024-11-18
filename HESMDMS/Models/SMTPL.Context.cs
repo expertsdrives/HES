@@ -53,6 +53,8 @@ namespace HESMDMS.Models
         public virtual DbSet<tbl_ATGLPaymentAck> tbl_ATGLPaymentAck { get; set; }
         public virtual DbSet<tbl_CustomerDetails> tbl_CustomerDetails { get; set; }
         public virtual DbSet<tbl_ConsumptionDetails> tbl_ConsumptionDetails { get; set; }
+        public virtual DbSet<tbl_MQTTBroker> tbl_MQTTBroker { get; set; }
+        public virtual DbSet<tbl_VayadutMasterDetails> tbl_VayadutMasterDetails { get; set; }
     
         public virtual ObjectResult<FetchCRCData_Result> FetchCRCData()
         {

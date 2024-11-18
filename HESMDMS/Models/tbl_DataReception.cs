@@ -16,6 +16,7 @@ namespace HESMDMS.Models
     {
         public int ID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<long> BusinessPartnerNo { get; set; }
         public string VAYUDUT_ID { get; set; }
         public string V_VOLTAGE { get; set; }
         public string VAYUDUT_TEMPERATURE { get; set; }
@@ -33,5 +34,6 @@ namespace HESMDMS.Models
         public string AMR_CASE_TEMPER_LOGGER { get; set; }
         public string AMR_CRC8 { get; set; }
         public string AMR_CRC_STATUS { get; set; }
+        public Nullable<int> HTotal { get; set; }
     }
 }

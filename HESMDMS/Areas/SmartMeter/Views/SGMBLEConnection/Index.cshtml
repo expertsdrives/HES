@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutArea.cshtml";
+}
+
+<div class="card card-block card-stretch card-height">
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <h4 class="card-title">Bluetooth Communication</h4>
+        </div>
+    </div>
+    <p id="status">Status: Not connected</p>
+    <div class="col-sm-12 col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title">System Operation</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="connectButton">Connect To BLE</button>
+                    </div>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" type="button" id="testButton">Test Mode Enable</button>
+                    </div>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button id="btnAddBalance" class="btn btn-primary">Test Mode Disable</button>
+                    </div>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <button id="pwdButton" class="btn btn-primary">PWD</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+        let device;
+        let server;
+        let service;
+        let writeCharacteristic;
+        let readCharacteristic;
+
+        const serviceUUID = '0783b03e-8535-b5a0-7140-a304d2495cb7';
+        const readCharacteristicUUID = '0783b03e-8535-b5a0-7140-a304d2495cb8';
+        const writeCharacteristicUUID = '0783b03e-8535-b5a0-7140-a304d2495cba';
+
+        // Hex data for PWD Mode
+        const hexDataPWD = new Uint8Array([0x02, 0x03, 0x00, 0x08, 0x7E, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x03, 0x0D]);
+        // Hex data for Test Mode
+        const hexDataTest = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0x1E, 0x03]);
+        // Hex data for SOV Open
+        const hexDataSOVOpen = new Uint8Array([0x02, 0x03, 0x00, 0x00, 0x05, 0x03]);
+
+        $('#connectButton').on('click', async function() {
+            try {
+                // Request device
+                device = await navigator.bluetooth.requestDevice({
+                    filters: [{ services: [serviceUUID] }],
+                    optionalServices: [serviceUUID]
+                });
+
+                $('#status').text('Status: Device selected, connecting...');
+
+                // Connect to the GATT server
+                server = await device.gatt.connect();
+                $('#status').text('Status: Connected to GATT server');
+
+                // Get the primary service
+                service = await server.getPrimaryService(serviceUUID);
+
+                // Get the write characteristic
+                writeCharacteristic = await service.getCharacteristic(writeCharacteristicUUID);
+
+                // Get the read characteristic and start notifications
+                readCharacteristic = await service.getCharacteristic(readCharacteristicUUID);
+                await readCharacteristic.startNotifications();
+                $('#status').text('Status: Notifications started for read characteristic');
+
+                // Enable buttons for PWD Mode, Test Mode, and SOV Open after connection
+                $('#pwdButton').prop('disabled', false);
+                $('#testButton').prop('disabled', false);
+                $('#sovOpenButton').prop('disabled', false);
+
+                // Handle incoming notifications
+                readCharacteristic.addEventListener('characteristicvaluechanged', handleNotification);
+
+            } catch (error) {
+                console.error('Error:', error);
+                $('#status').text('Status: ' + error);
+            }
+        });
+
+        // Send PWD Mode data on button click
+        $('#pwdButton').on('click', async function() {
+            try {
+                await writeCharacteristic.writeValue(hexDataPWD);
+                $('#status').text('Status: PWD Mode data sent, waiting for response...');
+            } catch (error) {
+                console.error('Error sending PWD Mode data:', error);
+            }
+        });
+
+        // Send Test Mode data on button click
+        $('#testButton').on('click', async function() {
+            try {
+                await writeCharacteristic.writeValue(hexDataTest);
+                $('#status').text('Status: Test Mode data sent, waiting for response...');
+            } catch (error) {
+                console.error('Error sending Test Mode data:', error);
+            }
+        });
+
+        // Send SOV Open data on button click
+        $('#sovOpenButton').on('click', async function() {
+            try {
+                await writeCharacteristic.writeValue(hexDataSOVOpen);
+                $('#status').text('Status: SOV Open data sent, waiting for response...');
+            } catch (error) {
+                console.error('Error sending SOV Open data:', error);
+            }
+        });
+
+        // Function to handle notifications and convert to hex
+        function handleNotification(event) {
+            const value = event.target.value;
+            let hexResult = '';
+            for (let i = 0; i < value.byteLength; i++) {
+                const hex = ('00' + value.getUint8(i).toString(16)).slice(-2); // Convert to hex and pad with 0 if necessary
+                hexResult += hex + ' ';
+            }
+            console.log('Notification received in hex: ', hexResult.trim());
+            $('#status').append('<br>Notification received: ' + hexResult.trim());
+        }
+</script>
+
+

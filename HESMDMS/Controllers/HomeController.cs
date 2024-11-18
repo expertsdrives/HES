@@ -102,7 +102,7 @@ namespace HESMDMS.Controllers
             return Redirect("CustomerRegistration");
         }
         public ActionResult Insert(tbl_CustomerRegistration collection, HttpPostedFileBase file)
-        {
+       {
             if (collection.InstallationDate != null)
             {
                 string ImageName = "";
@@ -122,6 +122,8 @@ namespace HESMDMS.Controllers
                     ImageName = "1.png";
                     collection.Image = "NoImage.png";
                 }
+                clsMeter.Database.ExecuteSqlCommand("UPDATE tbl_CustomerRegistration SET Status = 'Replaced' WHERE [MeterNumber] = '" + collection.MeterNumber + "'");
+
                 string slNumber = Convert.ToString(Session["snum"]);
                 collection.SerialNumber = slNumber;
                 collection.Status = "Pending";

@@ -83,6 +83,16 @@
                                 .text(options.value)
                                 .appendTo(container);
                         }
+                        else if (options.value == "No Response From Meter") {
+                            $("<div class='badge badge-danger'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        }
+                        else if (options.value == "Failed") {
+                            $("<div class='badge badge-danger'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        }
                         else if (options.value == "InProcess") {
                             $("<div class='badge badge-info'>")
                                 .text(options.value)

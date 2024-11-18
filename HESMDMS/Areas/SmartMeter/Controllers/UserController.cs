@@ -19,6 +19,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Text;
+using cashfree_payout.Client;
+using SixLabors.ImageSharp.Metadata.Profiles.Iptc;
 
 namespace HESMDMS.Areas.SmartMeter.Controllers
 {
@@ -55,7 +58,8 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                     ViewBag.pld = pld;
                     ViewBag.aid = pldQuery.AID;
                     ViewBag.eid = pldQuery.EID;
-                    var DataQueryToday = clsMetersProd.sp_ResponseSplited(pld, Currdate, Currdate).FirstOrDefault();
+                    clsMetersProd.Database.CommandTimeout = 300;
+                    var DataQueryToday = clsMetersProd.sp_ResponseSplited(pld, Currdate, Currdate).Take(100).FirstOrDefault();
                     var DataQueryYesterday = clsMetersProd.sp_ResponseSplited(pld, Prevdate, Prevdate).FirstOrDefault();
                     Session.Add("Meter ID", MeterID);
                     var AccountBalance = DataQueryToday != null ? DataQueryToday.AccountBalance.ToString().TrimStart('+').TrimStart('0') : "000";
@@ -100,8 +104,8 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
             attributes.Add("razorpay_signature", razorpay_signature);
             try
             {
-                Utils.verifyPaymentSignature(attributes);
-                ViewBag.pld = Session["pld"].ToString();
+            //    Utils.verifyPaymentSignature(attributes);
+            //    ViewBag.pld = Session["pld"].ToString();
                 ViewBag.aid = Session["aid"].ToString();
                 ViewBag.eid = Session["eeid"].ToString();
                 ViewBag.amount = Session["amount"].ToString();
@@ -130,8 +134,172 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
             Session.Add("eeid", eeid);
             return View("Payment");
         }
+        public async Task<JsonResult> PaymentProcessAsync(string amount)
+        {
+            Cashfree.XClientId = "73570205b7178c9b159c718f7f207537";
+            Cashfree.XClientSecret = "cfsk_ma_prod_607d9419455b14bd7c924fa2219baa57_05ada93a";
+            Cashfree.XEnvironment = Cashfree.PRODUCTION;
+            string email = Convert.ToString(Session["Username"]);
+            var client = new HttpClient();
+            var requestUri = new Uri("https://api.cashfree.com/pg/orders");
 
+            // Generate a unique customer_id
+            string customerId = Guid.NewGuid().ToString();
 
+            var orderData = new
+            {
+                order_id = $"order_{Guid.NewGuid()}",
+                order_amount = Convert.ToDecimal(amount),
+                order_currency = "INR",
+                customer_details = new
+                {
+                    customer_id = customerId,
+                    customer_email = email, // Replace with actual customer email if available
+                    customer_phone = "0000000000" // Replace with actual customer phone if available
+                },
+                order_meta = new
+                {
+                    return_url = "https://hesmdms.com/Smartmeter/User/HandleResponse?order_id={order_id}"
+                }
+            };
+
+            var jsonContent = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(orderData), Encoding.UTF8, "application/json");
+
+            var request = new HttpRequestMessage(System.Net.Http.HttpMethod.Post, requestUri)
+            {
+                Content = jsonContent
+            };
+
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Headers.Add("x-api-version", "2023-08-01");
+            request.Headers.Add("x-client-id", Cashfree.XClientId);
+            request.Headers.Add("x-client-secret", Cashfree.XClientSecret);
+
+            try
+            {
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+                var response = await client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseData = await response.Content.ReadAsStringAsync();
+                    var createOrderResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<CreateOrderResponse>(responseData);
+                    JObject jsonResponse = JObject.Parse(responseData);
+
+                    // Extract the payment_session_id
+                    string paymentSessionId = jsonResponse["payment_session_id"]?.ToString();
+                    Session.Add("amount", amount);
+                    return Json(paymentSessionId, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error: {response.StatusCode}, Reason: {response.ReasonPhrase}, Content: {errorContent}");
+                    return Json(new { success = false, error = errorContent });
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                return Json(new { success = false, error = e.Message });
+            }
+        }
+        public class OrderStatusResponse
+        {
+            public string OrderId { get; set; }
+            public string OrderAmount { get; set; }
+            public string order_status { get; set; }
+            public string PaymentStatus { get; set; }
+            // Add more properties based on Cashfree's response
+        }
+        public async Task<ActionResult> HandleResponse(string order_id)
+        {
+            string clientId = "73570205b7178c9b159c718f7f207537";
+            string clientSecret = "cfsk_ma_prod_607d9419455b14bd7c924fa2219baa57_05ada93a";
+            // Set up the HttpClient
+            using (var client = new HttpClient())
+            {
+                var requestUri = new Uri($"https://api.cashfree.com/pg/orders/{order_id}");
+                // Create the request message
+                var request = new HttpRequestMessage(System.Net.Http.HttpMethod.Get, requestUri);
+
+                // Set headers
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                request.Headers.Add("x-api-version", "2023-08-01");
+                request.Headers.Add("x-client-id", clientId);
+                request.Headers.Add("x-client-secret", clientSecret);
+
+                try
+                {
+                    System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                    // Send the request
+                    var response = await client.SendAsync(request);
+                    response.EnsureSuccessStatusCode();
+
+                    // Read and display the response
+                    var responseData = await response.Content.ReadAsStringAsync();
+                    var orderStatus = Newtonsoft.Json.JsonConvert.DeserializeObject<OrderStatusResponse>(responseData);
+
+                    // Check the payment status
+                    if (orderStatus.order_status == "PAID")
+                    {
+                        string amount = Convert.ToString(Session["amount"]);
+                        string pld = Convert.ToString(Session["pld"]);
+                        int amountd = Convert.ToInt32(amount);
+                        string balanceString = ToHexString(amountd);
+                        var balanceutput = string.Join(",", SplitIntoChunks(balanceString, 2));
+                        var command1 = clsMeters.tbl_OTACommands.Where(x => x.Name == "Add Balance").FirstOrDefault();
+                        var data1 = command1.Command;
+                        DateTime time1 = DateTime.UtcNow;
+                        string modifiedString = data1.Replace("-", balanceutput);
+                        var length = balanceutput.Split(',').Length.ToString("D2");
+                        data1 = modifiedString;
+                        string[] values = data1.Split(',');
+                        if (values.Length >= 3)
+                        {
+                            // Replace the third value with the new variable
+                            values[3] = length;
+
+                            // Join the array back into a string with commas
+                            string resultString = string.Join(",", values);
+
+                            // Now, resultString will be "value1,value2,newvalue,value4,value5"
+
+                            // You can use the resultString in your view or further processing
+                            data1 = resultString;
+                        }
+                        var cData1 = clsMetersProd.tbl_CommandBackLog;
+                        tbl_CommandBackLog clsCmd1 = new tbl_CommandBackLog();
+                        clsCmd1.Data = data1;
+                        clsCmd1.EventName = "Add Balance";
+                        clsCmd1.LogDate = DateTime.UtcNow;
+                        clsCmd1.Status = "Pending";
+                        clsCmd1.pld = pld;
+                        clsMetersProd.tbl_CommandBackLog.Add(clsCmd1);
+                        clsMetersProd.SaveChanges();
+                        // Payment was successful
+                        ViewBag.Message = "Payment was successful!";
+                        ViewBag.Status = "success";
+                    }
+                    else
+                    {
+                        // Payment failed
+                        ViewBag.Message = $"Payment failed with status: {orderStatus.PaymentStatus}";
+                        ViewBag.Status = "failure";
+                    }
+
+                    //return View(orderStatus);
+                }
+                catch (HttpRequestException e)
+                {
+                    // Handle request errors
+                    ViewBag.Message = $"Request error: {e.Message}";
+                    
+                }
+            }
+            
+            return View("PaymentSuccess");
+        }
         public ActionResult GetChartData()
         {
             DateTime Currdate = DateTime.UtcNow.Date;

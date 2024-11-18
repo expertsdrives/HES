@@ -2,90 +2,18 @@
 @{
     Layout = null;
 }
-
 @{
     ViewBag.Title = "Bluetooth Connection";
 }
-
-<h2>Bluetooth Connection</h2>
-
-@*<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Web Bluetooth Serial Communication</title>
-    </head>
-    <body>
-        <button onclick="connectAndReadWrite()">Connect and Read/Write</button>
-        <div>
-            <textarea id="log" rows="10" style="width: 100%;"></textarea>
-        </div>
-
-        <script>
-            async function connectAndReadWrite() {
-                const log = document.getElementById('log');
-                log.value = ''; // Clear previous logs
-
-                try {
-                    // Request Bluetooth device
-                    const device = await navigator.bluetooth.requestDevice({
-                        filters: [{ services: ['0783b03e-8535-b5a0-7140-a304d2495cb7'] }] // Replace with your device's service UUID
-                    });
-
-                    logMessage('Connecting to ' + device.name + '...');
-
-                    // Connect to GATT server
-                    const server = await device.gatt.connect();
-
-                    logMessage('Connected to GATT server.');
-
-                    // Get the Serial service
-                    const service = await server.getPrimaryService('0783b03e-8535-b5a0-7140-a304d2495cb7'); // Replace with your device's service UUID
-                    const ww = await service.getCharacteristics();
-                    // Get the RX and TX characteristics (assuming UUIDs for RX and TX are known)
-                    const rxCharacteristic = await service.getCharacteristic('0783b03e-8535-b5a0-7140-a304d2495cb9'); // Replace with RX characteristic UUID
-                    const txCharacteristic = await service.getCharacteristic('0783b03e-8535-b5a0-7140-a304d2495cba'); // Replace with TX characteristic UUID
-
-                    logMessage('Serial service and characteristics retrieved.');
-
-                    // Example: Write data to TX characteristic
-                    const dataToWrite = new TextEncoder().encode('Hello from Web Bluetooth!');
-                    await txCharacteristic.writeValue(dataToWrite);
-
-                    logMessage('Data written to TX characteristic.');
-
-                    // Example: Read data from RX characteristic
-                    const dataRead = await rxCharacteristic.readValue();
-                    const textDecoder = new TextDecoder();
-                    const decodedText = textDecoder.decode(dataRead);
-
-                    logMessage('Data read from RX characteristic: ' + decodedText);
-
-                } catch (error) {
-                    console.error('Error:', error);
-                    logMessage('Error: ' + error);
-                }
-            }
-
-            function logMessage(message) {
-                const log = document.getElementById('log');
-                log.value += message + '\n';
-                log.scrollTop = log.scrollHeight; // Auto-scroll to the bottom
-            }
-        </script>
-    </body>
-    </html>*@
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DLMS OBIS Code via Web Bluetooth</title>
+    <title>BLE Write and Read Response Example</title>
 </head>
 <body>
-    <button onclick="connectAndSendDLMS()">Connect and Send DLMS Command</button>
-    <button onclick="disconnect()">Disconnect</button>
+    <button onclick="connectAndSendData()">Connect and Send Data</button>
     <div>
         <textarea id="log" rows="10" style="width: 100%;"></textarea>
     </div>
@@ -96,7 +24,7 @@
         let writeCharacteristic;
         let notifyCharacteristic;
 
-        async function connectAndSendDLMS() {
+        async function connectAndSendData() {
             try {
                 logMessage('Requesting Bluetooth Device...');
                 device = await navigator.bluetooth.requestDevice({
@@ -116,16 +44,16 @@
 
                 logMessage('Setup complete. Ready for communication.');
 
-                // Example DLMS OBIS code
-                const dlmsOBISCode = "1.0.12.7.0.255"; // Replace with your DLMS OBIS code
+                // Write hexadecimal data
+                const hexData = new Uint8Array([0x00, 0x01, 0x00, 0x10, 0x00, 0x01, 0x00, 0x1f,
+                    0x60, 0x1d, 0xa1, 0x09, 0x06, 0x07, 0x60, 0x85,
+                    0x74, 0x05, 0x08, 0x01, 0x01, 0xbe, 0x10, 0x04,
+                    0x0e, 0x01, 0x00, 0x00, 0x00, 0x06, 0x5f, 0x1f,
+                    0x04, 0x00, 0x62, 0x1e, 0x5d, 0xff, 0xff]);
 
-                // Convert DLMS OBIS code to HDLC format (example)
-                const hdlcFrame = convertToHDLC(dlmsOBISCode);
+                await writeCharacteristic.writeValue(hexData);
 
-                // Write HDLC frame
-                await writeCharacteristic.writeValue(new Uint8Array(hdlcFrame));
-
-                logMessage('DLMS OBIS code sent successfully.');
+                logMessage('Hexadecimal data sent successfully.');
 
                 // Enable notifications for response
                 await notifyCharacteristic.startNotifications();
@@ -139,17 +67,16 @@
 
         function handleNotifications(event) {
             const value = event.target.value;
-            const textDecoder = new TextDecoder();
-            const decodedValue = textDecoder.decode(value);
+            const uint8Array = new Uint8Array(value.buffer);
 
-            logMessage('Received notification: ' + decodedValue);
-        }
-
-        async function disconnect() {
-            if (device && device.gatt.connected) {
-                await device.gatt.disconnect();
-                logMessage('Disconnected from Bluetooth device.');
+            let hexString = '';
+            for (let i = 0; i < uint8Array.length; i++) {
+                let hex = uint8Array[i].toString(16).toUpperCase();
+                hex = hex.length === 1 ? '0' + hex : hex; // Ensure two digits
+                hexString += hex + ' ';
             }
+
+            logMessage('Received notification (Hex): ' + hexString.trim());
         }
 
         function logMessage(message) {
@@ -157,23 +84,126 @@
             log.value += message + '\n';
             log.scrollTop = log.scrollHeight;
         }
-
-        function convertToHDLC(data) {
-            // Example HDLC framing function (replace with your implementation)
-            const startFlag = 0x7E; // HDLC start flag
-            const endFlag = 0x7E; // HDLC end flag
-
-            let framedData = [startFlag];
-            for (let i = 0; i < data.length; i++) {
-                framedData.push(data.charCodeAt(i));
-            }
-            framedData.push(endFlag);
-
-            return framedData;
-        }
     </script>
 </body>
 </html>
+
+@*<h2>Bluetooth Connection</h2>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DLMS OBIS Code via Web Bluetooth</title>
+    </head>
+    <body>
+        <button onclick="connectAndSendDLMS()">Connect and Send DLMS Command</button>
+        <button onclick="disconnect()">Disconnect</button>
+        <div>
+            <textarea id="log" rows="10" style="width: 100%;"></textarea>
+        </div>
+
+        <script>
+            let device;
+            let server;
+            let writeCharacteristic;
+            let notifyCharacteristic;
+
+            async function connectAndSendDLMS() {
+                try {
+                    logMessage('Requesting Bluetooth Device...');
+                    device = await navigator.bluetooth.requestDevice({
+                        acceptAllDevices: true, // Replace with filters as needed
+                        optionalServices: ['0783b03e-8535-b5a0-7140-a304d2495cb7'] // Replace with your service UUID
+                    });
+
+                    logMessage('Connecting to GATT Server...');
+                    server = await device.gatt.connect();
+
+                    logMessage('Getting Service...');
+                    const service = await server.getPrimaryService('0783b03e-8535-b5a0-7140-a304d2495cb7'); // Replace with your service UUID
+
+                    logMessage('Getting Characteristics...');
+                    writeCharacteristic = await service.getCharacteristic('0783b03e-8535-b5a0-7140-a304d2495cba'); // Replace with write characteristic UUID
+                    notifyCharacteristic = await service.getCharacteristic('0783b03e-8535-b5a0-7140-a304d2495cb8'); // Replace with notify characteristic UUID
+
+                    logMessage('Setup complete. Ready for communication.');
+
+                    // Enable notifications for response
+                    await notifyCharacteristic.startNotifications();
+                    notifyCharacteristic.addEventListener('characteristicvaluechanged', handleNotifications);
+                    logMessage('Notifications enabled for characteristic: ' + notifyCharacteristic.uuid);
+
+                    // Send SNRM request
+                    const snrmRequest = new Uint8Array([0x7E, 0xA0, 0x07, 0x03, 0x21, 0x93, 0x5F, 0x7E]);
+                    await writeCharacteristic.writeValue(snrmRequest);
+                    logMessage('SNRM request sent.');
+
+                    // Wait for UA response (simplified, in real case should be handled properly)
+                    await delay(2000);
+
+                    // Send AARQ request
+                    const aarqRequest = new Uint8Array([0x7E, 0xA0, 0x16, 0x03, 0x21, 0x93, 0x5F, 0x10, 0x16, 0x30, 0x14, 0xA1, 0x09, 0x06, 0x07, 0x60, 0x85, 0x74, 0x05, 0x08, 0x01, 0x01, 0xBE, 0x10, 0x04, 0x0E, 0x1F, 0x04, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x07, 0xE1, 0x00, 0x00, 0x00, 0x7E]);
+                    await writeCharacteristic.writeValue(aarqRequest);
+                    logMessage('AARQ request sent.');
+
+                    // Wait for AARE response (simplified, in real case should be handled properly)
+                    await delay(2000);
+
+                    // Send DLMS OBIS code
+                    const dlmsOBISCode = "1.0.12.7.0.255"; // Replace with your DLMS OBIS code
+                    const hdlcFrame = convertToHDLC(dlmsOBISCode);
+                    await writeCharacteristic.writeValue(new Uint8Array(hdlcFrame));
+                    logMessage('DLMS OBIS code sent successfully.');
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    logMessage('Error: ' + error);
+                }
+            }
+
+            function handleNotifications(event) {
+                const value = event.target.value;
+                const textDecoder = new TextDecoder();
+                const decodedValue = textDecoder.decode(value);
+
+                logMessage('Received notification: ' + decodedValue);
+            }
+
+            async function disconnect() {
+                if (device && device.gatt.connected) {
+                    await device.gatt.disconnect();
+                    logMessage('Disconnected from Bluetooth device.');
+                }
+            }
+
+            function logMessage(message) {
+                const log = document.getElementById('log');
+                log.value += message + '\n';
+                log.scrollTop = log.scrollHeight;
+            }
+
+            function convertToHDLC(data) {
+                // Example HDLC framing function (replace with your implementation)
+                const startFlag = 0x7E; // HDLC start flag
+                const endFlag = 0x7E; // HDLC end flag
+
+                let framedData = [startFlag];
+                for (let i = 0; i < data.length; i++) {
+                    framedData.push(data.charCodeAt(i));
+                }
+                framedData.push(endFlag);
+
+                return framedData;
+            }
+
+            function delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        </script>
+    </body>
+    </html>*@
+
 
 
 @*<script>
