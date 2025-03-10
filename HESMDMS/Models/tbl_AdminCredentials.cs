@@ -22,6 +22,7 @@ namespace HESMDMS.Models
         public Nullable<int> AccessFailedCount { get; set; }
         public string MobileNumber { get; set; }
         public Nullable<System.DateTime> LastLoggedInDate { get; set; }
+        public Nullable<bool> SendOTP { get; set; }
     
         public virtual tbl_RoleMaster tbl_RoleMaster { get; set; }
     }

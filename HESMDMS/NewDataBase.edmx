@@ -4,7 +4,27 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SmartMeterModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SmartMeterModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_ATGLRates">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GCV" Type="varchar" MaxLength="500" />
+          <Property Name="Tariff" Type="varchar" MaxLength="500" />
+          <Property Name="ApplicableDate" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tbl_SGMReg">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomreID" Type="varchar" MaxLength="500" />
+          <Property Name="SmartMeterSerialNumber" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
         <Function Name="sp_Circle1Temp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="startdate" Type="datetime" Mode="In" />
           <Parameter Name="enddate" Type="datetime" Mode="In" />
@@ -17,7 +37,10 @@
           <Parameter Name="start" Type="datetime" Mode="In" />
           <Parameter Name="end" Type="datetime" Mode="In" />
         </Function>
-        <EntityContainer Name="SmartMeterModel1StoreContainer" />
+        <EntityContainer Name="SmartMeterModel1StoreContainer">
+          <EntitySet Name="tbl_ATGLRates" EntityType="Self.tbl_ATGLRates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SGMReg" EntityType="Self.tbl_SGMReg" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -35,6 +58,8 @@
             <Parameter Name="start" Mode="In" Type="DateTime" />
             <Parameter Name="end" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="tbl_SGMReg" EntityType="SmartMeterModel1.tbl_SGMReg" />
+          <EntitySet Name="tbl_ATGLRates" EntityType="SmartMeterModel1.tbl_ATGLRates" />
         </EntityContainer>
         <ComplexType Name="sp_Circle1Temp_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -116,6 +141,26 @@
           <Property Type="Int32" Name="TXID" Nullable="true" />
           <Property Type="Decimal" Name="DailyConsumption" Nullable="true" Precision="28" Scale="5" />
         </ComplexType>
+        <EntityType Name="tbl_SGMReg">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomreID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SmartMeterSerialNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_ATGLRates">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GCV" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Tariff" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ApplicableDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -214,6 +259,28 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_SGMReg">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_SGMReg">
+              <MappingFragment StoreEntitySet="tbl_SGMReg">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="SmartMeterSerialNumber" ColumnName="SmartMeterSerialNumber" />
+                <ScalarProperty Name="CustomreID" ColumnName="CustomreID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ATGLRates">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_ATGLRates">
+              <MappingFragment StoreEntitySet="tbl_ATGLRates">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ApplicableDate" ColumnName="ApplicableDate" />
+                <ScalarProperty Name="Tariff" ColumnName="Tariff" />
+                <ScalarProperty Name="GCV" ColumnName="GCV" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

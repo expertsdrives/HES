@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Xml.Linq;
 using DevExtreme.AspNet.Data;
@@ -20,7 +21,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NPOI.SS.Formula.Functions;
 using OfficeOpenXml.Drawing.Slicer.Style;
+using Sentry;
 using static System.Data.Entity.Infrastructure.Design.Executor;
+using static HESMDMS.Controllers.GISController;
 
 namespace HESMDMS.Controllers
 {
@@ -31,6 +34,7 @@ namespace HESMDMS.Controllers
         SmartMeterEntities clsMeters = new SmartMeterEntities();
         SmartMeterEntities1 clsMeters1 = new SmartMeterEntities1();
         SmartMeter_ProdEntities clsMeters_Prod = new SmartMeter_ProdEntities();
+        SmartMeter_ProdEntities1 clsMeters_Prods = new SmartMeter_ProdEntities1();
         ElectricMeterEntities electric = new ElectricMeterEntities();
         [Route("CustomerLoad")]
         [HttpGet]
@@ -48,31 +52,127 @@ namespace HESMDMS.Controllers
         [HttpGet]
         public HttpResponseMessage AMRRawData(DataSourceLoadOptions loadOptions)
         {
-            var date = Convert.ToDateTime("2024-01-15");
+            var date = Convert.ToDateTime("2024-05-15");
             return Request.CreateResponse(DataSourceLoader.Load(clsMeters.V_RawData.OrderByDescending(X => X.ID).Where(x => x.DateTime >= date).Take(100000), loadOptions));
         }
+        [Route("CallToMap1")]
+        [HttpPost]
+        public HttpResponseMessage CallToMap1(string startDate, string endDate, string area)
+        {
+            DateTime sdate = Convert.ToDateTime(startDate);
+            DateTime edate = Convert.ToDateTime(endDate);
+            clsMeters.Database.CommandTimeout = 300;
+            var activeAMR = clsMeters.Database.SqlQuery<activeAMR>(
+          "exec sp_ActiveAMR @p0, @p1, @p2",
+          new SqlParameter("@p0", sdate),
+          new SqlParameter("@p1", edate),
+           new SqlParameter("@p2", area)// Pass an empty string or any other parameter if required
+      ).ToList();
+            var missingConsumptionSerials = clsMeters.Database.SqlQuery<inactiveAMR>(
+          "exec sp_InactiveAMR @p0, @p1, @p2",
+          new SqlParameter("@p0", sdate),
+          new SqlParameter("@p1", edate),
+            new SqlParameter("@p2", area)// Pass an empty string or any other parameter if required
+      ).ToList();
+            var activeVayudut = (from consumption in clsMeters.tbl_DataReception
+                                 join customer in clsMeters.tbl_VayadutMasterDetails
+                                 on consumption.VAYUDUT_ID equals customer.VayadutId
+                                 where consumption.Date >= sdate && consumption.Date <= edate
+                                 select new
+                                 {
+                                     VayudutID = consumption.VAYUDUT_ID,
+                                     Latitude = customer.Latitude,
+                                     Longitude = customer.Longitude
+                                 })
+                     .Distinct()
+                     .ToList();
 
+
+            var missingYayudutSerials = clsMeters.Database.SqlQuery<inactiveVayudut>(
+          "exec sp_InactiveVayudut @p0, @p1",
+          new SqlParameter("@p0", sdate),
+          new SqlParameter("@p1", edate)  // Pass an empty string or any other parameter if required
+      ).ToList();
+
+
+
+
+
+            var ActiveAMRJson = activeAMR
+     .Select(x => new
+     {
+         id = x.AMRSerialNumber, // Replace with the property that provides the unique identifier for the AMR
+         lat = double.TryParse(x.Latitude, out double lat) ? lat : 0.0,
+         lng = double.TryParse(x.Longitude, out double lng) ? lng : 0.0,
+         functional = true // Replace with the boolean field/property indicating functionality
+     })
+     .ToList();
+
+
+
+            var missingARMJson = missingConsumptionSerials
+      .Select(x => new
+      {
+          id = x.SerialNumber, // Replace with the property that provides the unique identifier for the AMR
+          lat = double.TryParse(x.Latitude, out double lat) ? lat : 0.0,
+          lng = double.TryParse(x.Longitude, out double lng) ? lng : 0.0,
+          functional = false // Replace with the boolean field/property indicating functionality
+      })
+      .ToList();
+
+            var ActiveVayudutJson = activeVayudut
+   .Select(x => new
+   {
+       id = x.VayudutID, // Replace with the property that provides the unique identifier for the AMR
+       lat = double.TryParse(Convert.ToString(x.Latitude), out double lat) ? lat : 0.0,
+       lng = double.TryParse(Convert.ToString(x.Longitude), out double lng) ? lng : 0.0,
+       functional = true // Replace with the boolean field/property indicating functionality
+   })
+    .ToList();
+
+
+            var missingVayudutJson = missingYayudutSerials
+     .Select(x => new
+     {
+         id = x.SerialNumber, // Replace with the property that provides the unique identifier for the AMR
+         lat = double.TryParse(Convert.ToString(x.Latitude), out double lat) ? lat : 0.0,
+         lng = double.TryParse(Convert.ToString(x.Longitude), out double lng) ? lng : 0.0,
+         functional = false // Replace with the boolean field/property indicating functionality
+     })
+     .ToList();
+            var serialNumber = activeAMR
+      .Select(x => new List<string>
+      {
+        x.AMRSerialNumber
+      })
+      .ToList();
+            var serializedData = new
+            {
+                functionalGateways = JsonConvert.SerializeObject(ActiveVayudutJson),
+                nonFunctionalGateways = JsonConvert.SerializeObject(missingVayudutJson),
+                functionalAMRs = JsonConvert.SerializeObject(ActiveAMRJson),
+                nonFunctionalAMRs = JsonConvert.SerializeObject(missingARMJson)
+            };
+            var gatewayDataJson = JsonConvert.SerializeObject(serializedData);
+            return Request.CreateResponse(HttpStatusCode.OK, gatewayDataJson);
+        }
         [Route("DisplayVayudut")]
         [HttpGet]
         public HttpResponseMessage DisplayVayudut(DataSourceLoadOptions loadOptions)
         {
-            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_VayudutRegistration, loadOptions));
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_VayadutMasterDetails, loadOptions));
         }
 
         [Route("AMRDataReceptionCRC")]
         [HttpGet]
-        public HttpResponseMessage AMRDataReceptionCRC(DataSourceLoadOptions loadOptions, string roleid)
+        public HttpResponseMessage AMRDataReceptionCRC(DataSourceLoadOptions loadOptions)
         {
 
-            if (roleid == "5")
-            {
-                return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_Demo(), loadOptions));
-            }
-            else
-            {
-                DateTime date1 = Convert.ToDateTime("2024-01-01");
+                clsMeters.Database.CommandTimeout = 500;
+
+            DateTime date1 = Convert.ToDateTime("2024-12-01");
                 return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_POC().Where(x => x.Date >= date1), loadOptions));
-            }
+            
 
         }
         [Route("OutofRange")]
@@ -83,7 +183,7 @@ namespace HESMDMS.Controllers
             DateTime date1 = Convert.ToDateTime("2024-01-01");
             decimal upperLimit = Convert.ToDecimal(1.5);
             decimal lowerLimit = Convert.ToDecimal(0);
-            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_POC().Where(x => x.Date >= date1 && (x.DailyConsumption > upperLimit || x.DailyConsumption < lowerLimit) && x.Street.ToLower()=="khurja"), loadOptions));
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_POC().Where(x => x.Date >= date1 && (x.DailyConsumption > upperLimit || x.DailyConsumption < lowerLimit) && x.Street.ToLower() == "khurja"), loadOptions));
         }
         [Route("LoadMeterMaster")]
         [HttpGet]
@@ -117,12 +217,11 @@ namespace HESMDMS.Controllers
         {
             var values = form.Get("values");
 
-            var newOrder = new tbl_VayudutRegistration();
+            var newOrder = new tbl_VayadutMasterDetails();
             JsonConvert.PopulateObject(values, newOrder);
-            newOrder.IsAssigned = false;
-            newOrder.CreatedDate = DateTime.Now;
+
             Validate(newOrder);
-            clsMeters.tbl_VayudutRegistration.Add(newOrder);
+            clsMeters.tbl_VayadutMasterDetails.Add(newOrder);
             clsMeters.SaveChanges();
             return Request.CreateResponse(HttpStatusCode.Created, newOrder);
         }
@@ -139,12 +238,24 @@ namespace HESMDMS.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, order);
         }
         [HttpPut]
+        [Route("UpdateSmartMeterCommands")]
+        public HttpResponseMessage UpdateSmartMeterCommands(FormDataCollection form)
+        {
+            var key = Convert.ToInt32(form.Get("key"));
+            var values = form.Get("values");
+            var order = clsMeters_Prods.tbl_epsettings.First(o => o.ID == key);
+            JsonConvert.PopulateObject(values, order);
+            Validate(order);
+            clsMeters_Prods.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.OK, order);
+        }
+        [HttpPut]
         [Route("UpdateVayudut")]
         public HttpResponseMessage UpdateVayudut(FormDataCollection form)
         {
             var key = Convert.ToInt32(form.Get("key"));
             var values = form.Get("values");
-            var order = clsMeters.tbl_VayudutRegistration.First(o => o.ID == key);
+            var order = clsMeters.tbl_VayadutMasterDetails.First(o => o.ID == key);
             JsonConvert.PopulateObject(values, order);
             Validate(order);
             clsMeters.SaveChanges();
@@ -187,7 +298,19 @@ namespace HESMDMS.Controllers
             clsMeters.SaveChanges();
             return Request.CreateResponse(HttpStatusCode.Created, newOrder);
         }
+        [Route("InsertSmartMeterCommands")]
+        [HttpPost]
+        public HttpResponseMessage InsertSmartMeterCommands(FormDataCollection form)
+        {
+            var values = form.Get("values");
 
+            var newOrder = new tbl_epsettings();
+            JsonConvert.PopulateObject(values, newOrder);
+            Validate(newOrder);
+            clsMeters_Prods.tbl_epsettings.Add(newOrder);
+            clsMeters_Prods.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.Created, newOrder);
+        }
         [Route("InsertElectricMeterMaster")]
         [HttpPost]
         public HttpResponseMessage InsertElectricMeterMaster(FormDataCollection form)
@@ -243,6 +366,30 @@ namespace HESMDMS.Controllers
         {
             return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_Customers, loaddata));
         }
+        [Route("SGMReg")]
+        [HttpGet]
+        public HttpResponseMessage SGMReg(DataSourceLoadOptions loaddata)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters1.tbl_SGMReg, loaddata));
+        } 
+        [Route("ATGLRates")]
+        [HttpGet]
+        public HttpResponseMessage ATGLRates(DataSourceLoadOptions loaddata)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters1.tbl_ATGLRates, loaddata));
+        }
+        [Route("SGMMeterFetch")]
+        [HttpGet]
+        public HttpResponseMessage SGMMeterFetch(DataSourceLoadOptions loaddata)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.tbl_SMeterMaster.Where(x=>x.MeterSerialNumber.StartsWith("240")), loaddata));
+        }
+        [Route("lorarawdata")]
+        [HttpGet]
+        public HttpResponseMessage lorarawdata(DataSourceLoadOptions loaddata)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.tbl_MQTTBroker.OrderByDescending(x => x.ID), loaddata));
+        }
         public class brokerData
         {
             public string meterid { get; set; }
@@ -252,11 +399,22 @@ namespace HESMDMS.Controllers
         [HttpGet]
         public HttpResponseMessage d2cCustomer(DataSourceLoadOptions loaddata)
         {
-           
+
             SmartMeter_ProdEntities1 clsMetersProd1 = new SmartMeter_ProdEntities1();
             clsMetersProd1.Database.CommandTimeout = 500;
             clsMeters_Prod.Database.CommandTimeout = 300;
             var activeAMR = clsMeters_Prod.Database.SqlQuery<SCustomerData>("exec sp_CustomerLogs").ToList();
+            return Request.CreateResponse(DataSourceLoader.Load(activeAMR, loaddata));
+        }
+        [Route("SmartMeterCommands")]
+        [HttpGet]
+        public HttpResponseMessage SmartMeterCommands(DataSourceLoadOptions loaddata)
+        {
+
+            SmartMeter_ProdEntities1 clsMetersProd1 = new SmartMeter_ProdEntities1();
+            clsMetersProd1.Database.CommandTimeout = 500;
+            clsMeters_Prod.Database.CommandTimeout = 300;
+            var activeAMR = clsMetersProd1.tbl_epsettings.ToList();
             return Request.CreateResponse(DataSourceLoader.Load(activeAMR, loaddata));
         }
         [Route("smtplmqtt")]
@@ -270,7 +428,7 @@ namespace HESMDMS.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid data.");
             }
             tbl_MQTTBroker meterData = JsonConvert.DeserializeObject<tbl_MQTTBroker>(result);
-            meterData.CreatedDate=DateTime.Now;
+            meterData.CreatedDate = DateTime.Now;
             clsMeters.tbl_MQTTBroker.Add(meterData);
             clsMeters.SaveChanges();
 
@@ -282,7 +440,7 @@ namespace HESMDMS.Controllers
         public HttpResponseMessage d2c(DataSourceLoadOptions loaddata, string roleid, DateTime? startDate = null, DateTime? endDate = null)
         {
             // Default to the past seven days if dates are not provided
-            DateTime defaultStartDate = DateTime.Now.AddDays(-5);
+            DateTime defaultStartDate = DateTime.Now.AddDays(-1);
             DateTime defaultEndDate = DateTime.Now;
 
             // Use provided dates or defaults
@@ -465,12 +623,12 @@ namespace HESMDMS.Controllers
         [HttpGet]
         public HttpResponseMessage LastMeterReading(DateTime fromdate, DateTime todate, DataSourceLoadOptions loadOptions, string roleid, string data)
         {
-            
+
             //if (data == "All" || data == "" || data == null)
             //{
-                DateTime start = Convert.ToDateTime(fromdate);
-                //DateTime end = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddDays(-1), INDIAN_ZONE);
-                DateTime end = Convert.ToDateTime(todate);
+            DateTime start = Convert.ToDateTime(fromdate);
+            //DateTime end = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddDays(-1), INDIAN_ZONE);
+            DateTime end = Convert.ToDateTime(todate);
             //    if (roleid == "5")
             //    {
             //        return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_Demo().Where(x => x.Date >= fromdate && x.Date <= todate), loadOptions));
@@ -493,9 +651,9 @@ namespace HESMDMS.Controllers
             //    }
             //    else
             //    {
-                    //var a = clsMeters.FetchConsumption_POC().Where(x => x.Date >= fromdate && x.Date <= todate && x.Street == data).Count();
-                    return Request.CreateResponse(DataSourceLoader.Load(clsMeters1.sp_FetchConsumptionData(start, end), loadOptions));
-                //}
+            //var a = clsMeters.FetchConsumption_POC().Where(x => x.Date >= fromdate && x.Date <= todate && x.Street == data).Count();
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters1.sp_FetchConsumptionData(start, end), loadOptions));
+            //}
 
             //}
             //DateTime start = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddDays(-15), INDIAN_ZONE);
@@ -567,7 +725,7 @@ namespace HESMDMS.Controllers
                                 TempMeterID = log.MeterSerialNumber == null ? log.TempMeterID : log.MeterSerialNumber,
                                 AID = log.AID,
                                 PLD = log.PLD,
-                            }).OrderByDescending(x=>x.ID);
+                            }).OrderByDescending(x => x.ID);
                 return Request.CreateResponse(DataSourceLoader.Load(data, loadOptions));
             }
 
@@ -661,11 +819,11 @@ namespace HESMDMS.Controllers
                         Content = new StringContent("Failed to send C2D command.")
                     };
                 }
-                
+
                 return new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent("Command sent successfully.")
-                    
+
                 };
             }
             return new HttpResponseMessage(HttpStatusCode.NoContent)
@@ -722,6 +880,112 @@ namespace HESMDMS.Controllers
             return Request.CreateResponse(HttpStatusCode.Created, newOrder);
 
         }
+        [Route("InsertSGMReg")]
+        [HttpPost]
+        public HttpResponseMessage InsertSGMReg(FormDataCollection form)
+        {
+            var values = form.Get("values");
+            var newOrder = new tbl_SGMReg();
+            newOrder.CreatedDate=DateTime.Now;
+            JsonConvert.PopulateObject(values, newOrder);
+            bool exists = clsMeters1.tbl_SGMReg.Any(x => x.CustomreID == newOrder.CustomreID || x.SmartMeterSerialNumber == newOrder.SmartMeterSerialNumber);
 
+            if (exists)
+            {
+                // Return a conflict response indicating the record already exists
+                return Request.CreateResponse(HttpStatusCode.Conflict, "Record with the same CustomerID or Meter Number already exists.");
+            }
+            Validate(newOrder);
+            clsMeters1.tbl_SGMReg.Add(newOrder);
+            clsMeters1.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.Created, newOrder);
+
+        }
+        [Route("ATGLRatesInsert")]
+        [HttpPost]
+        public HttpResponseMessage ATGLRatesInsert(FormDataCollection form)
+        {
+            var values = form.Get("values");
+            var newOrder = new tbl_ATGLRates();
+            newOrder.CreatedDate = DateTime.Now;
+            
+            
+            JsonConvert.PopulateObject(values, newOrder);
+            Validate(newOrder);
+            clsMeters1.tbl_ATGLRates.Add(newOrder);
+            clsMeters1.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.Created, newOrder);
+
+        }
+        public class RequestModel
+        {
+            public List<string> PlaceholderParameters { get; set; }
+        }
+        [Route("sendWAAsync")]
+        [HttpPost]
+        public async Task sendWAAsync(string meterNumber,string WpTemplateId, [FromBody] RequestModel request1)
+        {
+            var SGMREg = clsMeters1.tbl_SGMReg.Where(x=>x.SmartMeterSerialNumber==meterNumber).FirstOrDefault();
+            var customerID = SGMREg.CustomreID;
+            var customerDetails= clsMeters.tbl_Customers.Where(x=>x.ContractAcct==customerID).FirstOrDefault();
+            string mobileNo = customerDetails.MobilNumber;
+            string wpTemplateId = WpTemplateId;
+            List<string> placeholderParameters = request1.PlaceholderParameters;
+            placeholderParameters[0] = customerID;
+            var placeholderParamsString = string.Join("\", \"", placeholderParameters);
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://devspotbill.adani.com/WhatsappServices/api/ThirdParty/SendWhatsappAsync");
+            
+            // Add the headers
+            request.Headers.Add("x-api-key", "fc3a55e5-d01e-4e79-a18f-7b22606fad83");
+            request.Headers.Add("User-Agent", "okhttp");
+
+            // Create the JSON body with dynamic amount
+            string jsonContent = $@"
+        {{
+            ""mobileNo"": [
+                ""{mobileNo}""
+            ],
+            ""indicator"": ""ZIS_U_BILL_SSF_INDU_NEW_2"",
+            ""wpTemplateId"": ""{wpTemplateId}"",
+            ""placeholderParameters"": [
+                  ""{placeholderParamsString}""
+            ]
+        }}";
+
+            // Set the content
+            var content = new StringContent(jsonContent, null, "application/json");
+            request.Content = content;
+
+            try
+            {
+                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12 | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls;
+                // Send the request and get the response
+                var response = await client.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                tbl_ATGLWaACK wa = new tbl_ATGLWaACK();
+                wa.MeterNumber=meterNumber;
+                wa.Remarks = WpTemplateId;
+                wa.Status = true;
+                wa.CreatedDate = DateTime.Now.Date;
+                clsMeters_Prods.tbl_ATGLWaACK.Add(wa);
+                clsMeters_Prods.SaveChanges();
+                // Output the response body
+                //Console.WriteLine(await response.Content.ReadAsStringAsync());
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                Console.WriteLine($"Request failed: {ex.Message}");
+            }
+
+        }
+        [Route("GetBalance")]
+        [HttpPost]
+        public async Task GetBalance(string pld, string aid, string eid)
+        {
+            string eventname = "";
+
+        }
     }
 }

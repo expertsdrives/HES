@@ -37,28 +37,30 @@ namespace HESMDMS.Controllers
             public string Longitude { get; set; }
         }
         [HttpPost]
-        public JsonResult CallToMap(string startDate, string endDate)
+        public JsonResult CallToMap(string startDate, string endDate,string area)
         {
             DateTime sdate = Convert.ToDateTime(startDate);
             DateTime edate = Convert.ToDateTime(endDate);
             clsMeter.Database.CommandTimeout = 300;
             var activeAMR = clsMeter.Database.SqlQuery<activeAMR>(
-          "exec sp_ActiveAMR @p0, @p1",
+          "exec sp_ActiveAMR @p0, @p1, @p2",
           new SqlParameter("@p0", sdate),
-          new SqlParameter("@p1", edate)  // Pass an empty string or any other parameter if required
+          new SqlParameter("@p1", edate),
+           new SqlParameter("@p2", area)// Pass an empty string or any other parameter if required
       ).ToList();
             var missingConsumptionSerials = clsMeter.Database.SqlQuery<inactiveAMR>(
-          "exec sp_InactiveAMR @p0, @p1",
+          "exec sp_InactiveAMR @p0, @p1, @p2",
           new SqlParameter("@p0", sdate),
-          new SqlParameter("@p1", edate)  // Pass an empty string or any other parameter if required
+          new SqlParameter("@p1", edate),
+            new SqlParameter("@p2", area)// Pass an empty string or any other parameter if required
       ).ToList();
-            var activeVayudut = (from consumption in clsMeter.tbl_Consumption
+            var activeVayudut = (from consumption in clsMeter.tbl_DataReception
                                  join customer in clsMeter.tbl_VayadutMasterDetails
-                                 on consumption.Vayudut_ID equals customer.VayadutId
+                                 on consumption.VAYUDUT_ID equals customer.VayadutId
                                  where consumption.Date >= sdate && consumption.Date <= edate
                                  select new
                                  {
-                                     VayudutID = consumption.Vayudut_ID,
+                                     VayudutID = consumption.VAYUDUT_ID,
                                      Latitude = customer.Latitude,
                                      Longitude = customer.Longitude
                                  })
@@ -72,6 +74,10 @@ namespace HESMDMS.Controllers
           new SqlParameter("@p1", edate)  // Pass an empty string or any other parameter if required
       ).ToList();
 
+
+
+
+
             var ActiveAMRJson = activeAMR
       .Select(x => new List<object>
       {
@@ -81,7 +87,7 @@ namespace HESMDMS.Controllers
       })
       .ToList();
 
-
+        
 
             var missingARMJson = missingConsumptionSerials
       .Select(x => new List<object>

@@ -229,10 +229,10 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                         TotalAmount = "",
                         Disconnection_Flag = "",
                         GCV = "10085.968",
-                        MaterialNumber = "IS-G1.6PD",
+                        MaterialNumber = "IS-G1.6SMART",
                         MeterNo = billingData.MeterNumber,
                         ReadingDate = billingData.Date.ToString().Replace("-", "").Split(' ')[0],
-                        CurrentMeterReading = "1559.232",
+                        CurrentMeterReading = billingData.TotalConsumption.ToString(),
                         GASPrice = billingData.StandardCharge,
                         VATPercentage = "15",
                         Recharge_Balance = billingData.AccountBalance.ToString(),
@@ -245,13 +245,13 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                         Prepaid_Rent_Amount = "",
                         Prepaid_Rent_CGST = "90",
                         Prepaid_Rent_SGST = "90",
-                        Installment_Amount = "1000"
+                        Installment_Amount = getCustID.Installment_Amount
                     });
                 }
                 json = JsonConvert.SerializeObject(new { BillingData = billingDataList }, Formatting.Indented);
-                string Url = "https://aipoqdmz.adani.com:443/RESTAdapter/hesmdms/billingdata";
+                string Url = "https://dbcixdp.adani.com:443/RESTAdapter/hesmdms/billingdata";
                 string Username = "INTF_SMARTMETER";
-                string Password = "Adani@123";
+                string Password = "Navis@2024";
 
                 using (HttpClient client = new HttpClient())
                 {

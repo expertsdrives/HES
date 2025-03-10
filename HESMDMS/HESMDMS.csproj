@@ -7412,6 +7412,7 @@
     <Content Include="Scripts\globalize\message.min.js" />
     <Content Include="Scripts\globalize\number.js" />
     <Content Include="Scripts\globalize\number.min.js" />
+    <Content Include="Scripts\grid\ControlPanel.js" />
     <Content Include="Scripts\grid\AMRHealthGraph.js" />
     <Content Include="Scripts\grid\15DayRevenue.js" />
     <Content Include="Scripts\grid\AMRRawData.js" />
@@ -7422,6 +7423,9 @@
     <Content Include="Scripts\grid\CustomerRegistration.js" />
     <Content Include="Scripts\grid\15DayConsumption.js" />
     <Content Include="Scripts\grid\CaseTemper.js" />
+    <Content Include="Scripts\grid\RatesPanel.js" />
+    <Content Include="Scripts\grid\registerSGM.js" />
+    <Content Include="Scripts\grid\lora.js" />
     <Content Include="Scripts\grid\D2CCustomer.js" />
     <Content Include="Scripts\grid\DashboardGraphs.js" />
     <Content Include="Scripts\grid\15DayMeterReport.js" />
@@ -7502,6 +7506,10 @@
     <Content Include="Areas\SmartMeter\Views\SGMBLEConnection\Index.cshtml" />
     <Content Include="Areas\SmartMeter\Views\SamrtMeterData\SGMBLEConnection.cshtml" />
     <Content Include="Areas\Admin\Views\Reports\ClusterReport.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\ControlPanel\Index.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\Lorawan\Index.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\MeterManagment\SGMRegistration.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\ControlPanel\UpdateRates.cshtml" />
     <None Include="Models\.editorconfig" />
     <EntityDeploy Include="Prod.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -7834,9 +7842,11 @@
     <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Admin\Controllers\VayudutController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\BillingParameterController.cs" />
+    <Compile Include="Areas\SmartMeter\Controllers\ControlPanelController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\ElectricBLEController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\FirmwareController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\LogsController.cs" />
+    <Compile Include="Areas\SmartMeter\Controllers\LorawanController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\MeterManagmentController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\SamrtMeterDataController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\SGMBLEConnection.cs" />
@@ -8210,8 +8220,17 @@
     <Compile Include="tbl_AdminUser.cs">
       <DependentUpon>ElectricMeter.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_ATGLRates.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ATGLWaACK.cs">
+      <DependentUpon>Prod.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_BLEDemo.cs">
       <DependentUpon>ElectricMeter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_epsettings.cs">
+      <DependentUpon>Prod.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_MeterData.cs">
       <DependentUpon>ElectricMeter.tt</DependentUpon>
@@ -8221,6 +8240,9 @@
     </Compile>
     <Compile Include="tbl_ParameterMaster.cs">
       <DependentUpon>ElectricMeter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_SGMReg.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

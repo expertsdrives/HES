@@ -27,6 +27,8 @@ namespace HESMDMS
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<tbl_SGMReg> tbl_SGMReg { get; set; }
+        public virtual DbSet<tbl_ATGLRates> tbl_ATGLRates { get; set; }
     
         public virtual ObjectResult<sp_Circle1Temp_Result> sp_Circle1Temp(Nullable<System.DateTime> startdate, Nullable<System.DateTime> enddate)
         {

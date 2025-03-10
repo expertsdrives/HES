@@ -1,10 +1,13 @@
 ﻿using Elmah;
 using HESMDMS.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.Azure.Amqp.Framing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using NPOI.SS.Formula.Functions;
+using Stripe;
 using Syncfusion.Lic.util.encoders;
 using System;
 using System.Collections.Generic;
@@ -16,6 +19,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -90,7 +94,7 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                 var response = clsMetersProd.tbl_Response.Where(x => x.Data.Contains("&") && x.pld == pld).OrderByDescending(c => c.ID).ToList();
 
                 var balance = query != null ? query.AccountBalance : 0;
-                var tariff = query != null? query.StandardCharge:"";
+                var tariff = query != null ? query.StandardCharge : "";
                 var commonQuery = new JSONData { Resposne = query };
                 var commonData = new JSONData { Resposne1 = data };
                 var commonResponse = new JSONData { CommandResponse = response };
@@ -103,6 +107,26 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
                 return Json("");
             }
         }
+        string AddCommaAfterEveryTwoCharacters(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+
+            System.Text.StringBuilder result = new System.Text.StringBuilder();
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                result.Append(input[i]);
+
+                // Add a comma after every 2 characters, except at the end
+                if ((i + 1) % 2 == 0 && i != input.Length - 1)
+                {
+                    result.Append(',');
+                }
+            }
+
+            return result.ToString();
+        }
         [HttpPost]
         public async Task<JsonResult> SendData(string aid, string pld, string eid, string eventname, string modetype, string balanceInput)
         {
@@ -110,32 +134,127 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
             {
                 bool dataFound = false;
                 float intValue = 0;
-                if (modetype == "auto")
+                if (eventname == "Mod Balance")
                 {
-                    string[] eventsplit = eventname.Split(',');
-                    if (eventsplit.Length > 0)
+                    var fixByte = "02,03,00,04,30,01,03,5F,04";
+                    float cintValue = float.Parse(balanceInput, CultureInfo.InvariantCulture.NumberFormat);
+                    // Convert integer 182 as a hex in a string variable
+                    string balanceString = ToHexString(cintValue);
+                    byte[] balance = Enumerable.Range(0, balanceString.Length)
+                              .Where(x => x % 2 == 0)
+                              .Select(x => Convert.ToByte(balanceString.Substring(x, 2), 16))
+                              .ToArray();
+                    string modifiedInputl = Regex.Replace(balance.Length.ToString(), @"\b\d\b", m => "0" + m.Value); // Add 0 to single digits
+                    string outputl = string.Concat(modifiedInputl.Select((c, i) => (i > 0 && i % 2 == 0) ? $",{c}" : c.ToString()));
+                    string output = string.Concat(balanceString.Select((c, i) => (i > 0 && i % 2 == 0) ? $",{c}" : c.ToString()));
+                    var finalOutput = fixByte + "," + outputl + "," + output;
+                    var cData1 = clsMetersProd.tbl_CommandBackLog;
+                    tbl_CommandBackLog clsCmd1 = new tbl_CommandBackLog();
+                    clsCmd1.Data = finalOutput;
+                    clsCmd1.EventName = "Mod Balance";
+                    clsCmd1.LogDate = DateTime.UtcNow;
+                    clsCmd1.Status = "Pending";
+                    clsCmd1.pld = pld;
+                    clsMetersProd.tbl_CommandBackLog.Add(clsCmd1);
+                    clsMetersProd.SaveChanges();
+                    return Json("Command Added In Queue", JsonRequestBehavior.AllowGet);
+                }
+                else if (modetype == "auto")
+                {
+                    var dataCount = clsMetersProd.tbl_CommandBackLog.Where(x => x.pld == pld && x.Status == "Pending").Count();
+                    if (dataCount >= 5)
                     {
-                        foreach (string s in eventsplit)
+                        return Json("Max Command Executed", JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        string[] eventsplit = eventname.Split(',');
+                        if (eventsplit.Length > 0)
                         {
 
-                            var command1 = clsMeters.tbl_OTACommands.Where(x => x.Name == s).FirstOrDefault();
-                            var data1 = command1.Command;
-                            DateTime time1 = DateTime.UtcNow;
-                            if (eventname == "Set RTC")
+                            foreach (string s in eventsplit)
                             {
-                                string inputDate = Convert.ToDateTime(DateTime.Now).ToString("ddMMyyHHmmss");
-                                string hex = "";
-                                for (int i = 0; i < inputDate.Length; i += 2)
-                                {
-                                    string pair = inputDate.Substring(i, 2);
-                                    int value = int.Parse(pair);
 
-                                    // convert the decimal value to a two-digit hexadecimal string
-                                    string hexPair = value.ToString("X2");
-                                    hex += hexPair;
+                                var command1 = clsMeters.tbl_OTACommands.Where(x => x.Name == s).FirstOrDefault();
+                                var data1 = command1.Command;
+                                DateTime time1 = DateTime.UtcNow;
+                                if (eventname == "Set RTC")
+                                {
+                                    string inputDate = Convert.ToDateTime(DateTime.Now).ToString("ddMMyyHHmmss");
+                                    string hex = "";
+                                    for (int i = 0; i < inputDate.Length; i += 2)
+                                    {
+                                        string pair = inputDate.Substring(i, 2);
+                                        int value = int.Parse(pair);
+
+                                        // convert the decimal value to a two-digit hexadecimal string
+                                        string hexPair = value.ToString("X2");
+                                        hex += hexPair;
+                                    }
+                                    data1 = data1.Replace("-", string.Concat(hex.Select((c, i) => i > 0 && i % 2 == 0 ? "," + c : c.ToString())));
                                 }
-                                data1 = data1.Replace("-", string.Concat(hex.Select((c, i) => i > 0 && i % 2 == 0 ? "," + c : c.ToString())));
+                                if (eventname == "Add Balance" || eventname == "Set Vat" || eventname == "Set Average Gas Calorific Value" || eventname == "Set E-Credit Threshold")
+                                {
+                                    if (eventname.Contains("Set Vat"))
+                                        intValue = float.Parse(balanceInput, CultureInfo.InvariantCulture.NumberFormat) / 100;
+                                    else
+                                        intValue = float.Parse(balanceInput, CultureInfo.InvariantCulture.NumberFormat);
+                                    string balanceString = ToHexString(intValue);
+                                    //if (eventname == "Set Average Gas Calorific Value")
+                                    //{
+
+                                    //    balanceString = ConvertMsbToLsb(balanceString);
+                                    //}
+                                    var balanceutput = string.Join(",", SplitIntoChunks(balanceString, 2));
+                                    if (eventname == "Set Average Gas Calorific Value" || eventname == "Set E-Credit Threshold")
+                                    {
+                                        // Reverse the array
+                                        string[] splitArray = balanceutput.Split(',');
+
+                                        // Reverse the array
+                                        Array.Reverse(splitArray);
+
+                                        // Join the array elements back into a string using a comma as the separator
+                                        balanceutput = string.Join(",", splitArray);
+
+                                    }
+
+                                    string modifiedString = data1.Replace("-", balanceutput);
+                                    var length = balanceutput.Split(',').Length.ToString("D2");
+                                    data1 = modifiedString;
+                                    string[] values = data1.Split(',');
+                                    if (values.Length >= 3)
+                                    {
+                                        // Replace the third value with the new variable
+                                        values[3] = length;
+
+                                        // Join the array back into a string with commas
+                                        string resultString = string.Join(",", values);
+
+                                        // Now, resultString will be "value1,value2,newvalue,value4,value5"
+
+                                        // You can use the resultString in your view or further processing
+                                        data1 = resultString;
+                                    }
+
+                                }
+                                var cData1 = clsMetersProd.tbl_CommandBackLog;
+                                tbl_CommandBackLog clsCmd1 = new tbl_CommandBackLog();
+                                clsCmd1.Data = data1;
+                                clsCmd1.EventName = s;
+                                clsCmd1.LogDate = DateTime.UtcNow;
+                                clsCmd1.Status = "Pending";
+                                clsCmd1.pld = pld;
+                                clsMetersProd.tbl_CommandBackLog.Add(clsCmd1);
+                                clsMetersProd.SaveChanges();
                             }
+
+                        }
+                        else
+                        {
+                            var command = clsMeters.tbl_OTACommands.Where(x => x.Name == eventname).FirstOrDefault();
+                            var data = command.Command;
+                            DateTime time = DateTime.UtcNow;
                             if (eventname == "Add Balance" || eventname == "Set Vat" || eventname == "Set Average Gas Calorific Value" || eventname == "Set E-Credit Threshold")
                             {
                                 if (eventname.Contains("Set Vat"))
@@ -162,84 +281,23 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
 
                                 }
 
-                                string modifiedString = data1.Replace("-", balanceutput);
-                                var length = balanceutput.Split(',').Length.ToString("D2");
-                                data1 = modifiedString;
-                                string[] values = data1.Split(',');
-                                if (values.Length >= 3)
-                                {
-                                    // Replace the third value with the new variable
-                                    values[3] = length;
+                                string modifiedString = data.Replace("-", balanceutput);
 
-                                    // Join the array back into a string with commas
-                                    string resultString = string.Join(",", values);
-
-                                    // Now, resultString will be "value1,value2,newvalue,value4,value5"
-
-                                    // You can use the resultString in your view or further processing
-                                    data1 = resultString;
-                                }
+                                data = modifiedString;
 
                             }
-                            var cData1 = clsMetersProd.tbl_CommandBackLog;
-                            tbl_CommandBackLog clsCmd1 = new tbl_CommandBackLog();
-                            clsCmd1.Data = data1;
-                            clsCmd1.EventName = s;
-                            clsCmd1.LogDate = DateTime.UtcNow;
-                            clsCmd1.Status = "Pending";
-                            clsCmd1.pld = pld;
-                            clsMetersProd.tbl_CommandBackLog.Add(clsCmd1);
+                            var cData = clsMetersProd.tbl_CommandBackLog;
+                            tbl_CommandBackLog clsCmd = new tbl_CommandBackLog();
+                            clsCmd.Data = data;
+                            clsCmd.EventName = eventname;
+                            clsCmd.LogDate = DateTime.UtcNow;
+                            clsCmd.Status = "Pending";
+                            clsCmd.pld = pld;
+                            clsMetersProd.tbl_CommandBackLog.Add(clsCmd);
                             clsMetersProd.SaveChanges();
                         }
-
+                        return Json("Command Added In Queue", JsonRequestBehavior.AllowGet);
                     }
-                    else
-                    {
-                        var command = clsMeters.tbl_OTACommands.Where(x => x.Name == eventname).FirstOrDefault();
-                        var data = command.Command;
-                        DateTime time = DateTime.UtcNow;
-                        if (eventname == "Add Balance" || eventname == "Set Vat" || eventname == "Set Average Gas Calorific Value" || eventname == "Set E-Credit Threshold")
-                        {
-                            if (eventname.Contains("Set Vat"))
-                                intValue = float.Parse(balanceInput, CultureInfo.InvariantCulture.NumberFormat) / 100;
-                            else
-                                intValue = float.Parse(balanceInput, CultureInfo.InvariantCulture.NumberFormat);
-                            string balanceString = ToHexString(intValue);
-                            //if (eventname == "Set Average Gas Calorific Value")
-                            //{
-
-                            //    balanceString = ConvertMsbToLsb(balanceString);
-                            //}
-                            var balanceutput = string.Join(",", SplitIntoChunks(balanceString, 2));
-                            if (eventname == "Set Average Gas Calorific Value" || eventname == "Set E-Credit Threshold")
-                            {
-                                // Reverse the array
-                                string[] splitArray = balanceutput.Split(',');
-
-                                // Reverse the array
-                                Array.Reverse(splitArray);
-
-                                // Join the array elements back into a string using a comma as the separator
-                                balanceutput = string.Join(",", splitArray);
-
-                            }
-
-                            string modifiedString = data.Replace("-", balanceutput);
-
-                            data = modifiedString;
-
-                        }
-                        var cData = clsMetersProd.tbl_CommandBackLog;
-                        tbl_CommandBackLog clsCmd = new tbl_CommandBackLog();
-                        clsCmd.Data = data;
-                        clsCmd.EventName = eventname;
-                        clsCmd.LogDate = DateTime.UtcNow;
-                        clsCmd.Status = "Pending";
-                        clsCmd.pld = pld;
-                        clsMetersProd.tbl_CommandBackLog.Add(clsCmd);
-                        clsMetersProd.SaveChanges();
-                    }
-                    return Json("Command Added In Queue", JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

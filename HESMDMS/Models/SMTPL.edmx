@@ -33,6 +33,7 @@
           <Property Name="AccessFailedCount" Type="int" />
           <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
           <Property Name="LastLoggedInDate" Type="datetime" />
+          <Property Name="SendOTP" Type="bit" />
         </EntityType>
         <EntityType Name="tbl_AMRAckData">
           <Key>
@@ -924,6 +925,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <Property Name="AccessFailedCount" Type="Int32" />
           <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LastLoggedInDate" Type="DateTime" Precision="3" />
+          <Property Name="SendOTP" Type="Boolean" />
         </EntityType>
         <Association Name="FK_tbl_AdminCredentials_tbl_RoleMaster">
           <End Type="SmartMeterModel.tbl_RoleMaster" Role="tbl_RoleMaster" Multiplicity="1" />
@@ -1783,6 +1785,7 @@ warning 6002: The table/view 'SmartMeter.dbo.V_RawData' does not have a primary 
           <EntitySetMapping Name="tbl_AdminCredentials">
             <EntityTypeMapping TypeName="SmartMeterModel.tbl_AdminCredentials">
               <MappingFragment StoreEntitySet="tbl_AdminCredentials">
+                <ScalarProperty Name="SendOTP" ColumnName="SendOTP" />
                 <ScalarProperty Name="LastLoggedInDate" ColumnName="LastLoggedInDate" />
                 <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />

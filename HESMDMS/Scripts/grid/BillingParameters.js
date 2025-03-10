@@ -557,6 +557,47 @@ $("#btnAddBalance").click(function () {
 
 
 });
+
+
+    $("#btnModBalance").click(function () {
+        if (pld != "") {
+
+            var balanceInput = $('#lblModBalance').val();
+            if (balanceInput != "") {
+                loadPanel.show();
+                $.ajax({
+                    url: '/SmartMeter/Terminal/SendData',
+                    type: 'POST',
+                    data: { aid: aid, pld: pld, eid: eeid, eventname: "Mod Balance", modetype: modetype, balanceInput: balanceInput },
+                    success: function (result) {
+                        //loadPanel.hide();
+                        //$("#lblPresentVolume").val(result+" m3");
+                        ////textareaLogs.option('value', result);
+                        ////const myArray = result.split("/");
+                        ////var data = myArray[1];
+                        //DevExpress.ui.notify(result, "warning", 2000);
+                        if (result == "00000000") {
+                            loadPanel.hide();
+                            alert("Balance Added");
+                        }
+                        else {
+                            loadPanel.hide();
+                            $("#lblModBalanceStatus").text("");
+                            $("#lblModBalance").val(result);
+                        }
+                    }
+                });
+            }
+            else {
+                alert("Kindly Input Balance to Proceed");
+            }
+        }
+        else {
+            alert("Please Select Meter");
+        }
+
+
+    });
 $("#btnPrepaid").click(function () {
     if (pld != "") {
         loadPanel.show();

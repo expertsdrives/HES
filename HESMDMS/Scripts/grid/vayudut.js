@@ -44,47 +44,69 @@
         },
         columns: [
             {
-                dataField: "VayudutSrNo",
-                caption: "Serial Number",
-                dataType: 'number',
+                dataField: "VayadutNo",
+                caption: "Gateway Number",
+               
             },
             {
-                dataField: "VayudutInstalledLocation",
-                caption: "Installed Location",
+                dataField: "PcbNo",
+                caption: "Pcb No",
                
 
             },
             {
-                dataField: "VayudutInstalledDate",
-                caption: "Insallted Date",
-                dataType: "date",
-                format: 'dd-MM-yyyy',
-             
-       
-                sortOrder: 'desc',
-
+                dataField: "CardNo",
+                caption: "Card No",
             },
 
             {
-                dataField: "PhoneNumber",
-                caption: "Number",
-                dataType: 'number',
+                dataField: "VayadutId",
+                caption: "Gateway ID",
+                
             },
             {
-                dataField: "IMSI",
-                caption: "IMSI",
-                dataType: 'number',
+                dataField: "Latitude",
+                caption: "Latitude",
+
             },
             {
-                dataField: "CreatedDate",
-                caption: "Created Date",
+                dataField: "Longitude",
+                caption: "Longitude",
+              
+            },
+            {
+                dataField: "SealNo1",
+                caption: "SealNo1",
+    
+            }, {
+                dataField: "SealNo2",
+                caption: "SealNo2",
+
+            }, {
+                dataField: "Area",
+                caption: "Area",
+
+            },
+            {
+                dataField: "Remark",
+                caption: "Remark",
+
+            },
+            {
+                dataField: "Date",
+                caption: "Date",
                 dataType: "date",
                 format: 'dd-MM-yyyy',
+                width:120
             },
             {
-                dataField: "IsAssigned",
-                caption: "Is Assigned",
-                dataType: 'boolean',
+                dataField: "TpiName",
+                caption: "Tpi Name",
+
+            }, {
+                dataField: "GatewayStatus",
+                caption: "Gateway Status",
+
             },
 
         ],

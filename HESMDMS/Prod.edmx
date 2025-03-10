@@ -4,15 +4,42 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SmartMeter_ProdModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SmartMeter_ProdModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_ATGLWaACK">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MeterNumber" Type="varchar" MaxLength="500" />
+          <Property Name="Remarks" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_epsettings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParameterName" Type="nvarchar" MaxLength="100" />
+          <Property Name="NoOfBytes" Type="nvarchar" MaxLength="100" />
+          <Property Name="type" Type="nvarchar" MaxLength="100" />
+          <Property Name="Addr" Type="nvarchar" MaxLength="100" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+        </EntityType>
         <Function Name="sp_CustomerLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="SmartMeter_ProdModel1StoreContainer" />
+        <EntityContainer Name="SmartMeter_ProdModel1StoreContainer">
+          <EntitySet Name="tbl_ATGLWaACK" EntityType="Self.tbl_ATGLWaACK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_epsettings" EntityType="Self.tbl_epsettings" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SmartMeter_ProdModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SmartMeter_ProdEntities1" annotation:LazyLoadingEnabled="true" >
           <FunctionImport Name="sp_CustomerLogs" ReturnType="Collection(SmartMeter_ProdModel1.sp_CustomerLogs_Result)" />
+          <EntitySet Name="tbl_epsettings" EntityType="SmartMeter_ProdModel1.tbl_epsettings" />
+          <EntitySet Name="tbl_ATGLWaACK" EntityType="SmartMeter_ProdModel1.tbl_ATGLWaACK" />
         </EntityContainer>
         <ComplexType Name="sp_CustomerLogs_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -49,6 +76,28 @@
           <Property Type="Decimal" Name="ActualConsumption" Nullable="false" Precision="19" Scale="3" />
           <Property Type="String" Name="FullName" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <EntityType Name="tbl_epsettings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParameterName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NoOfBytes" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Addr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_ATGLWaACK">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeterNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -94,6 +143,30 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_epsettings">
+            <EntityTypeMapping TypeName="SmartMeter_ProdModel1.tbl_epsettings">
+              <MappingFragment StoreEntitySet="tbl_epsettings">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Addr" ColumnName="Addr" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="NoOfBytes" ColumnName="NoOfBytes" />
+                <ScalarProperty Name="ParameterName" ColumnName="ParameterName" />
+                <ScalarProperty Name="EventName" ColumnName="EventName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ATGLWaACK">
+            <EntityTypeMapping TypeName="SmartMeter_ProdModel1.tbl_ATGLWaACK">
+              <MappingFragment StoreEntitySet="tbl_ATGLWaACK">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

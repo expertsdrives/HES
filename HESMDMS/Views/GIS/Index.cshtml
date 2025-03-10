@@ -28,6 +28,15 @@
             <input type="date" id="startDate" class="date-picker" />
             <label for="endDate">End Date:</label>
             <input type="date" id="endDate" class="date-picker" />
+            <select id="myDropdown" class="dropdown-bg">
+                <option value="All">All</option>
+                <option value="CA01 - Vimla Devi Rice Mill">CA01 - Vimla Devi Rice Mill</option>
+                <option value="CA02 - Manchpur">CA02 - Manchpur</option>
+                <option value="CA03 - Gulzar Cinema">CA03 - Gulzar Cinema</option>
+                <option value="CA04 - Arniua Maujpur">CA04 - Arniua Maujpur</option>
+                <option value="CA05 - Bazipur">CA05 - Bazipur</option>
+                <option value="Outside CA">Outside CA</option>
+            </select>
             <button id="applyFilter" class="btn btn-primary">Show GIS Tagging</button>
 
         </div>
@@ -43,7 +52,7 @@
 
 <script>
     $(document).ready(function () {
-        var map = L.map('map').setView([28.1924017, 77.8829483], 13);
+        let map = L.map('map').setView([28.1924017, 77.8829483], 13);
         const loadPanel = $('.loadpanel').dxLoadPanel({
             shadingColor: 'rgba(0,0,0,0.4)',
             position: { of: '.container' },
@@ -74,11 +83,18 @@
 
             }
             console.log("Applying filter: Start Date = " + startDate + ", End Date = " + endDate);
+            const dropdown = document.getElementById("myDropdown");
+            const selectedValue = dropdown.value;
             $.ajax({
                 type: 'POST',                    // HTTP method
                 url: '/GIS/CallToMap',    // Controller URL (replace with actual controller/action)
-                data: { startDate: startDate, endDate: endDate }, // Data sent as key-value pairs
-                success: function (response) {     // Success callback
+                data: { startDate: startDate, endDate: endDate, area: selectedValue }, // Data sent as key-value pairs
+                success: function (response) {
+
+                    map.remove();
+
+                    // Reinitialize the map
+                    map = L.map('map').setView([28.1924017, 77.8829483], 13);// Success callback
                     var missingARMJson = response.missingARMJson;
                     var ActiveAMRJson = response.ActiveAMRJson;
                     var ActiveVayudutJson = response.ActiveVayudutJson;
@@ -104,9 +120,8 @@
                     //L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     //    maxZoom: 18,
                     //}).addTo(map);
-                    L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-                        maxZoom: 20,
-                        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors'
                     }).addTo(map);
 
                     // Add Mapbox Satellite tile layer with your access token
@@ -499,6 +514,30 @@
                                 var markerL = createDraggableCircle(latlon, 150, 'blue');
                             }
                         });
+                        const legend = L.control({ position: 'bottomright' });
+                        legend.onAdd = function (map) {
+                            const div = L.DomUtil.create('div', 'legend');
+                            div.innerHTML = `
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(0,0,255,0.2); border: 2px solid blue;"></div>
+                    <span>Functional Gateway</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(255,255,0,0.2); border: 2px solid yellow;"></div>
+                    <span>Non-functional Gateway</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: green;"></div>
+                    <span>Operational AMR</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: red;"></div>
+                    <span>Non-operational AMR</span>
+                </div>
+            `;
+                            return div;
+                        };
+                        legend.addTo(map);
                       
                         if (!found) {
                             alert('Marker with Serial Number ' + searchInput + ' not found.');

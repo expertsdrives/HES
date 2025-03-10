@@ -24,6 +24,10 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
             ViewBag.data = data;
             return View();
         }
+        public ActionResult SGMRegistration() { 
+        
+            return View();
+        }
         public async Task<JsonResult> GetMeterParamaterAsync(string aid, string pld, string eid)
         {
             Random rnd = new Random();

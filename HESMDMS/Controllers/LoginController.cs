@@ -79,6 +79,7 @@ namespace HESMDMS.Controllers
                         Session.Add("usertype", "Electic Admin");
                     }
                     Session.Add("FullName", data.FullName);
+                    ViewBag.fulname = data.FullName;
                     Session.Add("Username", data.Username);
                     Session.Add("UserID", data.ID);
                     FormsAuthentication.SetAuthCookie(data.FullName, false);
@@ -103,7 +104,7 @@ namespace HESMDMS.Controllers
                     else
                     {
                         Session.Add("Admin", "Admin");
-                        if (data.RoleID != 7 || data.ID == 114)
+                        if (data.SendOTP==true)
                         {
                             if (data.MobileNumber != null)
                             {

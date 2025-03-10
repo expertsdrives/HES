@@ -17,6 +17,10 @@ namespace HESMDMS.Areas.Admin.Controllers
         // GET: Admin/Dashboad
         public ActionResult Index()
         {
+            var custmers = clsMeters.tbl_CustomerDetails.Count();
+            ViewBag.Cus = custmers;
+            var amr = clsMeters.tbl_CustomerRegistration.Where(x=>x.Address.Contains("Khurja")).Count();
+            ViewBag.amr = amr;
             //if (Convert.ToString(Session["FullName"]) != "")
             //{
             //    List<double> lstZero = new List<double>();
