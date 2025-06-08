@@ -7412,6 +7412,7 @@
     <Content Include="Scripts\globalize\message.min.js" />
     <Content Include="Scripts\globalize\number.js" />
     <Content Include="Scripts\globalize\number.min.js" />
+    <Content Include="Scripts\grid\FotaFile.js" />
     <Content Include="Scripts\grid\ControlPanel.js" />
     <Content Include="Scripts\grid\AMRHealthGraph.js" />
     <Content Include="Scripts\grid\15DayRevenue.js" />
@@ -7423,6 +7424,18 @@
     <Content Include="Scripts\grid\CustomerRegistration.js" />
     <Content Include="Scripts\grid\15DayConsumption.js" />
     <Content Include="Scripts\grid\CaseTemper.js" />
+    <Content Include="Scripts\grid\atgltran.js" />
+    <Content Include="Scripts\grid\GasAMC.js" />
+    <Content Include="Scripts\grid\GasGCV.js" />
+    <Content Include="Scripts\grid\GasMiniCharge.js" />
+    <Content Include="Scripts\grid\GasQtySlabs1.js" />
+    <Content Include="Scripts\grid\GasQtySlabs2.js" />
+    <Content Include="Scripts\grid\GasRateSlabs1.js" />
+    <Content Include="Scripts\grid\GasRateSlabs2.js" />
+    <Content Include="Scripts\grid\GasRental.js" />
+    <Content Include="Scripts\grid\GasSurcharge.js" />
+    <Content Include="Scripts\grid\GasVat.js" />
+    <Content Include="Scripts\grid\MeterGroups.js" />
     <Content Include="Scripts\grid\RatesPanel.js" />
     <Content Include="Scripts\grid\registerSGM.js" />
     <Content Include="Scripts\grid\lora.js" />
@@ -7510,6 +7523,19 @@
     <Content Include="Areas\SmartMeter\Views\Lorawan\Index.cshtml" />
     <Content Include="Areas\SmartMeter\Views\MeterManagment\SGMRegistration.cshtml" />
     <Content Include="Areas\SmartMeter\Views\ControlPanel\UpdateRates.cshtml" />
+    <Content Include="Areas\Admin\Views\ATGLRates\GasAMC.cshtml" />
+    <Content Include="Areas\Admin\Views\ATGLRates\GasGCV.cshtml" />
+    <Content Include="Areas\Admin\Views\ATGLRates\GasMiniCharge.cshtml" />
+    <Content Include="Areas\Admin\Views\ATGLRates\GasQtySlabs1.cshtml" />
+    <Content Include="Areas\Admin\Views\ATGLRates\GasQtySlabs2.cshtml" />
+    <Content Include="Areas\Admin\Views\ATGLRates\GasRateSlab1.cshtml" />
+    <Content Include="Areas\Admin\Views\ATGLRates\GasRateSlabs2.cshtml" />
+    <Content Include="Areas\Admin\Views\ATGLRates\GasRental.cshtml" />
+    <Content Include="Areas\Admin\Views\ATGLRates\GasSurcharge.cshtml" />
+    <Content Include="Areas\Admin\Views\ATGLRates\GasVAT.cshtml" />
+    <Content Include="Areas\Admin\Views\ATGLRates\MeterGroup.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\ControlPanel\PaymentTranscation.cshtml" />
+    <Content Include="Areas\Admin\Views\Fota\Index.cshtml" />
     <None Include="Models\.editorconfig" />
     <EntityDeploy Include="Prod.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -7833,9 +7859,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ATGLRatesController.cs" />
     <Compile Include="Areas\Admin\Controllers\BluetoothController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboadController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FotaController.cs" />
     <Compile Include="Areas\Admin\Controllers\JioLogsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MeterController.cs" />
     <Compile Include="Areas\Admin\Controllers\RawDataController.cs" />
@@ -7900,6 +7928,9 @@
     <Compile Include="Models\BillingData.cs" />
     <Compile Include="Models\BluetoothLEServer.cs" />
     <Compile Include="Models\c2d.cs" />
+    <Compile Include="Models\clsExceptionDataRoutine.cs" />
+    <Compile Include="Models\clsFileOperationRoutines.cs" />
+    <Compile Include="Models\clsGlobalData.cs" />
     <Compile Include="Models\Cluster.cs" />
     <Compile Include="Models\CreateOrderResponse.cs" />
     <Compile Include="Models\CustomerRaw.cs">
@@ -8210,6 +8241,9 @@
     <Compile Include="sp_CustomerLogs_Result.cs">
       <DependentUpon>Prod.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_FetchATGLBalanceTransaction_Result.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_FetchConsumptionData_Result.cs">
       <DependentUpon>NewDataBase.tt</DependentUpon>
     </Compile>
@@ -8232,8 +8266,44 @@
     <Compile Include="tbl_epsettings.cs">
       <DependentUpon>Prod.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_FotaFileUpload.cs">
+      <DependentUpon>Prod.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_GasAMC.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_GasGCV.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_GasMinimumchargerate.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_GasqtySlabs_1.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_GasqtySlabs_2.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_GasRateSlabs_1.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_GasRateSlabs_2.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_GasRental.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_GasSurcharge.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_GasVAT.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_MeterData.cs">
       <DependentUpon>ElectricMeter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_MeterGroup.cs">
+      <DependentUpon>NewDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_MeterMasterRelay.cs">
       <DependentUpon>ElectricMeter.tt</DependentUpon>

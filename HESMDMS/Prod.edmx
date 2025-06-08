@@ -27,10 +27,20 @@
           <Property Name="Addr" Type="nvarchar" MaxLength="100" />
           <Property Name="Remarks" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="tbl_FotaFileUpload">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MeterID" Type="varchar" MaxLength="500" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
         <Function Name="sp_CustomerLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="SmartMeter_ProdModel1StoreContainer">
           <EntitySet Name="tbl_ATGLWaACK" EntityType="Self.tbl_ATGLWaACK" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_epsettings" EntityType="Self.tbl_epsettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_FotaFileUpload" EntityType="Self.tbl_FotaFileUpload" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -40,6 +50,7 @@
           <FunctionImport Name="sp_CustomerLogs" ReturnType="Collection(SmartMeter_ProdModel1.sp_CustomerLogs_Result)" />
           <EntitySet Name="tbl_epsettings" EntityType="SmartMeter_ProdModel1.tbl_epsettings" />
           <EntitySet Name="tbl_ATGLWaACK" EntityType="SmartMeter_ProdModel1.tbl_ATGLWaACK" />
+          <EntitySet Name="tbl_FotaFileUpload" EntityType="SmartMeter_ProdModel1.tbl_FotaFileUpload" />
         </EntityContainer>
         <ComplexType Name="sp_CustomerLogs_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -97,6 +108,15 @@
           <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tbl_FotaFileUpload">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeterID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -163,6 +183,16 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="MeterNumber" ColumnName="MeterNumber" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_FotaFileUpload">
+            <EntityTypeMapping TypeName="SmartMeter_ProdModel1.tbl_FotaFileUpload">
+              <MappingFragment StoreEntitySet="tbl_FotaFileUpload">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

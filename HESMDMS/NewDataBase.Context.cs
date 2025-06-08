@@ -29,6 +29,17 @@ namespace HESMDMS
     
         public virtual DbSet<tbl_SGMReg> tbl_SGMReg { get; set; }
         public virtual DbSet<tbl_ATGLRates> tbl_ATGLRates { get; set; }
+        public virtual DbSet<tbl_GasAMC> tbl_GasAMC { get; set; }
+        public virtual DbSet<tbl_GasGCV> tbl_GasGCV { get; set; }
+        public virtual DbSet<tbl_GasMinimumchargerate> tbl_GasMinimumchargerate { get; set; }
+        public virtual DbSet<tbl_GasqtySlabs_1> tbl_GasqtySlabs_1 { get; set; }
+        public virtual DbSet<tbl_GasqtySlabs_2> tbl_GasqtySlabs_2 { get; set; }
+        public virtual DbSet<tbl_GasRateSlabs_1> tbl_GasRateSlabs_1 { get; set; }
+        public virtual DbSet<tbl_GasRateSlabs_2> tbl_GasRateSlabs_2 { get; set; }
+        public virtual DbSet<tbl_GasRental> tbl_GasRental { get; set; }
+        public virtual DbSet<tbl_GasSurcharge> tbl_GasSurcharge { get; set; }
+        public virtual DbSet<tbl_GasVAT> tbl_GasVAT { get; set; }
+        public virtual DbSet<tbl_MeterGroup> tbl_MeterGroup { get; set; }
     
         public virtual ObjectResult<sp_Circle1Temp_Result> sp_Circle1Temp(Nullable<System.DateTime> startdate, Nullable<System.DateTime> enddate)
         {
@@ -67,6 +78,11 @@ namespace HESMDMS
                 new ObjectParameter("end", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FetchConsumptionData_Result>("sp_FetchConsumptionData", startParameter, endParameter);
+        }
+    
+        public virtual ObjectResult<sp_FetchATGLBalanceTransaction_Result> sp_FetchATGLBalanceTransaction()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FetchATGLBalanceTransaction_Result>("sp_FetchATGLBalanceTransaction");
         }
     }
 }

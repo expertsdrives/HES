@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Meter Groups";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .dx-datagrid {
+        color: #333;
+        background-color: transparent !important;
+    }
+
+    .dx-toolbar {
+        background-color: transparent !important;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        <h4>Meter Groups</h4>
+    </div>
+
+    <div class="card-body">
+        <button class="btn btn-primary mb-3" id="openaddModal">
+            <i class="fas fa-plus"></i> Add Meter Group
+        </button>
+
+        <div id="MeterGroupGrid"></div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add/Edit Meter Group</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="MeterGroupForm">
+                    <input type="hidden" id="MeterGroupID" />
+
+                    <div class="form-group">
+                        <label for="GroupName">Group Name:</label>
+                        <input type="text" class="form-control" id="GroupName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Meters:</label>
+                        <div id="MeterSelectionContainer" style="max-height: 200px; overflow-y: auto;"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/grid/MeterGroups.js"></script>

@@ -1,47 +1,95 @@
 ﻿using HESMDMS.Models;
+using HESMDMS.Services; // Assuming a service layer for business logic
 using Newtonsoft.Json;
-using Syncfusion.HtmlConverter;
-using Syncfusion.Pdf;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 
 namespace HESMDMS.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")] // Secure the controller
     public class AccountingController : Controller
     {
-        SmartMeterEntities clsDb = new SmartMeterEntities();
+        private readonly SmartMeterEntities _clsDb;
+        private readonly IInvoiceService _invoiceService;
+
+        // Use Dependency Injection for DbContext and services
+        public AccountingController(SmartMeterEntities clsDb, IInvoiceService invoiceService)
+        {
+            _clsDb = clsDb;
+            _invoiceService = invoiceService;
+        }
+
+        public AccountingController() : this(new SmartMeterEntities(), new InvoiceService())
+        {
+            // This constructor is for the default model binder.
+            // A proper DI container would handle this.
+        }
+
         // GET: Admin/Accounting
         public ActionResult Index()
         {
             return View();
         }
+
+        // GET: Admin/Accounting/GenerateInvoice
         public ActionResult GenerateInvoice()
         {
-            var monthName = from post in clsDb.sp_GenerateInvoice()
-                            select new { MonthName = post.MonthOfSales };
-            ViewBag.monthName = JsonConvert.SerializeObject(monthName.Distinct());
-            return View();
-        }   
-        public ActionResult InvoiceGenerate()
-        {
-            string strDDLValue = Request.Form["MonthName"].ToString();
-            var custData = clsDb.sp_GenerateInvoice().Where(x=>x.MonthOfSales== strDDLValue).ToList();  
-            foreach (var data in custData)
+            try
             {
-                var path = HttpContext.Server.MapPath("~/Invoice/");
-                var htmlPath = HttpContext.Server.MapPath("~/Invoice/Index.html");
-                var pdfPath = HttpContext.Server.MapPath("~/Invoice/test.pdf");
-                string htmlData = ExportPDF.ReplaceHTML(htmlPath);
-                //htmlData = htmlData.Replace("#customerName", data.FullName);
-                //htmlData = htmlData.Replace("#customerID", data.CustomerID);
-                ExportPDF.GenerateHTMLtoPDF(pdfPath, htmlData);
+                var monthNames = _clsDb.sp_GenerateInvoice()
+                                       .Select(p => p.MonthOfSales)
+                                       .Distinct()
+                                       .ToList();
+
+                ViewBag.MonthNames = new SelectList(monthNames);
+                return View();
             }
-            return View();
+            catch (Exception ex)
+            {
+                // Log the exception (e.g., using Elmah, Serilog, etc.)
+                // Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return View("Error", new HandleErrorInfo(ex, "Accounting", "GenerateInvoice"));
+            }
+        }
+
+        // POST: Admin/Accounting/GenerateInvoice
+        [HttpPost]
+        [ValidateAntiForgeryToken] // Prevent CSRF attacks
+        public ActionResult GenerateInvoice(string monthName)
+        {
+            if (string.IsNullOrEmpty(monthName))
+            {
+                ModelState.AddModelError("", "Please select a month.");
+                // Re-populate the dropdown if there's an error
+                var monthNames = _clsDb.sp_GenerateInvoice()
+                                       .Select(p => p.MonthOfSales)
+                                       .Distinct()
+                                       .ToList();
+                ViewBag.MonthNames = new SelectList(monthNames);
+                return View();
+            }
+
+            try
+            {
+                var invoiceData = _clsDb.sp_GenerateInvoice()
+                                        .Where(x => x.MonthOfSales == monthName)
+                                        .ToList();
+
+                foreach (var data in invoiceData)
+                {
+                    _invoiceService.GenerateAndSaveInvoice(data, Server);
+                }
+
+                TempData["SuccessMessage"] = $"Invoices for {monthName} generated successfully.";
+                return RedirectToAction("GenerateInvoice");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return View("Error", new HandleErrorInfo(ex, "Accounting", "GenerateInvoice"));
+            }
         }
     }
 }

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOV Close Criteria</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script>
+    function handleReset() {
+      document.getElementById("sovForm").reset();
+    }
+
+    function handleSubmit() {
+      const formData = new FormData(document.getElementById("sovForm"));
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+      console.log("Submitting Data:", data);
+      alert("Settings saved successfully! (See console for data)");
+    }
+  </script>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">SOV Close Criteria Settings</h2>
+    <form id="sovForm">
+
+      <!-- Section 1 -->
+      <h4>Critical Thresholds & Controls</h4>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="eBalance" class="form-label">E Balance</label>
+          <input type="number" id="eBalance" name="eBalance" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">OTA Session Post Balance Exhaust</label><br>
+          <input class="form-check-input" type="checkbox" id="otaPostBalance" name="otaPostBalance">
+        </div>
+        <div class="col-md-4">
+          <label for="commissionedDate" class="form-label">Meter Last Commissioned Date/Time</label>
+          <input type="datetime-local" id="commissionedDate" name="commissionedDate" class="form-control">
+        </div>
+        <div class="col-md-4 mt-3">
+          <label for="rssi" class="form-label">NB-IoT RSSI Signal Threshold (dBm)</label>
+          <input type="number" id="rssi" name="rssi" class="form-control">
+        </div>
+        <div class="col-md-4 mt-3">
+          <label class="form-label">RESET STATUS</label><br>
+          <button type="button" class="btn btn-danger" onclick="alert('Reset triggered!')">Reset</button>
+        </div>
+      </div>
+
+      <!-- Section 2 -->
+      <h4>Power Management</h4>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label class="form-label">Super Cap</label><br>
+          <input class="form-check-input" type="checkbox" id="superCap" name="superCap">
+        </div>
+        <div class="col-md-4">
+          <label for="lowBattery" class="form-label">Low Battery Threshold Value</label>
+          <input type="number" id="lowBattery" name="lowBattery" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label for="extLowBattery" class="form-label">Extreme Low Battery Threshold</label>
+          <input type="number" id="extLowBattery" name="extLowBattery" class="form-control">
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <h4>OTA & Data Transmission</h4>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <button type="button" class="btn btn-primary" onclick="alert('Transmission checked!')">Check Transmission</button>
+        </div>
+        <div class="col-md-4">
+          <input class="form-check-input" type="checkbox" id="otaSession" name="otaSession">
+          <label class="form-label ms-2">OTA Session</label>
+        </div>
+      </div>
+
+      <!-- Section 4 -->
+      <h4>Backfilling Options</h4>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <input class="form-check-input" type="checkbox" id="dataPush" name="dataPush">
+          <label class="form-label ms-2">Backfilling Data Push</label>
+        </div>
+        <div class="col-md-4">
+          <button type="button" class="btn btn-secondary" onclick="alert('Backfilling Pull Triggered!')">Backfilling Data Pull</button>
+        </div>
+        <div class="col-md-4">
+          <label for="pullOptions" class="form-label">Backfilling Data Pull Options</label>
+          <select id="pullOptions" name="pullOptions" class="form-select">
+            <option>Last N Records</option>
+            <option>By Range</option>
+            <option>Custom Filter</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section 5 -->
+      <h4>Read Data Operations</h4>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="recordNumbers" class="form-label">Read Records by Record Numbers</label>
+          <input type="text" id="recordNumbers" name="recordNumbers" class="form-control" placeholder="e.g., 10-20">
+        </div>
+        <div class="col-md-6">
+          <label for="dateRange" class="form-label">Read Records by Date/Time Range</label>
+          <input type="text" id="dateRange" name="dateRange" class="form-control" placeholder="e.g., 2024-01-01 to 2024-01-10">
+        </div>
+      </div>
+
+      <!-- Section 6 -->
+      <h4>Event Management</h4>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <input type="checkbox" id="autoPush" name="autoPush">
+          <label class="ms-2">Auto Data Push/Tx Event</label>
+        </div>
+        <div class="col-md-4">
+          <input type="checkbox" id="autoLog" name="autoLog">
+          <label class="ms-2">Auto Data Log Event</label>
+        </div>
+        <div class="col-md-4">
+          <input type="checkbox" id="otaEvent" name="otaEvent">
+          <label class="ms-2">OTA Communication Event</label>
+        </div>
+        <div class="col-md-4 mt-3">
+          <input type="checkbox" disabled>
+          <label class="ms-2">Auto Event 4 (Reserved)</label>
+        </div>
+        <div class="col-md-4 mt-3">
+          <input type="checkbox" disabled>
+          <label class="ms-2">Auto Event 5 (Reserved)</label>
+        </div>
+        <div class="col-md-4 mt-3">
+          <button type="button" class="btn btn-warning" onclick="alert('Auto Event 6 Action Performed!')">Perform Auto Event 6</button>
+        </div>
+      </div>
+
+      <!-- Form Buttons -->
+      <div class="mt-4">
+        <button type="button" class="btn btn-success" onclick="handleSubmit()">Save</button>
+        <button type="button" class="btn btn-secondary" onclick="handleReset()">Reset</button>
+        <button type="button" class="btn btn-outline-dark" onclick="window.location.reload()">Cancel</button>
+      </div>
+
+    </form>
+  </div>
+</body>
+</html>

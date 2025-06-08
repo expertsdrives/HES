@@ -594,7 +594,8 @@
             var keyByte = getAsciiBytes(a);
             const hexString1 = toHexString(keyByte);
             const Password = hexString1.replace(/,/g, ' ');
-            const hexString = "02 03 00 " + paddedStr + " 7E " + Password;
+            //const hexString = "02 03 00 " + paddedStr + " 7E " + Password;
+            const hexString = "02 03 00 00 A6 03"
             const byteArray = hexString.split(' ').map(hex => parseInt(hex, 16));
             const data = new Uint8Array(byteArray);
             await writer.write(data);

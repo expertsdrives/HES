@@ -7,6 +7,7 @@
       <Diagram DiagramId="4dba3a3336684eed87a1c17bfe8db5ec" Name="Diagram1" >
         <EntityTypeShape EntityType="SmartMeter_ProdModel1.tbl_epsettings" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="SmartMeter_ProdModel1.tbl_ATGLWaACK" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SmartMeter_ProdModel1.tbl_FotaFileUpload" Width="1.5" PointX="3.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

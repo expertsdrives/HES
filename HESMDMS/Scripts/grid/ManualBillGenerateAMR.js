@@ -150,7 +150,7 @@ function getClick(data, date, ReadingCount) {
     bpnuum = data;
    
     $.ajax({
-        url: "GenerateBillAsyncAMRAsync?bpnumber=" + JSON.parse(selectedRowKeys) + "&Date=" + date + "&ReadingCount=" + ReadingCount,
+        url: "GenerateBillAsyncAMRAsync?bpnumber=" + data + "&Date=" + date + "&ReadingCount=" + ReadingCount,
         success: function (result) {
             
             $('#exampleModal').modal('hide');

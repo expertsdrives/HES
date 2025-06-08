@@ -78,6 +78,24 @@
                                 .text(options.value)
                                 .appendTo(container);
                         }
+                        if (options.value == "Delivered") {
+                            $("<div class='badge badge-success'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        } if (options.value == "Delivered & Executed") {
+                            $("<div class='badge badge-success'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        } if (options.value == "Completed Phase 2") {
+                            $("<div class='badge badge-success'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        }
+                        if (options.value == "Failed Timeout") {
+                            $("<div class='badge badge-warning'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        }
                         else if (options.value == "Pending") {
                             $("<div class='badge badge-danger'>")
                                 .text(options.value)
@@ -92,13 +110,43 @@
                             $("<div class='badge badge-danger'>")
                                 .text(options.value)
                                 .appendTo(container);
+                        } else if (options.value == "Schedule to Retry 1") {
+                            $("<div class='badge badge-danger'>")
+                                .text(options.value)
+                                .appendTo(container);
+
+                        }
+                        else if (options.value == "Schedule to Retry") {
+                            $("<div class='badge badge-danger'>")
+                                .text(options.value)
+                                .appendTo(container);
+
+                        }
+                        else if (options.value == "Schedule to Retry 2") {
+                            $("<div class='badge badge-danger'>")
+                                .text(options.value)
+                                .appendTo(container);
                         }
                         else if (options.value == "InProcess") {
                             $("<div class='badge badge-info'>")
                                 .text(options.value)
                                 .appendTo(container);
                         }
-
+                        else if (options.value == "InProcess 1") {
+                            $("<div class='badge badge-info'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        }
+                        else if (options.value == "InProcess 2") {
+                            $("<div class='badge badge-info'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        }
+                        else if (options.value == "Aborted") {
+                            $("<div class='badge badge-danger'>")
+                                .text(options.value)
+                                .appendTo(container);
+                        }
                     }
                 },
                 {

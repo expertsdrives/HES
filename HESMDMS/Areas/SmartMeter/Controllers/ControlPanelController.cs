@@ -14,5 +14,7 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
             return View();
         }
         public ActionResult UpdateRates() { return View(); }
+
+        public ActionResult PaymentTranscation() { return View(); }
     }
 }

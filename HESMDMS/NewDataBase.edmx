@@ -16,6 +16,104 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="tbl_GasAMC">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AMC" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_GasGCV">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GCV" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_GasMinimumchargerate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Minimumchargerate" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_GasqtySlabs_1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GasqtySlab1" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_GasqtySlabs_2">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GasqtySlab2" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_GasRateSlabs_1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GasRateSlab1" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_GasRateSlabs_2">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GasrateSlab2" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_GasRental">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rental" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_GasSurcharge">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surcharge" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_GasVAT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VAT" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_MeterGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="MeterSelection" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="tbl_SGMReg">
           <Key>
             <PropertyRef Name="ID" />
@@ -33,12 +131,24 @@
           <Parameter Name="startdate" Type="datetime" Mode="In" />
           <Parameter Name="enddate" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="sp_FetchATGLBalanceTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_FetchConsumptionData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="start" Type="datetime" Mode="In" />
           <Parameter Name="end" Type="datetime" Mode="In" />
         </Function>
         <EntityContainer Name="SmartMeterModel1StoreContainer">
           <EntitySet Name="tbl_ATGLRates" EntityType="Self.tbl_ATGLRates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GasAMC" EntityType="Self.tbl_GasAMC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GasGCV" EntityType="Self.tbl_GasGCV" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GasMinimumchargerate" EntityType="Self.tbl_GasMinimumchargerate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GasqtySlabs_1" EntityType="Self.tbl_GasqtySlabs_1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GasqtySlabs_2" EntityType="Self.tbl_GasqtySlabs_2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GasRateSlabs_1" EntityType="Self.tbl_GasRateSlabs_1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GasRateSlabs_2" EntityType="Self.tbl_GasRateSlabs_2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GasRental" EntityType="Self.tbl_GasRental" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GasSurcharge" EntityType="Self.tbl_GasSurcharge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GasVAT" EntityType="Self.tbl_GasVAT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MeterGroup" EntityType="Self.tbl_MeterGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_SGMReg" EntityType="Self.tbl_SGMReg" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -60,6 +170,18 @@
           </FunctionImport>
           <EntitySet Name="tbl_SGMReg" EntityType="SmartMeterModel1.tbl_SGMReg" />
           <EntitySet Name="tbl_ATGLRates" EntityType="SmartMeterModel1.tbl_ATGLRates" />
+          <EntitySet Name="tbl_GasAMC" EntityType="SmartMeterModel1.tbl_GasAMC" />
+          <EntitySet Name="tbl_GasGCV" EntityType="SmartMeterModel1.tbl_GasGCV" />
+          <EntitySet Name="tbl_GasMinimumchargerate" EntityType="SmartMeterModel1.tbl_GasMinimumchargerate" />
+          <EntitySet Name="tbl_GasqtySlabs_1" EntityType="SmartMeterModel1.tbl_GasqtySlabs_1" />
+          <EntitySet Name="tbl_GasqtySlabs_2" EntityType="SmartMeterModel1.tbl_GasqtySlabs_2" />
+          <EntitySet Name="tbl_GasRateSlabs_1" EntityType="SmartMeterModel1.tbl_GasRateSlabs_1" />
+          <EntitySet Name="tbl_GasRateSlabs_2" EntityType="SmartMeterModel1.tbl_GasRateSlabs_2" />
+          <EntitySet Name="tbl_GasRental" EntityType="SmartMeterModel1.tbl_GasRental" />
+          <EntitySet Name="tbl_GasSurcharge" EntityType="SmartMeterModel1.tbl_GasSurcharge" />
+          <EntitySet Name="tbl_GasVAT" EntityType="SmartMeterModel1.tbl_GasVAT" />
+          <EntitySet Name="tbl_MeterGroup" EntityType="SmartMeterModel1.tbl_MeterGroup" />
+          <FunctionImport Name="sp_FetchATGLBalanceTransaction" ReturnType="Collection(SmartMeterModel1.sp_FetchATGLBalanceTransaction_Result)" />
         </EntityContainer>
         <ComplexType Name="sp_Circle1Temp_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -161,6 +283,118 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="tbl_GasAMC">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AMC" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_GasGCV">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GCV" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_GasMinimumchargerate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Minimumchargerate" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_GasqtySlabs_1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GasqtySlab1" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_GasqtySlabs_2">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GasqtySlab2" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_GasRateSlabs_1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GasRateSlab1" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_GasRateSlabs_2">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GasrateSlab2" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_GasRental">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rental" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_GasSurcharge">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surcharge" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_GasVAT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VAT" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_MeterGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="MeterSelection" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="sp_FetchATGLBalanceTransaction_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="CustomerID" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="PaymentAmount" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="PaymentMode" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="TransactionID" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="TransactionDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Server" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="BusinessPatner" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="SmartMeterSerialNumber" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="500" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -281,6 +515,133 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GasAMC">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_GasAMC">
+              <MappingFragment StoreEntitySet="tbl_GasAMC">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="AMC" ColumnName="AMC" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GasGCV">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_GasGCV">
+              <MappingFragment StoreEntitySet="tbl_GasGCV">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="GCV" ColumnName="GCV" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GasMinimumchargerate">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_GasMinimumchargerate">
+              <MappingFragment StoreEntitySet="tbl_GasMinimumchargerate">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Minimumchargerate" ColumnName="Minimumchargerate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GasqtySlabs_1">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_GasqtySlabs_1">
+              <MappingFragment StoreEntitySet="tbl_GasqtySlabs_1">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="GasqtySlab1" ColumnName="GasqtySlab1" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GasqtySlabs_2">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_GasqtySlabs_2">
+              <MappingFragment StoreEntitySet="tbl_GasqtySlabs_2">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="GasqtySlab2" ColumnName="GasqtySlab2" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GasRateSlabs_1">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_GasRateSlabs_1">
+              <MappingFragment StoreEntitySet="tbl_GasRateSlabs_1">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="GasRateSlab1" ColumnName="GasRateSlab1" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GasRateSlabs_2">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_GasRateSlabs_2">
+              <MappingFragment StoreEntitySet="tbl_GasRateSlabs_2">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="GasrateSlab2" ColumnName="GasrateSlab2" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GasRental">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_GasRental">
+              <MappingFragment StoreEntitySet="tbl_GasRental">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Rental" ColumnName="Rental" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GasSurcharge">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_GasSurcharge">
+              <MappingFragment StoreEntitySet="tbl_GasSurcharge">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Surcharge" ColumnName="Surcharge" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GasVAT">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_GasVAT">
+              <MappingFragment StoreEntitySet="tbl_GasVAT">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="VAT" ColumnName="VAT" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MeterGroup">
+            <EntityTypeMapping TypeName="SmartMeterModel1.tbl_MeterGroup">
+              <MappingFragment StoreEntitySet="tbl_MeterGroup">
+                <ScalarProperty Name="MeterSelection" ColumnName="MeterSelection" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_FetchATGLBalanceTransaction" FunctionName="SmartMeterModel1.Store.sp_FetchATGLBalanceTransaction">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SmartMeterModel1.sp_FetchATGLBalanceTransaction_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Server" ColumnName="Server" />
+                <ScalarProperty Name="BusinessPatner" ColumnName="BusinessPatner" />
+                <ScalarProperty Name="SmartMeterSerialNumber" ColumnName="SmartMeterSerialNumber" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

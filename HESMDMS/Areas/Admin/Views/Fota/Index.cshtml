@@ -1,0 +1,74 @@
+﻿
+
+@model HESMDMS.Areas.Admin.Controllers.FotaViewModel
+
+@{
+    ViewBag.Title = "Fota File Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<div class="col-sm-12 col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">Select Meter</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div id="SelectMeterFota"></div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12 col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">Select File</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("UploadWithMeter", "Fota", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="file" name="uploadedFiles" multiple />
+                <input type="hidden" id="selectedMeter" name="selectedMeter" />
+                <br /><br />
+                <input type="submit" value="Upload File" class="btn btn-primary" />
+            }
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12 col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">Files History</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div id="filehistory"></div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/fota-index.js"></script>
+    <script>
+        $(function() {
+            var selectedMeterId = @(Model.SelectedMeterId.HasValue ? Model.SelectedMeterId.Value.ToString() : "null");
+            var urls = {
+                getMeterDetails: '@Url.Action("GetMeterDetails", "Fota")',
+                selectSmartMeter: '/SelectSmartMeter?roleid=7',
+                fotaFileHistory: '/FotaFileHistory'
+            };
+            FotaPage.init(selectedMeterId, urls);
+        });
+    </script>
+}

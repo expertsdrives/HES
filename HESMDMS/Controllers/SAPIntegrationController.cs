@@ -1148,6 +1148,7 @@ namespace HESMDMS.Controllers
             public DateTime? Date { get; set; }
             public decimal Balance { get; set; }
             public decimal PendingBal { get; set; }
+            public string PendingBalDate { get; set; }
         }
         [System.Web.Http.Route("GetSmartCustomerData")]
         [System.Web.Http.HttpPost]
@@ -1169,7 +1170,7 @@ namespace HESMDMS.Controllers
                 }
                 var getmeterDetails = clsMetersProd.tbl_SMeterMaster.Where(x => x.MeterSerialNumber == getMeterDetailscus.SmartMeterSerialNumber).FirstOrDefault();
                 var pld = getmeterDetails.PLD;
-                var data = clsMetersProd.sp_ResponseSplited_Billing(pld, fromDate, toDate).OrderByDescending(x => x.Date).ToList();
+                var data = clsMetersProd.sp_ResponseSplited_Billing(pld, fromDate, toDate).OrderBy(x => x.Date).ToList().Skip(2);
                 if (data == null)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Data Found");
@@ -1177,8 +1178,8 @@ namespace HESMDMS.Controllers
                 var billingDataList = new List<BillingData>();
                 foreach (var billingData in data)
                 {
-                    var gcv = "10085.968";
-                    var kkcal = Convert.ToDecimal(billingData.TotalConsumptionDifference) * Convert.ToDecimal(10085.968);
+                    var gcv = billingData.GasCalorific;
+                    var kkcal = Convert.ToDecimal(billingData.TotalConsumptionDifference) * Convert.ToDecimal(billingData.GasCalorific);
                     var btu = Convert.ToDecimal(kkcal) * Convert.ToDecimal(3.968321);
                     var mmbtu = Convert.ToDecimal(btu) / Convert.ToDecimal(Math.Pow(10, 6));
                     var gasAmount = Convert.ToDecimal(billingData.StandardCharge) * mmbtu;
@@ -1255,12 +1256,13 @@ namespace HESMDMS.Controllers
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Meter details not found");
                 }
+                var dateBal = "";
                 decimal pendingBal = 0;
                 var getmeterDetails = clsMetersProd.tbl_SMeterMaster.Where(x => x.MeterSerialNumber == getMeterDetailscus.SmartMeterSerialNumber).FirstOrDefault();
                 var pld = getmeterDetails.PLD;
                 var data = clsMetersProd.sp_ResponseSplited(pld, FromDate, todate).OrderByDescending(x => x.Date).FirstOrDefault();
                 var getBlancesql = clsMetersProd.tbl_CommandBackLog.Where(x => x.EventName == "Add Balance" && x.Status == "Pending" &&x.pld==pld).ToList();
-                if (getBlancesql != null)
+                if (getBlancesql.Count >0)
                 {
                     foreach (var d in getBlancesql)
                     {
@@ -1270,6 +1272,8 @@ namespace HESMDMS.Controllers
                         var bal = FromHexString(balancestring);
                         pendingBal = pendingBal + Convert.ToDecimal(bal);
                     }
+                    var getBlancesqlDate = clsMetersProd.tbl_CommandBackLog.Where(x => x.EventName == "Add Balance" && x.Status == "Pending" && x.pld == pld).OrderByDescending(x=>x.ID).FirstOrDefault();
+                     dateBal = getBlancesqlDate.LogDate.ToString();
                 }
                 var egetBlancesql1 = clsMetersProd.tbl_CommandBackLog.Where(x => x.EventName == "Set E-Credit Threshold" && x.Status == "Pending" && x.pld==pld).FirstOrDefault();
                 if (egetBlancesql1 != null)
@@ -1282,23 +1286,50 @@ namespace HESMDMS.Controllers
                     var ebalanceutput = string.Join(",", array1);
                     var bal = FromHexString(balancestring);
                     pendingBal = Convert.ToDecimal(pendingBal) + Convert.ToDecimal(pendingBal);
+                    dateBal = egetBlancesql1.LogDate.ToString();
                 }
 
-                if (data == null)
+                if (data == null  && getBlancesql.Count > 0)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Data Found");
+                    var accountBalance =0;
+                    var ebal = 0;
+                    var totalBalance = Convert.ToDecimal(ebal) + Convert.ToDecimal(accountBalance);
+                    TimeZoneInfo istTimeZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                    DateTime istTime = TimeZoneInfo.ConvertTimeFromUtc(Convert.ToDateTime(dateBal), istTimeZone);
+                    var balance = new BalanceData
+                    {
+                        Date = DateTime.Now,
+                        Balance = totalBalance,  // Adding gas amount and VAT charges
+                        PendingBal = pendingBal,
+                        PendingBalDate = istTime.ToString("dd-MM-yyyy")
+                    };
+                    return Request.CreateResponse(HttpStatusCode.OK, balance);
                 }
-                var accountBalance = data.AccountBalance;
-                var ebal = data.eCreditBalance;
-                var totalBalance = Convert.ToDecimal(ebal) + Convert.ToDecimal(accountBalance);
-                var balance = new BalanceData
+                else
                 {
-                    Date = data.Date,
-
-                    Balance = totalBalance,  // Adding gas amount and VAT charges
-                    PendingBal = pendingBal
-                };
-                return Request.CreateResponse(HttpStatusCode.OK, balance);
+                    var accountBalance = data.AccountBalance;
+                    var ebal = data.eCreditBalance.Replace("+","");
+                    var totalBalance = Convert.ToDecimal(ebal) + Convert.ToDecimal(accountBalance);
+                    TimeZoneInfo istTimeZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                    DateTime istTime=DateTime.Now;
+                    if (dateBal != "")
+                    {
+                        istTime = TimeZoneInfo.ConvertTimeFromUtc(Convert.ToDateTime(dateBal), istTimeZone);
+                    }
+                    else
+                    {
+                        istTime = Convert.ToDateTime("1990-01-01");
+                    }
+                    var balance = new BalanceData
+                    {
+                        Date = data.Date,
+                        Balance = totalBalance,  // Adding gas amount and VAT charges
+                        PendingBal = pendingBal,
+                        PendingBalDate = istTime.ToString()== "1990-01-01 00:00:00" ? "": istTime.ToString("dd-MM-yyyy")
+                    };
+                    return Request.CreateResponse(HttpStatusCode.OK, balance);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "No Data Found");
             }
             catch (Exception ex)
             {

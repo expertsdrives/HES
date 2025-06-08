@@ -99,19 +99,19 @@ namespace HESMDMS.Areas.Admin.Controllers
 
                             var amrRecord = new AMRData
                             {
-                                Installation = rowData[2],
+                                Installation = "1000341244",
                                 Material = "",
-                                Serialno = rowData[3],
+                                Serialno = "17335704",
                                 Register = "001",
                                 Mrreason = "01",
                                 Mridnumber = "",
-                                Readingresult = rowData[4],
+                                Readingresult = "1467.644",
                                 Meterreadingnote = "",
                                 Actualcustomermrtype = "01",
                                 Meterreader = "",
-                                Mrdateforbilling = "20240402",
-                                Mrtimeforbilling = "20240402",
-                                Actualmrdate = "20240402",
+                                Mrdateforbilling = "20250430",
+                                Mrtimeforbilling = "20250430",
+                                Actualmrdate = "20250430",
                                 Actualmrtime = "0600",
                                 Mrdateofmaximum = "",
                                 Mrtimeofmaximum = "",
@@ -129,9 +129,9 @@ namespace HESMDMS.Areas.Admin.Controllers
 
                     }
                     string json = JsonConvert.SerializeObject(amrDataRequest);
-                    string Url = "https://aipoqdmz.adani.com:443/RESTAdapter/hesmdms/AMRData";
+                    string Url = "https://dbcixdp.adani.com:443/RESTAdapter/hesmdms/AMRData";
                     string Username = "INTF_SMARTMETER";
-                    string Password = "Adani@123";
+                    string Password = "SmA&T25m&@";
                     using (HttpClient client = new HttpClient())
                     {
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(

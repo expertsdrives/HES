@@ -279,7 +279,7 @@
                                         </ul>
                                     </li>
                                 }
-                                if (Convert.ToString(Session["RoleID"]) != "11" && Convert.ToString(Session["RoleID"]) != "12")
+                                if (Convert.ToString(Session["RoleID"]) != "11" && Convert.ToString(Session["RoleID"]) != "12" && Convert.ToString(Session["RoleID"]) != "7")
                                 {
                                     <li class=" ">
                                         <a href="#Stable" class="collapsed" data-toggle="collapse" aria-expanded="false">
@@ -325,6 +325,11 @@
                                             <li class="">
                                                 <a href="/Smartmeter/Terminal/BillingParameters">
                                                     <i class="las la-minus"></i><span>Billing Parameters</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/Admin/Fota">
+                                                    <i class="las la-minus"></i><span>Fota</span>
                                                 </a>
                                             </li>
                                             <li class="">
@@ -398,7 +403,86 @@
                                         </ul>
                                     </li>
                                 }
+                                <li class="">
+                                    <a href="#ap" class="collapsed svg-icon" data-toggle="collapse" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                                             width="20" height="20">
+                                            <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                            <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                                        </svg>
+                                        <span class="ml-3">Admin Panel</span>
+                                        <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                        <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                                    </a>
+                                    <ul id="ap" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                        <li class="">
 
+                                            <a href="/SmartMeter/ControlPanel/PaymentTranscation">
+                                                <i class="las la-minus"></i><span class="">Transcation Details</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+
+                                            <a href="/Admin/ATGLRates/MeterGroup">
+                                                <i class="las la-minus"></i><span class="">Groups</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+
+                                            <a href="/Admin/ATGLRates/GasRateSlab1">
+                                                <i class="las la-minus"></i><span class="">Gas rate slab-1</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+
+                                            <a href="/Admin/ATGLRates/GasQtySlabs1">
+                                                <i class="las la-minus"></i><span class="">Gas rate slab-1 QTY</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+
+                                            <a href="/Admin/ATGLRates/GasRateSlabs2">
+                                                <i class="las la-minus"></i><span class=""> Gas rate slab-2</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+
+                                            <a href="/Admin/ATGLRates/GasQtySlabs2">
+                                                <i class="las la-minus"></i><span class=""> Gas rate slab-2 QTY</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+
+                                            <a href="/Admin/ATGLRates/GasSurcharge">
+                                                <i class="las la-minus"></i><span class="">Surcharge</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+
+                                            <a href="/Admin/ATGLRates/GasMiniCharge">
+                                                <i class="las la-minus"></i><span class="">GasMiniCharge</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+
+                                            <a href="/Admin/ATGLRates/GasRental">
+                                                <i class="las la-minus"></i><span class="">Rental</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+
+                                            <a href="/Admin/ATGLRates/GasAMC">
+                                                <i class="las la-minus"></i><span class="">AMC</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+
+                                            <a href="/Admin/ATGLRates/GasGCV">
+                                                <i class="las la-minus"></i><span class="">GCV</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                                 if (Convert.ToString(Session["RoleID"]) != "9" && Convert.ToString(Session["RoleID"]) != "11" && Convert.ToString(Session["RoleID"]) != "12")
                                 {
                                     <li class=" ">
@@ -415,10 +499,10 @@
                                         </a>
                                         <ul id="Reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                             @*<li class="">
-                                                    <a href="/DataReception/Index">
-                                                        <i class="las la-minus"></i><span>AMR Data</span>
-                                                    </a>
-                                                </li>*@
+                            <a href="/DataReception/Index">
+                                <i class="las la-minus"></i><span>AMR Data</span>
+                            </a>
+                        </li>*@
                                             <li class="">
                                                 <a href="/Admin/Reports/LastMeterReading">
                                                     <i class="las la-minus"></i><span>Date Wise Reading</span>
@@ -522,10 +606,10 @@
                                         </a>
                                         <ul id="Meter" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                             @*<li class="">
-                                                    <a href="/DataReception/Index">
-                                                        <i class="las la-minus"></i><span>AMR Data</span>
-                                                    </a>
-                                                </li>*@
+                            <a href="/DataReception/Index">
+                                <i class="las la-minus"></i><span>AMR Data</span>
+                            </a>
+                        </li>*@
                                             <li class="">
                                                 <a href="/Admin/Meter">
                                                     <i class="las la-minus"></i><span>Meter</span>
@@ -784,91 +868,91 @@
                             }
                             @*Master*@
                             @*<li class=" ">
-                                    <a href="#pricing" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                             width="20" height="20">
-                                            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
-                                            <path fill-rule="evenodd"
-                                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
-                                                  clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="ml-3">Pricing</span>
-                                        <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                        <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                    </a>
-                                    <ul id="pricing" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                        <li class="">
-                                            <a href="../backend/pricing.html">
-                                                <i class="las la-minus"></i><span>Pricing 1</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="../backend/pricing-2.html">
-                                                <i class="las la-minus"></i><span>Pricing 2</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
+            <a href="#pricing" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                     width="20" height="20">
+                    <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
+                    <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
+                          clip-rule="evenodd" />
+                </svg>
+                <span class="ml-3">Pricing</span>
+                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+            </a>
+            <ul id="pricing" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                <li class="">
+                    <a href="../backend/pricing.html">
+                        <i class="las la-minus"></i><span>Pricing 1</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../backend/pricing-2.html">
+                        <i class="las la-minus"></i><span>Pricing 2</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
 
-                                <li class=" ">
-                                    <a href="#pages-error" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                             width="20" height="20">
-                                            <path fill-rule="evenodd"
-                                                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                                  clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="ml-3">Error</span>
-                                        <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                        <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                                    </a>
-                                    <ul id="pages-error" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                        <li class="">
-                                            <a href="../backend/pages-error.html">
-                                                <i class="las la-minus"></i><span>Error 404</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="../backend/pages-error-500.html">
-                                                <i class="las la-minus"></i><span>Error 500</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="">
-                                    <a href="../backend/timeline.html">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                             width="20" height="20">
-                                            <path fill-rule="evenodd"
-                                                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                                  clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="ml-3">Timeline</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="../backend/pages-blank-page.html">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                             width="20" height="20">
-                                            <path fill-rule="evenodd"
-                                                  d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                                                  clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="ml-3">Blank Page</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="../backend/pages-maintenance.html">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                             width="20" height="20">
-                                            <path fill-rule="evenodd"
-                                                  d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
-                                                  clip-rule="evenodd" />
-                                            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
-                                        </svg>
-                                        <span class="ml-3">Maintenance</span>
-                                    </a>
-                                </li>*@
+        <li class=" ">
+            <a href="#pages-error" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                     width="20" height="20">
+                    <path fill-rule="evenodd"
+                          d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                          clip-rule="evenodd" />
+                </svg>
+                <span class="ml-3">Error</span>
+                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+            </a>
+            <ul id="pages-error" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                <li class="">
+                    <a href="../backend/pages-error.html">
+                        <i class="las la-minus"></i><span>Error 404</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../backend/pages-error-500.html">
+                        <i class="las la-minus"></i><span>Error 500</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="">
+            <a href="../backend/timeline.html">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                     width="20" height="20">
+                    <path fill-rule="evenodd"
+                          d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                          clip-rule="evenodd" />
+                </svg>
+                <span class="ml-3">Timeline</span>
+            </a>
+        </li>
+        <li class="">
+            <a href="../backend/pages-blank-page.html">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                     width="20" height="20">
+                    <path fill-rule="evenodd"
+                          d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                          clip-rule="evenodd" />
+                </svg>
+                <span class="ml-3">Blank Page</span>
+            </a>
+        </li>
+        <li class="">
+            <a href="../backend/pages-maintenance.html">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                     width="20" height="20">
+                    <path fill-rule="evenodd"
+                          d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                          clip-rule="evenodd" />
+                    <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+                </svg>
+                <span class="ml-3">Maintenance</span>
+            </a>
+        </li>*@
                         </ul>
                     }
                     else
@@ -1016,6 +1100,7 @@
     @Scripts.Render("~/Scripts/DevExtremeBundle")
 
     @Html.EJS().ScriptManager()
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>

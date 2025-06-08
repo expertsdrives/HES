@@ -29,6 +29,7 @@ namespace HESMDMS
     
         public virtual DbSet<tbl_epsettings> tbl_epsettings { get; set; }
         public virtual DbSet<tbl_ATGLWaACK> tbl_ATGLWaACK { get; set; }
+        public virtual DbSet<tbl_FotaFileUpload> tbl_FotaFileUpload { get; set; }
     
         public virtual ObjectResult<sp_CustomerLogs_Result> sp_CustomerLogs()
         {

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -168,11 +170,21 @@ namespace HESMDMS.Controllers
         public HttpResponseMessage AMRDataReceptionCRC(DataSourceLoadOptions loadOptions)
         {
 
-                clsMeters.Database.CommandTimeout = 500;
+            clsMeters.Database.CommandTimeout = 500;
 
             DateTime date1 = Convert.ToDateTime("2024-12-01");
-                return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_POC().Where(x => x.Date >= date1), loadOptions));
-            
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_POC().Where(x => x.Date >= date1), loadOptions));
+
+
+        }
+        [Route("FotaFileHistory")]
+        [HttpGet]
+        public HttpResponseMessage FotaFileHistory(DataSourceLoadOptions loadOptions,string meterid)
+        {
+
+           
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prods.tbl_FotaFileUpload.Where(x => x.MeterID == meterid), loadOptions));
+
 
         }
         [Route("OutofRange")]
@@ -371,7 +383,7 @@ namespace HESMDMS.Controllers
         public HttpResponseMessage SGMReg(DataSourceLoadOptions loaddata)
         {
             return Request.CreateResponse(DataSourceLoader.Load(clsMeters1.tbl_SGMReg, loaddata));
-        } 
+        }
         [Route("ATGLRates")]
         [HttpGet]
         public HttpResponseMessage ATGLRates(DataSourceLoadOptions loaddata)
@@ -382,7 +394,7 @@ namespace HESMDMS.Controllers
         [HttpGet]
         public HttpResponseMessage SGMMeterFetch(DataSourceLoadOptions loaddata)
         {
-            return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.tbl_SMeterMaster.Where(x=>x.MeterSerialNumber.StartsWith("240")), loaddata));
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters_Prod.tbl_SMeterMaster.Where(x => x.MeterSerialNumber.StartsWith("240")), loaddata));
         }
         [Route("lorarawdata")]
         [HttpGet]
@@ -440,7 +452,7 @@ namespace HESMDMS.Controllers
         public HttpResponseMessage d2c(DataSourceLoadOptions loaddata, string roleid, DateTime? startDate = null, DateTime? endDate = null)
         {
             // Default to the past seven days if dates are not provided
-            DateTime defaultStartDate = DateTime.Now.AddDays(-1);
+            DateTime defaultStartDate = DateTime.Now;
             DateTime defaultEndDate = DateTime.Now;
 
             // Use provided dates or defaults
@@ -450,7 +462,7 @@ namespace HESMDMS.Controllers
             // Fetch data within the date range
             var data = clsMeters_Prod.tbl_JioLogs
                 .Where(x => x.DateTime >= filterStartDate && x.DateTime <= filterEndDate)
-                .ToList();
+                .ToList().OrderByDescending(x => x.ID);
 
             List<ModelParameter> model = new List<ModelParameter>();
             foreach (var fData in data)
@@ -596,6 +608,12 @@ namespace HESMDMS.Controllers
         public HttpResponseMessage MagneticTemper(DataSourceLoadOptions loadOptions)
         {
             return Request.CreateResponse(DataSourceLoader.Load(clsMeters.FetchConsumption_MagneticTemper(), loadOptions));
+        }
+        [Route("atgltran")]
+        [HttpGet]
+        public HttpResponseMessage atgltran(DataSourceLoadOptions loadOptions)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(clsMeters1.sp_FetchATGLBalanceTransaction(), loadOptions));
         }
         [Route("CaseTemper")]
         [HttpGet]
@@ -886,7 +904,7 @@ namespace HESMDMS.Controllers
         {
             var values = form.Get("values");
             var newOrder = new tbl_SGMReg();
-            newOrder.CreatedDate=DateTime.Now;
+            newOrder.CreatedDate = DateTime.Now;
             JsonConvert.PopulateObject(values, newOrder);
             bool exists = clsMeters1.tbl_SGMReg.Any(x => x.CustomreID == newOrder.CustomreID || x.SmartMeterSerialNumber == newOrder.SmartMeterSerialNumber);
 
@@ -908,8 +926,8 @@ namespace HESMDMS.Controllers
             var values = form.Get("values");
             var newOrder = new tbl_ATGLRates();
             newOrder.CreatedDate = DateTime.Now;
-            
-            
+
+
             JsonConvert.PopulateObject(values, newOrder);
             Validate(newOrder);
             clsMeters1.tbl_ATGLRates.Add(newOrder);
@@ -923,11 +941,11 @@ namespace HESMDMS.Controllers
         }
         [Route("sendWAAsync")]
         [HttpPost]
-        public async Task sendWAAsync(string meterNumber,string WpTemplateId, [FromBody] RequestModel request1)
+        public async Task sendWAAsync(string meterNumber, string WpTemplateId, [FromBody] RequestModel request1)
         {
-            var SGMREg = clsMeters1.tbl_SGMReg.Where(x=>x.SmartMeterSerialNumber==meterNumber).FirstOrDefault();
+            var SGMREg = clsMeters1.tbl_SGMReg.Where(x => x.SmartMeterSerialNumber == meterNumber).FirstOrDefault();
             var customerID = SGMREg.CustomreID;
-            var customerDetails= clsMeters.tbl_Customers.Where(x=>x.ContractAcct==customerID).FirstOrDefault();
+            var customerDetails = clsMeters.tbl_Customers.Where(x => x.ContractAcct == customerID).FirstOrDefault();
             string mobileNo = customerDetails.MobilNumber;
             string wpTemplateId = WpTemplateId;
             List<string> placeholderParameters = request1.PlaceholderParameters;
@@ -935,7 +953,7 @@ namespace HESMDMS.Controllers
             var placeholderParamsString = string.Join("\", \"", placeholderParameters);
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, "https://devspotbill.adani.com/WhatsappServices/api/ThirdParty/SendWhatsappAsync");
-            
+
             // Add the headers
             request.Headers.Add("x-api-key", "fc3a55e5-d01e-4e79-a18f-7b22606fad83");
             request.Headers.Add("User-Agent", "okhttp");
@@ -964,7 +982,7 @@ namespace HESMDMS.Controllers
                 var response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 tbl_ATGLWaACK wa = new tbl_ATGLWaACK();
-                wa.MeterNumber=meterNumber;
+                wa.MeterNumber = meterNumber;
                 wa.Remarks = WpTemplateId;
                 wa.Status = true;
                 wa.CreatedDate = DateTime.Now.Date;
@@ -986,6 +1004,260 @@ namespace HESMDMS.Controllers
         {
             string eventname = "";
 
+        }
+
+        [Route("GenerateBillAsync")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GenerateBillAsync(string bpnumber, string fromdate, string todate, string monthnumber)
+        {
+            if (monthnumber == "2")
+            {
+                var getCustID = clsMeters.tbl_Customers.Where(x => x.BusinessPatner == bpnumber).FirstOrDefault();
+                var custID = getCustID.ID;
+                var getPLD = clsMeters_Prod.tbl_AssignSmartMeter.Where(x => x.CustomerInstallationID == custID).FirstOrDefault();
+                DateTime toDate = Convert.ToDateTime(todate);
+                DateTime fromDate = Convert.ToDateTime(fromdate);
+                TimeSpan difference = toDate - fromDate;
+                int dateDiff = difference.Days;
+                string pld = getPLD.pld;
+                string json = "";
+
+                var data = clsMeters_Prod.sp_ResponseSplited_Billing(pld, fromDate, toDate).ToList().OrderBy(x => x.Date).Skip(2);
+
+                foreach (var billingData in data)
+                {
+                    var billingDataList = new List<BillingData>();
+                    var gcv = billingData.GasCalorific;
+                    var kkcal = Convert.ToDecimal(billingData.TotalConsumptionDifference) * Convert.ToDecimal(gcv);
+                    var btu = Convert.ToDecimal(kkcal) * Convert.ToDecimal(3.968321);
+                    var mmbtu = Convert.ToDecimal(btu) / Convert.ToDecimal(Math.Pow(10, 6));
+                    var gasAmount = Convert.ToDecimal(billingData.StandardCharge) * mmbtu;
+                    var vatCharges = gasAmount * Convert.ToDecimal(0.05);
+                    var date1 = billingData.Date;
+
+                    if (date1 != toDate)
+                    {
+                        billingDataList.Add(new BillingData
+                        {
+                            BusinessPartner = billingData.BusinessPatner,
+                            Installation = billingData.Installation,
+                            GASAmount = Math.Round(gasAmount, 5).ToString("#0.#####"),
+                            VATAmount = Math.Round(vatCharges, 5).ToString("#0.#####"),
+                            DiscountAmount = "",
+                            MinimumAmount = "",
+                            CGST_on_MinimumCharge = "",
+                            SGST_on_MinimumCharge = "",
+                            AMCAmount = "",
+                            CGST_on_AMC_Amount = "",
+                            SGST_on_AMC_Amount = "",
+                            TotalAmount = "",
+                            Disconnection_Flag = "",
+                            GCV = gcv,
+                            MaterialNumber = "",
+                            MeterNo = "",
+                            ReadingDate = "",
+                            CurrentMeterReading = "",
+                            GASPrice = billingData.StandardCharge,
+                            VATPercentage = "5",
+                            Recharge_Balance = billingData.AccountBalance.ToString(),
+                            FromDate = Convert.ToDateTime(billingData.Date).ToString("yyyy-MM-dd HH:mm:ss").Replace("-", "").Replace("/", "").Split(' ')[0],
+                            DueDate = Convert.ToDateTime(billingData.Date).ToString("yyyy-MM-dd HH:mm:ss").Replace("-", "").Replace("/", "").Split(' ')[0],
+                            PrePaidSCM_Consumption = Convert.ToDecimal(billingData.TotalConsumptionDifference).ToString("#0.###"),
+                            PrePaid_Kcal = kkcal.ToString("#0.#####"),
+                            PrePaid_BTU = btu.ToString("#0.#####"), /*Convert.ToDecimal(Convert.ToDouble(billingData.TotalConsumptionDifference) * 35.314 * 1000 * 1.055).ToString("#0.#####"),*/
+                            PrePaid_MMBTU = mmbtu.ToString("#0.#####"),
+                            Prepaid_Rent_Amount = ""
+                        });
+                    }
+                    else
+                    {
+                        billingDataList.Add(new BillingData
+                        {
+                            BusinessPartner = billingData.BusinessPatner,
+                            Installation = billingData.Installation,
+                            GASAmount = Math.Round(gasAmount, 5).ToString("#0.#####"),
+                            VATAmount = Math.Round(vatCharges, 5).ToString("#0.#####"),
+                            DiscountAmount = "",
+                            MinimumAmount = "",
+                            CGST_on_MinimumCharge = "",
+                            SGST_on_MinimumCharge = "",
+                            AMCAmount = "",
+                            CGST_on_AMC_Amount = "",
+                            SGST_on_AMC_Amount = "",
+                            TotalAmount = "",
+                            Disconnection_Flag = "",
+                            GCV = gcv,
+                            MaterialNumber = "IS-G1.6SMART",
+                            MeterNo = billingData.MeterNumber,
+                            ReadingDate = Convert.ToDateTime(billingData.Date).ToString("yyyy-MM-dd HH:mm:ss").Replace("-", "").Replace("/", "").Split(' ')[0],
+                            CurrentMeterReading = billingData.TotalConsumption.ToString(),
+                            GASPrice = billingData.StandardCharge,
+                            VATPercentage = "5",
+                            Recharge_Balance = billingData.AccountBalance.ToString(),
+                            FromDate = Convert.ToDateTime(billingData.Date).ToString("yyyy-MM-dd HH:mm:ss").Replace("-", "").Replace("/", "").Split(' ')[0],
+                            DueDate = Convert.ToDateTime(billingData.Date).ToString("yyyy-MM-dd HH:mm:ss").Replace("-", "").Replace("/", "").Split(' ')[0],
+                            PrePaidSCM_Consumption = Convert.ToDecimal(billingData.TotalConsumptionDifference).ToString("#0.###"),
+                            PrePaid_Kcal = kkcal.ToString("#0.#####"),
+                            PrePaid_BTU = btu.ToString("#0.#####"), /*Convert.ToDecimal(Convert.ToDouble(billingData.TotalConsumptionDifference) * 35.314 * 1000 * 1.055).ToString("#0.#####"),*/
+                            PrePaid_MMBTU = mmbtu.ToString("#0.#####"),
+                            Prepaid_Rent_Amount = "",
+                            Prepaid_Rent_CGST = "0",
+                            Prepaid_Rent_SGST = "0",
+                            Installment_Amount = "0"
+                        });
+
+                    }
+                    json = JsonConvert.SerializeObject(new { BillingData = billingDataList }, Formatting.Indented);
+                    string Url = "https://dbcixdp.adani.com:443/RESTAdapter/hesmdms/billingdata";
+                    string Username = "INTF_SMARTMETER";
+                    string Password = "SmA&T25m&@";
+
+                    using (HttpClient client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                            "Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{Username}:{Password}")));
+                        var json1 = JsonConvert.SerializeObject(json);
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12 | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls;
+
+                        var response = await client.PostAsync(Url, content);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            Thread.Sleep(4000);
+                            // Handle success
+
+                        }
+                    }
+                    if (date1 == toDate)
+                    {
+
+                        break;
+                    }
+
+
+                }
+            }
+            else
+            {
+                var getCustID = clsMeters.tbl_Customers.Where(x => x.BusinessPatner == bpnumber).FirstOrDefault();
+                var custID = getCustID.ID;
+                var getPLD = clsMeters_Prod.tbl_AssignSmartMeter.Where(x => x.CustomerInstallationID == custID).FirstOrDefault();
+                DateTime toDate = Convert.ToDateTime(todate);
+                DateTime fromDate = Convert.ToDateTime(fromdate);
+                TimeSpan difference = toDate - fromDate;
+                int dateDiff = difference.Days;
+                string pld = getPLD.pld;
+                string json = "";
+
+                var data = clsMeters_Prod.sp_ResponseSplited_Billing(pld, fromDate, toDate).ToList().OrderBy(x => x.Date).Skip(2);
+
+                foreach (var billingData in data)
+                {
+                    var billingDataList = new List<BillingData>();
+                    var gcv = billingData.GasCalorific;
+                    var kkcal = Convert.ToDecimal(billingData.TotalConsumptionDifference) * Convert.ToDecimal(gcv);
+                    var btu = Convert.ToDecimal(kkcal) * Convert.ToDecimal(3.968321);
+                    var mmbtu = Convert.ToDecimal(btu) / Convert.ToDecimal(Math.Pow(10, 6));
+                    var gasAmount = Convert.ToDecimal(billingData.StandardCharge) * mmbtu;
+                    var vatCharges = gasAmount * Convert.ToDecimal(0.05);
+                    var date1 = billingData.Date;
+
+
+                    billingDataList.Add(new BillingData
+                    {
+                        BusinessPartner = billingData.BusinessPatner,
+                        Installation = billingData.Installation,
+                        GASAmount = Math.Round(gasAmount, 5).ToString("#0.#####"),
+                        VATAmount = Math.Round(vatCharges, 5).ToString("#0.#####"),
+                        DiscountAmount = "",
+                        MinimumAmount = "",
+                        CGST_on_MinimumCharge = "",
+                        SGST_on_MinimumCharge = "",
+                        AMCAmount = "",
+                        CGST_on_AMC_Amount = "",
+                        SGST_on_AMC_Amount = "",
+                        TotalAmount = "",
+                        Disconnection_Flag = "",
+                        GCV = gcv,
+                        MaterialNumber = "",
+                        MeterNo = "",
+                        ReadingDate = "",
+                        CurrentMeterReading = "",
+                        GASPrice = billingData.StandardCharge,
+                        VATPercentage = "5",
+                        Recharge_Balance = billingData.AccountBalance.ToString(),
+                        FromDate = Convert.ToDateTime(billingData.Date).ToString("yyyy-MM-dd HH:mm:ss").Replace("-", "").Replace("/", "").Split(' ')[0],
+                        DueDate = Convert.ToDateTime(billingData.Date).ToString("yyyy-MM-dd HH:mm:ss").Replace("-", "").Replace("/", "").Split(' ')[0],
+                        PrePaidSCM_Consumption = Convert.ToDecimal(billingData.TotalConsumptionDifference).ToString("#0.###"),
+                        PrePaid_Kcal = kkcal.ToString("#0.#####"),
+                        PrePaid_BTU = btu.ToString("#0.#####"), /*Convert.ToDecimal(Convert.ToDouble(billingData.TotalConsumptionDifference) * 35.314 * 1000 * 1.055).ToString("#0.#####"),*/
+                        PrePaid_MMBTU = mmbtu.ToString("#0.#####"),
+                        Prepaid_Rent_Amount = ""
+                    });
+
+
+                    json = JsonConvert.SerializeObject(new { BillingData = billingDataList }, Formatting.Indented);
+                    string Url = "https://dbcixdp.adani.com:443/RESTAdapter/hesmdms/billingdata";
+                    string Username = "INTF_SMARTMETER";
+                    string Password = "SmA&T25m&@";
+
+                    using (HttpClient client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                            "Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{Username}:{Password}")));
+                        var json1 = JsonConvert.SerializeObject(json);
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12 | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls;
+
+                        var response = await client.PostAsync(Url, content);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            Thread.Sleep(4000);
+                            // Handle success
+
+                        }
+                    }
+                    if (date1 == toDate)
+                    {
+
+                        break;
+                    }
+
+
+                }
+            }
+            return Request.CreateResponse(HttpStatusCode.Created, bpnumber);
+        }
+        [HttpGet]
+        [Route("Fota")]
+        public HttpResponseMessage GetZipFile(string filename)
+        {
+            // Optional: Validate the filename to prevent directory traversal attacks
+            if (Path.GetFileName(filename) != filename)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid filename.");
+            }
+
+            // Define the absolute path (update this path as per your server setup)
+            string filePath = clsGlobalData.strLoc_LogFile+ "/UploadedFiles/" + filename;
+
+            if (!File.Exists(filePath))
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, "File not found.");
+            }
+
+            // Read the file into byte array
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent(fileBytes)
+            };
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = filename
+            };
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
+            return response;
         }
     }
 }

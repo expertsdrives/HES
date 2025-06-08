@@ -413,6 +413,9 @@
         }),
         displayExpr: 'TempMeterID',
         valueExpr: 'TempMeterID',
+        searchEnabled: true, // ✅ Enables the search box
+       
+        
         value: mid,
         onValueChanged: function (data) {
             $("#mtrRefresh").attr("href", "/Smartmeter/Terminal/BillingParameters?mid=" + data.value);

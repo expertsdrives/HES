@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Gas Quantity Slabs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-block card-stretch card-height">
+    <div class="card-header text-center">
+        <h4 class="card-title">Gas Quantity Slabs 1</h4>
+    </div>
+
+    <div class="card-body">
+        <button class="btn btn-primary mb-3" id="openaddGasQtyModal">
+            <i class="fas fa-plus"></i> Add Gas Quantity Slab 1
+        </button>
+
+        <div id="GasQtySlabGrid"></div>
+    </div>
+</div>
+
+<!-- Modal for Add/Edit Gas Quantity Slab -->
+<div class="modal fade" id="addGasQtyModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Gas Quantity Slab 1</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="gasQtySlabForm">
+                    <input type="hidden" id="GasQtySlabID">
+
+                    <div class="form-group">
+                        <label for="GroupName">Select Group Name:</label>
+                        <select class="form-control" id="GroupName" required></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="GasQtySlab1">Gas Quantity Slab 1</label>
+                        <input type="number" step="0.001" class="form-control" id="GasQtySlab1" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/grid/GasQtySlabs1.js"></script>
