@@ -328,6 +328,11 @@
                                                 </a>
                                             </li>
                                             <li class="">
+                                                <a href="/SmartMeter/EEPROMCommand">
+                                                    <i class="las la-minus"></i><span>EEPROM Command</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
                                                 <a href="/Admin/Fota">
                                                     <i class="las la-minus"></i><span>Fota</span>
                                                 </a>
@@ -363,6 +368,11 @@
                                                     </a>
                                                 </li>
                                             }
+                                            <li class="">
+                                                <a href="/ControlPanel">
+                                                    <i class="las la-minus"></i><span>Control Panel</span>
+                                                </a>
+                                            </li>
                                             @if (Convert.ToString(Session["RoleID"]) != "7" && Convert.ToString(Session["RoleID"]) != "9" && Convert.ToString(Session["RoleID"]) != "11" && Convert.ToString(Session["RoleID"]) != "12")
                                             {
                                                 <li class="">
@@ -379,7 +389,7 @@
                                         </ul>
                                     </li>
                                 }
-
+                                
                                 if (Convert.ToString(Session["RoleID"]) == "1" || Convert.ToString(Session["RoleID"]) == "2")
                                 {
                                     <li class="">
@@ -549,6 +559,11 @@
                                             <li class="">
                                                 <a href="/Admin/Reports/ClusterReport">
                                                     <i class="las la-minus"></i><span>Cluster Report</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/SmartMeter/PowerbiReports">
+                                                    <i class="las la-minus"></i><span>AMR SLA Report</span>
                                                 </a>
                                             </li>
                                             @if (Convert.ToString(Session["RoleID"]) == "10")

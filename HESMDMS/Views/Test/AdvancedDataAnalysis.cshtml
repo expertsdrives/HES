@@ -1,0 +1,89 @@
+@model HESMDMS.Controllers.AdvancedDataAnalysisViewModel
+
+@{
+    ViewBag.Title = "Advanced Data Analysis";
+    var amrTrendLabels = new List<string>();
+    foreach (var item in Model.CustomerData)
+    {
+        amrTrendLabels.Add(item.InstallationDate.HasValue ? item.InstallationDate.Value.ToString("yyyy-MM-dd") : "");
+    }
+    var amrTrendData = Model.CustomerData.Select(m => m.AMRReading ?? 0);
+    var cityLabels = Model.CustomersByCity.Keys;
+    var cityData = Model.CustomersByCity.Values;
+}
+
+<h2>Advanced Data Analysis</h2>
+
+@using (Html.BeginForm("AdvancedDataAnalysis", "Test", FormMethod.Get))
+{
+    <p>
+        Start Date: <input type="date" name="startDate" />
+        End Date: <input type="date" name="endDate" />
+        <input type="submit" value="Filter" />
+    </p>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <canvas id="amrTrendChart"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="cityDistributionChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // AMR Trend Chart
+    var amrTrendCtx = document.getElementById('amrTrendChart').getContext('2d');
+    var amrTrendChart = new Chart(amrTrendCtx, {
+        type: 'line',
+        data: {
+            labels: [@Html.Raw("'" + String.Join("','", amrTrendLabels) + "'")],
+            datasets: [{
+                label: 'AMR Reading Trend',
+                data: [@string.Join(",", amrTrendData)],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // City Distribution Chart
+    var cityDistributionCtx = document.getElementById('cityDistributionChart').getContext('2d');
+    var cityDistributionChart = new Chart(cityDistributionCtx, {
+        type: 'pie',
+        data: {
+            labels: [@Html.Raw("'" + String.Join("','", cityLabels) + "'")],
+            datasets: [{
+                label: 'Customers by City',
+                data: [@string.Join(",", cityData)],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
+</script>

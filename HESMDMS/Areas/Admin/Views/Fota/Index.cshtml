@@ -33,13 +33,23 @@
             </div>
         </div>
         <div class="card-body">
-            @using (Html.BeginForm("UploadWithMeter", "Fota", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("Upload", "Fota", FormMethod.Post, new { enctype = "multipart/form-data", id = "uploadForm" }))
             {
                 @Html.AntiForgeryToken()
                 <input type="file" name="uploadedFiles" multiple />
-                <input type="hidden" id="selectedMeter" name="selectedMeter" />
+                <input type="hidden" id="selectedMeterUpload" name="selectedMeter" />
                 <br /><br />
-                <input type="submit" value="Upload File" class="btn btn-primary" />
+                <button type="submit" class="btn btn-success">Upload</button>
+            }
+            <hr />
+            @using (Html.BeginForm("WriteCommand", "Fota", FormMethod.Post, new { id = "commandForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" id="selectedMeterCommand" name="selectedMeter" />
+                <input type="hidden" id="fotaAction" name="fotaAction" />
+                <button type="submit" id="btnInitiate" class="btn btn-primary">Initiate FOTA</button>
+                <button type="submit" id="btnContinue" class="btn btn-info">Continue FOTA</button>
+                <button type="submit" id="btnAbort" class="btn btn-danger">Abort Fota</button>
             }
         </div>
     </div>
@@ -61,14 +71,36 @@
 @section scripts {
     <script src="~/Scripts/fota-index.js"></script>
     <script>
+        var selectedMeterId = "@(Model.SelectedMeterId ?? "null")";
         $(function() {
-            var selectedMeterId = @(Model.SelectedMeterId.HasValue ? Model.SelectedMeterId.Value.ToString() : "null");
             var urls = {
                 getMeterDetails: '@Url.Action("GetMeterDetails", "Fota")',
                 selectSmartMeter: '/SelectSmartMeter?roleid=7',
                 fotaFileHistory: '/FotaFileHistory'
             };
             FotaPage.init(selectedMeterId, urls);
+
+            $('#uploadForm, #commandForm').submit(function (e) {
+                var currentMeterId = FotaPage.getSelectedMeterId();
+                if (!currentMeterId || currentMeterId === "null") {
+                    alert('Please select a meter first.');
+                    e.preventDefault();
+                    return false;
+                }
+                $(this).find('input[name="selectedMeter"]').val(currentMeterId);
+            });
+
+            $('#btnInitiate').click(function () {
+                $('#fotaAction').val('Initiate');
+            });
+
+            $('#btnContinue').click(function () {
+                $('#fotaAction').val('Continue');
+            });
+
+            $('#btnAbort').click(function () {
+                $('#fotaAction').val('Abort');
+            });
         });
     </script>
 }

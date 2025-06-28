@@ -31,11 +31,9 @@ var FotaPage = (function () {
     }
 
     function onMeterChanged(data) {
-        var meterId = data.value;
-        $('#selectedMeter').val(meterId);
-        
-        loadFileHistory(meterId);
-        validateMeterDetails(meterId);
+        selectedMeterId = data.value;
+        loadFileHistory(selectedMeterId);
+        validateMeterDetails(selectedMeterId);
     }
 
     function loadFileHistory(meterId) {
@@ -76,7 +74,10 @@ var FotaPage = (function () {
     }
 
     return {
-        init: init
+        init: init,
+        getSelectedMeterId: function () {
+            return selectedMeterId;
+        }
     };
 
 })();

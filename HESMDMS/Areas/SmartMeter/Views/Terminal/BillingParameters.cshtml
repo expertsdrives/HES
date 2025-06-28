@@ -155,7 +155,7 @@
     <span class="switch-left">On</span>
     <span class="switch-right">Off</span>
 </label>*@
-<div class="col-sm-12 col-lg-12">
+<div class="col-sm-12">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div class="header-title">
@@ -166,165 +166,146 @@
             <div id="SelectMeter1"></div> <a id="mtrRefresh" href="">Refresh</a>
         </div>
     </div>
-
 </div>
 
 <div class="loadpanel"></div>
 
-<div class="col-sm-12 col-lg-4">
+<div class="col-sm-12">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div class="header-title">
-                <h4 class="card-title">Balance</h4>
+                <h4 class="card-title">Billing Parameters</h4>
             </div>
         </div>
         <div class="card-body">
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnGetBalance">Get Balance</button>
-                </div>
-                <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblGetBalance">
-                <label id="lblGetBalanceStatus"></label>
-            </div>
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button id="btnAddBalance" class="btn btn-primary">Add Balance</button>
-                </div>
-                <input type="text" class="form-control" placeholder="" aria-label="" id="lblAddBalance"><br />
-                <label id="lblAddBalanceStatus"></label>
-            </div>
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button id="btnModBalance" class="btn btn-primary">Mod Balance</button>
-                </div>
-                <input type="text" class="form-control" placeholder="" aria-label="" id="lblModBalance"><br />
-                <label id="lblModBalanceStatus"></label>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<div class="col-sm-12 col-lg-4">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between">
-            <div class="header-title">
-                <h4 class="card-title">VAT</h4>
-            </div>
-        </div>
-        <div class="card-body volume">
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnGetVat">Get VAT</button>
-                </div>
-                <input type="text" class="form-control" placeholder="0 %" aria-label="" readonly id="lblGetVat">
-            </div>
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnSetVAT">SET VAT</button>
-                </div>
-                <input type="text" class="form-control" placeholder="0 %" aria-label="" id="lblSetVAT">  <label id="lblSetVatStatus"></label>
-            </div>
-
-        </div>
-    </div>
-
-</div>
-<div class="col-sm-12 col-lg-4">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between">
-            <div class="header-title">
-                <h4 class="card-title">Tariff</h4>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnGetTariff">GET Present Tariff</button>
-                </div>
-                <input type="text" class="form-control" placeholder="0 Rs" aria-label="" readonly id="lblGetTariff">
-            </div>
-            <div class="input-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button" id="btnSetTraiff">SET Next Tariff</button>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Balance Management</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button" id="btnGetBalance">Get Balance</button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="" aria-label="" readonly id="lblGetBalance">
+                                <label id="lblGetBalanceStatus"></label>
+                            </div>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button id="btnAddBalance" class="btn btn-primary">Add Balance</button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="" aria-label="" id="lblAddBalance"><br />
+                                <label id="lblAddBalanceStatus"></label>
+                            </div>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button id="btnModBalance" class="btn btn-primary">Mod Balance</button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="" aria-label="" id="lblModBalance"><br />
+                                <label id="lblModBalanceStatus"></label>
+                            </div>
+                        </div>
                     </div>
-                    <input type="date" class="form-control" placeholder="Select Date" id="lblTraiffDate">
-                    <input type="time" class="form-control" placeholder="Select Time" id="lblTraiffTime">
-                    <input type="text" class="form-control" placeholder="Enter Amount Rs" id="lblTraiffAmount">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">E-Credit/ Calorific Value</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button" id="btnSetAvgGasCal">Set KCAL/SCM</button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="-" aria-label="" id="lblSetAvgGasCal">
+                                <label id="lblSKCALStatus"></label>
+                            </div>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button" id="btnGetAvgGasCal">GET KCAL/SCM</button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblGetAvgGasCal">
+                            </div>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button" id="btnSetECredit">Set E-Balance</button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="-" aria-label="" id="lblSetECredit">
+                            </div>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button" id="btnReadECredit">Get E-Balance</button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblReadECredit">
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Tariff & VAT</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button" id="btnGetVat">Get VAT</button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="0 %" aria-label="" readonly id="lblGetVat">
+                            </div>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button" id="btnSetVAT">SET VAT</button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="0 %" aria-label="" id="lblSetVAT">
+                                <label id="lblSetVatStatus"></label>
+                            </div>
+                            <hr />
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button" id="btnGetTariff">GET Present Tariff</button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="0 Rs" aria-label="" readonly id="lblGetTariff">
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-primary" type="button" id="btnSetTraiff">SET Next Tariff</button>
+                                    </div>
+                                    <input type="date" class="form-control" placeholder="Select Date" id="lblTraiffDate">
+                                    <input type="time" class="form-control" placeholder="Select Time" id="lblTraiffTime">
+                                    <input type="text" class="form-control" placeholder="Enter Amount Rs" id="lblTraiffAmount">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Mode</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button" id="btnPrepaid">Prepaid</button>
+                                </div>
+                            </div>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button" id="btnPostpaid">Postpaid</button>
+                                </div>
+                            </div>
 
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button" id="btnRTCValue">RTC Value Commisioning</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
-
-</div>
-<div class="col-sm-12 col-lg-4">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between">
-            <div class="header-title">
-                <h4 class="card-title">E-Credit/ Calorific Value</h4>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnSetAvgGasCal">Set KCAL/SCM</button>
-                </div>
-                <input type="text" class="form-control" placeholder="-" aria-label="" id="lblSetAvgGasCal">
-                <label id="lblSKCALStatus"></label>
-            </div>
-
-
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnGetAvgGasCal">GET KCAL/SCM</button>
-                </div>
-                <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblGetAvgGasCal">
-            </div>
-
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnSetECredit">Set E-Balance</button>
-                </div>
-                <input type="text" class="form-control" placeholder="-" aria-label="" id="lblSetECredit">
-            </div>
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnReadECredit">Get E-Balance</button>
-                </div>
-                <input type="text" class="form-control" placeholder="-" aria-label="" readonly id="lblReadECredit">
-            </div>
-
-        </div>
-    </div>
-
-</div>
-<div class="col-sm-12 col-lg-4">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between">
-            <div class="header-title">
-                <h4 class="card-title">Mode</h4>
-            </div>
-        </div>
-        <div class="card-body volume">
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnPrepaid">Prepaid</button>
-                </div>
-               
-            </div>
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="btnPostpaid">Postpaid</button>
-                </div>
-                
-            </div>
-
-        </div>
-    </div>
-
 </div>
 <script>
     var Jsondata = @Html.Raw(Json.Encode(ViewBag.data));

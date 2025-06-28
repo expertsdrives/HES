@@ -1,0 +1,60 @@
+@{
+    ViewBag.Title = "Control Panel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Control Panel</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-block card-stretch card-height">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">Parameters</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Parameter Description</th>
+                                <th>Parameter Name to Display on SGM-Connect / HES-MDMS</th>
+                                <th>Applicable to SGM-Connect/HESMDMS</th>
+                                <th>Write/Read Access</th>
+                                <th>Remarks</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SOV Close Criteria</td>
+                                <td>SOV Close upon Main Bal. + E Bal. Exhaust by meter (Yes/No)</td>
+                                <td>SGM-Connect, HESMDMS</td>
+                                <td>Write-Read</td>
+                                <td>At HESMDMS end, following options shall be kept selectable at time of meter registration for SOV Close upon balance exhaust: 1. Immediate SOV close command issue upon Main bal reported <=0 2. Immediate SOV close command issue upon Main bal+Ebalance reported <=0 3. SOV Close command issue for next working day 4. No SOV close command for previladged customers 5. SOV close command to issue based on trigger received from customer end (SAP). 6. SOV Close by Meter - NO SOV Command to issue upon Balance Exhaust by HESMDMS.</td>
+                                <td><button class="btn btn-primary">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>SOV Close Criteria</td>
+                                <td>SOV Close on Main Bal. Exhaust (Yes/No)</td>
+                                <td>SGM-Connect, HESMDMS</td>
+                                <td>Write-Read</td>
+                                <td></td>
+                                <td><button class="btn btn-primary">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>E Balance</td>
+                                <td>E-Balance Threshold Configure/Read</td>
+                                <td>SGM-Connect, HESMDMS</td>
+                                <td>Write-Read</td>
+                                <td>In the event of Add balance, if E-Balance is < E-Balance Threshold, difference amount will be added to E-Balance and remaining will be transferred as main balance.</td>
+                                <td><button class="btn btn-primary">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

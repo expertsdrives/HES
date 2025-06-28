@@ -1259,5 +1259,41 @@ namespace HESMDMS.Controllers
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
             return response;
         }
+[Route("ProcessBalance")]
+        [HttpPost]
+        public HttpResponseMessage ProcessBalance([FromBody] string data)
+        {
+            // To test this endpoint with Postman, send a POST request to /api/ProcessBalance
+            // with the "Content-Type" header set to "application/json" and the raw body containing the comma-separated string.
+            // For example: "1,2,3,4,5,6,7,8,9,40,28,00,00,00,00,00,00,18,19,20"
+            try
+            {
+                if (string.IsNullOrEmpty(data))
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Input data cannot be null or empty.");
+                }
+
+                string[] csting = data.Split(',');
+
+                if (csting.Length < 17)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Input data does not have enough elements.");
+                }
+
+                string balancestring = csting[9] + csting[10] + csting[11] + csting[12] + csting[13] + csting[14] + csting[15] + csting[16];
+                
+                long longValue = long.Parse(balancestring, System.Globalization.NumberStyles.HexNumber);
+                double doubleValue = BitConverter.Int64BitsToDouble(longValue);
+                var bal = doubleValue.ToString("F2");
+
+                return Request.CreateResponse(HttpStatusCode.OK, bal);
+            }
+            catch (Exception ex)
+            {
+                // It's a good practice to log the exception.
+                // Sentry.SentrySdk.CaptureException(ex); 
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "An error occurred while processing the data: " + ex.Message);
+            }
+        }
     }
 }

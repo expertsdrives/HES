@@ -265,6 +265,32 @@ namespace HESMDMS.Areas.SmartMeter.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetBalance(string data)
+        {
+            long longValue = long.Parse(data, System.Globalization.NumberStyles.HexNumber);
+            double doubleValue = BitConverter.Int64BitsToDouble(longValue);
+            var bal = doubleValue.ToString("F2");
+            return Json(bal, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetVat(string data)
+        {
+            var vat = FromHexString(data);
+            return Json((vat * 100).ToString("F2"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetTariff(string data)
+        {
+            var tariff = FromHexString(data);
+            return Json(tariff.ToString("F2"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCal(string data)
+        {
+            var cal = FromHexString(data);
+            return Json(cal.ToString("F2"), JsonRequestBehavior.AllowGet);
+        }
+        
         #endregion
 
         #region Private Helper Methods

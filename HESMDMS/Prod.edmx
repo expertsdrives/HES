@@ -15,6 +15,19 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="Status" Type="bit" />
         </EntityType>
+        <EntityType Name="tbl_EPROMCommand">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CommandHeader" Type="nvarchar" MaxLength="500" />
+          <Property Name="CommandFotter" Type="nvarchar" MaxLength="500" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Length" Type="nvarchar" MaxLength="500" />
+          <Property Name="CommandName" Type="nvarchar" MaxLength="500" />
+          <Property Name="DataType" Type="nvarchar" MaxLength="100" />
+          <Property Name="ArrayType" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="tbl_epsettings">
           <Key>
             <PropertyRef Name="ID" />
@@ -39,6 +52,7 @@
         <Function Name="sp_CustomerLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="SmartMeter_ProdModel1StoreContainer">
           <EntitySet Name="tbl_ATGLWaACK" EntityType="Self.tbl_ATGLWaACK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_EPROMCommand" EntityType="Self.tbl_EPROMCommand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_epsettings" EntityType="Self.tbl_epsettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_FotaFileUpload" EntityType="Self.tbl_FotaFileUpload" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -51,6 +65,7 @@
           <EntitySet Name="tbl_epsettings" EntityType="SmartMeter_ProdModel1.tbl_epsettings" />
           <EntitySet Name="tbl_ATGLWaACK" EntityType="SmartMeter_ProdModel1.tbl_ATGLWaACK" />
           <EntitySet Name="tbl_FotaFileUpload" EntityType="SmartMeter_ProdModel1.tbl_FotaFileUpload" />
+          <EntitySet Name="tbl_EPROMCommand" EntityType="SmartMeter_ProdModel1.tbl_EPROMCommand" />
         </EntityContainer>
         <ComplexType Name="sp_CustomerLogs_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -117,6 +132,19 @@
           <Property Name="MeterID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="FileName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_EPROMCommand">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CommandHeader" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CommandFotter" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Length" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CommandName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DataType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ArrayType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -193,6 +221,20 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_EPROMCommand">
+            <EntityTypeMapping TypeName="SmartMeter_ProdModel1.tbl_EPROMCommand">
+              <MappingFragment StoreEntitySet="tbl_EPROMCommand">
+                <ScalarProperty Name="ArrayType" ColumnName="ArrayType" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="CommandName" ColumnName="CommandName" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CommandFotter" ColumnName="CommandFotter" />
+                <ScalarProperty Name="CommandHeader" ColumnName="CommandHeader" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -5,6 +5,29 @@
     var apidata = "";
     var mid = "";
     var modetype = "auto";
+function parseAndValidate(result, functionName) {
+    if (!result) {
+        console.error(`${functionName}: received empty result`);
+        return null;
+    }
+    try {
+        const myObj = JSON.parse(result);
+
+        const data1 = myObj.LatestResponse;
+        const data2 = myObj.CommandBacklog;
+        const data3 = myObj.CommandResponses;
+
+        if (data1 === undefined || data2 === undefined || data3 === undefined) {
+            console.error(`${functionName}: response object is missing required properties (LatestResponse, CommandBacklog, CommandResponses)`, myObj);
+            return null;
+        }
+
+        return { data1, data2, data3 };
+    } catch (e) {
+        console.error(`${functionName}: JSON parsing failed`, e);
+        return null;
+    }
+}
     function convertHexToDouble(hexValue) {
         var longValue = BigInt("0x" + hexValue);
         var buffer = new ArrayBuffer(8);
@@ -30,10 +53,9 @@
         var i = 0;
         var csting = "";
         var data3date = "";
-        const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+        const parsedData = parseAndValidate(result, 'loadgetbal');
+        if (!parsedData) return;
+        const { data1, data2, data3 } = parsedData;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',').length > 9)
@@ -78,10 +100,9 @@
         var i = 0;
         var csting = "";
         var data3date = "";
-        const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+        const parsedData = parseAndValidate(result, 'loadgetvat');
+        if (!parsedData) return;
+        const { data1, data2, data3 } = parsedData;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',').length > 9)
@@ -129,10 +150,9 @@
         var i = 0;
         var csting = "";
         var data3date = "";
-        const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+        const parsedData = parseAndValidate(result, 'loadGetTariff');
+        if (!parsedData) return;
+        const { data1, data2, data3 } = parsedData;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',').length > 9)
@@ -176,10 +196,9 @@
         var i = 0;
         var csting = "";
         var data3date = "";
-        const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+        const parsedData = parseAndValidate(result, 'loadsetbal');
+        if (!parsedData) return;
+        const { data1, data2, data3 } = parsedData;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.includes("29")) {
@@ -216,10 +235,9 @@
         var i = 0;
         var csting = "";
         var data3date = "";
-        const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+        const parsedData = parseAndValidate(result, 'loadsetVat');
+        if (!parsedData) return;
+        const { data1, data2, data3 } = parsedData;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',').length > 9)
@@ -259,10 +277,9 @@
         var i = 0;
         var csting = "";
         var data3date = "";
-        const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+        const parsedData = parseAndValidate(result, 'loadGetKCal');
+        if (!parsedData) return;
+        const { data1, data2, data3 } = parsedData;
         for (i = 0; i < data3.length; i++) {
             console.log(data3);
             var d = data3[i].Data;
@@ -309,10 +326,9 @@
         var i = 0;
         var csting = "";
         var data3date = "";
-        const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+        const parsedData = parseAndValidate(result, 'loadKCAL');
+        if (!parsedData) return;
+        const { data1, data2, data3 } = parsedData;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',').length > 9)
@@ -348,11 +364,11 @@
         var i = 0;
         var csting = "";
         var data3date = "";
-        const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
-        for (i = 0; i <= data3.length; i++) {
+        const parsedData = parseAndValidate(result, 'loadgetEbal');
+        if (!parsedData) return;
+        const { data1, data2, data3 } = parsedData;
+        for (i = 0; i < data3.length; i++) {
+            if (!data3[i] || !data3[i].Data) continue;
             var d = data3[i].Data;
             if (d.split(',').length > 9)
                 if (d.split(',')[8].includes("F2")) {

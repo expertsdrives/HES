@@ -1,0 +1,102 @@
+@model IEnumerable<HESMDMS.Controllers.CustomerDataViewModel>
+
+@{
+    ViewBag.Title = "Customer Data Analysis";
+    var chartLabels = new List<string>();
+    var chartData = new List<decimal>();
+    foreach (var item in Model)
+    {
+        chartLabels.Add(item.FullName);
+        chartData.Add(item.AMRReading ?? 0);
+    }
+}
+
+<h2>Customer Data Analysis</h2>
+
+@using (Html.BeginForm("CustomerDataAnalysis", "Test", FormMethod.Get))
+{
+    <p>
+        Start Date: <input type="date" name="startDate" />
+        End Date: <input type="date" name="endDate" />
+        <input type="submit" value="Filter" />
+    </p>
+}
+
+<div style="width: 80%; margin: auto;">
+    <canvas id="customerChart"></canvas>
+</div>
+
+<hr />
+
+<h3>Customer Data</h3>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MeterNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AMRReading)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InstallationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChargeAreaZone)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MeterNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AMRReading)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InstallationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChargeAreaZone)
+        </td>
+    </tr>
+}
+
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('customerChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [@Html.Raw("'" + String.Join("','", chartLabels) + "'")],
+            datasets: [{
+                label: 'AMR Reading',
+                data: [@string.Join(",", chartData)],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

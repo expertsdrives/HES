@@ -7536,6 +7536,9 @@
     <Content Include="Areas\Admin\Views\ATGLRates\MeterGroup.cshtml" />
     <Content Include="Areas\SmartMeter\Views\ControlPanel\PaymentTranscation.cshtml" />
     <Content Include="Areas\Admin\Views\Fota\Index.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\MeterMaster\Index.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\EEPROMCommand\Index.cshtml" />
+    <Content Include="Areas\SmartMeter\Views\PowerbiReports\Index.cshtml" />
     <None Include="Models\.editorconfig" />
     <EntityDeploy Include="Prod.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -7845,6 +7848,8 @@
     <Content Include="Views\GIS\Index.cshtml" />
     <Content Include="Views\GIS\Index - Copy.cshtml" />
     <Content Include="Views\Login\GetOTP.cshtml" />
+    <Content Include="Views\Test\AdvancedDataAnalysis.cshtml" />
+    <Content Include="Views\Test\CustomerDataAnalysis.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -7871,11 +7876,14 @@
     <Compile Include="Areas\Admin\Controllers\VayudutController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\BillingParameterController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\ControlPanelController.cs" />
+    <Compile Include="Areas\SmartMeter\Controllers\EEPROMCommandController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\ElectricBLEController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\FirmwareController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\LogsController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\LorawanController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\MeterManagmentController.cs" />
+    <Compile Include="Areas\SmartMeter\Controllers\MeterMasterController.cs" />
+    <Compile Include="Areas\SmartMeter\Controllers\PowerbiReportsController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\SamrtMeterDataController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\SGMBLEConnection.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\TerminalController.cs" />
@@ -7899,6 +7907,7 @@
     <Compile Include="Controllers\SignalController.cs" />
     <Compile Include="Controllers\SweetController.cs" />
     <Compile Include="Controllers\tbl_RawDataAPIController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="ElectricMeter.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -8262,6 +8271,9 @@
     </Compile>
     <Compile Include="tbl_BLEDemo.cs">
       <DependentUpon>ElectricMeter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_EPROMCommand.cs">
+      <DependentUpon>Prod.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_epsettings.cs">
       <DependentUpon>Prod.tt</DependentUpon>

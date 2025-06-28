@@ -1,0 +1,21 @@
+@{
+    ViewBag.Title = "Power BI Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #report-container {
+        width: 100%;
+        height: calc(100vh - 120px); /* Adjust the height as needed, subtracting header/footer height */
+    }
+
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+</style>
+
+<div id="report-container">
+    <iframe title="amr" src="https://app.powerbi.com/view?r=eyJrIjoiMTMxOTNmYjEtNGYyMi00YjExLWFkNzUtNzhiMGFlNGJhMWUwIiwidCI6ImY1Yjk5YWEyLWY2NDctNGJjMy04MjBlLTc0M2Y0N2JhYWQ4NCJ9" frameborder="0" allowFullScreen="true"></iframe>
+</div>

@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dx-datagrid {
+        color: #333;
+        background-color: transparent !important;
+    }
+
+    .dx-toolbar {
+        background-color: transparent !important;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    .greenColor {
+        color: green;
+    }
+
+    .sub {
+        vertical-align: 0;
+        position: relative;
+        top: -1.2ex;
+        font-size: 76%;
+    }
+
+    .right-side {
+        position: absolute;
+        right: 1px;
+        top: 6px;
+    }
+</style>
+<div class="card card-block card-stretch card-height">
+    <div class="card-header" style="text-align:center">
+        <div class="header-title">
+            <h4 class="card-title">Smart Meter Master</h4>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <div id="SmartMeterMaster"></div>
+        <a href="~/Content/SampleExcel/SampleMeterMaster.xlsx" download>Download Sample Excel</a>
+        <form id="importForm" action="@Url.Action("ImportFromExcel")" method="post" enctype="multipart/form-data" style="margin-top: 10px;">
+            <input type="file" name="file" id="file" />
+            <button type="submit" class="btn btn-primary">Import</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#SmartMeterMaster").dxDataGrid({
+            dataSource: {
+                key: "ID",
+                load: function(loadOptions) {
+                    var d = $.Deferred();
+                    $.getJSON('@Url.Action("GetMeterMasterData")', loadOptions)
+                        .done(function(data) {
+                            d.resolve(data.data, {
+                                totalCount: data.totalCount,
+                                summary: data.summary,
+                                groupCount: data.groupCount
+                            });
+                        })
+                        .fail(function() { d.reject("Data loading error"); });
+                    return d.promise();
+                },
+                insert: function(values) {
+                    return $.post('@Url.Action("InsertMeterMaster")', { values: JSON.stringify(values) });
+                },
+                update: function(key, values) {
+                    return $.ajax({
+                        url: '@Url.Action("UpdateMeterMaster")',
+                        type: 'PUT',
+                        data: { key: key, values: JSON.stringify(values) }
+                    });
+                },
+                remove: function(key) {
+                    return $.ajax({
+                        url: '@Url.Action("DeleteMeterMaster")',
+                        type: 'DELETE',
+                        data: { key: key }
+                    });
+                }
+            },
+            editing: {
+                mode: "inline",
+                allowAdding: true,
+                allowUpdating: true,
+                allowDeleting: true,
+                popup: {
+                    title: "Meter Info",
+                    showTitle: true,
+                    width: 700,
+                    height: 525
+                },
+                form: {
+                    items: [
+                        { itemType: "group", colCount: 2, colSpan: 2, items: ["PLD", "MUNumber", "SimICCID", "SimNo", "IMSI", "IMEI", "DeviceName"] }
+                    ]
+                }
+            },
+            columns: [
+                { dataField: "PLD", caption: "PLD" },
+                { dataField: "MeterSerialNumber", caption: "Meter Serial No." },
+                { dataField: "SimICCID", caption: "Sim ICCID" },
+                { dataField: "SimNo", caption: "Sim No" },
+                { dataField: "AID", caption: "AID" },
+                { dataField: "EID", caption: "EID" },
+                { dataField: "IMSI", caption: "IMSI" },
+                { dataField: "IMEI", caption: "IMEI" },
+                { dataField: "DeviceName", caption: "Device Name" }
+            ],
+            searchPanel: {
+                visible: true
+            },
+            export: {
+                enabled: true,
+                fileName: "MeterMaster"
+            }
+        });
+
+        $("#importForm").on("submit", function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: $(this).attr("action"),
+                type: $(this).attr("method"),
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        $("#SmartMeterMaster").dxDataGrid("instance").refresh();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function () {
+                    alert("An error occurred while importing the file.");
+                }
+            });
+        });
+    });
+</script>

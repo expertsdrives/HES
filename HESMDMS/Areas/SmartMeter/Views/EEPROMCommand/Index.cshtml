@@ -1,0 +1,208 @@
+﻿@{
+    ViewBag.Title = "EEPROM Commands";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container d-flex flex-column align-items-center">
+    <div class="row w-100">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">Select Meter</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="SelectMeter1"></div> <a id="mtrRefresh" href="javascript:void(0);">Refresh</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4 w-100">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <div id="command-dropdown"></div>
+                </div>
+                <div class="col-md-3">
+                    <div id="response-textbox"></div>
+                </div>
+                <div class="col-md-2">
+                    <div id="read-button"></div>
+                </div>
+                <div class="col-md-2">
+                    <div id="write-button"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="load-panel"></div>
+</div>
+
+<script>
+    $(function () {
+        var loadPanel = $("#load-panel").dxLoadPanel({
+            shadingColor: "rgba(0,0,0,0.4)",
+            visible: false,
+            showIndicator: true,
+            showPane: true,
+            shading: true,
+            closeOnOutsideClick: false
+        }).dxLoadPanel("instance");
+
+        var meterSelectBox = $("#SelectMeter1").dxSelectBox({
+            dataSource: DevExpress.data.AspNet.createStore({
+                key: "ID",
+                loadUrl: "/SelectSmartMeter?roleid=7",
+                onBeforeSend: function (method, ajaxOptions) {
+                    ajaxOptions.xhrFields = { withCredentials: true };
+                }
+            }),
+            displayExpr: 'TempMeterID',
+            valueExpr: 'TempMeterID',
+            searchEnabled: true,
+            placeholder: "Select Meter",
+            width: '100%',
+            onValueChanged: function (e) {
+                if (e.value) {
+                    $.ajax({
+                        url: '@Url.Action("CheckPld", "EEPROMCommand")',
+                        type: 'POST',
+                        data: { meterSerialNumber: e.value },
+                        success: function (response) {
+                            if (response.success && !response.hasPld) {
+                                DevExpress.ui.dialog.alert('PLD not available for the selected meter.', 'PLD Check');
+                            }
+                        }
+                    });
+                }
+            }
+        }).dxSelectBox("instance");
+
+        $("#mtrRefresh").on("click", function () {
+            meterSelectBox.getDataSource().reload();
+        });
+
+        var commandDropDown = $("#command-dropdown").dxSelectBox({
+            dataSource: DevExpress.data.AspNet.createStore({
+                key: "CommandName",
+                loadUrl: '@Url.Action("GetEpromCommands", "EEPROMCommand")',
+                 onBeforeSend: function (method, ajaxOptions) {
+                    ajaxOptions.xhrFields = { withCredentials: true };
+                },
+                 loadMode: "raw"
+            }),
+            displayExpr: "CommandName",
+            valueExpr: "CommandName",
+            placeholder: "Select Command",
+            searchEnabled: true,
+            onValueChanged: function (e) {
+                if (e.value) {
+                    var commandName = e.value;
+                    $("#write-button").dxButton("instance").option("disabled", commandName.toLowerCase().includes("read"));
+                    loadPanel.show();
+                    $.ajax({
+                        url: '@Url.Action("GetLatestResponse", "EEPROMCommand")',
+                        type: 'POST',
+                        data: { commandName: commandName, meterSerialNumber: meterSelectBox.option('value') },
+                        success: function (response) {
+                            loadPanel.hide();
+                            if (response.success) {
+                                $("#response-textbox").dxTextBox("instance").option("value", response.data);
+                            } else {
+                                $("#response-textbox").dxTextBox("instance").option("value", "");
+                                DevExpress.ui.notify(response.message, 'error', 2000);
+                            }
+                        },
+                        error: function () {
+                            loadPanel.hide();
+                        }
+                    });
+                }
+            }
+        }).dxSelectBox("instance");
+
+        $("#response-textbox").dxTextBox({
+            placeholder: "Enter value or see response",
+            searchEnabled: true
+        });
+
+        $("#read-button").dxButton({
+            text: "Read",
+            elementAttr: {
+                class: "btn btn-info"
+            },
+            onClick: function () {
+                readFunction(commandDropDown.option('value'));
+            }
+        });
+
+        $("#write-button").dxButton({
+            text: "Write",
+            elementAttr: {
+                class: "btn btn-primary"
+            },
+            disabled: true, // Initially disabled
+            onClick: function () {
+                const value = $("#response-textbox").dxTextBox('instance').option('value');
+                writeReadFunction(commandDropDown.option('value'), value);
+            }
+        });
+
+        function readFunction(actionName) {
+            const selectedMeter = meterSelectBox.option('value');
+            if (!selectedMeter) {
+                DevExpress.ui.notify('Please select a meter.', 'error', 2000);
+                return;
+            }
+            if (!actionName) {
+                DevExpress.ui.notify('Please select a command.', 'error', 2000);
+                return;
+            }
+            $.ajax({
+                url: '@Url.Action("ReadCommand", "EEPROMCommand")',
+                type: 'POST',
+                data: { command: actionName, meter: selectedMeter },
+                success: function (response) {
+                    if (response.success) {
+                        DevExpress.ui.notify(response.message, 'success', 2000);
+                    } else {
+                        DevExpress.ui.notify(response.message, 'error', 2000);
+                    }
+                },
+                error: function () {
+                    DevExpress.ui.notify('An error occurred.', 'error', 2000);
+                }
+            });
+        }
+
+        function writeReadFunction(actionName, value) {
+            const selectedMeter = meterSelectBox.option('value');
+            if (!selectedMeter) {
+                DevExpress.ui.notify('Please select a meter.', 'error', 2000);
+                return;
+            }
+            if (!value) {
+                DevExpress.ui.notify('Value is required for Write-Read actions.', 'error', 2000);
+                return;
+            }
+            $.ajax({
+                url: '@Url.Action("WriteReadCommand", "EEPROMCommand")',
+                type: 'POST',
+                data: { command: actionName, value: value, meter: selectedMeter },
+                success: function (response) {
+                    if (response.success) {
+                        DevExpress.ui.notify(response.message, 'success', 2000);
+                    } else {
+                        DevExpress.ui.notify(response.message, 'error', 2000);
+                    }
+                },
+                error: function () {
+                    DevExpress.ui.notify('An error occurred.', 'error', 2000);
+                }
+            });
+        }
+    });
+</script>

@@ -79,17 +79,17 @@
                         ValvePosition(result);
                         batteryLife(result);
                         $("#lblBatteryVoltage").val(myArray[0].CommandResponse.BatteryVoltage / 1000 + " V");
-                        var tamper = myArray[0].Resposne.TamperEvents;
+                        var tamper = myArray[0].Response.TamperEvents;
                         var substrings = tamper.match(/.{1,2}/g);
-                        var titlt = substrings[6] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var caseT = substrings[1] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var managetT = substrings[0] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var ExcessPush = substrings[4] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var Excessgas = substrings[3] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var SovStuck = substrings[5] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var Invalid = substrings[7] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var main = substrings[2] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
-                        var Rf = substrings[8] + " (" + convertTicksToDate(myArray[0].Resposne.LogDate) + ")";
+                        var titlt = substrings[6] + " (" + convertTicksToDate(myArray[0].Response.LogDate) + ")";
+                        var caseT = substrings[1] + " (" + convertTicksToDate(myArray[0].Response.LogDate) + ")";
+                        var managetT = substrings[0] + " (" + convertTicksToDate(myArray[0].Response.LogDate) + ")";
+                        var ExcessPush = substrings[4] + " (" + convertTicksToDate(myArray[0].Response.LogDate) + ")";
+                        var Excessgas = substrings[3] + " (" + convertTicksToDate(myArray[0].Response.LogDate) + ")";
+                        var SovStuck = substrings[5] + " (" + convertTicksToDate(myArray[0].Response.LogDate) + ")";
+                        var Invalid = substrings[7] + " (" + convertTicksToDate(myArray[0].Response.LogDate) + ")";
+                        var main = substrings[2] + " (" + convertTicksToDate(myArray[0].Response.LogDate) + ")";
+                        var Rf = substrings[8] + " (" + convertTicksToDate(myArray[0].Response.LogDate) + ")";
                         $("#lblTilt").val(titlt);
                         $("#lblCase").val(caseT);
                         $("#lblMaganet").val(managetT);
@@ -182,9 +182,9 @@
         var csting = "";
         var data3date = "";
         const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+       var data1 = myArray.LatestResponse;
+        var data2 = myArray.CommandBacklog;
+        var data3 = myArray.CommandResponses;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("D0")) {
@@ -232,9 +232,9 @@
         var csting = "";
         var data3date = "";
         const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+        var data1 = myArray.LatestResponse;
+        var data2 = myArray.CommandBacklog;
+        var data3 = myArray.CommandResponses;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("EC")) {
@@ -281,9 +281,9 @@
         var csting = "";
         var data3date = "";
         const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+        var data1 = myArray.LatestResponse;
+        var data2 = myArray.CommandBacklog;
+        var data3 = myArray.CommandResponses;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("1D")) {
@@ -322,9 +322,9 @@
         var csting = "";
         var data3date = "";
         const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+        var data1 = myArray.LatestResponse;
+        var data2 = myArray.CommandBacklog;
+        var data3 = myArray.CommandResponses;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("D4")) {
@@ -349,9 +349,9 @@
         var csting = "";
         var data3date = "";
         const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+       var data1 = myArray.LatestResponse;
+        var data2 = myArray.CommandBacklog;
+        var data3 = myArray.CommandResponses;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("D8")) {
@@ -373,9 +373,9 @@
         var csting = "";
         var data3date = "";
         const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+      var data1 = myArray.LatestResponse;
+        var data2 = myArray.CommandBacklog;
+        var data3 = myArray.CommandResponses;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("1A")) {
@@ -411,9 +411,9 @@
         var csting = "";
         var data3date = "";
         const myArray = JSON.parse(result);
-        var data1 = myArray[0].Resposne;
-        var data2 = myArray[1].Resposne1;
-        var data3 = myArray[2].CommandResponse;
+       var data1 = myArray.LatestResponse;
+        var data2 = myArray.CommandBacklog;
+        var data3 = myArray.CommandResponses;
         for (i = 0; i < data3.length; i++) {
             var d = data3[i].Data;
             if (d.split(',')[8].includes("07")) {
