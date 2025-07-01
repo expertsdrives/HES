@@ -6,6 +6,10 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    @* DevExtreme CSS *@
+    <link href="~/Content/dx.common.css" rel="stylesheet" />
+    <link href="~/Content/dx.light.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -35,6 +39,12 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+    @* DevExtreme Scripts *@
+    <script src="~/Scripts/dx.all.js"></script>
+    <script src="~/Scripts/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/Scripts/aspnet/dx.aspnet.data.js"></script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

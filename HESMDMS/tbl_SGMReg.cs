@@ -18,5 +18,6 @@ namespace HESMDMS
         public string CustomreID { get; set; }
         public string SmartMeterSerialNumber { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> InstallationDate { get; set; }
     }
 }

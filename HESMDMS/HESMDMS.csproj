@@ -7539,6 +7539,7 @@
     <Content Include="Areas\SmartMeter\Views\MeterMaster\Index.cshtml" />
     <Content Include="Areas\SmartMeter\Views\EEPROMCommand\Index.cshtml" />
     <Content Include="Areas\SmartMeter\Views\PowerbiReports\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Billing\Index.cshtml" />
     <None Include="Models\.editorconfig" />
     <EntityDeploy Include="Prod.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -7865,6 +7866,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ATGLRatesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BillingController.cs" />
     <Compile Include="Areas\Admin\Controllers\BluetoothController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboadController.cs" />
@@ -7874,6 +7876,7 @@
     <Compile Include="Areas\Admin\Controllers\RawDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Admin\Controllers\VayudutController.cs" />
+    <Compile Include="Areas\Admin\Data\BillingViewModel.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\BillingParameterController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\ControlPanelController.cs" />
     <Compile Include="Areas\SmartMeter\Controllers\EEPROMCommandController.cs" />
@@ -8343,7 +8346,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\SmartMeter\Data\" />
     <Folder Include="Uploads\" />
     <Folder Include="Views\BLE\" />

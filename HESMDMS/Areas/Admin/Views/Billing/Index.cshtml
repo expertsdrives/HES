@@ -1,0 +1,101 @@
+@{
+    ViewBag.Title = "Billing Acknowledgement Data";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .dx-datagrid {
+        color: #333;
+        background-color: transparent !important;
+    }
+
+    .dx-toolbar {
+        background-color: transparent !important;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    .greenColor {
+        color: green;
+    }
+
+    .sub {
+        vertical-align: 0;
+        position: relative;
+        top: -1.2ex;
+        font-size: 76%;
+    }
+
+    .right-side {
+        position: absolute;
+        right: 1px;
+        top: 6px;
+    }
+    .dx-datagrid .dx-header-row > td {
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
+<h2>@ViewBag.Title</h2>
+
+<div id="gridContainer"></div>
+
+@section scripts {
+    <script>
+        $(function() {
+            var grid = $("#gridContainer").dxDataGrid({
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "ID",
+                    loadUrl: "@Url.Action("GetBillingData", "Billing", new { area = "Admin" })"
+                }),
+                remoteOperations: true,
+                columns: [
+                    "BusinessPartner",
+                    "Installation",
+                    {
+                        dataField: "Date",
+                        dataType: "date",
+                        sortOrder: "desc"
+                    },
+                    "Material",
+                    {
+                        dataField: "MeterSerialNumber",
+                        caption: "Meter Serial Number"
+                    },
+                    {
+                        dataField: "CustomerID",
+                        caption: "Customer ID"
+                    },
+                    "MessageType",
+                    "MessageID",
+                    "MessageDescription"
+                ],
+                filterRow: { visible: true },
+                headerFilter: { visible: true },
+                groupPanel: { visible: true },
+                sorting: {
+                    mode: "single"
+                },
+                paging: { pageSize: 10 },
+                pager: {
+                    showPageSizeSelector: true,
+                    allowedPageSizes: [5, 10, 20]
+                },
+                searchPanel: { visible: true }
+            }).dxDataGrid("instance");
+
+            // SignalR Hub Connection
+            var hub = $.connection.gridHub;
+            hub.client.updateData = function () {
+                console.log("SignalR: updateData message received.");
+                grid.refresh();
+            };
+            $.connection.hub.start().done(function() {
+                console.log("SignalR: Connection established.");
+            }).fail(function(e) {
+                console.error("SignalR: Connection failed.", e);
+            });
+        });
+    </script>
+}

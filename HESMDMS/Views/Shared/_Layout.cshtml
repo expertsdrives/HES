@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="~/assets/vendor/tui-calendar/tui-time-picker/dist/tui-time-picker.css">
     @*<link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/bootstrap5.css" />
         <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>*@
+
 </head>
 
 <body class="  ">
@@ -329,7 +330,7 @@
                                             </li>
                                             <li class="">
                                                 <a href="/SmartMeter/EEPROMCommand">
-                                                    <i class="las la-minus"></i><span>EEPROM Command</span>
+                                                    <i class="las la-minus"></i><span>SGM Command</span>
                                                 </a>
                                             </li>
                                             <li class="">
@@ -1094,7 +1095,6 @@
     </script>
     <script src="~/assets/js/backend-bundle.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
-    <script type="text/javascript" src="/signalr/hubs"></script>
     <!-- Table Treeview JavaScript -->
     <script src="~/assets/js/table-treeview.js"></script>
 
@@ -1115,6 +1115,7 @@
     @Scripts.Render("~/Scripts/DevExtremeBundle")
 
     @Html.EJS().ScriptManager()
+    <script type="text/javascript" src="/signalr/hubs"></script>
     @RenderSection("scripts", required: false)
 </body>
 

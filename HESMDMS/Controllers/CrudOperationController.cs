@@ -1295,5 +1295,18 @@ namespace HESMDMS.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "An error occurred while processing the data: " + ex.Message);
             }
         }
+[Route("GetResponseDataWithDollar")]
+        [HttpGet]
+        public HttpResponseMessage GetResponseDataWithDollar(DataSourceLoadOptions loadOptions, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            var query = clsMeters_Prod.tbl_Response.Where(r => r.Data.Contains("$"));
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                query = query.Where(r => r.LogDate >= startDate && r.LogDate <= endDate);
+            }
+
+            return Request.CreateResponse(DataSourceLoader.Load(query, loadOptions));
+        }
     }
 }

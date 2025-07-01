@@ -122,6 +122,7 @@
           <Property Name="CustomreID" Type="varchar" MaxLength="500" />
           <Property Name="SmartMeterSerialNumber" Type="varchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="InstallationDate" Type="datetime" />
         </EntityType>
         <Function Name="sp_Circle1Temp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="startdate" Type="datetime" Mode="In" />
@@ -271,6 +272,7 @@
           <Property Name="CustomreID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="SmartMeterSerialNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="InstallationDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tbl_ATGLRates">
           <Key>
@@ -496,6 +498,7 @@
           <EntitySetMapping Name="tbl_SGMReg">
             <EntityTypeMapping TypeName="SmartMeterModel1.tbl_SGMReg">
               <MappingFragment StoreEntitySet="tbl_SGMReg">
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="SmartMeterSerialNumber" ColumnName="SmartMeterSerialNumber" />
                 <ScalarProperty Name="CustomreID" ColumnName="CustomreID" />
